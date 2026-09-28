@@ -1,0 +1,580 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Customers - Memora Studio</title>
+
+  <link
+    rel="stylesheet"
+    href="../../css/style.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../../css/studio.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../../css/customers.css"
+  >
+
+</head>
+
+
+<body class="studio-body">
+
+
+<div
+  class="studio-mobile-overlay"
+  id="studioMobileOverlay"
+></div>
+
+
+<div class="studio-layout">
+
+
+  <aside
+    class="studio-sidebar"
+    id="studioSidebar"
+  >
+
+
+    <div class="studio-sidebar-header">
+
+      <a
+        href="../dashboard/"
+        class="studio-brand"
+      >
+        MEMORA
+      </a>
+
+      <span class="studio-brand-subtitle">
+        Studio
+      </span>
+
+    </div>
+
+
+    <nav class="studio-nav">
+
+      <a
+        href="../dashboard/"
+        class="studio-nav-item"
+      >
+        <span class="studio-nav-icon">◫</span>
+        <span>Dashboard</span>
+      </a>
+
+      <a
+        href="../orders/"
+        class="studio-nav-item"
+      >
+        <span class="studio-nav-icon">◇</span>
+        <span>Orders</span>
+      </a>
+
+      <a
+        href="../production/"
+        class="studio-nav-item"
+      >
+        <span class="studio-nav-icon">◌</span>
+        <span>Production</span>
+      </a>
+
+      <a
+        href="../finance/"
+        class="studio-nav-item"
+      >
+        <span class="studio-nav-icon">Rp</span>
+        <span>Finance</span>
+      </a>
+
+      <a
+        href="../invoices/"
+        class="studio-nav-item"
+      >
+        <span class="studio-nav-icon">▤</span>
+        <span>Invoices</span>
+      </a>
+
+      <a
+        href="../customers/"
+        class="studio-nav-item active"
+      >
+        <span class="studio-nav-icon">♡</span>
+        <span>Customers</span>
+      </a>
+
+      <a
+        href="../products/"
+        class="studio-nav-item"
+      >
+        <span class="studio-nav-icon">□</span>
+        <span>Products</span>
+      </a>
+
+      <a
+        href="../gallery/"
+        class="studio-nav-item"
+      >
+        <span class="studio-nav-icon">▧</span>
+        <span>Gallery</span>
+      </a>
+
+      <a
+        href="../archive/"
+        class="studio-nav-item"
+      >
+        <span class="studio-nav-icon">◱</span>
+        <span>Archive</span>
+      </a>
+
+    </nav>
+
+
+    <div class="studio-sidebar-bottom">
+
+      <div class="studio-owner">
+
+        <div class="studio-owner-main">
+
+          <div class="studio-owner-avatar">
+            TA
+          </div>
+
+          <div class="studio-owner-text">
+
+            <strong data-owner-name>
+              Tassya & Arif
+            </strong>
+
+            <span data-owner-role>
+              Owner
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <button
+          type="button"
+          class="studio-logout-button"
+          data-action="studio-logout"
+        >
+          Keluar
+        </button>
+
+      </div>
+
+    </div>
+
+
+  </aside>
+
+
+  <main class="studio-main">
+
+
+    <header class="studio-topbar">
+
+      <div class="studio-topbar-left">
+
+        <button
+          type="button"
+          class="studio-menu-button"
+          id="studioMenuButton"
+        >
+          ☰
+        </button>
+
+        <div>
+
+          <span class="studio-eyebrow">
+            Memora Studio
+          </span>
+
+          <h1>
+            Customers
+          </h1>
+
+        </div>
+
+      </div>
+
+
+      <div class="studio-topbar-right">
+
+        <button
+          type="button"
+          id="customersRefreshButton"
+          class="customers-secondary-button"
+        >
+          Refresh
+        </button>
+
+      </div>
+
+    </header>
+
+
+    <div class="studio-content">
+
+
+      <section class="customers-heading">
+
+        <div>
+
+          <span class="dashboard-section-label">
+            Customer Management
+          </span>
+
+          <h2>
+            Data Customer
+          </h2>
+
+          <p>
+            Lihat customer, histori order, dan total transaksi Memora.
+          </p>
+
+        </div>
+
+      </section>
+
+
+      <section class="customers-stat-grid">
+
+        <article class="customers-stat-card">
+
+          <span>
+            Total Customer
+          </span>
+
+          <strong id="customersTotal">
+            0
+          </strong>
+
+        </article>
+
+
+        <article class="customers-stat-card">
+
+          <span>
+            Pernah Order
+          </span>
+
+          <strong id="customersWithOrders">
+            0
+          </strong>
+
+        </article>
+
+
+        <article class="customers-stat-card">
+
+          <span>
+            Repeat Customer
+          </span>
+
+          <strong id="customersRepeat">
+            0
+          </strong>
+
+        </article>
+
+
+        <article class="customers-stat-card">
+
+          <span>
+            Total Nilai Order
+          </span>
+
+          <strong id="customersRevenue">
+            Rp0
+          </strong>
+
+        </article>
+
+      </section>
+
+
+      <section class="customers-panel">
+
+
+        <div class="customers-toolbar">
+
+          <input
+            type="search"
+            id="customersSearch"
+            placeholder="Cari nama, WhatsApp, atau email..."
+          >
+
+
+          <select id="customersFilter">
+
+            <option value="">
+              Semua Customer
+            </option>
+
+            <option value="has_order">
+              Pernah Order
+            </option>
+
+            <option value="repeat">
+              Repeat Customer
+            </option>
+
+            <option value="no_order">
+              Belum Ada Order
+            </option>
+
+          </select>
+
+
+          <button
+            type="button"
+            id="customersResetButton"
+            class="customers-secondary-button"
+          >
+            Reset
+          </button>
+
+        </div>
+
+
+        <div class="customers-result-info">
+
+          <span id="customersResultCount">
+            0 customer
+          </span>
+
+        </div>
+
+
+        <div class="customers-table-wrapper">
+
+          <table class="customers-table">
+
+            <thead>
+
+              <tr>
+
+                <th>Customer</th>
+                <th>WhatsApp</th>
+                <th>Email</th>
+                <th>Total Order</th>
+                <th>Total Belanja</th>
+                <th>Order Terakhir</th>
+                <th></th>
+
+              </tr>
+
+            </thead>
+
+
+            <tbody id="customersTableBody">
+
+              <tr>
+
+                <td
+                  colspan="7"
+                  class="customers-loading"
+                >
+                  Memuat customer...
+                </td>
+
+              </tr>
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+
+        <div
+          class="customers-empty"
+          id="customersEmpty"
+          hidden
+        >
+
+          <strong>
+            Customer tidak ditemukan.
+          </strong>
+
+          <p>
+            Coba ubah pencarian atau filter.
+          </p>
+
+        </div>
+
+
+      </section>
+
+
+    </div>
+
+
+  </main>
+
+
+</div>
+
+
+<!-- CUSTOMER DETAIL -->
+
+<div
+  class="customers-modal"
+  id="customerModal"
+  hidden
+>
+
+
+  <div
+    class="customers-modal-backdrop"
+    data-close-customer
+  ></div>
+
+
+  <div class="customers-modal-card">
+
+
+    <div class="customers-modal-header">
+
+      <div>
+
+        <span class="dashboard-section-label">
+          Customer
+        </span>
+
+        <h3 id="customerModalName">
+          Customer
+        </h3>
+
+      </div>
+
+
+      <button
+        type="button"
+        class="customers-modal-close"
+        data-close-customer
+      >
+        ×
+      </button>
+
+    </div>
+
+
+    <div class="customers-detail-grid">
+
+      <div>
+
+        <span>
+          WhatsApp
+        </span>
+
+        <strong id="customerModalWhatsapp">
+          -
+        </strong>
+
+      </div>
+
+
+      <div>
+
+        <span>
+          Email
+        </span>
+
+        <strong id="customerModalEmail">
+          -
+        </strong>
+
+      </div>
+
+
+      <div class="customers-detail-full">
+
+        <span>
+          Alamat
+        </span>
+
+        <strong id="customerModalAddress">
+          -
+        </strong>
+
+      </div>
+
+    </div>
+
+
+    <div class="customers-modal-summary">
+
+      <div>
+
+        <span>
+          Total Order
+        </span>
+
+        <strong id="customerModalOrderCount">
+          0
+        </strong>
+
+      </div>
+
+
+      <div>
+
+        <span>
+          Total Belanja
+        </span>
+
+        <strong id="customerModalSpend">
+          Rp0
+        </strong>
+
+      </div>
+
+    </div>
+
+
+    <div class="customers-modal-orders">
+
+      <span class="dashboard-section-label">
+        Order History
+      </span>
+
+      <div
+        id="customerModalOrders"
+        class="customers-order-list"
+      ></div>
+
+    </div>
+
+
+  </div>
+
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="../../js/supabase.js"></script>
+<script src="../../js/studio/auth.js"></script>
+<script src="../../js/studio/guard.js"></script>
+<script src="../../js/studio/customers.js"></script>
+
+
+</body>
+
+</html>

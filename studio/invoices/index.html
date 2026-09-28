@@ -1,0 +1,717 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Invoices - Memora Studio</title>
+
+  <link
+    rel="stylesheet"
+    href="../../css/style.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../../css/studio.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../../css/invoices.css"
+  >
+
+</head>
+
+
+<body class="studio-body">
+
+
+<div
+  class="studio-mobile-overlay"
+  id="studioMobileOverlay"
+></div>
+
+
+<div class="studio-layout">
+
+
+  <aside
+    class="studio-sidebar"
+    id="studioSidebar"
+  >
+
+    <div class="studio-sidebar-header">
+
+      <a
+        href="../dashboard/"
+        class="studio-brand"
+      >
+        MEMORA
+      </a>
+
+      <span class="studio-brand-subtitle">
+        Studio
+      </span>
+
+    </div>
+
+
+    <nav class="studio-nav">
+
+      <a href="../dashboard/" class="studio-nav-item">
+        <span class="studio-nav-icon">◫</span>
+        <span>Dashboard</span>
+      </a>
+
+      <a href="../orders/" class="studio-nav-item">
+        <span class="studio-nav-icon">◇</span>
+        <span>Orders</span>
+      </a>
+
+      <a href="../production/" class="studio-nav-item">
+        <span class="studio-nav-icon">◌</span>
+        <span>Production</span>
+      </a>
+
+      <a href="../finance/" class="studio-nav-item">
+        <span class="studio-nav-icon">Rp</span>
+        <span>Finance</span>
+      </a>
+
+      <a href="../invoices/" class="studio-nav-item active">
+        <span class="studio-nav-icon">▤</span>
+        <span>Invoices</span>
+      </a>
+
+      <a href="../customers/" class="studio-nav-item">
+        <span class="studio-nav-icon">♡</span>
+        <span>Customers</span>
+      </a>
+
+      <a href="../products/" class="studio-nav-item">
+        <span class="studio-nav-icon">□</span>
+        <span>Products</span>
+      </a>
+
+      <a href="../gallery/" class="studio-nav-item">
+        <span class="studio-nav-icon">▧</span>
+        <span>Gallery</span>
+      </a>
+
+      <a href="../archive/" class="studio-nav-item">
+        <span class="studio-nav-icon">◱</span>
+        <span>Archive</span>
+      </a>
+
+    </nav>
+
+
+    <div class="studio-sidebar-bottom">
+
+      <div class="studio-owner">
+
+        <div class="studio-owner-main">
+
+          <div class="studio-owner-avatar">
+            TA
+          </div>
+
+          <div class="studio-owner-text">
+
+            <strong data-owner-name>
+              Tassya & Arif
+            </strong>
+
+            <span data-owner-role>
+              Owner
+            </span>
+
+          </div>
+
+        </div>
+
+        <button
+          type="button"
+          class="studio-logout-button"
+          data-action="studio-logout"
+        >
+          Keluar
+        </button>
+
+      </div>
+
+    </div>
+
+  </aside>
+
+
+  <main class="studio-main">
+
+
+    <header class="studio-topbar">
+
+      <div class="studio-topbar-left">
+
+        <button
+          type="button"
+          class="studio-menu-button"
+          id="studioMenuButton"
+        >
+          ☰
+        </button>
+
+        <div>
+
+          <span class="studio-eyebrow">
+            Memora Studio
+          </span>
+
+          <h1>
+            Invoices
+          </h1>
+
+        </div>
+
+      </div>
+
+
+      <div class="studio-topbar-right">
+
+        <button
+          type="button"
+          class="invoice-secondary-button"
+          id="invoiceRefreshButton"
+        >
+          Refresh
+        </button>
+
+      </div>
+
+    </header>
+
+
+    <div class="studio-content">
+
+
+      <section class="invoice-heading">
+
+        <span class="dashboard-section-label">
+          Payment Documents
+        </span>
+
+        <h2>
+          Invoice Customer
+        </h2>
+
+        <p>
+          Buat invoice DP, pembayaran lanjutan, pelunasan, dan invoice final.
+        </p>
+
+      </section>
+
+
+      <section class="invoice-stat-grid">
+
+        <article class="invoice-stat-card">
+
+          <span>Total Order</span>
+
+          <strong id="invoiceOrderCount">
+            0
+          </strong>
+
+        </article>
+
+
+        <article class="invoice-stat-card">
+
+          <span>Sudah Ada Pembayaran</span>
+
+          <strong id="invoicePaymentOrderCount">
+            0
+          </strong>
+
+        </article>
+
+
+        <article class="invoice-stat-card">
+
+          <span>Order Lunas</span>
+
+          <strong id="invoicePaidOrderCount">
+            0
+          </strong>
+
+        </article>
+
+
+        <article class="invoice-stat-card">
+
+          <span>Total Pembayaran</span>
+
+          <strong id="invoicePaymentTotal">
+            Rp0
+          </strong>
+
+        </article>
+
+      </section>
+
+
+      <section class="invoice-panel">
+
+        <div class="invoice-toolbar">
+
+          <input
+            type="search"
+            id="invoiceSearch"
+            placeholder="Cari Order ID, nama customer, atau WhatsApp..."
+          >
+
+
+          <select id="invoicePaymentFilter">
+
+            <option value="">
+              Semua Order
+            </option>
+
+            <option value="paid">
+              Sudah Ada Pembayaran
+            </option>
+
+            <option value="unpaid">
+              Belum Ada Pembayaran
+            </option>
+
+            <option value="lunas">
+              Lunas
+            </option>
+
+          </select>
+
+
+          <button
+            type="button"
+            class="invoice-secondary-button"
+            id="invoiceResetButton"
+          >
+            Reset
+          </button>
+
+        </div>
+
+
+        <div
+          class="invoice-order-grid"
+          id="invoiceOrderGrid"
+        >
+
+          <div class="invoice-loading">
+            Memuat data invoice...
+          </div>
+
+        </div>
+
+
+        <div
+          class="invoice-empty"
+          id="invoiceEmpty"
+          hidden
+        >
+          Tidak ada order yang ditemukan.
+        </div>
+
+      </section>
+
+
+    </div>
+
+
+  </main>
+
+</div>
+
+
+<!-- ======================================================
+     PREVIEW MODAL
+     ====================================================== -->
+
+<div
+  class="invoice-modal"
+  id="invoiceModal"
+  hidden
+>
+
+  <div
+    class="invoice-modal-backdrop"
+    data-close-invoice
+  ></div>
+
+
+  <div class="invoice-modal-content">
+
+
+    <div class="invoice-preview-actions">
+
+      <button
+        type="button"
+        class="invoice-secondary-button"
+        data-close-invoice
+      >
+        Tutup
+      </button>
+
+
+      <button
+        type="button"
+        class="invoice-secondary-button"
+        id="exportPdfButton"
+      >
+        Export PDF
+      </button>
+
+
+      <button
+        type="button"
+        class="invoice-primary-button"
+        id="sharePdfButton"
+      >
+        Share PDF
+      </button>
+
+    </div>
+
+
+    <article
+      class="invoice-document"
+      id="invoiceDocument"
+    >
+
+
+      <header class="invoice-document-header">
+
+        <div>
+
+          <strong class="invoice-logo">
+            MEMORA
+          </strong>
+
+          <p>
+            Creative Printing & Personalized Stationery
+          </p>
+
+        </div>
+
+
+        <div class="invoice-title-block">
+
+          <h1 id="previewInvoiceTitle">
+            INVOICE DP
+          </h1>
+
+          <span id="previewInvoiceNumber">
+            -
+          </span>
+
+        </div>
+
+      </header>
+
+
+      <section class="invoice-document-meta">
+
+        <div>
+
+          <span class="invoice-meta-label">
+            Bill To
+          </span>
+
+          <strong id="previewCustomerName">
+            -
+          </strong>
+
+          <p id="previewCustomerWhatsapp">
+            -
+          </p>
+
+          <p id="previewCustomerEmail">
+            -
+          </p>
+
+          <p id="previewCustomerAddress">
+            -
+          </p>
+
+        </div>
+
+
+        <div class="invoice-meta-right">
+
+          <div>
+
+            <span>
+              Order ID
+            </span>
+
+            <strong id="previewOrderNumber">
+              -
+            </strong>
+
+          </div>
+
+
+          <div>
+
+            <span>
+              Tanggal Invoice
+            </span>
+
+            <strong id="previewInvoiceDate">
+              -
+            </strong>
+
+          </div>
+
+
+          <div>
+
+            <span>
+              Status
+            </span>
+
+            <strong id="previewInvoiceStatus">
+              -
+            </strong>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <section class="invoice-items-section">
+
+        <table class="invoice-document-table">
+
+          <thead>
+
+            <tr>
+              <th>Produk</th>
+              <th>Qty</th>
+              <th>Harga</th>
+              <th>Total</th>
+            </tr>
+
+          </thead>
+
+
+          <tbody id="previewInvoiceItems"></tbody>
+
+        </table>
+
+      </section>
+
+
+      <section class="invoice-payment-box">
+
+        <div>
+
+          <span>
+            Jenis Pembayaran
+          </span>
+
+          <strong id="previewPaymentType">
+            -
+          </strong>
+
+        </div>
+
+
+        <div>
+
+          <span>
+            Pembayaran Kali Ini
+          </span>
+
+          <strong id="previewCurrentPayment">
+            Rp0
+          </strong>
+
+        </div>
+
+
+        <div>
+
+          <span>
+            Metode
+          </span>
+
+          <strong id="previewPaymentMethod">
+            -
+          </strong>
+
+        </div>
+
+
+        <div>
+
+          <span>
+            Tanggal Pembayaran
+          </span>
+
+          <strong id="previewPaymentDate">
+            -
+          </strong>
+
+        </div>
+
+      </section>
+
+
+      <section class="invoice-document-bottom">
+
+
+        <div class="invoice-document-note">
+
+          <strong>
+            Catatan
+          </strong>
+
+          <p id="previewReferenceNote">
+            -
+          </p>
+
+        </div>
+
+
+        <div class="invoice-total-box">
+
+          <div>
+
+            <span>
+              Subtotal Produk
+            </span>
+
+            <strong id="previewSubtotal">
+              Rp0
+            </strong>
+
+          </div>
+
+
+          <div>
+
+            <span>
+              Ongkir
+            </span>
+
+            <strong id="previewShipping">
+              Rp0
+            </strong>
+
+          </div>
+
+
+          <div class="invoice-grand-total">
+
+            <span>
+              Grand Total
+            </span>
+
+            <strong id="previewGrandTotal">
+              Rp0
+            </strong>
+
+          </div>
+
+
+          <div>
+
+            <span>
+              Total Sudah Dibayar
+            </span>
+
+            <strong id="previewTotalPaid">
+              Rp0
+            </strong>
+
+          </div>
+
+
+          <div class="invoice-remaining">
+
+            <span>
+              Sisa Tagihan
+            </span>
+
+            <strong id="previewRemaining">
+              Rp0
+            </strong>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <footer class="invoice-document-footer">
+
+        <div>
+
+          <span>
+            Terima kasih telah mempercayai Memora.
+          </span>
+
+        </div>
+
+
+        <div class="invoice-signature">
+
+          <span>
+            Memora,
+          </span>
+
+          <strong>
+            Tassya & Arif
+          </strong>
+
+        </div>
+
+      </footer>
+
+
+    </article>
+
+
+  </div>
+
+</div>
+
+
+<!-- jsPDF -->
+
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.2/dist/jspdf.umd.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.8.4/dist/jspdf.plugin.autotable.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="../../js/supabase.js"></script>
+<script src="../../js/studio/auth.js"></script>
+<script src="../../js/studio/guard.js"></script>
+<script src="../../js/studio/invoices.js"></script>
+
+
+</body>
+
+</html>

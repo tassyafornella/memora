@@ -1,0 +1,783 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Custom Sticker - Memora</title>
+
+  <link rel="stylesheet" href="../../css/style.css">
+  <link rel="stylesheet" href="../../css/product.css">
+  <link rel="stylesheet" href="../../css/responsive.css">
+
+  <style>
+
+    .sticker-option-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .sticker-option {
+      padding: 16px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: #fff;
+      color: var(--text);
+      cursor: pointer;
+      text-align: left;
+      transition: .2s ease;
+    }
+
+    .sticker-option:hover {
+      border-color: var(--green-medium);
+    }
+
+    .sticker-option.active {
+      background: var(--green-dark);
+      border-color: var(--green-dark);
+      color: #fff;
+    }
+
+    .sticker-option strong {
+      display: block;
+      font-size: 12px;
+    }
+
+    .sticker-option span {
+      display: block;
+      margin-top: 4px;
+      font-size: 9px;
+      opacity: .7;
+    }
+
+    .sticker-result {
+      margin-top: 14px;
+      padding: 18px;
+      border-radius: 16px;
+      background: var(--green-soft);
+      border: 1px solid var(--border);
+    }
+
+    .sticker-result-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 9px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .sticker-result-row:last-child {
+      border-bottom: 0;
+    }
+
+    .sticker-result-row span {
+      color: var(--muted);
+      font-size: 10px;
+    }
+
+    .sticker-result-row strong {
+      color: var(--green-dark);
+      font-size: 11px;
+    }
+
+    .sticker-total-pcs {
+      font-size: 18px !important;
+    }
+
+    .custom-shape-note {
+      display: none;
+      margin-top: 10px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      background: #f8faf8;
+      color: var(--muted);
+      font-size: 10px;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 650px) {
+
+      .sticker-option-grid {
+        grid-template-columns: 1fr;
+      }
+
+    }
+
+  </style>
+
+</head>
+
+
+<body data-product="sticker">
+
+
+<header class="site-header">
+
+  <div class="container header-inner">
+
+    <a href="../../index.html" class="brand">
+      MEMORA
+    </a>
+
+    <nav class="desktop-nav">
+
+      <a href="../../order/" class="nav-link">
+        Order
+      </a>
+
+      <a href="../../track/" class="nav-link">
+        Track
+      </a>
+
+      <a href="../../cart/" class="nav-link cart-nav">
+
+        Cart
+
+        <span
+          class="cart-count"
+          id="cartCount"
+        >
+          0
+        </span>
+
+      </a>
+
+    </nav>
+
+  </div>
+
+</header>
+
+
+<main class="product-page">
+
+  <div class="container">
+
+
+    <div class="product-breadcrumb">
+
+      <a href="../../index.html">
+        Beranda
+      </a>
+
+      <span>/</span>
+
+      <strong>
+        Sticker
+      </strong>
+
+    </div>
+
+
+    <section class="product-detail-layout">
+
+
+      <!-- LEFT -->
+
+      <div class="product-gallery">
+
+        <div class="product-image-wrapper">
+
+          <img
+            src="../../assets/images/products/sticker/cover.jpg"
+            alt="Custom Sticker Memora"
+            onerror="handleProductImageError(this, 'Custom Sticker')"
+          >
+
+        </div>
+
+        <div class="product-preview-caption">
+
+          <span>
+            Custom Product
+          </span>
+
+          <strong>
+            Sticker Memora
+          </strong>
+
+        </div>
+
+      </div>
+
+
+      <!-- RIGHT -->
+
+      <div class="product-configurator">
+
+
+        <div class="product-heading">
+
+          <span class="product-category">
+            Personalized Printing
+          </span>
+
+          <h1>
+            Custom Sticker
+          </h1>
+
+          <p>
+            Pilih bentuk, ukuran, bahan dan jumlah lembar.
+            Sistem akan menghitung estimasi jumlah sticker
+            secara otomatis.
+          </p>
+
+        </div>
+
+
+        <!-- SHAPE -->
+
+        <div class="config-section">
+
+          <div class="config-heading-row">
+
+            <div>
+
+              <span class="config-step">
+                01
+              </span>
+
+              <h2>
+                Pilih Bentuk
+              </h2>
+
+            </div>
+
+          </div>
+
+
+          <div class="sticker-option-grid">
+
+            <button
+              type="button"
+              class="sticker-option active"
+              data-shape="circle"
+            >
+              <strong>
+                Bulat / Lingkaran
+              </strong>
+
+              <span>
+                Circle sticker
+              </span>
+            </button>
+
+
+            <button
+              type="button"
+              class="sticker-option"
+              data-shape="rounded"
+            >
+              <strong>
+                Kotak Rounded
+              </strong>
+
+              <span>
+                Rounded square
+              </span>
+            </button>
+
+
+            <button
+              type="button"
+              class="sticker-option"
+              data-shape="custom"
+            >
+              <strong>
+                Custom Shape
+              </strong>
+
+              <span>
+                Sesuai pola desain
+              </span>
+            </button>
+
+          </div>
+
+
+          <div
+            class="custom-shape-note"
+            id="customShapeNote"
+          >
+            Untuk bentuk custom, jumlah sticker per lembar
+            akan disesuaikan dengan luas dan pola cutting desain.
+            Tim Memora akan mengkonfirmasi setelah desain diterima.
+          </div>
+
+        </div>
+
+
+        <!-- SIZE -->
+
+        <div class="config-section">
+
+          <div class="config-heading-row">
+
+            <div>
+
+              <span class="config-step">
+                02
+              </span>
+
+              <h2>
+                Pilih Ukuran
+              </h2>
+
+            </div>
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label class="form-label">
+              Ukuran Sticker
+            </label>
+
+            <select
+              class="form-select"
+              id="stickerSize"
+            >
+
+              <option value="10">
+                10 x 10 cm
+              </option>
+
+              <option value="9">
+                9 x 9 cm
+              </option>
+
+              <option value="8">
+                8 x 8 cm
+              </option>
+
+              <option value="7">
+                7 x 7 cm
+              </option>
+
+              <option value="6">
+                6 x 6 cm
+              </option>
+
+              <option value="5" selected>
+                5 x 5 cm
+              </option>
+
+              <option value="4">
+                4 x 4 cm
+              </option>
+
+              <option value="3">
+                3 x 3 cm
+              </option>
+
+              <option value="2.5">
+                2.5 x 2.5 cm
+              </option>
+
+              <option value="2">
+                2 x 2 cm
+              </option>
+
+              <option value="1">
+                1 x 1 cm
+              </option>
+
+            </select>
+
+          </div>
+
+        </div>
+
+
+        <!-- MATERIAL -->
+
+        <div class="config-section">
+
+          <div class="config-heading-row">
+
+            <div>
+
+              <span class="config-step">
+                03
+              </span>
+
+              <h2>
+                Pilih Bahan
+              </h2>
+
+            </div>
+
+          </div>
+
+
+          <div class="sticker-option-grid">
+
+            <button
+              type="button"
+              class="sticker-option active"
+              data-material="Glossy"
+            >
+
+              <strong>
+                Glossy
+              </strong>
+
+              <span>
+                Permukaan mengkilap
+              </span>
+
+            </button>
+
+
+            <button
+              type="button"
+              class="sticker-option"
+              data-material="Matte"
+            >
+
+              <strong>
+                Matte
+              </strong>
+
+              <span>
+                Permukaan lembut & tidak mengkilap
+              </span>
+
+            </button>
+
+          </div>
+
+        </div>
+
+
+        <!-- SHEETS -->
+
+        <div class="config-section">
+
+          <div class="config-heading-row">
+
+            <div>
+
+              <span class="config-step">
+                04
+              </span>
+
+              <h2>
+                Jumlah Lembar
+              </h2>
+
+            </div>
+
+          </div>
+
+
+          <div class="quantity-control">
+
+            <button
+              type="button"
+              class="quantity-button"
+              id="decreaseSheet"
+            >
+              −
+            </button>
+
+            <input
+              type="number"
+              id="sheetQuantity"
+              min="1"
+              value="1"
+            >
+
+            <button
+              type="button"
+              class="quantity-button"
+              id="increaseSheet"
+            >
+              +
+            </button>
+
+            <span class="quantity-unit">
+              lembar
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <!-- RESULT -->
+
+        <div class="config-section">
+
+          <div class="config-heading-row">
+
+            <div>
+
+              <span class="config-step">
+                05
+              </span>
+
+              <h2>
+                Estimasi Hasil
+              </h2>
+
+            </div>
+
+          </div>
+
+
+          <div class="sticker-result">
+
+            <div class="sticker-result-row">
+
+              <span>
+                Bentuk
+              </span>
+
+              <strong id="resultShape">
+                Bulat / Lingkaran
+              </strong>
+
+            </div>
+
+
+            <div class="sticker-result-row">
+
+              <span>
+                Ukuran
+              </span>
+
+              <strong id="resultSize">
+                5 x 5 cm
+              </strong>
+
+            </div>
+
+
+            <div class="sticker-result-row">
+
+              <span>
+                Bahan
+              </span>
+
+              <strong id="resultMaterial">
+                Glossy
+              </strong>
+
+            </div>
+
+
+            <div class="sticker-result-row">
+
+              <span>
+                Sticker / Lembar
+              </span>
+
+              <strong id="resultPerSheet">
+                55 pcs
+              </strong>
+
+            </div>
+
+
+            <div class="sticker-result-row">
+
+              <span>
+                Jumlah Lembar
+              </span>
+
+              <strong id="resultSheets">
+                1 lembar
+              </strong>
+
+            </div>
+
+
+            <div class="sticker-result-row">
+
+              <span>
+                Estimasi Total Sticker
+              </span>
+
+              <strong
+                class="sticker-total-pcs"
+                id="resultTotalPcs"
+              >
+                55 pcs
+              </strong>
+
+            </div>
+
+          </div>
+
+            <div class="sticker-result-row">
+
+              <span>
+                Harga / Lembar
+              </span>
+
+              <strong id="resultUnitPrice">
+                Rp0
+              </strong>
+
+            </div>
+
+
+            <div class="sticker-result-row">
+
+              <span>
+                Estimasi Total Harga
+              </span>
+
+              <strong
+                class="sticker-total-pcs"
+                id="resultTotalPrice"
+              >
+                Rp0
+              </strong>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- CUSTOM DATA -->
+
+        <div class="config-section">
+
+          <div class="config-heading-row">
+
+            <div>
+
+              <span class="config-step">
+                06
+              </span>
+
+              <h2>
+                Detail Custom
+              </h2>
+
+            </div>
+
+          </div>
+
+
+          <div class="product-form-grid">
+
+
+            <div class="form-group">
+
+              <label class="form-label">
+                Nama / Teks
+              </label>
+
+              <input
+                type="text"
+                class="form-input"
+                id="stickerName"
+                placeholder="Contoh: Tassya & Arif"
+              >
+
+            </div>
+
+
+            <div class="form-group">
+
+              <label class="form-label">
+                Tema Warna
+              </label>
+
+              <input
+                type="text"
+                class="form-input"
+                id="stickerTheme"
+                placeholder="Contoh: Matcha & Pink"
+              >
+
+            </div>
+
+
+            <div class="form-group full">
+
+              <label class="form-label">
+                Catatan
+              </label>
+
+              <textarea
+                class="form-textarea"
+                id="stickerNote"
+                placeholder="Tuliskan kebutuhan desain atau catatan tambahan..."
+              ></textarea>
+
+            </div>
+
+
+          </div>
+
+        </div>
+
+
+
+        <button
+          type="button"
+          class="add-to-cart-button"
+          id="addStickerToCart"
+        >
+          Tambah ke Keranjang
+        </button>
+
+        <p class="product-helper">
+          Detail pesanan masih bisa dicek kembali sebelum checkout.
+        </p>
+
+
+
+      </div>
+
+    </section>
+
+  </div>
+
+</main>
+
+
+<footer class="site-footer">
+
+  <div class="container footer-inner">
+
+    <div>
+
+      <div class="footer-brand">
+        MEMORA
+      </div>
+
+      <p class="footer-copy">
+        Creative Printing & Personalized Stationery
+      </p>
+
+    </div>
+
+  </div>
+
+</footer>
+
+
+<script src="../../js/main.js"></script>
+<script src="../../js/sticker.js"></script>
+
+
+</body>
+
+</html>
+
+
+

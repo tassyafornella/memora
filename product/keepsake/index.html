@@ -1,0 +1,729 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="description"
+    content="Personalized Keepsake Set by Memora."
+  >
+
+  <title>Keepsake Set - Memora</title>
+
+  <link
+    rel="stylesheet"
+    href="../../css/style.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../../css/product.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../../css/responsive.css"
+  >
+
+</head>
+
+
+<body data-product="keepsake">
+
+
+  <header class="site-header">
+
+    <div class="container header-inner">
+
+      <a
+        href="../../index.html"
+        class="brand"
+      >
+        MEMORA
+      </a>
+
+
+      <nav class="desktop-nav">
+
+        <a
+          href="../../order/"
+          class="nav-link"
+        >
+          Order
+        </a>
+
+        <a
+          href="../../track/"
+          class="nav-link"
+        >
+          Track
+        </a>
+
+        <a
+          href="../../cart/"
+          class="nav-link cart-nav"
+        >
+          Cart
+
+          <span
+            class="cart-count"
+            id="cartCount"
+          >
+            0
+          </span>
+        </a>
+
+      </nav>
+
+
+      <button
+        type="button"
+        class="mobile-menu-button"
+        id="mobileMenuButton"
+        aria-expanded="false"
+      >
+        â˜°
+      </button>
+
+    </div>
+
+  </header>
+
+
+  <nav
+    class="mobile-nav"
+    id="mobileNav"
+  >
+
+    <a href="../../order/">
+      Order
+      <span>â†’</span>
+    </a>
+
+    <a href="../../track/">
+      Track
+      <span>â†’</span>
+    </a>
+
+    <a href="../../cart/">
+
+      <span>Cart</span>
+
+      <span
+        class="cart-count"
+        id="mobileCartCount"
+      >
+        0
+      </span>
+
+    </a>
+
+  </nav>
+
+
+  <main class="product-page">
+
+    <div class="container">
+
+
+      <div class="product-breadcrumb">
+
+        <a href="../../index.html">
+          Beranda
+        </a>
+
+        <span>/</span>
+
+        <strong>
+          Keepsake
+        </strong>
+
+      </div>
+
+
+      <section class="product-detail-layout">
+
+
+        <div class="product-gallery">
+
+          <div
+            class="product-image-wrapper"
+            id="productImageWrapper"
+          >
+
+            <img
+              id="productImage"
+              src="../../assets/images/products/keepsake/simple.jpg"
+              alt="Keepsake Simple"
+              onerror="handleVariantImageError(this)"
+            >
+
+          </div>
+
+
+          <div class="product-preview-caption">
+
+            <span>
+              Preview
+            </span>
+
+            <strong id="previewPackageName">
+              Simple
+            </strong>
+
+          </div>
+
+        </div>
+
+
+        <div class="product-configurator">
+
+
+          <div class="product-heading">
+
+            <span class="product-category">
+              Memory Stationery
+            </span>
+
+            <h1>
+              Keepsake Set
+            </h1>
+
+            <p>
+              Personalized memory cards untuk menyimpan
+              cerita, foto, pesan, dan momen spesial
+              dalam satu set yang personal.
+            </p>
+
+          </div>
+
+
+          <!-- PACKAGE -->
+
+          <div class="config-section">
+
+            <div class="config-heading-row">
+
+              <div>
+
+                <span class="config-step">
+                  01
+                </span>
+
+                <h2>
+                  Pilih Paket
+                </h2>
+
+              </div>
+
+              <span
+                class="selected-package-label"
+                id="selectedPackageLabel"
+              >
+                Simple
+              </span>
+
+            </div>
+
+
+            <div class="variant-grid">
+
+
+              <button
+                type="button"
+                class="variant-card active"
+                data-variant="simple"
+              >
+
+                <span class="variant-label">
+                  Simple
+                </span>
+
+                <strong>
+                  Rp12.000
+                </strong>
+
+                <small>
+                  / set
+                </small>
+
+              </button>
+
+
+              <button
+                type="button"
+                class="variant-card"
+                data-variant="signature"
+              >
+
+                <span class="variant-label">
+                  Signature
+                </span>
+
+                <strong>
+                  Rp18.000
+                </strong>
+
+                <small>
+                  / set
+                </small>
+
+              </button>
+
+
+              <button
+                type="button"
+                class="variant-card"
+                data-variant="complete"
+              >
+
+                <span class="variant-label">
+                  Complete
+                </span>
+
+                <strong>
+                  Rp25.000
+                </strong>
+
+                <small>
+                  / set
+                </small>
+
+              </button>
+
+            </div>
+
+          </div>
+
+
+          <!-- CONTENT -->
+
+          <div class="config-section">
+
+            <div class="config-heading-row">
+
+              <div>
+
+                <span class="config-step">
+                  02
+                </span>
+
+                <h2>
+                  Isi Paket
+                </h2>
+
+              </div>
+
+            </div>
+
+
+            <div class="package-content-box">
+
+              <div class="package-current">
+
+                <span>
+                  Paket dipilih
+                </span>
+
+                <strong id="packageContentName">
+                  Simple
+                </strong>
+
+              </div>
+
+
+              <ul
+                class="package-content-list"
+                id="packageContentList"
+              ></ul>
+
+            </div>
+
+          </div>
+
+
+          <!-- QUANTITY -->
+
+          <div class="config-section">
+
+            <div class="config-heading-row">
+
+              <div>
+
+                <span class="config-step">
+                  03
+                </span>
+
+                <h2>
+                  Jumlah Pesanan
+                </h2>
+
+              </div>
+
+            </div>
+
+
+            <div class="quantity-control">
+
+              <button
+                type="button"
+                class="quantity-button"
+                id="decreaseQuantity"
+              >&minus;</button>
+
+              <input
+                type="number"
+                id="quantityInput"
+                min="1"
+                value="1"
+              >
+
+              <button
+                type="button"
+                class="quantity-button"
+                id="increaseQuantity"
+              >
+                +
+              </button>
+
+              <span class="quantity-unit">
+                set
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <!-- PERSONALIZATION -->
+
+          <div class="config-section">
+
+            <div class="config-heading-row">
+
+              <div>
+
+                <span class="config-step">
+                  04
+                </span>
+
+                <h2>
+                  Data Personalization
+                </h2>
+
+              </div>
+
+            </div>
+
+
+            <div class="product-form-grid">
+
+
+              <div class="form-group">
+
+                <label
+                  class="form-label"
+                  for="recipientName"
+                >
+                  Nama
+                </label>
+
+                <input
+                  type="text"
+                  id="recipientName"
+                  class="form-input"
+                  data-personalization
+                  data-label="Nama"
+                  placeholder="Nama yang ingin dicantumkan"
+                >
+
+              </div>
+
+
+              <div class="form-group">
+
+                <label
+                  class="form-label"
+                  for="occasion"
+                >
+                  Occasion
+                </label>
+
+                <input
+                  type="text"
+                  id="occasion"
+                  class="form-input"
+                  data-personalization
+                  data-label="Occasion"
+                  placeholder="Wedding, Anniversary, Birthday..."
+                >
+
+              </div>
+
+
+              <div class="form-group">
+
+                <label
+                  class="form-label"
+                  for="eventDate"
+                >
+                  Tanggal
+                </label>
+
+                <input
+                  type="date"
+                  id="eventDate"
+                  class="form-input"
+                  data-personalization
+                  data-label="Tanggal"
+                >
+
+              </div>
+
+
+              <div class="form-group">
+
+                <label
+                  class="form-label"
+                  for="themeColor"
+                >
+                  Tema / Warna
+                </label>
+
+                <input
+                  type="text"
+                  id="themeColor"
+                  class="form-input"
+                  data-personalization
+                  data-label="Tema / Warna"
+                  placeholder="Contoh: Brown & Cream"
+                >
+
+              </div>
+
+
+              <div class="form-group full">
+
+                <label
+                  class="form-label"
+                  for="customText"
+                >
+                  Teks / Cerita
+                </label>
+
+                <textarea
+                  id="customText"
+                  class="form-textarea"
+                  data-personalization
+                  data-label="Teks / Cerita"
+                  placeholder="Tuliskan kata-kata atau cerita yang ingin digunakan..."
+                ></textarea>
+
+              </div>
+
+
+              <div class="form-group full">
+
+                <label
+                  class="form-label"
+                  for="customerNote"
+                >
+                  Catatan
+                </label>
+
+                <textarea
+                  id="customerNote"
+                  class="form-textarea"
+                  data-personalization
+                  data-label="Catatan"
+                  placeholder="Detail tambahan untuk Memora..."
+                ></textarea>
+
+              </div>
+
+
+            </div>
+
+          </div>
+
+
+          <!-- SUMMARY -->
+
+          <div class="product-summary">
+
+            <div class="summary-header">
+
+              <span>
+                Ringkasan
+              </span>
+
+              <strong>
+                Keepsake Set
+              </strong>
+
+            </div>
+
+
+            <div class="summary-row">
+
+              <span>
+                Paket
+              </span>
+
+              <strong id="summaryPackage">
+                Simple
+              </strong>
+
+            </div>
+
+
+            <div class="summary-row">
+
+              <span>
+                Harga / Set
+              </span>
+
+              <strong id="summaryUnitPrice">
+                Rp12.000
+              </strong>
+
+            </div>
+
+
+            <div class="summary-row">
+
+              <span>
+                Jumlah
+              </span>
+
+              <strong id="summaryQuantity">
+                1 set
+              </strong>
+
+            </div>
+
+
+            <div class="summary-total">
+
+              <div>
+
+                <span>
+                  Estimasi Total
+                </span>
+
+                <small>
+                  Belum termasuk ongkir
+                </small>
+
+              </div>
+
+              <strong id="summaryTotal">
+                Rp12.000
+              </strong>
+
+            </div>
+
+          </div>
+
+
+          <button
+            type="button"
+            class="add-to-cart-button"
+            id="addToCartButton"
+          >
+            Tambah ke Keranjang
+          </button>
+
+          <p class="product-helper">
+            Kamu masih bisa mengubah detail sebelum checkout.
+          </p>
+
+        </div>
+
+      </section>
+
+    </div>
+
+  </main>
+
+
+  <div
+    class="cart-toast"
+    id="cartToast"
+  >
+
+    <div>
+
+      <strong>
+        Ditambahkan ke keranjang
+      </strong>
+
+      <span>
+        Keepsake Set berhasil ditambahkan.
+      </span>
+
+    </div>
+
+    <a href="../../cart/">
+      Lihat Cart
+    </a>
+
+  </div>
+
+
+  <footer class="site-footer">
+
+    <div class="container footer-inner">
+
+      <div>
+
+        <div class="footer-brand">
+          MEMORA
+        </div>
+
+        <p class="footer-copy">
+          Creative Printing & Personalized Stationery
+        </p>
+
+      </div>
+
+
+      <div class="footer-links">
+
+        <a href="../../index.html">
+          Beranda
+        </a>
+
+        <a href="../../order/">
+          Order
+        </a>
+
+        <a href="../../track/">
+          Track
+        </a>
+
+        <a href="../../cart/">
+          Cart
+        </a>
+
+      </div>
+
+    </div>
+
+  </footer>
+
+
+  <script src="../../js/main.js"></script>
+  <script src="../../js/product.js"></script>
+
+</body>
+
+</html>
+

@@ -1,0 +1,395 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Products - Memora Studio</title>
+
+  <link rel="stylesheet" href="../../css/style.css">
+  <link rel="stylesheet" href="../../css/studio.css">
+  <link rel="stylesheet" href="../../css/products.css">
+</head>
+
+<body class="studio-body">
+
+<div class="studio-mobile-overlay" id="studioMobileOverlay"></div>
+
+<div class="studio-layout">
+
+  <aside class="studio-sidebar" id="studioSidebar">
+
+    <div class="studio-sidebar-header">
+      <a href="../dashboard/" class="studio-brand">MEMORA</a>
+      <span class="studio-brand-subtitle">Studio</span>
+    </div>
+
+    <nav class="studio-nav">
+
+      <a href="../dashboard/" class="studio-nav-item">
+        <span class="studio-nav-icon">◫</span>
+        <span>Dashboard</span>
+      </a>
+
+      <a href="../orders/" class="studio-nav-item">
+        <span class="studio-nav-icon">◇</span>
+        <span>Orders</span>
+      </a>
+
+      <a href="../production/" class="studio-nav-item">
+        <span class="studio-nav-icon">◌</span>
+        <span>Production</span>
+      </a>
+
+      <a href="../finance/" class="studio-nav-item">
+        <span class="studio-nav-icon">Rp</span>
+        <span>Finance</span>
+      </a>
+
+      <a href="../invoices/" class="studio-nav-item">
+        <span class="studio-nav-icon">▤</span>
+        <span>Invoices</span>
+      </a>
+
+      <a href="../customers/" class="studio-nav-item">
+        <span class="studio-nav-icon">♡</span>
+        <span>Customers</span>
+      </a>
+
+      <a href="../products/" class="studio-nav-item active">
+        <span class="studio-nav-icon">□</span>
+        <span>Products</span>
+      </a>
+
+      <a href="../gallery/" class="studio-nav-item">
+        <span class="studio-nav-icon">▧</span>
+        <span>Gallery</span>
+      </a>
+
+      <a href="../archive/" class="studio-nav-item">
+        <span class="studio-nav-icon">◱</span>
+        <span>Archive</span>
+      </a>
+
+    </nav>
+
+    <div class="studio-sidebar-bottom">
+
+      <div class="studio-owner">
+
+        <div class="studio-owner-main">
+
+          <div class="studio-owner-avatar">
+            TA
+          </div>
+
+          <div class="studio-owner-text">
+            <strong data-owner-name>Tassya & Arif</strong>
+            <span data-owner-role>Owner</span>
+          </div>
+
+        </div>
+
+        <button
+          type="button"
+          class="studio-logout-button"
+          data-action="studio-logout"
+        >
+          Keluar
+        </button>
+
+      </div>
+
+    </div>
+
+  </aside>
+
+
+  <main class="studio-main">
+
+    <header class="studio-topbar">
+
+      <div class="studio-topbar-left">
+
+        <button
+          type="button"
+          class="studio-menu-button"
+          id="studioMenuButton"
+        >
+          ☰
+        </button>
+
+        <div>
+          <span class="studio-eyebrow">Memora Studio</span>
+          <h1>Products</h1>
+        </div>
+
+      </div>
+
+      <div class="studio-topbar-right">
+
+        <button
+          type="button"
+          class="products-secondary-button"
+          id="productsRefreshButton"
+        >
+          Refresh
+        </button>
+
+      </div>
+
+    </header>
+
+
+    <div class="studio-content">
+
+      <section class="products-heading">
+
+        <span class="dashboard-section-label">
+          Catalog Management
+        </span>
+
+        <h2>Produk & Harga</h2>
+
+        <p>
+          Kelola produk, variant, status aktif, dan bulk pricing Memora.
+        </p>
+
+      </section>
+
+
+      <section class="products-stat-grid">
+
+        <article class="products-stat-card">
+          <span>Total Produk</span>
+          <strong id="productsTotal">0</strong>
+        </article>
+
+        <article class="products-stat-card">
+          <span>Produk Aktif</span>
+          <strong id="productsActive">0</strong>
+        </article>
+
+        <article class="products-stat-card">
+          <span>Total Variant</span>
+          <strong id="productsVariants">0</strong>
+        </article>
+
+        <article class="products-stat-card">
+          <span>Bulk Price Tier</span>
+          <strong id="productsBulkTiers">0</strong>
+        </article>
+
+      </section>
+
+
+      <section class="products-panel">
+
+        <div class="products-toolbar">
+
+          <input
+            type="search"
+            id="productsSearch"
+            placeholder="Cari nama produk atau slug..."
+          >
+
+          <select id="productsFilter">
+
+            <option value="">
+              Semua Produk
+            </option>
+
+            <option value="active">
+              Aktif
+            </option>
+
+            <option value="inactive">
+              Nonaktif
+            </option>
+
+          </select>
+
+          <button
+            type="button"
+            class="products-secondary-button"
+            id="productsResetButton"
+          >
+            Reset
+          </button>
+
+        </div>
+
+        <div
+          class="products-grid"
+          id="productsGrid"
+        >
+          <div class="products-loading">
+            Memuat produk...
+          </div>
+        </div>
+
+        <div
+          class="products-empty"
+          id="productsEmpty"
+          hidden
+        >
+          Produk tidak ditemukan.
+        </div>
+
+      </section>
+
+    </div>
+
+  </main>
+
+</div>
+
+
+<div
+  class="products-modal"
+  id="productModal"
+  hidden
+>
+
+  <div
+    class="products-modal-backdrop"
+    data-close-product
+  ></div>
+
+  <div class="products-modal-card">
+
+    <div class="products-modal-header">
+
+      <div>
+        <span class="dashboard-section-label">
+          Product Editor
+        </span>
+
+        <h3 id="productModalTitle">
+          Produk
+        </h3>
+      </div>
+
+      <button
+        type="button"
+        class="products-modal-close"
+        data-close-product
+      >
+        ×
+      </button>
+
+    </div>
+
+
+    <div class="products-form-group">
+
+      <label>
+        Nama Produk
+      </label>
+
+      <input
+        type="text"
+        id="productNameInput"
+      >
+
+    </div>
+
+
+    <div class="products-form-group">
+
+      <label>
+        Slug
+      </label>
+
+      <input
+        type="text"
+        id="productSlugInput"
+        disabled
+      >
+
+    </div>
+
+
+    <div class="products-form-group">
+
+      <label class="products-switch-label">
+
+        <input
+          type="checkbox"
+          id="productActiveInput"
+        >
+
+        <span>
+          Produk Aktif
+        </span>
+
+      </label>
+
+    </div>
+
+
+    <button
+      type="button"
+      class="products-primary-button"
+      id="saveProductButton"
+    >
+      Simpan Produk
+    </button>
+
+
+    <div class="products-section-divider"></div>
+
+
+    <div class="products-subheading">
+
+      <span class="dashboard-section-label">
+        Variants
+      </span>
+
+      <h4>
+        Harga Variant
+      </h4>
+
+    </div>
+
+    <div id="productVariantList"></div>
+
+
+    <div
+      class="products-bulk-section"
+      id="productBulkSection"
+      hidden
+    >
+
+      <div class="products-section-divider"></div>
+
+      <div class="products-subheading">
+
+        <span class="dashboard-section-label">
+          Bulk Pricing
+        </span>
+
+        <h4>
+          Harga Berdasarkan Quantity
+        </h4>
+
+      </div>
+
+      <div id="productBulkList"></div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="../../js/supabase.js"></script>
+<script src="../../js/studio/auth.js"></script>
+<script src="../../js/studio/guard.js"></script>
+<script src="../../js/studio/products.js"></script>
+
+</body>
+</html>

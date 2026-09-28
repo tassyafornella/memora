@@ -1,0 +1,748 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="description"
+    content="Lacak status pesanan Memora menggunakan Order ID dan nomor WhatsApp."
+  >
+
+  <title>Track Order - Memora</title>
+
+  <link
+    rel="stylesheet"
+    href="../css/style.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../css/track.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../css/responsive.css"
+  >
+
+</head>
+
+
+<body>
+
+
+<header class="site-header">
+
+  <div class="container header-inner">
+
+    <a
+      href="../index.html"
+      class="brand"
+    >
+      MEMORA
+    </a>
+
+
+    <nav class="desktop-nav">
+
+      <a
+        href="../order/"
+        class="nav-link"
+      >
+        Order
+      </a>
+
+      <a
+        href="../track/"
+        class="nav-link active"
+      >
+        Track
+      </a>
+
+      <a
+        href="../cart/"
+        class="nav-link cart-nav"
+      >
+        Cart
+
+        <span
+          class="cart-count"
+          id="cartCount"
+        >
+          0
+        </span>
+
+      </a>
+
+    </nav>
+
+
+    <button
+      type="button"
+      class="mobile-menu-button"
+      id="mobileMenuButton"
+      aria-label="Buka menu"
+      aria-expanded="false"
+    >
+      ☰
+    </button>
+
+  </div>
+
+</header>
+
+
+<nav
+  class="mobile-nav"
+  id="mobileNav"
+>
+
+  <a href="../order/">
+    Order
+    <span>→</span>
+  </a>
+
+  <a href="../track/">
+    Track
+    <span>→</span>
+  </a>
+
+  <a href="../cart/">
+
+    <span>
+      Cart
+    </span>
+
+    <span
+      class="cart-count"
+      id="mobileCartCount"
+    >
+      0
+    </span>
+
+  </a>
+
+</nav>
+
+
+<main class="track-page">
+
+
+  <section class="track-hero">
+
+    <div class="container">
+
+      <div class="track-hero-inner">
+
+        <span class="track-eyebrow">
+          Order Tracking
+        </span>
+
+        <h1>
+          Lacak Pesanan Kamu
+        </h1>
+
+        <p>
+          Masukkan Order ID dan nomor WhatsApp yang digunakan
+          saat checkout untuk melihat perkembangan pesanan.
+        </p>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <section class="track-content">
+
+    <div class="container">
+
+
+      <div class="track-layout">
+
+
+        <!-- SEARCH -->
+
+        <aside class="track-search-card">
+
+          <div class="track-card-heading">
+
+            <span class="track-card-number">
+              01
+            </span>
+
+            <div>
+
+              <h2>
+                Cari Pesanan
+              </h2>
+
+              <p>
+                Gunakan data yang sama saat checkout.
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <form
+            id="trackForm"
+            novalidate
+          >
+
+
+            <div class="form-group">
+
+              <label
+                class="form-label"
+                for="trackOrderNumber"
+              >
+                Order ID
+              </label>
+
+              <input
+                type="text"
+                id="trackOrderNumber"
+                class="form-input"
+                placeholder="Contoh: MEM-20260928-0001"
+                autocomplete="off"
+                required
+              >
+
+              <small class="track-field-help">
+                Order ID tersedia pada halaman pesanan berhasil.
+              </small>
+
+            </div>
+
+
+            <div class="form-group">
+
+              <label
+                class="form-label"
+                for="trackWhatsapp"
+              >
+                Nomor WhatsApp
+              </label>
+
+              <input
+                type="tel"
+                id="trackWhatsapp"
+                class="form-input"
+                placeholder="Contoh: 081234567890"
+                autocomplete="tel"
+                required
+              >
+
+            </div>
+
+
+            <div
+              class="track-form-error"
+              id="trackFormError"
+              role="alert"
+            ></div>
+
+
+            <button
+              type="submit"
+              class="track-submit-button"
+              id="trackSubmitButton"
+            >
+
+              <span id="trackSubmitText">
+                Lacak Pesanan
+              </span>
+
+              <span
+                class="track-button-loader"
+                id="trackButtonLoader"
+                aria-hidden="true"
+              ></span>
+
+            </button>
+
+
+          </form>
+
+
+          <div class="track-security-note">
+
+            <div class="track-security-icon">
+              i
+            </div>
+
+            <p>
+              Detail pesanan hanya dapat dilihat menggunakan
+              kombinasi Order ID dan nomor WhatsApp yang sesuai.
+            </p>
+
+          </div>
+
+        </aside>
+
+
+        <!-- RESULT -->
+
+        <section class="track-result-area">
+
+
+          <!-- INITIAL -->
+
+          <div
+            class="track-placeholder"
+            id="trackPlaceholder"
+          >
+
+            <div class="track-placeholder-icon">
+              ↗
+            </div>
+
+            <h2>
+              Status pesanan akan tampil di sini
+            </h2>
+
+            <p>
+              Masukkan Order ID dan WhatsApp untuk melihat
+              progress pesanan Memora.
+            </p>
+
+          </div>
+
+
+          <!-- NOT FOUND -->
+
+          <div
+            class="track-not-found hidden"
+            id="trackNotFound"
+          >
+
+            <div class="track-not-found-icon">
+              !
+            </div>
+
+            <h2>
+              Pesanan tidak ditemukan
+            </h2>
+
+            <p>
+              Pastikan Order ID dan nomor WhatsApp sudah benar,
+              kemudian coba kembali.
+            </p>
+
+          </div>
+
+
+          <!-- RESULT CONTENT -->
+
+          <div
+            class="track-result hidden"
+            id="trackResult"
+          >
+
+
+            <!-- HEADER -->
+
+            <div class="track-order-header">
+
+              <div>
+
+                <span class="track-label">
+                  Order ID
+                </span>
+
+                <h2 id="resultOrderNumber">
+                  -
+                </h2>
+
+                <p id="resultCreatedAt">
+                  -
+                </p>
+
+              </div>
+
+
+              <div
+                class="track-status-badge"
+                id="resultStatusBadge"
+              >
+                Menunggu Konfirmasi
+              </div>
+
+            </div>
+
+
+            <!-- PROGRESS -->
+
+            <div class="track-progress-card">
+
+              <div class="track-section-heading">
+
+                <div>
+
+                  <span class="track-section-eyebrow">
+                    Progress
+                  </span>
+
+                  <h3>
+                    Status Pesanan
+                  </h3>
+
+                </div>
+
+                <strong
+                  class="track-progress-percent"
+                  id="trackProgressPercent"
+                >
+                  0%
+                </strong>
+
+              </div>
+
+
+              <div class="track-progress-bar">
+
+                <div
+                  class="track-progress-fill"
+                  id="trackProgressFill"
+                ></div>
+
+              </div>
+
+
+              <p
+                class="track-current-message"
+                id="trackCurrentMessage"
+              >
+                Pesanan sedang menunggu konfirmasi dari Memora.
+              </p>
+
+            </div>
+
+
+            <!-- CUSTOMER & PAYMENT -->
+
+            <div class="track-info-grid">
+
+
+              <div class="track-info-card">
+
+                <span class="track-info-title">
+                  Customer
+                </span>
+
+                <div class="track-info-row">
+
+                  <span>
+                    Nama
+                  </span>
+
+                  <strong id="resultCustomerName">
+                    -
+                  </strong>
+
+                </div>
+
+                <div class="track-info-row">
+
+                  <span>
+                    WhatsApp
+                  </span>
+
+                  <strong id="resultWhatsapp">
+                    -
+                  </strong>
+
+                </div>
+
+              </div>
+
+
+              <div class="track-info-card">
+
+                <span class="track-info-title">
+                  Pembayaran
+                </span>
+
+                <div class="track-info-row">
+
+                  <span>
+                    Status
+                  </span>
+
+                  <strong id="resultPaymentStatus">
+                    -
+                  </strong>
+
+                </div>
+
+                <div class="track-info-row">
+
+                  <span>
+                    Total Pesanan
+                  </span>
+
+                  <strong id="resultGrandTotal">
+                    Rp0
+                  </strong>
+
+                </div>
+
+                <div class="track-info-row">
+
+                  <span>
+                    Sudah Dibayar
+                  </span>
+
+                  <strong id="resultTotalPaid">
+                    Rp0
+                  </strong>
+
+                </div>
+
+                <div class="track-info-row highlight">
+
+                  <span>
+                    Sisa Pembayaran
+                  </span>
+
+                  <strong id="resultRemainingBalance">
+                    Rp0
+                  </strong>
+
+                </div>
+
+              </div>
+
+
+            </div>
+
+
+            <!-- ITEMS -->
+
+            <div class="track-card">
+
+              <div class="track-section-heading">
+
+                <div>
+
+                  <span class="track-section-eyebrow">
+                    Order
+                  </span>
+
+                  <h3>
+                    Detail Pesanan
+                  </h3>
+
+                </div>
+
+              </div>
+
+
+              <div
+                class="track-items"
+                id="trackItems"
+              ></div>
+
+            </div>
+
+
+            <!-- SHIPPING -->
+
+            <div
+              class="track-card hidden"
+              id="shippingCard"
+            >
+
+              <div class="track-section-heading">
+
+                <div>
+
+                  <span class="track-section-eyebrow">
+                    Delivery
+                  </span>
+
+                  <h3>
+                    Informasi Pengiriman
+                  </h3>
+
+                </div>
+
+              </div>
+
+
+              <div class="shipping-grid">
+
+                <div>
+
+                  <span>
+                    Kurir
+                  </span>
+
+                  <strong id="shippingCourier">
+                    -
+                  </strong>
+
+                </div>
+
+                <div>
+
+                  <span>
+                    Nomor Resi
+                  </span>
+
+                  <strong id="shippingTrackingNumber">
+                    -
+                  </strong>
+
+                </div>
+
+                <div>
+
+                  <span>
+                    Tanggal Kirim
+                  </span>
+
+                  <strong id="shippingDate">
+                    -
+                  </strong>
+
+                </div>
+
+                <div>
+
+                  <span>
+                    Status
+                  </span>
+
+                  <strong id="shippingStatus">
+                    -
+                  </strong>
+
+                </div>
+
+              </div>
+
+            </div>
+
+
+            <!-- TIMELINE -->
+
+            <div class="track-card">
+
+              <div class="track-section-heading">
+
+                <div>
+
+                  <span class="track-section-eyebrow">
+                    Timeline
+                  </span>
+
+                  <h3>
+                    Perjalanan Pesanan
+                  </h3>
+
+                </div>
+
+              </div>
+
+
+              <div
+                class="track-timeline"
+                id="trackTimeline"
+              ></div>
+
+            </div>
+
+
+            <div class="track-footer-note">
+
+              <strong>
+                Ada pertanyaan tentang pesanan?
+              </strong>
+
+              <p>
+                Tim Memora akan menghubungi customer melalui
+                WhatsApp untuk konfirmasi desain, pembayaran,
+                revisi, dan informasi lainnya.
+              </p>
+
+            </div>
+
+
+          </div>
+
+
+        </section>
+
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+</main>
+
+
+<footer class="site-footer">
+
+  <div class="container footer-inner">
+
+    <div>
+
+      <div class="footer-brand">
+        MEMORA
+      </div>
+
+      <p class="footer-copy">
+        Creative Printing & Personalized Stationery
+      </p>
+
+    </div>
+
+
+    <div class="footer-links">
+
+      <a href="../index.html">
+        Beranda
+      </a>
+
+      <a href="../order/">
+        Order
+      </a>
+
+      <a href="../track/">
+        Track
+      </a>
+
+      <a href="../cart/">
+        Cart
+      </a>
+
+    </div>
+
+  </div>
+
+</footer>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/main.js"></script>
+<script src="../js/supabase.js"></script>
+<script src="../js/track.js"></script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,882 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="description"
+    content="Login Memora Studio"
+  >
+
+  <title>Login - Memora Studio</title>
+
+  <link
+    rel="stylesheet"
+    href="../../css/style.css"
+  >
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+
+      min-height: 100vh;
+
+      font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "SF Pro Display",
+        "SF Pro Text",
+        "Helvetica Neue",
+        Arial,
+        sans-serif;
+
+      background:
+        linear-gradient(
+          145deg,
+          #f7faf8 0%,
+          #edf3ef 100%
+        );
+
+      color: #1e2925;
+    }
+
+
+    .login-page {
+      min-height: 100vh;
+
+      display: grid;
+      grid-template-columns:
+        minmax(0, 1.08fr)
+        minmax(420px, .92fr);
+    }
+
+
+    /* LEFT */
+
+    .login-brand-panel {
+      min-height: 100vh;
+
+      padding: 58px;
+
+      position: relative;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      overflow: hidden;
+
+      background: #173f35;
+      color: #fff;
+    }
+
+
+    .login-brand-panel::before {
+      content: "";
+
+      position: absolute;
+
+      width: 420px;
+      height: 420px;
+
+      top: -150px;
+      right: -160px;
+
+      border-radius: 50%;
+
+      background:
+        rgba(255,255,255,.045);
+    }
+
+
+    .login-brand-panel::after {
+      content: "";
+
+      position: absolute;
+
+      width: 520px;
+      height: 520px;
+
+      left: -230px;
+      bottom: -250px;
+
+      border-radius: 50%;
+
+      border:
+        1px solid
+        rgba(255,255,255,.07);
+    }
+
+
+    .login-brand {
+      position: relative;
+      z-index: 2;
+    }
+
+
+    .login-brand strong {
+      display: block;
+
+      font-size: 24px;
+      letter-spacing: .09em;
+    }
+
+
+    .login-brand span {
+      display: block;
+
+      margin-top: 4px;
+
+      color:
+        rgba(255,255,255,.56);
+
+      font-size: 10px;
+
+      letter-spacing: .18em;
+
+      text-transform: uppercase;
+    }
+
+
+    .login-brand-content {
+      position: relative;
+      z-index: 2;
+
+      max-width: 520px;
+    }
+
+
+    .login-brand-eyebrow {
+      display: block;
+
+      margin-bottom: 15px;
+
+      color:
+        rgba(255,255,255,.58);
+
+      font-size: 9px;
+      font-weight: 700;
+
+      letter-spacing: .17em;
+      text-transform: uppercase;
+    }
+
+
+    .login-brand-content h1 {
+      margin: 0;
+
+      max-width: 480px;
+
+      font-size:
+        clamp(42px, 6vw, 72px);
+
+      line-height: .98;
+
+      letter-spacing: -.055em;
+    }
+
+
+    .login-brand-content p {
+      max-width: 470px;
+
+      margin-top: 24px;
+
+      color:
+        rgba(255,255,255,.64);
+
+      font-size: 11px;
+      line-height: 1.9;
+    }
+
+
+    .login-brand-footer {
+      position: relative;
+      z-index: 2;
+
+      color:
+        rgba(255,255,255,.38);
+
+      font-size: 8px;
+    }
+
+
+    /* RIGHT */
+
+    .login-form-panel {
+      min-height: 100vh;
+
+      padding: 50px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+
+    .login-form-wrapper {
+      width: min(400px, 100%);
+    }
+
+
+    .login-mobile-logo {
+      display: none;
+
+      margin-bottom: 40px;
+
+      color: #173f35;
+
+      text-decoration: none;
+    }
+
+
+    .login-mobile-logo strong {
+      display: block;
+
+      font-size: 20px;
+      letter-spacing: .08em;
+    }
+
+
+    .login-mobile-logo span {
+      display: block;
+
+      margin-top: 2px;
+
+      color: #7b8982;
+
+      font-size: 8px;
+
+      text-transform: uppercase;
+      letter-spacing: .15em;
+    }
+
+
+    .login-heading {
+      margin-bottom: 31px;
+    }
+
+
+    .login-eyebrow {
+      display: block;
+
+      margin-bottom: 9px;
+
+      color: #3f6f60;
+
+      font-size: 8px;
+      font-weight: 750;
+
+      letter-spacing: .16em;
+
+      text-transform: uppercase;
+    }
+
+
+    .login-heading h2 {
+      margin: 0;
+
+      color: #173f35;
+
+      font-size: 34px;
+      letter-spacing: -.045em;
+    }
+
+
+    .login-heading p {
+      margin-top: 10px;
+
+      color: #7b8982;
+
+      font-size: 9px;
+      line-height: 1.7;
+    }
+
+
+    .login-form-group {
+      margin-bottom: 17px;
+    }
+
+
+    .login-form-group label {
+      display: block;
+
+      margin-bottom: 7px;
+
+      color: #30453c;
+
+      font-size: 8px;
+      font-weight: 700;
+    }
+
+
+    .login-input-wrapper {
+      position: relative;
+    }
+
+
+    .login-input {
+      width: 100%;
+      height: 48px;
+
+      padding: 0 14px;
+
+      border:
+        1px solid
+        #dbe5de;
+
+      border-radius: 13px;
+
+      outline: none;
+
+      background: #fff;
+
+      color: #1e2925;
+
+      font-family: inherit;
+      font-size: 10px;
+
+      transition:
+        border-color .2s ease,
+        box-shadow .2s ease;
+    }
+
+
+    .login-input:focus {
+      border-color: #3f6f60;
+
+      box-shadow:
+        0 0 0 3px
+        rgba(63,111,96,.08);
+    }
+
+
+    .password-input {
+      padding-right: 52px;
+    }
+
+
+    .password-toggle {
+      width: 39px;
+      height: 39px;
+
+      position: absolute;
+
+      right: 5px;
+      top: 50%;
+
+      transform:
+        translateY(-50%);
+
+      border: 0;
+
+      border-radius: 10px;
+
+      background: transparent;
+
+      color: #75847d;
+
+      cursor: pointer;
+
+      font-family: inherit;
+      font-size: 8px;
+      font-weight: 700;
+    }
+
+
+    .login-options {
+      margin:
+        -2px 0 20px;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      gap: 15px;
+    }
+
+
+    .login-remember {
+      display: flex;
+      align-items: center;
+
+      gap: 7px;
+
+      color: #697871;
+
+      font-size: 8px;
+
+      cursor: pointer;
+    }
+
+
+    .login-remember input {
+      accent-color: #173f35;
+    }
+
+
+    .login-help {
+      color: #3f6f60;
+
+      font-size: 8px;
+    }
+
+
+    .login-error {
+      display: none;
+
+      margin-bottom: 15px;
+      padding: 11px 13px;
+
+      border:
+        1px solid
+        #edcccc;
+
+      border-radius: 11px;
+
+      background: #fff4f4;
+
+      color: #994242;
+
+      font-size: 8px;
+      line-height: 1.5;
+    }
+
+
+    .login-error.show {
+      display: block;
+    }
+
+
+    .login-success {
+      display: none;
+
+      margin-bottom: 15px;
+      padding: 11px 13px;
+
+      border:
+        1px solid
+        #cfe0d6;
+
+      border-radius: 11px;
+
+      background: #edf5f0;
+
+      color: #245746;
+
+      font-size: 8px;
+      line-height: 1.5;
+    }
+
+
+    .login-success.show {
+      display: block;
+    }
+
+
+    .login-submit {
+      width: 100%;
+      min-height: 49px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      gap: 8px;
+
+      border: 0;
+
+      border-radius: 999px;
+
+      background: #173f35;
+      color: #fff;
+
+      cursor: pointer;
+
+      font-family: inherit;
+      font-size: 9px;
+      font-weight: 750;
+
+      transition:
+        background .2s ease,
+        transform .2s ease;
+    }
+
+
+    .login-submit:hover {
+      background: #245746;
+
+      transform:
+        translateY(-1px);
+    }
+
+
+    .login-submit:disabled {
+      opacity: .6;
+
+      cursor: wait;
+
+      transform: none;
+    }
+
+
+    .login-loader {
+      display: none;
+
+      width: 13px;
+      height: 13px;
+
+      border:
+        2px solid
+        rgba(255,255,255,.35);
+
+      border-top-color: #fff;
+
+      border-radius: 50%;
+
+      animation:
+        loginSpin .7s
+        linear infinite;
+    }
+
+
+    .login-submit.loading
+    .login-loader {
+      display: block;
+    }
+
+
+    @keyframes loginSpin {
+
+      to {
+        transform:
+          rotate(360deg);
+      }
+
+    }
+
+
+    .login-note {
+      margin-top: 21px;
+
+      padding-top: 18px;
+
+      border-top:
+        1px solid
+        #dfe7e1;
+
+      color: #89958f;
+
+      font-size: 8px;
+      line-height: 1.6;
+
+      text-align: center;
+    }
+
+
+    .login-note strong {
+      color: #53665d;
+    }
+
+
+    .login-back {
+      margin-top: 22px;
+
+      display: flex;
+      justify-content: center;
+    }
+
+
+    .login-back a {
+      color: #3f6f60;
+
+      text-decoration: none;
+
+      font-size: 8px;
+      font-weight: 700;
+    }
+
+
+    @media (max-width: 850px) {
+
+      .login-page {
+        display: block;
+      }
+
+      .login-brand-panel {
+        display: none;
+      }
+
+      .login-form-panel {
+        min-height: 100vh;
+
+        padding: 35px 22px;
+      }
+
+      .login-mobile-logo {
+        display: block;
+      }
+
+    }
+
+
+  </style>
+
+</head>
+
+
+<body>
+
+
+<main class="login-page">
+
+
+  <!-- LEFT BRAND PANEL -->
+
+  <section class="login-brand-panel">
+
+
+    <a
+      href="../../index.html"
+      class="login-brand"
+    >
+
+      <strong>
+        MEMORA
+      </strong>
+
+      <span>
+        Studio
+      </span>
+
+    </a>
+
+
+    <div class="login-brand-content">
+
+      <span class="login-brand-eyebrow">
+        Creative Business Management
+      </span>
+
+      <h1>
+        Manage every detail beautifully.
+      </h1>
+
+      <p>
+        Kelola pesanan, produksi, keuangan,
+        customer, produk, dan gallery Memora
+        dalam satu workspace.
+      </p>
+
+    </div>
+
+
+    <div class="login-brand-footer">
+      Memora Studio • Owner Access
+    </div>
+
+
+  </section>
+
+
+  <!-- LOGIN PANEL -->
+
+  <section class="login-form-panel">
+
+
+    <div class="login-form-wrapper">
+
+
+      <a
+        href="../../index.html"
+        class="login-mobile-logo"
+      >
+
+        <strong>
+          MEMORA
+        </strong>
+
+        <span>
+          Studio
+        </span>
+
+      </a>
+
+
+      <div class="login-heading">
+
+        <span class="login-eyebrow">
+          Owner Access
+        </span>
+
+        <h2>
+          Welcome Back
+        </h2>
+
+        <p>
+          Masuk menggunakan akun admin Memora Studio.
+        </p>
+
+      </div>
+
+
+      <form
+        id="studioLoginForm"
+        novalidate
+      >
+
+
+        <div class="login-form-group">
+
+          <label for="studioEmail">
+            Email
+          </label>
+
+          <input
+            type="email"
+            id="studioEmail"
+            class="login-input"
+            placeholder="admin@memora..."
+            autocomplete="email"
+            required
+          >
+
+        </div>
+
+
+        <div class="login-form-group">
+
+          <label for="studioPassword">
+            Password
+          </label>
+
+
+          <div class="login-input-wrapper">
+
+            <input
+              type="password"
+              id="studioPassword"
+              class="login-input password-input"
+              placeholder="Masukkan password"
+              autocomplete="current-password"
+              required
+            >
+
+            <button
+              type="button"
+              class="password-toggle"
+              id="togglePassword"
+            >
+              SHOW
+            </button>
+
+          </div>
+
+        </div>
+
+
+        <div class="login-options">
+
+
+          <label class="login-remember">
+
+            <input
+              type="checkbox"
+              id="rememberLogin"
+              checked
+            >
+
+            <span>
+              Tetap masuk
+            </span>
+
+          </label>
+
+
+          <span class="login-help">
+            Memora Studio
+          </span>
+
+
+        </div>
+
+
+        <div
+          class="login-error"
+          id="loginError"
+          role="alert"
+        ></div>
+
+
+        <div
+          class="login-success"
+          id="loginSuccess"
+        ></div>
+
+
+        <button
+          type="submit"
+          class="login-submit"
+          id="loginSubmitButton"
+        >
+
+          <span id="loginSubmitText">
+            Masuk ke Studio
+          </span>
+
+          <span
+            class="login-loader"
+            id="loginLoader"
+          ></span>
+
+        </button>
+
+
+      </form>
+
+
+      <p class="login-note">
+        Halaman ini hanya untuk
+        <strong>owner Memora</strong>.
+        Customer tidak memerlukan akun untuk melakukan pemesanan.
+      </p>
+
+
+      <div class="login-back">
+
+        <a href="../../index.html">
+          ← Kembali ke Website
+        </a>
+
+      </div>
+
+
+    </div>
+
+
+  </section>
+
+
+</main>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="../../js/supabase.js"></script>
+<script src="../../js/studio/auth.js"></script>
+
+
+</body>
+
+</html>

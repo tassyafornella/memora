@@ -1,0 +1,559 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="description"
+    content="Memora Studio Orders"
+  >
+
+  <title>Orders - Memora Studio</title>
+
+  <link
+    rel="stylesheet"
+    href="../../css/style.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../../css/studio.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../../css/orders.css"
+  >
+
+</head>
+
+
+<body class="studio-body">
+
+
+<div
+  class="studio-mobile-overlay"
+  id="studioMobileOverlay"
+></div>
+
+
+<div class="studio-layout">
+
+
+  <aside
+    class="studio-sidebar"
+    id="studioSidebar"
+  >
+
+
+    <div class="studio-sidebar-header">
+
+      <a
+        href="../dashboard/"
+        class="studio-brand"
+      >
+        MEMORA
+      </a>
+
+      <span class="studio-brand-subtitle">
+        Studio
+      </span>
+
+    </div>
+
+
+    <nav class="studio-nav">
+
+      <a
+        href="../dashboard/"
+        class="studio-nav-item"
+      >
+        <span class="studio-nav-icon">◫</span>
+        <span>Dashboard</span>
+      </a>
+
+      <a
+        href="../orders/"
+        class="studio-nav-item active"
+      >
+        <span class="studio-nav-icon">◇</span>
+        <span>Orders</span>
+      </a>
+
+      <a
+        href="../production/"
+        class="studio-nav-item"
+      >
+        <span class="studio-nav-icon">◌</span>
+        <span>Production</span>
+      </a>
+
+      <a
+        href="../finance/"
+        class="studio-nav-item"
+      >
+        <span class="studio-nav-icon">Rp</span>
+        <span>Finance</span>
+      </a>
+
+      <a
+        href="../invoices/"
+        class="studio-nav-item"
+      >
+        <span class="studio-nav-icon">▤</span>
+        <span>Invoices</span>
+      </a>
+
+      <a
+        href="../customers/"
+        class="studio-nav-item"
+      >
+        <span class="studio-nav-icon">♡</span>
+        <span>Customers</span>
+      </a>
+
+      <a
+        href="../products/"
+        class="studio-nav-item"
+      >
+        <span class="studio-nav-icon">□</span>
+        <span>Products</span>
+      </a>
+
+      <a
+        href="../gallery/"
+        class="studio-nav-item"
+      >
+        <span class="studio-nav-icon">▧</span>
+        <span>Gallery</span>
+      </a>
+
+      <a
+        href="../archive/"
+        class="studio-nav-item"
+      >
+        <span class="studio-nav-icon">◱</span>
+        <span>Archive</span>
+      </a>
+
+    </nav>
+
+
+    <div class="studio-sidebar-bottom">
+
+      <div class="studio-owner">
+
+        <div class="studio-owner-main">
+
+          <div class="studio-owner-avatar">
+            TA
+          </div>
+
+          <div class="studio-owner-text">
+
+            <strong data-owner-name>
+              Tassya & Arif
+            </strong>
+
+            <span data-owner-role>
+              Owner
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <button
+          type="button"
+          class="studio-logout-button"
+          data-action="studio-logout"
+        >
+          Keluar
+        </button>
+
+      </div>
+
+    </div>
+
+
+  </aside>
+
+
+  <main class="studio-main">
+
+
+    <header class="studio-topbar">
+
+      <div class="studio-topbar-left">
+
+        <button
+          type="button"
+          class="studio-menu-button"
+          id="studioMenuButton"
+          aria-label="Buka menu"
+        >
+          ☰
+        </button>
+
+        <div>
+
+          <span class="studio-eyebrow">
+            Memora Studio
+          </span>
+
+          <h1>
+            Orders
+          </h1>
+
+        </div>
+
+      </div>
+
+
+      <div class="studio-topbar-right">
+
+        <a
+          href="../dashboard/"
+          class="orders-back-button"
+        >
+          Kembali ke Dashboard
+        </a>
+
+      </div>
+
+    </header>
+
+
+    <div class="studio-content">
+
+
+      <section class="orders-heading">
+
+        <div>
+
+          <span class="dashboard-section-label">
+            Order Management
+          </span>
+
+          <h2>
+            Kelola Semua Pesanan
+          </h2>
+
+          <p>
+            Pantau order customer dari konfirmasi hingga selesai.
+          </p>
+
+        </div>
+
+      </section>
+
+
+      <section class="orders-stat-grid">
+
+        <article class="orders-stat-card">
+
+          <span>
+            Total Order
+          </span>
+
+          <strong id="ordersTotal">
+            0
+          </strong>
+
+        </article>
+
+
+        <article class="orders-stat-card">
+
+          <span>
+            Menunggu Konfirmasi
+          </span>
+
+          <strong id="ordersWaiting">
+            0
+          </strong>
+
+        </article>
+
+
+        <article class="orders-stat-card">
+
+          <span>
+            Sedang Diproses
+          </span>
+
+          <strong id="ordersProcessing">
+            0
+          </strong>
+
+        </article>
+
+
+        <article class="orders-stat-card">
+
+          <span>
+            Selesai
+          </span>
+
+          <strong id="ordersCompleted">
+            0
+          </strong>
+
+        </article>
+
+      </section>
+
+
+      <section class="orders-panel">
+
+
+        <div class="orders-toolbar">
+
+
+          <div class="orders-search">
+
+            <input
+              type="search"
+              id="ordersSearch"
+              placeholder="Cari Order ID, nama, atau WhatsApp..."
+              autocomplete="off"
+            >
+
+          </div>
+
+
+          <div class="orders-filter-group">
+
+
+            <select id="ordersStatusFilter">
+
+              <option value="">
+                Semua Status
+              </option>
+
+              <option value="menunggu_konfirmasi">
+                Menunggu Konfirmasi
+              </option>
+
+              <option value="data_belum_lengkap">
+                Data Belum Lengkap
+              </option>
+
+              <option value="data_lengkap">
+                Data Lengkap
+              </option>
+
+              <option value="desain">
+                Desain
+              </option>
+
+              <option value="menunggu_approval">
+                Menunggu Approval
+              </option>
+
+              <option value="revisi">
+                Revisi
+              </option>
+
+              <option value="approved">
+                Approved
+              </option>
+
+              <option value="printing">
+                Printing
+              </option>
+
+              <option value="finishing">
+                Finishing
+              </option>
+
+              <option value="quality_check">
+                Quality Check
+              </option>
+
+              <option value="packing">
+                Packing
+              </option>
+
+              <option value="dikirim">
+                Dikirim
+              </option>
+
+              <option value="selesai">
+                Selesai
+              </option>
+
+              <option value="dibatalkan">
+                Dibatalkan
+              </option>
+
+            </select>
+
+
+            <select id="ordersPaymentFilter">
+
+              <option value="">
+                Semua Pembayaran
+              </option>
+
+              <option value="belum_ada_pembayaran">
+                Belum Ada Pembayaran
+              </option>
+
+              <option value="dp_diterima">
+                DP Diterima
+              </option>
+
+              <option value="sebagian">
+                Sebagian
+              </option>
+
+              <option value="lunas">
+                Lunas
+              </option>
+
+            </select>
+
+
+            <button
+              type="button"
+              id="ordersResetFilter"
+              class="orders-reset-button"
+            >
+              Reset
+            </button>
+
+          </div>
+
+
+        </div>
+
+
+        <div class="orders-result-info">
+
+          <span id="ordersResultCount">
+            0 order
+          </span>
+
+          <button
+            type="button"
+            id="ordersRefreshButton"
+            class="orders-refresh-button"
+          >
+            Refresh
+          </button>
+
+        </div>
+
+
+        <div class="orders-table-wrapper">
+
+          <table class="orders-table">
+
+            <thead>
+
+              <tr>
+
+                <th>
+                  Order
+                </th>
+
+                <th>
+                  Customer
+                </th>
+
+                <th>
+                  WhatsApp
+                </th>
+
+                <th>
+                  Total
+                </th>
+
+                <th>
+                  Payment
+                </th>
+
+                <th>
+                  Status
+                </th>
+
+                <th>
+                  Tanggal
+                </th>
+
+                <th></th>
+
+              </tr>
+
+            </thead>
+
+
+            <tbody id="ordersTableBody">
+
+              <tr>
+
+                <td
+                  colspan="8"
+                  class="orders-loading"
+                >
+                  Memuat order...
+                </td>
+
+              </tr>
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+
+        <div
+          class="orders-empty"
+          id="ordersEmpty"
+          hidden
+        >
+
+          <strong>
+            Tidak ada order ditemukan.
+          </strong>
+
+          <p>
+            Coba ubah filter atau kata pencarian.
+          </p>
+
+        </div>
+
+
+      </section>
+
+
+    </div>
+
+
+  </main>
+
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="../../js/supabase.js"></script>
+<script src="../../js/studio/auth.js"></script>
+<script src="../../js/studio/guard.js"></script>
+<script src="../../js/studio/orders.js"></script>
+
+
+</body>
+
+</html>

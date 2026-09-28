@@ -1,0 +1,949 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="description"
+    content="Memora Studio Dashboard"
+  >
+
+  <title>Dashboard - Memora Studio</title>
+
+  <link
+    rel="stylesheet"
+    href="../../css/style.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../../css/studio.css"
+  >
+
+</head>
+
+
+<body class="studio-body">
+
+
+<div
+  class="studio-mobile-overlay"
+  id="studioMobileOverlay"
+></div>
+
+
+<div class="studio-layout">
+
+
+  <!-- ======================================================
+       SIDEBAR
+       ====================================================== -->
+
+  <aside
+    class="studio-sidebar"
+    id="studioSidebar"
+  >
+
+
+    <div class="studio-sidebar-header">
+
+      <a
+        href="../dashboard/"
+        class="studio-brand"
+      >
+        MEMORA
+      </a>
+
+      <span class="studio-brand-subtitle">
+        Studio
+      </span>
+
+    </div>
+
+
+    <nav class="studio-nav">
+
+
+      <a
+        href="../dashboard/"
+        class="studio-nav-item active"
+      >
+        <span class="studio-nav-icon">
+          ◫
+        </span>
+
+        <span>
+          Dashboard
+        </span>
+      </a>
+
+
+      <a
+        href="../orders/"
+        class="studio-nav-item"
+      >
+        <span class="studio-nav-icon">
+          ◇
+        </span>
+
+        <span>
+          Orders
+        </span>
+      </a>
+
+
+      <a
+        href="../production/"
+        class="studio-nav-item"
+      >
+        <span class="studio-nav-icon">
+          ◌
+        </span>
+
+        <span>
+          Production
+        </span>
+      </a>
+
+
+      <a
+        href="../finance/"
+        class="studio-nav-item"
+      >
+        <span class="studio-nav-icon">
+          Rp
+        </span>
+
+        <span>
+          Finance
+        </span>
+      </a>
+
+
+      <a
+        href="../invoices/"
+        class="studio-nav-item"
+      >
+        <span class="studio-nav-icon">
+          ▤
+        </span>
+
+        <span>
+          Invoices
+        </span>
+      </a>
+
+
+      <a
+        href="../customers/"
+        class="studio-nav-item"
+      >
+        <span class="studio-nav-icon">
+          ♡
+        </span>
+
+        <span>
+          Customers
+        </span>
+      </a>
+
+
+      <a
+        href="../products/"
+        class="studio-nav-item"
+      >
+        <span class="studio-nav-icon">
+          □
+        </span>
+
+        <span>
+          Products
+        </span>
+      </a>
+
+
+      <a
+        href="../gallery/"
+        class="studio-nav-item"
+      >
+        <span class="studio-nav-icon">
+          ▧
+        </span>
+
+        <span>
+          Gallery
+        </span>
+      </a>
+
+
+      <a
+        href="../archive/"
+        class="studio-nav-item"
+      >
+        <span class="studio-nav-icon">
+          ◱
+        </span>
+
+        <span>
+          Archive
+        </span>
+      </a>
+
+
+    </nav>
+
+
+    <div class="studio-sidebar-bottom">
+
+
+      <div class="studio-owner">
+
+        <div class="studio-owner-main">
+
+          <div class="studio-owner-avatar">
+            TA
+          </div>
+
+          <div class="studio-owner-text">
+
+            <strong data-owner-name>
+              Tassya & Arif
+            </strong>
+
+            <span data-owner-role>
+              Owner
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <button
+          type="button"
+          class="studio-logout-button"
+          data-action="studio-logout"
+        >
+          Keluar
+        </button>
+
+      </div>
+
+
+    </div>
+
+
+  </aside>
+
+
+  <!-- ======================================================
+       MAIN
+       ====================================================== -->
+
+  <main class="studio-main">
+
+
+    <!-- TOPBAR -->
+
+    <header class="studio-topbar">
+
+
+      <div class="studio-topbar-left">
+
+        <button
+          type="button"
+          class="studio-menu-button"
+          id="studioMenuButton"
+          aria-label="Buka menu"
+        >
+          ☰
+        </button>
+
+
+        <div>
+
+          <span class="studio-eyebrow">
+            Memora Studio
+          </span>
+
+          <h1>
+            Dashboard
+          </h1>
+
+        </div>
+
+      </div>
+
+
+      <div class="studio-topbar-right">
+
+        <div class="studio-today">
+
+          <span>
+            Hari ini
+          </span>
+
+          <strong id="dashboardDate">
+            -
+          </strong>
+
+        </div>
+
+      </div>
+
+
+    </header>
+
+
+    <!-- CONTENT -->
+
+    <div class="studio-content">
+
+
+      <!-- WELCOME -->
+
+      <section class="dashboard-welcome">
+
+        <div>
+
+          <span class="dashboard-welcome-label">
+            Overview
+          </span>
+
+          <h2>
+            Selamat datang di Memora Studio.
+          </h2>
+
+          <p>
+            Pantau order, pembayaran, dan proses produksi
+            Memora dari satu dashboard.
+          </p>
+
+        </div>
+
+
+        <a
+          href="../orders/"
+          class="dashboard-primary-button"
+        >
+          Lihat Semua Order
+          <span>→</span>
+        </a>
+
+      </section>
+
+
+      <!-- ==================================================
+           MAIN STATS
+           ================================================== -->
+
+      <section class="dashboard-stat-grid">
+
+
+        <article class="dashboard-stat-card">
+
+          <div class="dashboard-stat-top">
+
+            <span class="dashboard-stat-label">
+              Total Order
+            </span>
+
+            <span class="dashboard-stat-icon">
+              ◇
+            </span>
+
+          </div>
+
+          <strong
+            class="dashboard-stat-value"
+            id="statTotalOrders"
+          >
+            0
+          </strong>
+
+          <span class="dashboard-stat-helper">
+            Semua order customer
+          </span>
+
+        </article>
+
+
+        <article class="dashboard-stat-card">
+
+          <div class="dashboard-stat-top">
+
+            <span class="dashboard-stat-label">
+              Menunggu Konfirmasi
+            </span>
+
+            <span class="dashboard-stat-icon">
+              ◷
+            </span>
+
+          </div>
+
+          <strong
+            class="dashboard-stat-value"
+            id="statWaitingOrders"
+          >
+            0
+          </strong>
+
+          <span class="dashboard-stat-helper">
+            Perlu diperiksa
+          </span>
+
+        </article>
+
+
+        <article class="dashboard-stat-card">
+
+          <div class="dashboard-stat-top">
+
+            <span class="dashboard-stat-label">
+              Sedang Diproses
+            </span>
+
+            <span class="dashboard-stat-icon">
+              ◌
+            </span>
+
+          </div>
+
+          <strong
+            class="dashboard-stat-value"
+            id="statProcessingOrders"
+          >
+            0
+          </strong>
+
+          <span class="dashboard-stat-helper">
+            Desain hingga pengiriman
+          </span>
+
+        </article>
+
+
+        <article class="dashboard-stat-card">
+
+          <div class="dashboard-stat-top">
+
+            <span class="dashboard-stat-label">
+              Selesai
+            </span>
+
+            <span class="dashboard-stat-icon">
+              ✓
+            </span>
+
+          </div>
+
+          <strong
+            class="dashboard-stat-value"
+            id="statCompletedOrders"
+          >
+            0
+          </strong>
+
+          <span class="dashboard-stat-helper">
+            Order selesai
+          </span>
+
+        </article>
+
+
+      </section>
+
+
+      <!-- ==================================================
+           FINANCE
+           ================================================== -->
+
+      <section class="dashboard-section">
+
+        <div class="dashboard-section-heading">
+
+          <div>
+
+            <span class="dashboard-section-label">
+              Finance Overview
+            </span>
+
+            <h2>
+              Ringkasan Keuangan
+            </h2>
+
+          </div>
+
+          <a href="../finance/">
+            Buka Finance →
+          </a>
+
+        </div>
+
+
+        <div class="dashboard-finance-grid">
+
+
+          <article class="dashboard-finance-card">
+
+            <span>
+              Nilai Semua Order
+            </span>
+
+            <strong id="statOrderValue">
+              Rp0
+            </strong>
+
+            <small>
+              Berdasarkan order aktif
+            </small>
+
+          </article>
+
+
+          <article class="dashboard-finance-card">
+
+            <span>
+              Pembayaran Diterima
+            </span>
+
+            <strong id="statPaidAmount">
+              Rp0
+            </strong>
+
+            <small>
+              DP dan pelunasan tercatat
+            </small>
+
+          </article>
+
+
+          <article class="dashboard-finance-card">
+
+            <span>
+              Belum Lunas
+            </span>
+
+            <strong id="statOutstandingAmount">
+              Rp0
+            </strong>
+
+            <small>
+              Estimasi sisa pembayaran
+            </small>
+
+          </article>
+
+
+          <article class="dashboard-finance-card">
+
+            <span>
+              Order Lunas
+            </span>
+
+            <strong id="statPaidOrders">
+              0
+            </strong>
+
+            <small>
+              Payment status lunas
+            </small>
+
+          </article>
+
+
+        </div>
+
+      </section>
+
+
+      <!-- ==================================================
+           MAIN GRID
+           ================================================== -->
+
+      <div class="dashboard-main-grid">
+
+
+        <!-- RECENT ORDERS -->
+
+        <section class="dashboard-panel dashboard-orders-panel">
+
+
+          <div class="dashboard-panel-heading">
+
+            <div>
+
+              <span class="dashboard-section-label">
+                Recent Orders
+              </span>
+
+              <h2>
+                Order Terbaru
+              </h2>
+
+            </div>
+
+            <a href="../orders/">
+              Semua Order →
+            </a>
+
+          </div>
+
+
+          <div class="dashboard-table-wrapper">
+
+
+            <table class="dashboard-table">
+
+              <thead>
+
+                <tr>
+
+                  <th>
+                    Order
+                  </th>
+
+                  <th>
+                    Customer
+                  </th>
+
+                  <th>
+                    Total
+                  </th>
+
+                  <th>
+                    Status
+                  </th>
+
+                  <th>
+                    Tanggal
+                  </th>
+
+                  <th></th>
+
+                </tr>
+
+              </thead>
+
+
+              <tbody id="recentOrdersBody">
+
+                <tr>
+
+                  <td
+                    colspan="6"
+                    class="dashboard-table-loading"
+                  >
+                    Memuat order...
+                  </td>
+
+                </tr>
+
+              </tbody>
+
+            </table>
+
+
+          </div>
+
+
+          <div
+            class="dashboard-empty"
+            id="recentOrdersEmpty"
+            hidden
+          >
+
+            <strong>
+              Belum ada order.
+            </strong>
+
+            <p>
+              Order customer akan muncul di sini.
+            </p>
+
+          </div>
+
+
+        </section>
+
+
+        <!-- ATTENTION -->
+
+        <section class="dashboard-panel">
+
+
+          <div class="dashboard-panel-heading">
+
+            <div>
+
+              <span class="dashboard-section-label">
+                Attention
+              </span>
+
+              <h2>
+                Perlu Perhatian
+              </h2>
+
+            </div>
+
+          </div>
+
+
+          <div
+            class="dashboard-attention-list"
+            id="attentionList"
+          >
+
+            <div class="dashboard-attention-loading">
+              Memuat...
+            </div>
+
+          </div>
+
+
+        </section>
+
+
+      </div>
+
+
+      <!-- ==================================================
+           PRODUCTION
+           ================================================== -->
+
+      <section class="dashboard-section">
+
+        <div class="dashboard-section-heading">
+
+          <div>
+
+            <span class="dashboard-section-label">
+              Workflow
+            </span>
+
+            <h2>
+              Progress Produksi
+            </h2>
+
+          </div>
+
+          <a href="../production/">
+            Buka Production →
+          </a>
+
+        </div>
+
+
+        <div
+          class="dashboard-production-grid"
+          id="productionGrid"
+        ></div>
+
+      </section>
+
+
+      <!-- ==================================================
+           QUICK ACTION
+           ================================================== -->
+
+      <section class="dashboard-section">
+
+
+        <div class="dashboard-section-heading">
+
+          <div>
+
+            <span class="dashboard-section-label">
+              Shortcut
+            </span>
+
+            <h2>
+              Quick Action
+            </h2>
+
+          </div>
+
+        </div>
+
+
+        <div class="dashboard-quick-grid">
+
+
+          <a
+            href="../orders/"
+            class="dashboard-quick-card"
+          >
+
+            <span class="dashboard-quick-icon">
+              ◇
+            </span>
+
+            <div>
+
+              <strong>
+                Orders
+              </strong>
+
+              <span>
+                Kelola pesanan customer
+              </span>
+
+            </div>
+
+          </a>
+
+
+          <a
+            href="../production/"
+            class="dashboard-quick-card"
+          >
+
+            <span class="dashboard-quick-icon">
+              ◌
+            </span>
+
+            <div>
+
+              <strong>
+                Production
+              </strong>
+
+              <span>
+                Pantau proses produksi
+              </span>
+
+            </div>
+
+          </a>
+
+
+          <a
+            href="../finance/"
+            class="dashboard-quick-card"
+          >
+
+            <span class="dashboard-quick-icon">
+              Rp
+            </span>
+
+            <div>
+
+              <strong>
+                Finance
+              </strong>
+
+              <span>
+                DP dan pelunasan
+              </span>
+
+            </div>
+
+          </a>
+
+
+          <a
+            href="../products/"
+            class="dashboard-quick-card"
+          >
+
+            <span class="dashboard-quick-icon">
+              □
+            </span>
+
+            <div>
+
+              <strong>
+                Products
+              </strong>
+
+              <span>
+                Kelola katalog dan harga
+              </span>
+
+            </div>
+
+          </a>
+
+
+          <a
+            href="../gallery/"
+            class="dashboard-quick-card"
+          >
+
+            <span class="dashboard-quick-icon">
+              ▧
+            </span>
+
+            <div>
+
+              <strong>
+                Gallery
+              </strong>
+
+              <span>
+                Upload foto katalog
+              </span>
+
+            </div>
+
+          </a>
+
+
+          <a
+            href="../customers/"
+            class="dashboard-quick-card"
+          >
+
+            <span class="dashboard-quick-icon">
+              ♡
+            </span>
+
+            <div>
+
+              <strong>
+                Customers
+              </strong>
+
+              <span>
+                Data customer Memora
+              </span>
+
+            </div>
+
+          </a>
+
+
+        </div>
+
+
+      </section>
+
+
+    </div>
+
+
+  </main>
+
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="../../js/supabase.js"></script>
+<script src="../../js/studio/auth.js"></script>
+<script src="../../js/studio/guard.js"></script>
+<script src="../../js/studio/dashboard.js"></script>
+
+
+</body>
+
+</html>

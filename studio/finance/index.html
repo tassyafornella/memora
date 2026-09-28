@@ -1,0 +1,600 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Finance - Memora Studio</title>
+
+  <link
+    rel="stylesheet"
+    href="../../css/style.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../../css/studio.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../../css/finance.css"
+  >
+
+</head>
+
+
+<body class="studio-body">
+
+
+<div
+  class="studio-mobile-overlay"
+  id="studioMobileOverlay"
+></div>
+
+
+<div class="studio-layout">
+
+
+  <aside
+    class="studio-sidebar"
+    id="studioSidebar"
+  >
+
+
+    <div class="studio-sidebar-header">
+
+      <a
+        href="../dashboard/"
+        class="studio-brand"
+      >
+        MEMORA
+      </a>
+
+      <span class="studio-brand-subtitle">
+        Studio
+      </span>
+
+    </div>
+
+
+    <nav class="studio-nav">
+
+      <a href="../dashboard/" class="studio-nav-item">
+        <span class="studio-nav-icon">◫</span>
+        <span>Dashboard</span>
+      </a>
+
+      <a href="../orders/" class="studio-nav-item">
+        <span class="studio-nav-icon">◇</span>
+        <span>Orders</span>
+      </a>
+
+      <a href="../production/" class="studio-nav-item">
+        <span class="studio-nav-icon">◌</span>
+        <span>Production</span>
+      </a>
+
+      <a href="../finance/" class="studio-nav-item active">
+        <span class="studio-nav-icon">Rp</span>
+        <span>Finance</span>
+      </a>
+
+      <a href="../invoices/" class="studio-nav-item">
+        <span class="studio-nav-icon">▤</span>
+        <span>Invoices</span>
+      </a>
+
+      <a href="../customers/" class="studio-nav-item">
+        <span class="studio-nav-icon">♡</span>
+        <span>Customers</span>
+      </a>
+
+      <a href="../products/" class="studio-nav-item">
+        <span class="studio-nav-icon">□</span>
+        <span>Products</span>
+      </a>
+
+      <a href="../gallery/" class="studio-nav-item">
+        <span class="studio-nav-icon">▧</span>
+        <span>Gallery</span>
+      </a>
+
+      <a href="../archive/" class="studio-nav-item">
+        <span class="studio-nav-icon">◱</span>
+        <span>Archive</span>
+      </a>
+
+    </nav>
+
+
+    <div class="studio-sidebar-bottom">
+
+      <div class="studio-owner">
+
+        <div class="studio-owner-main">
+
+          <div class="studio-owner-avatar">
+            TA
+          </div>
+
+          <div class="studio-owner-text">
+
+            <strong data-owner-name>
+              Tassya & Arif
+            </strong>
+
+            <span data-owner-role>
+              Owner
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <button
+          type="button"
+          class="studio-logout-button"
+          data-action="studio-logout"
+        >
+          Keluar
+        </button>
+
+      </div>
+
+    </div>
+
+
+  </aside>
+
+
+  <main class="studio-main">
+
+
+    <header class="studio-topbar">
+
+      <div class="studio-topbar-left">
+
+        <button
+          type="button"
+          class="studio-menu-button"
+          id="studioMenuButton"
+        >
+          ☰
+        </button>
+
+        <div>
+
+          <span class="studio-eyebrow">
+            Memora Studio
+          </span>
+
+          <h1>
+            Finance
+          </h1>
+
+        </div>
+
+      </div>
+
+
+      <div class="studio-topbar-right">
+
+        <button
+          type="button"
+          id="financeRefreshButton"
+          class="finance-secondary-button"
+        >
+          Refresh
+        </button>
+
+      </div>
+
+    </header>
+
+
+    <div class="studio-content">
+
+
+      <section class="finance-heading">
+
+        <div>
+
+          <span class="dashboard-section-label">
+            Payment Management
+          </span>
+
+          <h2>
+            Keuangan & Pembayaran
+          </h2>
+
+          <p>
+            Catat DP, pembayaran lanjutan, dan pelunasan setiap order.
+          </p>
+
+        </div>
+
+      </section>
+
+
+      <section class="finance-stat-grid">
+
+        <article class="finance-stat-card">
+
+          <span>
+            Nilai Order Aktif
+          </span>
+
+          <strong id="financeOrderValue">
+            Rp0
+          </strong>
+
+        </article>
+
+
+        <article class="finance-stat-card">
+
+          <span>
+            Total Diterima
+          </span>
+
+          <strong id="financePaidAmount">
+            Rp0
+          </strong>
+
+        </article>
+
+
+        <article class="finance-stat-card">
+
+          <span>
+            Sisa Tagihan
+          </span>
+
+          <strong id="financeOutstanding">
+            Rp0
+          </strong>
+
+        </article>
+
+
+        <article class="finance-stat-card">
+
+          <span>
+            Order Lunas
+          </span>
+
+          <strong id="financePaidOrders">
+            0
+          </strong>
+
+        </article>
+
+      </section>
+
+
+      <section class="finance-panel">
+
+
+        <div class="finance-toolbar">
+
+          <input
+            type="search"
+            id="financeSearch"
+            placeholder="Cari Order ID, customer, WhatsApp..."
+          >
+
+
+          <select id="financePaymentFilter">
+
+            <option value="">
+              Semua Pembayaran
+            </option>
+
+            <option value="belum_ada_pembayaran">
+              Belum Ada Pembayaran
+            </option>
+
+            <option value="dp_diterima">
+              DP Diterima
+            </option>
+
+            <option value="sebagian">
+              Sebagian
+            </option>
+
+            <option value="lunas">
+              Lunas
+            </option>
+
+          </select>
+
+
+          <button
+            type="button"
+            id="financeResetButton"
+            class="finance-secondary-button"
+          >
+            Reset
+          </button>
+
+        </div>
+
+
+        <div class="finance-table-wrapper">
+
+          <table class="finance-table">
+
+            <thead>
+
+              <tr>
+
+                <th>Order</th>
+                <th>Customer</th>
+                <th>Total</th>
+                <th>Dibayar</th>
+                <th>Sisa</th>
+                <th>Status</th>
+                <th></th>
+
+              </tr>
+
+            </thead>
+
+
+            <tbody id="financeTableBody">
+
+              <tr>
+
+                <td
+                  colspan="7"
+                  class="finance-loading"
+                >
+                  Memuat finance...
+                </td>
+
+              </tr>
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+
+        <div
+          class="finance-empty"
+          id="financeEmpty"
+          hidden
+        >
+
+          Tidak ada data ditemukan.
+
+        </div>
+
+      </section>
+
+
+    </div>
+
+
+  </main>
+
+
+</div>
+
+
+<!-- PAYMENT MODAL -->
+
+<div
+  class="finance-modal"
+  id="paymentModal"
+  hidden
+>
+
+  <div
+    class="finance-modal-backdrop"
+    data-close-payment
+  ></div>
+
+
+  <div class="finance-modal-card">
+
+
+    <div class="finance-modal-header">
+
+      <div>
+
+        <span class="dashboard-section-label">
+          Payment
+        </span>
+
+        <h3>
+          Catat Pembayaran
+        </h3>
+
+      </div>
+
+
+      <button
+        type="button"
+        class="finance-modal-close"
+        data-close-payment
+      >
+        ×
+      </button>
+
+    </div>
+
+
+    <div class="finance-modal-order">
+
+      <span>
+        Order
+      </span>
+
+      <strong id="paymentOrderNumber">
+        -
+      </strong>
+
+    </div>
+
+
+    <div class="finance-form-group">
+
+      <label for="paymentType">
+        Jenis Pembayaran
+      </label>
+
+      <select id="paymentType">
+
+        <option value="dp">
+          DP
+        </option>
+
+        <option value="payment">
+          Pembayaran Sebagian
+        </option>
+
+        <option value="pelunasan">
+          Pelunasan
+        </option>
+
+      </select>
+
+    </div>
+
+
+    <div class="finance-form-group">
+
+      <label for="paymentAmount">
+        Nominal
+      </label>
+
+      <input
+        type="number"
+        id="paymentAmount"
+        min="1"
+        step="1"
+        placeholder="Contoh: 500000"
+      >
+
+    </div>
+
+
+    <div class="finance-form-group">
+
+      <label for="paymentMethod">
+        Metode
+      </label>
+
+      <select id="paymentMethod">
+
+        <option value="transfer">
+          Transfer
+        </option>
+
+        <option value="cash">
+          Cash
+        </option>
+
+        <option value="other">
+          Lainnya
+        </option>
+
+      </select>
+
+    </div>
+
+
+    <div class="finance-form-group">
+
+      <label for="paymentReference">
+        Referensi / Keterangan
+      </label>
+
+      <input
+        type="text"
+        id="paymentReference"
+        placeholder="Contoh: Transfer BCA"
+      >
+
+    </div>
+
+
+    <div class="finance-modal-summary">
+
+      <div>
+
+        <span>
+          Grand Total
+        </span>
+
+        <strong id="paymentGrandTotal">
+          Rp0
+        </strong>
+
+      </div>
+
+
+      <div>
+
+        <span>
+          Sudah Dibayar
+        </span>
+
+        <strong id="paymentAlreadyPaid">
+          Rp0
+        </strong>
+
+      </div>
+
+
+      <div>
+
+        <span>
+          Sisa
+        </span>
+
+        <strong id="paymentRemaining">
+          Rp0
+        </strong>
+
+      </div>
+
+    </div>
+
+
+    <button
+      type="button"
+      class="finance-primary-button"
+      id="savePaymentButton"
+    >
+      Simpan Pembayaran
+    </button>
+
+
+  </div>
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="../../js/supabase.js"></script>
+<script src="../../js/studio/auth.js"></script>
+<script src="../../js/studio/guard.js"></script>
+<script src="../../js/studio/finance.js"></script>
+
+
+</body>
+
+</html>
+

@@ -1,0 +1,455 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="description"
+    content="Memora Studio Production"
+  >
+
+  <title>Production - Memora Studio</title>
+
+  <link
+    rel="stylesheet"
+    href="../../css/style.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../../css/studio.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../../css/production.css"
+  >
+
+</head>
+
+
+<body class="studio-body">
+
+
+<div
+  class="studio-mobile-overlay"
+  id="studioMobileOverlay"
+></div>
+
+
+<div class="studio-layout">
+
+
+  <!-- SIDEBAR -->
+
+  <aside
+    class="studio-sidebar"
+    id="studioSidebar"
+  >
+
+
+    <div class="studio-sidebar-header">
+
+      <a
+        href="../dashboard/"
+        class="studio-brand"
+      >
+        MEMORA
+      </a>
+
+      <span class="studio-brand-subtitle">
+        Studio
+      </span>
+
+    </div>
+
+
+    <nav class="studio-nav">
+
+      <a
+        href="../dashboard/"
+        class="studio-nav-item"
+      >
+        <span class="studio-nav-icon">◫</span>
+        <span>Dashboard</span>
+      </a>
+
+
+      <a
+        href="../orders/"
+        class="studio-nav-item"
+      >
+        <span class="studio-nav-icon">◇</span>
+        <span>Orders</span>
+      </a>
+
+
+      <a
+        href="../production/"
+        class="studio-nav-item active"
+      >
+        <span class="studio-nav-icon">◌</span>
+        <span>Production</span>
+      </a>
+
+
+      <a
+        href="../finance/"
+        class="studio-nav-item"
+      >
+        <span class="studio-nav-icon">Rp</span>
+        <span>Finance</span>
+      </a>
+
+
+      <a
+        href="../invoices/"
+        class="studio-nav-item"
+      >
+        <span class="studio-nav-icon">▤</span>
+        <span>Invoices</span>
+      </a>
+
+
+      <a
+        href="../customers/"
+        class="studio-nav-item"
+      >
+        <span class="studio-nav-icon">♡</span>
+        <span>Customers</span>
+      </a>
+
+
+      <a
+        href="../products/"
+        class="studio-nav-item"
+      >
+        <span class="studio-nav-icon">□</span>
+        <span>Products</span>
+      </a>
+
+
+      <a
+        href="../gallery/"
+        class="studio-nav-item"
+      >
+        <span class="studio-nav-icon">▧</span>
+        <span>Gallery</span>
+      </a>
+
+
+      <a
+        href="../archive/"
+        class="studio-nav-item"
+      >
+        <span class="studio-nav-icon">◱</span>
+        <span>Archive</span>
+      </a>
+
+    </nav>
+
+
+    <div class="studio-sidebar-bottom">
+
+      <div class="studio-owner">
+
+        <div class="studio-owner-main">
+
+          <div class="studio-owner-avatar">
+            TA
+          </div>
+
+          <div class="studio-owner-text">
+
+            <strong data-owner-name>
+              Tassya & Arif
+            </strong>
+
+            <span data-owner-role>
+              Owner
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <button
+          type="button"
+          class="studio-logout-button"
+          data-action="studio-logout"
+        >
+          Keluar
+        </button>
+
+      </div>
+
+    </div>
+
+
+  </aside>
+
+
+  <!-- MAIN -->
+
+  <main class="studio-main">
+
+
+    <header class="studio-topbar">
+
+      <div class="studio-topbar-left">
+
+        <button
+          type="button"
+          class="studio-menu-button"
+          id="studioMenuButton"
+        >
+          ☰
+        </button>
+
+
+        <div>
+
+          <span class="studio-eyebrow">
+            Memora Studio
+          </span>
+
+          <h1>
+            Production
+          </h1>
+
+        </div>
+
+      </div>
+
+
+      <div class="studio-topbar-right">
+
+        <button
+          type="button"
+          class="production-refresh-button"
+          id="productionRefreshButton"
+        >
+          Refresh
+        </button>
+
+      </div>
+
+    </header>
+
+
+    <div class="studio-content">
+
+
+      <!-- HEADING -->
+
+      <section class="production-heading">
+
+        <div>
+
+          <span class="dashboard-section-label">
+            Production Workflow
+          </span>
+
+          <h2>
+            Proses Produksi
+          </h2>
+
+          <p>
+            Pantau setiap order dari proses desain hingga pengiriman.
+          </p>
+
+        </div>
+
+      </section>
+
+
+      <!-- SUMMARY -->
+
+      <section class="production-stat-grid">
+
+        <article class="production-stat-card">
+
+          <span>
+            Dalam Produksi
+          </span>
+
+          <strong id="productionActiveCount">
+            0
+          </strong>
+
+        </article>
+
+
+        <article class="production-stat-card">
+
+          <span>
+            Menunggu Approval
+          </span>
+
+          <strong id="productionApprovalCount">
+            0
+          </strong>
+
+        </article>
+
+
+        <article class="production-stat-card">
+
+          <span>
+            Printing
+          </span>
+
+          <strong id="productionPrintingCount">
+            0
+          </strong>
+
+        </article>
+
+
+        <article class="production-stat-card">
+
+          <span>
+            Siap / Sedang Dikirim
+          </span>
+
+          <strong id="productionShippingCount">
+            0
+          </strong>
+
+        </article>
+
+      </section>
+
+
+      <!-- TOOLBAR -->
+
+      <section class="production-toolbar">
+
+        <div class="production-search">
+
+          <input
+            type="search"
+            id="productionSearch"
+            placeholder="Cari Order ID, customer, atau WhatsApp..."
+          >
+
+        </div>
+
+
+        <div class="production-toolbar-right">
+
+          <select id="productionStageFilter">
+
+            <option value="">
+              Semua Tahap
+            </option>
+
+            <option value="desain">
+              Desain
+            </option>
+
+            <option value="menunggu_approval">
+              Menunggu Approval
+            </option>
+
+            <option value="revisi">
+              Revisi
+            </option>
+
+            <option value="approved">
+              Approved
+            </option>
+
+            <option value="printing">
+              Printing
+            </option>
+
+            <option value="finishing">
+              Finishing
+            </option>
+
+            <option value="quality_check">
+              Quality Check
+            </option>
+
+            <option value="packing">
+              Packing
+            </option>
+
+            <option value="dikirim">
+              Dikirim
+            </option>
+
+          </select>
+
+
+          <button
+            type="button"
+            id="productionResetButton"
+            class="production-reset-button"
+          >
+            Reset
+          </button>
+
+        </div>
+
+      </section>
+
+
+      <!-- BOARD -->
+
+      <section class="production-board-wrapper">
+
+        <div
+          class="production-board"
+          id="productionBoard"
+        ></div>
+
+      </section>
+
+
+      <div
+        class="production-empty"
+        id="productionEmpty"
+        hidden
+      >
+
+        <strong>
+          Belum ada order dalam proses produksi.
+        </strong>
+
+        <p>
+          Order akan muncul setelah status masuk ke tahap desain atau produksi.
+        </p>
+
+      </div>
+
+
+    </div>
+
+
+  </main>
+
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="../../js/supabase.js"></script>
+<script src="../../js/studio/auth.js"></script>
+<script src="../../js/studio/guard.js"></script>
+<script src="../../js/studio/production.js"></script>
+
+
+</body>
+
+</html>

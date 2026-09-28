@@ -1,0 +1,891 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="description"
+    content="Memora Studio Product Gallery"
+  >
+
+  <title>Gallery - Memora Studio</title>
+
+  <link
+    rel="stylesheet"
+    href="../../css/style.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../../css/studio.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../../css/gallery.css"
+  >
+
+</head>
+
+
+<body class="studio-body">
+
+
+<div class="studio-shell">
+
+
+  <!-- SIDEBAR -->
+
+  <aside
+    class="studio-sidebar"
+    id="studioSidebar"
+  >
+
+    <div class="studio-sidebar-top">
+
+      <a
+        href="../dashboard/"
+        class="studio-logo"
+      >
+
+        <strong>
+          MEMORA
+        </strong>
+
+        <span>
+          Studio
+        </span>
+
+      </a>
+
+
+      <nav class="studio-nav">
+
+
+        <a
+          href="../dashboard/"
+          class="studio-nav-item"
+        >
+          <span class="studio-nav-icon">
+            ⌂
+          </span>
+
+          <span>
+            Dashboard
+          </span>
+        </a>
+
+
+        <a
+          href="../orders/"
+          class="studio-nav-item"
+        >
+          <span class="studio-nav-icon">
+            □
+          </span>
+
+          <span>
+            Orders
+          </span>
+        </a>
+
+
+        <a
+          href="../production/"
+          class="studio-nav-item"
+        >
+          <span class="studio-nav-icon">
+            ◇
+          </span>
+
+          <span>
+            Production Queue
+          </span>
+        </a>
+
+
+        <div class="studio-nav-section">
+          Management
+        </div>
+
+
+        <a
+          href="../finance/"
+          class="studio-nav-item"
+        >
+          <span class="studio-nav-icon">
+            Rp
+          </span>
+
+          <span>
+            Finance
+          </span>
+        </a>
+
+
+        <a
+          href="../invoices/"
+          class="studio-nav-item"
+        >
+          <span class="studio-nav-icon">
+            ≡
+          </span>
+
+          <span>
+            Invoices
+          </span>
+        </a>
+
+
+        <a
+          href="../customers/"
+          class="studio-nav-item"
+        >
+          <span class="studio-nav-icon">
+            ○
+          </span>
+
+          <span>
+            Customers
+          </span>
+        </a>
+
+
+        <a
+          href="../products/"
+          class="studio-nav-item"
+        >
+          <span class="studio-nav-icon">
+            ▦
+          </span>
+
+          <span>
+            Products
+          </span>
+        </a>
+
+
+        <a
+          href="../gallery/"
+          class="studio-nav-item active"
+        >
+          <span class="studio-nav-icon">
+            ▧
+          </span>
+
+          <span>
+            Gallery
+          </span>
+        </a>
+
+
+        <div class="studio-nav-section">
+          System
+        </div>
+
+
+        <a
+          href="../archive/"
+          class="studio-nav-item"
+        >
+          <span class="studio-nav-icon">
+            ⌑
+          </span>
+
+          <span>
+            Archive
+          </span>
+        </a>
+
+
+      </nav>
+
+    </div>
+
+
+    <div class="studio-owner studio-owner-with-logout">
+
+      <div class="studio-owner-main">
+
+        <div class="studio-owner-avatar">
+          TA
+        </div>
+
+        <div>
+
+          <strong data-owner-name>
+            Tassya & Arif
+          </strong>
+
+          <span data-owner-role>
+            Owner
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <button
+        type="button"
+        class="studio-logout-button"
+        data-action="studio-logout"
+      >
+        Keluar
+      </button>
+
+    </div>
+
+  </aside>
+
+
+  <!-- MAIN -->
+
+  <main class="studio-main">
+
+
+    <header class="studio-topbar">
+
+      <button
+        type="button"
+        class="studio-menu-button"
+        id="studioMenuButton"
+        aria-label="Buka menu"
+      >
+        ☰
+      </button>
+
+
+      <div>
+
+        <span class="studio-topbar-caption">
+          Memora Studio
+        </span>
+
+        <strong>
+          Product Gallery
+        </strong>
+
+      </div>
+
+
+      <a
+        href="../../index.html"
+        class="studio-view-store"
+        target="_blank"
+      >
+        Lihat Website
+        <span>↗</span>
+      </a>
+
+    </header>
+
+
+    <div class="gallery-page">
+
+
+      <!-- HEADING -->
+
+      <section class="gallery-heading">
+
+        <div>
+
+          <span class="gallery-eyebrow">
+            Product Management
+          </span>
+
+          <h1>
+            Gallery
+          </h1>
+
+          <p>
+            Kelola foto produk yang tampil pada katalog
+            dan halaman produk customer.
+          </p>
+
+        </div>
+
+
+        <button
+          type="button"
+          class="gallery-upload-main"
+          id="openUploadModal"
+        >
+          <span>
+            +
+          </span>
+
+          Upload Foto
+        </button>
+
+      </section>
+
+
+      <!-- STATS -->
+
+      <section class="gallery-stats">
+
+
+        <article class="gallery-stat-card">
+
+          <span>
+            Total Foto
+          </span>
+
+          <strong id="statTotalPhotos">
+            0
+          </strong>
+
+          <small>
+            Semua foto aktif
+          </small>
+
+        </article>
+
+
+        <article class="gallery-stat-card">
+
+          <span>
+            Produk
+          </span>
+
+          <strong id="statProducts">
+            0
+          </strong>
+
+          <small>
+            Produk dengan foto
+          </small>
+
+        </article>
+
+
+        <article class="gallery-stat-card">
+
+          <span>
+            Cover Katalog
+          </span>
+
+          <strong id="statCovers">
+            0
+          </strong>
+
+          <small>
+            Foto utama produk
+          </small>
+
+        </article>
+
+
+      </section>
+
+
+      <!-- TOOLBAR -->
+
+      <section class="gallery-toolbar">
+
+
+        <div class="gallery-filters">
+
+
+          <select
+            id="filterProduct"
+            class="gallery-select"
+          >
+
+            <option value="">
+              Semua Produk
+            </option>
+
+          </select>
+
+
+          <select
+            id="filterType"
+            class="gallery-select"
+          >
+
+            <option value="">
+              Semua Jenis
+            </option>
+
+            <option value="cover">
+              Cover Katalog
+            </option>
+
+            <option value="gallery">
+              Gallery
+            </option>
+
+            <option value="variant">
+              Variant
+            </option>
+
+          </select>
+
+
+        </div>
+
+
+        <div class="gallery-search">
+
+          <span>
+            ⌕
+          </span>
+
+          <input
+            type="search"
+            id="gallerySearch"
+            placeholder="Cari foto atau produk..."
+          >
+
+        </div>
+
+
+      </section>
+
+
+      <!-- LOADING -->
+
+      <section
+        class="gallery-loading"
+        id="galleryLoading"
+      >
+
+        <div class="gallery-spinner"></div>
+
+        <span>
+          Memuat gallery...
+        </span>
+
+      </section>
+
+
+      <!-- EMPTY -->
+
+      <section
+        class="gallery-empty hidden"
+        id="galleryEmpty"
+      >
+
+        <div class="gallery-empty-icon">
+          ◇
+        </div>
+
+        <h2>
+          Belum ada foto produk
+        </h2>
+
+        <p>
+          Upload foto pertama untuk mulai
+          menampilkan gambar pada katalog Memora.
+        </p>
+
+        <button
+          type="button"
+          class="gallery-upload-empty"
+          id="emptyUploadButton"
+        >
+          + Upload Foto
+        </button>
+
+      </section>
+
+
+      <!-- CONTENT -->
+
+      <section
+        class="gallery-groups hidden"
+        id="galleryGroups"
+      ></section>
+
+
+    </div>
+
+  </main>
+
+</div>
+
+
+<!-- =====================================================
+     UPLOAD MODAL
+     ===================================================== -->
+
+<div
+  class="gallery-modal-backdrop hidden"
+  id="uploadModal"
+>
+
+
+  <div class="gallery-modal">
+
+
+    <div class="gallery-modal-header">
+
+      <div>
+
+        <span>
+          Product Gallery
+        </span>
+
+        <h2>
+          Upload Foto Produk
+        </h2>
+
+      </div>
+
+
+      <button
+        type="button"
+        class="gallery-modal-close"
+        id="closeUploadModal"
+      >
+        ×
+      </button>
+
+    </div>
+
+
+    <form
+      id="uploadForm"
+      class="gallery-upload-form"
+    >
+
+
+      <div class="gallery-form-group">
+
+        <label for="uploadProduct">
+          Product
+        </label>
+
+        <select
+          id="uploadProduct"
+          required
+        >
+
+          <option value="">
+            Pilih produk
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <div class="gallery-form-group">
+
+        <label>
+          Foto Untuk
+        </label>
+
+
+        <div class="gallery-radio-grid">
+
+
+          <label class="gallery-radio-card">
+
+            <input
+              type="radio"
+              name="imageTarget"
+              value="gallery"
+              checked
+            >
+
+            <span>
+
+              <strong>
+                General / Gallery
+              </strong>
+
+              <small>
+                Foto umum produk
+              </small>
+
+            </span>
+
+          </label>
+
+
+          <label class="gallery-radio-card">
+
+            <input
+              type="radio"
+              name="imageTarget"
+              value="variant"
+            >
+
+            <span>
+
+              <strong>
+                Variant
+              </strong>
+
+              <small>
+                Foto paket tertentu
+              </small>
+
+            </span>
+
+          </label>
+
+
+        </div>
+
+      </div>
+
+
+      <div
+        class="gallery-form-group hidden"
+        id="variantField"
+      >
+
+        <label for="uploadVariant">
+          Variant
+        </label>
+
+        <select id="uploadVariant">
+
+          <option value="">
+            Pilih variant
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <div class="gallery-form-group">
+
+        <label for="uploadTitle">
+          Judul Foto
+        </label>
+
+        <input
+          type="text"
+          id="uploadTitle"
+          placeholder="Contoh: Invitation Sage Green"
+        >
+
+      </div>
+
+
+      <div class="gallery-form-group">
+
+        <label>
+          Foto Produk
+        </label>
+
+
+        <label
+          class="gallery-drop-zone"
+          id="galleryDropZone"
+          for="uploadImage"
+        >
+
+          <input
+            type="file"
+            id="uploadImage"
+            accept="image/jpeg,image/png,image/webp"
+            hidden
+            required
+          >
+
+
+          <div
+            class="gallery-upload-placeholder"
+            id="uploadPlaceholder"
+          >
+
+            <div class="gallery-upload-icon">
+              ↑
+            </div>
+
+            <strong>
+              Drop image here
+            </strong>
+
+            <span>
+              atau klik untuk memilih foto
+            </span>
+
+            <small>
+              JPG, PNG atau WEBP
+            </small>
+
+          </div>
+
+
+          <div
+            class="gallery-upload-preview hidden"
+            id="uploadPreview"
+          >
+
+            <img
+              id="uploadPreviewImage"
+              alt="Preview"
+            >
+
+            <button
+              type="button"
+              id="removePreviewImage"
+            >
+              Ganti Foto
+            </button>
+
+          </div>
+
+
+        </label>
+
+      </div>
+
+
+      <label class="gallery-cover-checkbox">
+
+        <input
+          type="checkbox"
+          id="uploadAsCover"
+        >
+
+        <span>
+
+          <strong>
+            Jadikan Cover Katalog
+          </strong>
+
+          <small>
+            Foto ini menjadi gambar utama produk pada website customer.
+          </small>
+
+        </span>
+
+      </label>
+
+
+      <div
+        class="gallery-upload-error hidden"
+        id="uploadError"
+      ></div>
+
+
+      <div class="gallery-modal-actions">
+
+        <button
+          type="button"
+          class="gallery-button-secondary"
+          id="cancelUpload"
+        >
+          Batal
+        </button>
+
+        <button
+          type="submit"
+          class="gallery-button-primary"
+          id="uploadSubmitButton"
+        >
+
+          <span id="uploadSubmitText">
+            Upload Foto
+          </span>
+
+          <span
+            class="gallery-button-loader"
+            id="uploadLoader"
+          ></span>
+
+        </button>
+
+      </div>
+
+
+    </form>
+
+  </div>
+
+</div>
+
+
+<!-- CONFIRM MODAL -->
+
+<div
+  class="gallery-modal-backdrop hidden"
+  id="confirmModal"
+>
+
+  <div class="gallery-confirm-modal">
+
+    <div class="gallery-confirm-icon">
+      !
+    </div>
+
+    <h2 id="confirmTitle">
+      Hapus Foto?
+    </h2>
+
+    <p id="confirmMessage">
+      Foto akan dihapus dari Gallery.
+    </p>
+
+    <div class="gallery-modal-actions">
+
+      <button
+        type="button"
+        class="gallery-button-secondary"
+        id="confirmCancel"
+      >
+        Batal
+      </button>
+
+      <button
+        type="button"
+        class="gallery-button-danger"
+        id="confirmAction"
+      >
+        Hapus
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- TOAST -->
+
+<div
+  class="gallery-toast"
+  id="galleryToast"
+>
+
+  <strong id="galleryToastTitle">
+    Berhasil
+  </strong>
+
+  <span id="galleryToastMessage">
+    Perubahan berhasil disimpan.
+  </span>
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="../../js/supabase.js"></script>
+<script src="../../js/studio/auth.js"></script>
+<script src="../../js/studio/guard.js"></script>
+<script src="../../js/studio/gallery.js"></script>
+
+
+</body>
+
+</html>
+
+
