@@ -66,47 +66,14 @@
 
       <!-- DESKTOP NAV -->
 
-      <nav
-        class="desktop-nav"
-        aria-label="Navigasi utama"
-      >
+<nav class="customer-nav">
+  <a href="/">Home</a>
+  <a href="/order/">Order</a>
+  <a href="/track/">Track</a>
+  <a href="/cart/">Cart</a>
+</nav>
 
-        <a
-          href="order/"
-          class="nav-link"
-        >
-          Order
-        </a>
-
-
-        <a
-          href="track/"
-          class="nav-link"
-        >
-          Track
-        </a>
-
-
-        <a
-          href="cart/"
-          class="nav-link cart-nav"
-        >
-
-          Cart
-
-          <span
-            class="cart-count"
-            id="cartCount"
-          >
-            0
-          </span>
-
-        </a>
-
-      </nav>
-
-
-      <!-- MOBILE BUTTON -->
+<!-- MOBILE BUTTON -->
 
       <button
         type="button"
@@ -128,40 +95,7 @@
        MOBILE NAV
        ===================================================== -->
 
-  <nav
-    class="mobile-nav"
-    id="mobileNav"
-    aria-label="Navigasi mobile"
-  >
-
-    <a href="order/">
-      Order
-      <span>→</span>
-    </a>
-
-
-    <a href="track/">
-      Track
-      <span>→</span>
-    </a>
-
-
-    <a href="cart/">
-
-      <span>
-        Cart
-      </span>
-
-      <span
-        class="cart-count"
-        id="mobileCartCount"
-      >
-        0
-      </span>
-
-    </a>
-
-  </nav>
+  
 
 
 
@@ -860,9 +794,16 @@
 <script src="js/supabase.js"></script>
 <script src="js/main.js"></script>
 
+<script src="js/customer-nav.js"></script>
+
 </body>
 
 </html>
+
+
+
+
+
 
 
 

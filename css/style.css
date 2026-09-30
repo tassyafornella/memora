@@ -760,3 +760,59 @@ ol {
   }
 
 }
+/* =========================================================
+   CUSTOMER NAVIGATION
+   ========================================================= */
+
+.customer-nav {
+  display: flex;
+  align-items: center;
+
+  gap: 18px;
+}
+
+
+.customer-nav a,
+.customer-nav-logout {
+  color: #173f35;
+
+  font-size: 11px;
+  font-weight: 600;
+
+  text-decoration: none;
+
+  background: transparent;
+
+  border: 0;
+
+  padding: 0;
+
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "SF Pro Display",
+    "SF Pro Text",
+    "Helvetica Neue",
+    Arial,
+    sans-serif;
+
+  cursor: pointer;
+}
+
+
+.customer-nav a:hover,
+.customer-nav-logout:hover {
+  opacity: 0.65;
+}
+
+
+@media (max-width: 768px) {
+
+  .customer-nav {
+    gap: 12px;
+
+    flex-wrap: wrap;
+  }
+
+}
+
