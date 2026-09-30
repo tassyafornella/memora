@@ -1108,7 +1108,17 @@
       }
 
 
-      await loadAll();
+      document
+      .getElementById(
+        "saveShippingDetailButton"
+      )
+      ?.addEventListener(
+        "click",
+        saveShippingDetail
+      );
+
+
+    await loadAll();
 
     }
     catch (error) {
@@ -1292,6 +1302,527 @@
 
   }
 
+  let currentShipping = null;
+
+  let shippingHistory = [];
+
+
+  const SHIPPING_STATUS_LABELS = {
+
+    belum_dikirim:
+      "Belum Dikirim",
+
+    diserahkan_ke_kurir:
+      "Diserahkan ke Kurir",
+
+    dalam_perjalanan:
+      "Dalam Perjalanan",
+
+    sampai_kota_tujuan:
+      "Sampai Kota Tujuan",
+
+    sedang_diantar:
+      "Sedang Diantar",
+
+    terkirim:
+      "Terkirim"
+
+  };
+
+
+  async function loadShipping() {
+
+    const {
+      data,
+      error
+    } =
+      await client()
+        .from("shipping")
+        .select("*")
+        .eq(
+          "order_id",
+          orderId
+        )
+        .maybeSingle();
+
+
+    if (error) {
+
+      console.warn(
+        "Shipping:",
+        error
+      );
+
+      currentShipping = null;
+
+      return;
+
+    }
+
+
+    currentShipping =
+      data || null;
+
+
+    if (!currentShipping) {
+
+      shippingHistory = [];
+
+      return;
+
+    }
+
+
+    const {
+      data: historyData,
+      error: historyError
+    } =
+      await client()
+        .from("shipping_history")
+        .select("*")
+        .eq(
+          "shipping_id",
+          currentShipping.id
+        )
+        .order(
+          "created_at",
+          {
+            ascending: false
+          }
+        );
+
+
+    if (historyError) {
+
+      console.warn(
+        "Shipping history:",
+        historyError
+      );
+
+      shippingHistory = [];
+
+      return;
+
+    }
+
+
+    shippingHistory =
+      historyData || [];
+
+  }
+
+
+  function renderShipping() {
+
+    const courier =
+      document.getElementById(
+        "shippingCourier"
+      );
+
+
+    const service =
+      document.getElementById(
+        "shippingService"
+      );
+
+
+    const tracking =
+      document.getElementById(
+        "shippingTrackingNumber"
+      );
+
+
+    const status =
+      document.getElementById(
+        "shippingStatus"
+      );
+
+
+    if (courier) {
+
+      courier.value =
+        currentShipping?.courier ||
+        "";
+
+    }
+
+
+    if (service) {
+
+      service.value =
+        currentShipping?.service ||
+        "";
+
+    }
+
+
+    if (tracking) {
+
+      tracking.value =
+        currentShipping?.tracking_number ||
+        "";
+
+    }
+
+
+    if (status) {
+
+      status.value =
+        currentShipping?.shipping_status ||
+        "belum_dikirim";
+
+    }
+
+
+    const historyContainer =
+      document.getElementById(
+        "shippingHistoryAdmin"
+      );
+
+
+    if (!historyContainer) {
+      return;
+    }
+
+
+    if (!shippingHistory.length) {
+
+      historyContainer.innerHTML = `
+        <div class="order-detail-note">
+          Belum ada histori pengiriman.
+        </div>
+      `;
+
+      return;
+
+    }
+
+
+    historyContainer.innerHTML =
+      shippingHistory
+        .map(
+          item => `
+
+            <div class="order-detail-shipping-history-item">
+
+              <strong>
+                ${escapeHtml(
+                  SHIPPING_STATUS_LABELS[
+                    item.status
+                  ] ||
+                  item.status ||
+                  "-"
+                )}
+              </strong>
+
+              <span>
+                ${formatDate(
+                  item.created_at
+                )}
+              </span>
+
+              ${
+                item.note
+                  ? `
+                    <p>
+                      ${escapeHtml(
+                        item.note
+                      )}
+                    </p>
+                  `
+                  : ""
+              }
+
+            </div>
+
+          `
+        )
+        .join("");
+
+  }
+
+
+  async function saveShippingDetail() {
+
+    const button =
+      document.getElementById(
+        "saveShippingDetailButton"
+      );
+
+
+    const courier =
+      document.getElementById(
+        "shippingCourier"
+      )?.value || "";
+
+
+    const service =
+      document.getElementById(
+        "shippingService"
+      )?.value.trim() || "";
+
+
+    const trackingNumber =
+      document.getElementById(
+        "shippingTrackingNumber"
+      )?.value.trim() || "";
+
+
+    const status =
+      document.getElementById(
+        "shippingStatus"
+      )?.value ||
+      "belum_dikirim";
+
+
+    const note =
+      document.getElementById(
+        "shippingNote"
+      )?.value.trim() || "";
+
+
+    if (
+      status !== "belum_dikirim" &&
+      !courier
+    ) {
+
+      alert(
+        "Pilih kurir terlebih dahulu."
+      );
+
+      return;
+
+    }
+
+
+    if (
+      [
+        "dalam_perjalanan",
+        "sampai_kota_tujuan",
+        "sedang_diantar",
+        "terkirim"
+      ].includes(status) &&
+      !trackingNumber
+    ) {
+
+      alert(
+        "Nomor resi wajib diisi untuk status pengiriman ini."
+      );
+
+      return;
+
+    }
+
+
+    button.disabled =
+      true;
+
+
+    button.textContent =
+      "Menyimpan...";
+
+
+    try {
+
+      const oldStatus =
+        currentShipping?.shipping_status ||
+        null;
+
+
+      const shippingPayload = {
+
+        order_id:
+          orderId,
+
+        courier:
+          courier || null,
+
+        service:
+          service || null,
+
+        tracking_number:
+          trackingNumber || null,
+
+        shipping_cost:
+          getShipping(),
+
+        shipping_status:
+          status,
+
+        note:
+          note || null,
+
+        updated_at:
+          new Date().toISOString()
+
+      };
+
+
+      if (
+        status !== "belum_dikirim" &&
+        !currentShipping?.shipping_date
+      ) {
+
+        shippingPayload.shipping_date =
+          new Date()
+            .toISOString()
+            .slice(
+              0,
+              10
+            );
+
+      }
+
+
+      if (
+        status === "terkirim"
+      ) {
+
+        shippingPayload.received_date =
+          new Date()
+            .toISOString()
+            .slice(
+              0,
+              10
+            );
+
+      }
+
+
+      let shippingRecord;
+
+
+      if (currentShipping) {
+
+        const {
+          data,
+          error
+        } =
+          await client()
+            .from("shipping")
+            .update(
+              shippingPayload
+            )
+            .eq(
+              "id",
+              currentShipping.id
+            )
+            .select()
+            .single();
+
+
+        if (error) {
+          throw error;
+        }
+
+
+        shippingRecord =
+          data;
+
+      }
+      else {
+
+        const {
+          data,
+          error
+        } =
+          await client()
+            .from("shipping")
+            .insert(
+              shippingPayload
+            )
+            .select()
+            .single();
+
+
+        if (error) {
+          throw error;
+        }
+
+
+        shippingRecord =
+          data;
+
+      }
+
+
+      if (
+        oldStatus !== status ||
+        note
+      ) {
+
+        const {
+          error: historyError
+        } =
+          await client()
+            .from("shipping_history")
+            .insert({
+
+              shipping_id:
+                shippingRecord.id,
+
+              status:
+                status,
+
+              note:
+                note || null
+
+            });
+
+
+        if (historyError) {
+          throw historyError;
+        }
+
+      }
+
+
+      currentShipping =
+        shippingRecord;
+
+
+      document.getElementById(
+        "shippingNote"
+      ).value = "";
+
+
+      await loadShipping();
+
+      renderShipping();
+
+
+      alert(
+        "Data pengiriman berhasil disimpan."
+      );
+
+    }
+    catch (error) {
+
+      console.error(
+        "Save shipping:",
+        error
+      );
+
+
+      alert(
+        error?.message ||
+        "Gagal menyimpan pengiriman."
+      );
+
+    }
+    finally {
+
+      button.disabled =
+        false;
+
+
+      button.textContent =
+        "Simpan Pengiriman";
+
+    }
+
+  }
+
   function renderAll() {
 
     renderHeader();
@@ -1306,6 +1837,8 @@
 
     renderTimeline();
 
+    renderShipping();
+
   }
 
 
@@ -1318,7 +1851,8 @@
       loadCustomer(),
       loadItems(),
       loadHistory(),
-      loadPayments()
+      loadPayments(),
+      loadShipping()
     ]);
 
 
@@ -1425,6 +1959,16 @@
       );
 
 
+    document
+      .getElementById(
+        "saveShippingDetailButton"
+      )
+      ?.addEventListener(
+        "click",
+        saveShippingDetail
+      );
+
+
     await loadAll();
 
 
@@ -1490,6 +2034,10 @@
 
 
 })();
+
+
+
+
 
 
 

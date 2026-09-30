@@ -408,12 +408,50 @@
             getStatus(order);
 
 
-          if (
-            stage &&
-            stage !== orderStatus
-          ) {
+          if (stage) {
 
-            return false;
+            const stageGroups = {
+
+              desain: [
+                "desain"
+              ],
+
+              approval: [
+                "menunggu_approval",
+                "revisi",
+                "approved"
+              ],
+
+              produksi: [
+                "printing",
+                "finishing",
+                "quality_check"
+              ],
+
+              packing: [
+                "packing"
+              ],
+
+              dikirim: [
+                "dikirim"
+              ]
+
+            };
+
+
+            const allowedStatuses =
+              stageGroups[stage] || [];
+
+
+            if (
+              !allowedStatuses.includes(
+                orderStatus
+              )
+            ) {
+
+              return false;
+
+            }
 
           }
 
@@ -1068,3 +1106,4 @@
 
 
 })();
+

@@ -1,0 +1,173 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Login - Memora</title>
+
+  <link
+    rel="stylesheet"
+    href="../../css/style.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../../css/account.css"
+  >
+
+</head>
+
+
+<body class="account-body">
+
+
+<main class="account-auth-page">
+
+
+  <section class="account-auth-card">
+
+
+    <a
+      href="../../"
+      class="account-brand"
+    >
+      MEMORA
+    </a>
+
+
+    <div class="account-auth-heading">
+
+      <span>
+        Customer Account
+      </span>
+
+      <h1>
+        Login
+      </h1>
+
+      <p>
+        Welcome back. Continue your journey with Memora.
+      </p>
+
+    </div>
+
+
+    <form
+      id="loginForm"
+      class="account-form"
+    >
+
+
+      <div class="account-form-group">
+
+        <label for="loginEmail">
+          Email
+        </label>
+
+        <input
+          type="email"
+          id="loginEmail"
+          autocomplete="email"
+          required
+          placeholder="nama@email.com"
+        >
+
+      </div>
+
+
+      <div class="account-form-group">
+
+        <div class="account-label-row">
+
+          <label for="loginPassword">
+            Password
+          </label>
+
+          <a
+            href="../forgot-password/"
+            class="account-forgot-link"
+          >
+            Lupa password?
+          </a>
+
+        </div>
+
+
+        <div class="account-password-field">
+
+          <input
+            type="password"
+            id="loginPassword"
+            autocomplete="current-password"
+            required
+            placeholder="Password"
+          >
+
+          <button
+            type="button"
+            class="account-password-toggle"
+            data-password-toggle="loginPassword"
+          >
+            Lihat
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <button
+        type="submit"
+        class="account-primary-button"
+        id="loginButton"
+      >
+        Login
+      </button>
+
+
+      <div
+        class="account-message"
+        id="loginMessage"
+        hidden
+      ></div>
+
+
+    </form>
+
+
+    <div class="account-auth-footer">
+
+      <span>
+        Belum punya akun?
+      </span>
+
+      <a href="../register/">
+        Daftar
+      </a>
+
+    </div>
+
+
+  </section>
+
+
+</main>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="../../js/supabase.js"></script>
+<script src="../../js/account.js"></script>
+
+
+</body>
+
+</html>
+

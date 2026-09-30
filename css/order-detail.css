@@ -639,3 +639,93 @@
   cursor: wait;
 }
 
+
+/* =========================================================
+   SHIPPING ADMIN
+   ========================================================= */
+
+.order-detail-form-group input {
+  width: 100%;
+
+  box-sizing: border-box;
+
+  padding: 10px 11px;
+
+  border: 1px solid #dde6e0;
+  border-radius: 10px;
+
+  outline: none;
+
+  background: #ffffff;
+
+  color: #1e2925;
+
+  font: inherit;
+  font-size: 11px;
+}
+
+
+.order-detail-shipping-history {
+  display: flex;
+  flex-direction: column;
+
+  gap: 8px;
+
+  margin-top: 18px;
+}
+
+
+.order-detail-shipping-history-item {
+  position: relative;
+
+  padding: 10px 12px 10px 20px;
+
+  border-left: 2px solid #dce7e0;
+}
+
+
+.order-detail-shipping-history-item::before {
+  content: "";
+
+  position: absolute;
+
+  top: 14px;
+  left: -5px;
+
+  width: 8px;
+  height: 8px;
+
+  border-radius: 50%;
+
+  background: #3f6f60;
+}
+
+
+.order-detail-shipping-history-item strong {
+  display: block;
+
+  color: #173f35;
+
+  font-size: 10px;
+}
+
+
+.order-detail-shipping-history-item span {
+  display: block;
+
+  margin-top: 3px;
+
+  color: #7b8982;
+
+  font-size: 9px;
+}
+
+
+.order-detail-shipping-history-item p {
+  margin: 4px 0 0;
+
+  color: #5c6a64;
+
+  font-size: 9px;
+}
+

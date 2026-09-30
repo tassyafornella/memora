@@ -571,6 +571,178 @@
             </section>
 
 
+            <!-- SHIPPING -->
+
+            <section class="order-detail-panel">
+
+              <div class="order-detail-panel-heading">
+
+                <div>
+
+                  <span class="dashboard-section-label">
+                    Shipping
+                  </span>
+
+                  <h3>
+                    Pengiriman
+                  </h3>
+
+                </div>
+
+              </div>
+
+
+              <div class="order-detail-form-group">
+
+                <label for="shippingCourier">
+                  Kurir
+                </label>
+
+                <select id="shippingCourier">
+
+                  <option value="">
+                    Pilih Kurir
+                  </option>
+
+                  <option value="JNE">
+                    JNE
+                  </option>
+
+                  <option value="J&T Express">
+                    J&T Express
+                  </option>
+
+                  <option value="SiCepat">
+                    SiCepat
+                  </option>
+
+                  <option value="AnterAja">
+                    AnterAja
+                  </option>
+
+                  <option value="Ninja Xpress">
+                    Ninja Xpress
+                  </option>
+
+                  <option value="Pos Indonesia">
+                    Pos Indonesia
+                  </option>
+
+                  <option value="GrabExpress">
+                    GrabExpress
+                  </option>
+
+                  <option value="GoSend">
+                    GoSend
+                  </option>
+
+                  <option value="Lainnya">
+                    Lainnya
+                  </option>
+
+                </select>
+
+              </div>
+
+
+              <div class="order-detail-form-group">
+
+                <label for="shippingService">
+                  Layanan
+                </label>
+
+                <input
+                  type="text"
+                  id="shippingService"
+                  placeholder="Contoh: REG / EZ / Same Day"
+                >
+
+              </div>
+
+
+              <div class="order-detail-form-group">
+
+                <label for="shippingTrackingNumber">
+                  Nomor Resi
+                </label>
+
+                <input
+                  type="text"
+                  id="shippingTrackingNumber"
+                  placeholder="Masukkan nomor resi"
+                >
+
+              </div>
+
+
+              <div class="order-detail-form-group">
+
+                <label for="shippingStatus">
+                  Status Pengiriman
+                </label>
+
+                <select id="shippingStatus">
+
+                  <option value="belum_dikirim">
+                    Belum Dikirim
+                  </option>
+
+                  <option value="diserahkan_ke_kurir">
+                    Diserahkan ke Kurir
+                  </option>
+
+                  <option value="dalam_perjalanan">
+                    Dalam Perjalanan
+                  </option>
+
+                  <option value="sampai_kota_tujuan">
+                    Sampai Kota Tujuan
+                  </option>
+
+                  <option value="sedang_diantar">
+                    Sedang Diantar
+                  </option>
+
+                  <option value="terkirim">
+                    Terkirim
+                  </option>
+
+                </select>
+
+              </div>
+
+
+              <div class="order-detail-form-group">
+
+                <label for="shippingNote">
+                  Catatan Status
+                </label>
+
+                <textarea
+                  id="shippingNote"
+                  placeholder="Contoh: Paket sudah diterima kurir."
+                ></textarea>
+
+              </div>
+
+
+              <button
+                type="button"
+                class="order-detail-primary-button"
+                id="saveShippingDetailButton"
+              >
+                Simpan Pengiriman
+              </button>
+
+
+              <div
+                class="order-detail-shipping-history"
+                id="shippingHistoryAdmin"
+              ></div>
+
+            </section>
+
+
             <!-- STATUS UPDATE -->
 
             <section class="order-detail-panel">
@@ -796,4 +968,5 @@
 </body>
 
 </html>
+
 

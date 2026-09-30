@@ -1,0 +1,226 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Register - Memora</title>
+
+  <link
+    rel="stylesheet"
+    href="../../css/style.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../../css/account.css"
+  >
+
+</head>
+
+
+<body class="account-body">
+
+
+<main class="account-auth-page">
+
+
+  <section class="account-auth-card">
+
+
+    <a
+      href="../../"
+      class="account-brand"
+    >
+      MEMORA
+    </a>
+
+
+    <div class="account-auth-heading">
+
+      <span>
+        Create Account
+      </span>
+
+      <h1>
+        Daftar Akun
+      </h1>
+
+      <p>
+        Create your account and keep your moments beautifully organized.
+      </p>
+
+    </div>
+
+
+    <form
+      id="registerForm"
+      class="account-form"
+    >
+
+
+      <div class="account-form-group">
+
+        <label for="registerName">
+          Nama Lengkap
+        </label>
+
+        <input
+          type="text"
+          id="registerName"
+          autocomplete="name"
+          required
+          placeholder="Nama lengkap"
+        >
+
+      </div>
+
+
+      <div class="account-form-group">
+
+        <label for="registerEmail">
+          Email
+        </label>
+
+        <input
+          type="email"
+          id="registerEmail"
+          autocomplete="email"
+          required
+          placeholder="nama@email.com"
+        >
+
+      </div>
+
+
+      <div class="account-form-group">
+
+        <label for="registerWhatsapp">
+          WhatsApp
+        </label>
+
+        <input
+          type="tel"
+          id="registerWhatsapp"
+          autocomplete="tel"
+          required
+          placeholder="08xxxxxxxxxx"
+        >
+
+      </div>
+
+
+      <div class="account-form-group">
+
+        <label for="registerPassword">
+          Password
+        </label>
+
+        <div class="account-password-field">
+
+          <input
+            type="password"
+            id="registerPassword"
+            autocomplete="new-password"
+            required
+            minlength="8"
+            placeholder="Minimal 8 karakter"
+          >
+
+          <button
+            type="button"
+            class="account-password-toggle"
+            data-password-toggle="registerPassword"
+          >
+            Lihat
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <div class="account-form-group">
+
+        <label for="registerPasswordConfirm">
+          Konfirmasi Password
+        </label>
+
+        <div class="account-password-field">
+
+          <input
+            type="password"
+            id="registerPasswordConfirm"
+            autocomplete="new-password"
+            required
+            minlength="8"
+            placeholder="Ulangi password"
+          >
+
+          <button
+            type="button"
+            class="account-password-toggle"
+            data-password-toggle="registerPasswordConfirm"
+          >
+            Lihat
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <button
+        type="submit"
+        class="account-primary-button"
+        id="registerButton"
+      >
+        Daftar
+      </button>
+
+
+      <div
+        class="account-message"
+        id="registerMessage"
+        hidden
+      ></div>
+
+
+    </form>
+
+
+    <div class="account-auth-footer">
+
+      <span>
+        Sudah punya akun?
+      </span>
+
+      <a href="../login/">
+        Login
+      </a>
+
+    </div>
+
+
+  </section>
+
+
+</main>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="../../js/supabase.js"></script>
+<script src="../../js/account.js"></script>
+
+
+</body>
+
+</html>
+
