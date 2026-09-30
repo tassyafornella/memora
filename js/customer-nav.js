@@ -8,68 +8,44 @@
   }
 
 
-  function getAllNavs() {
-
+  function getNavs() {
     return Array.from(
       document.querySelectorAll(".customer-nav")
     );
+  }
+
+
+  function removeExistingAuthMenus(nav) {
+
+    Array.from(nav.children).forEach(function (element) {
+
+      const text =
+        String(element.textContent || "")
+          .trim()
+          .toLowerCase();
+
+      const href =
+        element.getAttribute("href") || "";
+
+
+      if (
+        text === "profile" ||
+        text === "logout" ||
+        text === "login" ||
+        text === "register" ||
+        href.includes("/account/")
+      ) {
+        element.remove();
+      }
+
+    });
 
   }
 
 
-  function clearAuthMenus(nav) {
+  function renderLoggedIn(nav) {
 
-    nav
-      .querySelectorAll(
-        ".customer-auth-menu"
-      )
-      .forEach(
-        element => element.remove()
-      );
-
-  }
-
-
-  function addLoggedOutMenu(nav) {
-
-    clearAuthMenus(nav);
-
-
-    const login =
-      document.createElement("a");
-
-    login.href =
-      "/account/login/";
-
-    login.textContent =
-      "Login";
-
-    login.className =
-      "customer-auth-menu";
-
-
-    const register =
-      document.createElement("a");
-
-    register.href =
-      "/account/register/";
-
-    register.textContent =
-      "Register";
-
-    register.className =
-      "customer-auth-menu";
-
-
-    nav.appendChild(login);
-    nav.appendChild(register);
-
-  }
-
-
-  function addLoggedInMenu(nav) {
-
-    clearAuthMenus(nav);
+    removeExistingAuthMenus(nav);
 
 
     const profile =
@@ -80,9 +56,6 @@
 
     profile.textContent =
       "Profile";
-
-    profile.className =
-      "customer-auth-menu";
 
 
     const logout =
@@ -95,11 +68,23 @@
       "Logout";
 
     logout.className =
-      "customer-nav-logout customer-auth-menu";
+      "customer-nav-logout";
 
-    logout.setAttribute(
-      "data-customer-logout",
-      ""
+    logout.addEventListener(
+      "click",
+      async function () {
+
+        const supabase =
+          getSupabase();
+
+        if (supabase) {
+          await supabase.auth.signOut();
+        }
+
+        window.location.href =
+          "/";
+
+      }
     );
 
 
@@ -109,63 +94,41 @@
   }
 
 
-  async function handleLogout() {
+  function renderLoggedOut(nav) {
 
-    const supabase =
-      getSupabase();
-
-
-    if (!supabase) {
-      return;
-    }
+    removeExistingAuthMenus(nav);
 
 
-    try {
+    const login =
+      document.createElement("a");
 
-      await supabase.auth.signOut();
+    login.href =
+      "/account/login/";
 
-    }
-    catch (error) {
-
-      console.error(
-        "Logout:",
-        error
-      );
-
-    }
+    login.textContent =
+      "Login";
 
 
-    window.location.href =
-      "/";
+    const register =
+      document.createElement("a");
 
-  }
+    register.href =
+      "/account/register/";
+
+    register.textContent =
+      "Register";
 
 
-  function bindLogoutButtons() {
-
-    document
-      .querySelectorAll(
-        "[data-customer-logout]"
-      )
-      .forEach(
-        button => {
-
-          button.addEventListener(
-            "click",
-            handleLogout
-          );
-
-        }
-      );
+    nav.appendChild(login);
+    nav.appendChild(register);
 
   }
 
 
-  async function initCustomerNav() {
+  async function init() {
 
     const navs =
-      getAllNavs();
-
+      getNavs();
 
     if (!navs.length) {
       return;
@@ -179,7 +142,7 @@
     if (!supabase) {
 
       navs.forEach(
-        addLoggedOutMenu
+        renderLoggedOut
       );
 
       return;
@@ -190,44 +153,36 @@
     try {
 
       const {
-        data,
-        error
+        data
       } =
         await supabase.auth.getUser();
 
 
-      if (
-        error ||
-        !data?.user
-      ) {
+      if (data?.user) {
 
         navs.forEach(
-          addLoggedOutMenu
+          renderLoggedIn
         );
 
-        return;
+      }
+      else {
+
+        navs.forEach(
+          renderLoggedOut
+        );
 
       }
-
-
-      navs.forEach(
-        addLoggedInMenu
-      );
-
-
-      bindLogoutButtons();
 
     }
     catch (error) {
 
       console.error(
-        "Customer navigation:",
+        "Navbar:",
         error
       );
 
-
       navs.forEach(
-        addLoggedOutMenu
+        renderLoggedOut
       );
 
     }
@@ -237,8 +192,7 @@
 
   document.addEventListener(
     "DOMContentLoaded",
-    initCustomerNav
+    init
   );
-
 
 })();
