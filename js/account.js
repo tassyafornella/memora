@@ -452,7 +452,7 @@
 
       showMessage(
         "registerMessage",
-        "Akun berhasil dibuat. Silakan cek email untuk verifikasi, lalu login.",
+        "Akun berhasil dibuat.",
         "success"
       );
 
@@ -1737,3 +1737,5 @@
 
 
 })();
+
+
