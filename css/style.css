@@ -1,3 +1,4 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 /* =========================================================
    MEMORA
    GLOBAL STYLE
@@ -72,14 +73,7 @@ body {
   background: var(--white);
   color: var(--text);
 
-  font-family:
-    -apple-system,
-    BlinkMacSystemFont,
-    "SF Pro Display",
-    "SF Pro Text",
-    "Helvetica Neue",
-    Arial,
-    sans-serif;
+  font-family: "Poppins", Arial, sans-serif;
 
   font-size: 14px;
   line-height: 1.5;
@@ -787,14 +781,7 @@ ol {
 
   padding: 0;
 
-  font-family:
-    -apple-system,
-    BlinkMacSystemFont,
-    "SF Pro Display",
-    "SF Pro Text",
-    "Helvetica Neue",
-    Arial,
-    sans-serif;
+  font-family: "Poppins", Arial, sans-serif;
 
   cursor: pointer;
 }
@@ -815,4 +802,123 @@ ol {
   }
 
 }
+
+
+
+/* =========================================================
+   CUSTOMER NAV CART BADGE FIX
+   ========================================================= */
+
+.customer-cart-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.customer-cart-badge {
+  min-width: 20px;
+  height: 20px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0 6px;
+
+  border-radius: 999px;
+
+  background: #173f35;
+  color: #ffffff;
+
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.customer-nav a {
+  display: inline-flex;
+  align-items: center;
+}
+
+
+/* =========================================================
+   MEMORA GLOBAL FONT OVERRIDE
+   POPPINS ONLY - NO ITALIC
+   ========================================================= */
+
+html,
+body,
+button,
+input,
+select,
+textarea,
+a,
+span,
+p,
+label,
+small,
+strong,
+em,
+i,
+b,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+nav,
+header,
+footer,
+section,
+article,
+div {
+  font-family: "Poppins", Arial, sans-serif !important;
+  font-style: normal !important;
+}
+
+
+/* Heading tetap clean tetapi tanpa serif / italic */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Poppins", Arial, sans-serif !important;
+  font-style: normal !important;
+}
+
+
+/* Elemen yang sebelumnya sengaja italic */
+
+em,
+i,
+.account-page h1,
+.account-main h1,
+.account-page h2,
+.account-main h2,
+.checkout-login-dialog h2,
+.product-heading h1,
+.product-title,
+.section-title,
+.hero-title {
+  font-family: "Poppins", Arial, sans-serif !important;
+  font-style: normal !important;
+}
+
+
+/* Form controls */
+
+button,
+input,
+textarea,
+select,
+option {
+  font-family: "Poppins", Arial, sans-serif !important;
+  font-style: normal !important;
+}
+
 

@@ -642,12 +642,142 @@
   }
 
 
+
+  function renderShippingAddress() {
+
+    const label =
+      currentOrder?.shipping_label ||
+      "-";
+
+
+    const recipient =
+      currentOrder?.shipping_recipient_name ||
+      "-";
+
+
+    const phone =
+      currentOrder?.shipping_phone ||
+      "-";
+
+
+    const addressParts = [
+
+      currentOrder?.shipping_address_line,
+
+      currentOrder?.shipping_village,
+
+      currentOrder?.shipping_district,
+
+      currentOrder?.shipping_city,
+
+      currentOrder?.shipping_province,
+
+      currentOrder?.shipping_postal_code
+
+    ]
+      .filter(
+        value =>
+          value &&
+          String(value).trim()
+      );
+
+
+    const hasSnapshot =
+      Boolean(
+        currentOrder?.shipping_address_id ||
+        currentOrder?.shipping_address_line ||
+        currentOrder?.shipping_recipient_name
+      );
+
+
+    const fullAddress =
+      hasSnapshot
+        ? (
+            addressParts.length
+              ? addressParts.join(", ")
+              : "-"
+          )
+        : "Snapshot alamat pengiriman belum tersedia untuk pesanan ini.";
+
+
+    setText(
+      "detailShippingLabel",
+      hasSnapshot
+        ? label
+        : "-"
+    );
+
+
+    setText(
+      "detailShippingRecipient",
+      hasSnapshot
+        ? recipient
+        : "-"
+    );
+
+
+    setText(
+      "detailShippingPhone",
+      hasSnapshot
+        ? phone
+        : "-"
+    );
+
+
+    setText(
+      "detailShippingAddressFull",
+      fullAddress
+    );
+
+
+    const landmark =
+      document.getElementById(
+        "detailShippingLandmark"
+      );
+
+
+    if (landmark) {
+
+      const landmarkValue =
+        currentOrder?.shipping_landmark
+          ?.trim?.() ||
+        "";
+
+
+      if (
+        hasSnapshot &&
+        landmarkValue
+      ) {
+
+        landmark.hidden = false;
+
+        landmark.textContent =
+          "Patokan: " +
+          landmarkValue;
+
+      }
+      else {
+
+        landmark.hidden = true;
+        landmark.textContent = "";
+
+      }
+
+    }
+
+  }
+
   function renderItems() {
 
     const container =
       document.getElementById(
         "detailItems"
       );
+
+
+    if (!container) {
+      return;
+    }
 
 
     if (!items.length) {
@@ -659,176 +789,401 @@
       `;
 
       return;
+
+    }
+
+
+    function parseJsonValue(
+      value,
+      fallback
+    ) {
+
+      if (
+        value === null ||
+        value === undefined
+      ) {
+
+        return fallback;
+
+      }
+
+
+      if (
+        typeof value !== "string"
+      ) {
+
+        return value;
+
+      }
+
+
+      try {
+
+        return JSON.parse(value);
+
+      }
+      catch {
+
+        return fallback;
+
+      }
+
+    }
+
+
+    function renderPersonalization(
+      rawValue
+    ) {
+
+      const personalization =
+        parseJsonValue(
+          rawValue,
+          {}
+        );
+
+
+      if (
+        !personalization ||
+        typeof personalization !== "object" ||
+        Array.isArray(personalization)
+      ) {
+
+        return "";
+
+      }
+
+
+      const rows =
+        Object
+          .entries(personalization)
+          .map(
+            ([key, value]) => {
+
+              let label =
+                key;
+
+              let displayValue =
+                value;
+
+
+              if (
+                value &&
+                typeof value === "object" &&
+                !Array.isArray(value)
+              ) {
+
+                label =
+                  value.label ||
+                  key;
+
+                displayValue =
+                  value.value ??
+                  "-";
+
+              }
+
+
+              if (
+                Array.isArray(displayValue)
+              ) {
+
+                displayValue =
+                  displayValue.join(", ");
+
+              }
+
+
+              if (
+                displayValue &&
+                typeof displayValue ===
+                  "object"
+              ) {
+
+                displayValue =
+                  JSON.stringify(
+                    displayValue
+                  );
+
+              }
+
+
+              return `
+                <div class="order-detail-personalization-item">
+
+                  <span>
+                    ${escapeHtml(label)}
+                  </span>
+
+                  <strong>
+                    ${escapeHtml(
+                      displayValue ?? "-"
+                    )}
+                  </strong>
+
+                </div>
+              `;
+
+            }
+          )
+          .join("");
+
+
+      if (!rows) {
+        return "";
+      }
+
+
+      return `
+        <div class="order-detail-personalization">
+
+          <div style="
+            grid-column:1/-1;
+            font-size:11px;
+            font-weight:600;
+            color:#173f35;
+            margin-bottom:2px;
+          ">
+            Personalisasi
+          </div>
+
+          ${rows}
+
+        </div>
+      `;
+
+    }
+
+
+    function renderAddons(
+      rawValue
+    ) {
+
+      let addons =
+        parseJsonValue(
+          rawValue,
+          []
+        );
+
+
+      if (
+        !Array.isArray(addons)
+      ) {
+
+        addons = [];
+
+      }
+
+
+      if (!addons.length) {
+        return "";
+      }
+
+
+      const rows =
+        addons
+          .map(
+            addon => {
+
+              if (
+                typeof addon === "string"
+              ) {
+
+                return `
+                  <span class="order-detail-addon-chip">
+                    ${escapeHtml(addon)}
+                  </span>
+                `;
+
+              }
+
+
+              const name =
+                addon?.name ||
+                addon?.label ||
+                addon?.title ||
+                "Add-on";
+
+
+              const price =
+                Number(
+                  addon?.price || 0
+                );
+
+
+              return `
+                <span class="order-detail-addon-chip">
+
+                  ${escapeHtml(name)}
+
+                  ${
+                    price > 0
+                      ? ` · ${formatRupiah(price)}`
+                      : ""
+                  }
+
+                </span>
+              `;
+
+            }
+          )
+          .join("");
+
+
+      return `
+        <div class="order-detail-addons">
+
+          <span class="order-detail-addons-label">
+            Add-on
+          </span>
+
+          <div class="order-detail-addons-list">
+            ${rows}
+          </div>
+
+        </div>
+      `;
+
     }
 
 
     container.innerHTML =
-      items.map(
-        item => {
+      items
+        .map(
+          item => {
 
-          const name =
-            item.product_name ||
-            item.name ||
-            "Produk";
-
-
-          const variant =
-            item.variant_name ||
-            item.variant ||
-            item.variant_code ||
-            "-";
+            const name =
+              item.product_name ||
+              item.name ||
+              "Produk";
 
 
-          const qty =
-            Number(
-              item.quantity ||
-              1
-            );
+            const variant =
+              item.variant_name ||
+              item.variant ||
+              item.variant_code ||
+              "-";
 
 
-          const unitPrice =
-            Number(
-              item.unit_price ||
-              item.price ||
-              0
-            );
+            const qty =
+              Number(
+                item.quantity || 1
+              );
 
 
-          const subtotal =
-            Number(
-              item.subtotal ||
-              item.total ||
-              (
-                qty *
-                unitPrice
-              )
-            );
+            const unitPrice =
+              Number(
+                item.unit_price ||
+                item.price ||
+                0
+              );
 
 
-          let personalization =
-            item.personalization ||
-            item.custom_data ||
-            item.metadata ||
-            {};
+            const subtotal =
+              Number(
+                item.subtotal ||
+                item.total ||
+                (
+                  qty *
+                  unitPrice
+                )
+              );
 
 
-          if (
-            typeof personalization ===
-            "string"
-          ) {
+            const personalizationHtml =
+              renderPersonalization(
+                item.personalization ||
+                item.custom_data ||
+                item.metadata
+              );
 
-            try {
-              personalization =
-                JSON.parse(
-                  personalization
-                );
-            }
-            catch {
-              personalization = {};
-            }
+
+            const addonsHtml =
+              renderAddons(
+                item.addons
+              );
+
+
+            const customerNote =
+              item.customer_note
+                ?.trim?.() ||
+              "";
+
+
+            return `
+
+              <article class="order-detail-item">
+
+                <div class="order-detail-item-head">
+
+                  <div>
+
+                    <h4>
+                      ${escapeHtml(name)}
+                    </h4>
+
+                    <span>
+                      ${escapeHtml(variant)}
+                      ·
+                      ${qty} pcs
+                    </span>
+
+                  </div>
+
+
+                  <div class="order-detail-item-price">
+
+                    <strong>
+                      ${formatRupiah(subtotal)}
+                    </strong>
+
+                    <small style="
+                      display:block;
+                      margin-top:4px;
+                      color:#7b8982;
+                      font-size:10px;
+                      font-weight:400;
+                    ">
+                      ${formatRupiah(unitPrice)} / pcs
+                    </small>
+
+                  </div>
+
+                </div>
+
+
+                ${personalizationHtml}
+
+                ${addonsHtml}
+
+
+                ${
+                  customerNote
+                    ? `
+                      <div
+                        class="order-detail-note"
+                        style="margin-top:12px;"
+                      >
+                        <strong>
+                          Catatan Item
+                        </strong>
+
+                        <br>
+
+                        ${escapeHtml(customerNote)}
+                      </div>
+                    `
+                    : ""
+                }
+
+              </article>
+
+            `;
 
           }
-
-
-          const personalizationHtml =
-            Object.entries(
-              personalization || {}
-            )
-              .map(
-                ([key, value]) => {
-
-                  let label =
-                    key;
-
-                  let displayValue =
-                    value;
-
-
-                  if (
-                    value &&
-                    typeof value ===
-                    "object"
-                  ) {
-
-                    label =
-                      value.label ||
-                      key;
-
-                    displayValue =
-                      value.value ??
-                      "-";
-
-                  }
-
-
-                  return `
-
-                    <div class="order-detail-personalization-item">
-
-                      <span>
-                        ${escapeHtml(label)}
-                      </span>
-
-                      <strong>
-                        ${escapeHtml(displayValue)}
-                      </strong>
-
-                    </div>
-
-                  `;
-
-                }
-              )
-              .join("");
-
-
-          return `
-
-            <article class="order-detail-item">
-
-              <div class="order-detail-item-head">
-
-                <div>
-
-                  <h4>
-                    ${escapeHtml(name)}
-                  </h4>
-
-                  <span>
-                    ${escapeHtml(variant)}
-                    ·
-                    ${qty}
-                  </span>
-
-                </div>
-
-                <div class="order-detail-item-price">
-                  ${formatRupiah(subtotal)}
-                </div>
-
-              </div>
-
-
-              ${
-                personalizationHtml
-                  ? `
-                    <div class="order-detail-personalization">
-                      ${personalizationHtml}
-                    </div>
-                  `
-                  : ""
-              }
-
-            </article>
-
-          `;
-
-        }
-      )
-      .join("");
+        )
+        .join("");
 
   }
-
 
   function renderSummary() {
 
@@ -1301,33 +1656,9 @@
     }
 
   }
-
   let currentShipping = null;
 
   let shippingHistory = [];
-
-
-  const SHIPPING_STATUS_LABELS = {
-
-    belum_dikirim:
-      "Belum Dikirim",
-
-    diserahkan_ke_kurir:
-      "Diserahkan ke Kurir",
-
-    dalam_perjalanan:
-      "Dalam Perjalanan",
-
-    sampai_kota_tujuan:
-      "Sampai Kota Tujuan",
-
-    sedang_diantar:
-      "Sedang Diantar",
-
-    terkirim:
-      "Terkirim"
-
-  };
 
 
   async function loadShipping() {
@@ -1354,6 +1685,7 @@
       );
 
       currentShipping = null;
+      shippingHistory = [];
 
       return;
 
@@ -1432,12 +1764,6 @@
       );
 
 
-    const status =
-      document.getElementById(
-        "shippingStatus"
-      );
-
-
     if (courier) {
 
       courier.value =
@@ -1465,15 +1791,6 @@
     }
 
 
-    if (status) {
-
-      status.value =
-        currentShipping?.shipping_status ||
-        "belum_dikirim";
-
-    }
-
-
     const historyContainer =
       document.getElementById(
         "shippingHistoryAdmin"
@@ -1485,11 +1802,24 @@
     }
 
 
+    if (!currentShipping?.tracking_number) {
+
+      historyContainer.innerHTML = `
+        <div class="order-detail-note">
+          Nomor resi belum disimpan.
+        </div>
+      `;
+
+      return;
+
+    }
+
+
     if (!shippingHistory.length) {
 
       historyContainer.innerHTML = `
         <div class="order-detail-note">
-          Belum ada histori pengiriman.
+          Resi sudah tersimpan. Histori tracking otomatis belum tersedia.
         </div>
       `;
 
@@ -1507,11 +1837,7 @@
 
               <strong>
                 ${escapeHtml(
-                  SHIPPING_STATUS_LABELS[
-                    item.status
-                  ] ||
-                  item.status ||
-                  "-"
+                  item.status || "-"
                 )}
               </strong>
 
@@ -1568,23 +1894,7 @@
       )?.value.trim() || "";
 
 
-    const status =
-      document.getElementById(
-        "shippingStatus"
-      )?.value ||
-      "belum_dikirim";
-
-
-    const note =
-      document.getElementById(
-        "shippingNote"
-      )?.value.trim() || "";
-
-
-    if (
-      status !== "belum_dikirim" &&
-      !courier
-    ) {
+    if (!courier) {
 
       alert(
         "Pilih kurir terlebih dahulu."
@@ -1595,18 +1905,10 @@
     }
 
 
-    if (
-      [
-        "dalam_perjalanan",
-        "sampai_kota_tujuan",
-        "sedang_diantar",
-        "terkirim"
-      ].includes(status) &&
-      !trackingNumber
-    ) {
+    if (!trackingNumber) {
 
       alert(
-        "Nomor resi wajib diisi untuk status pengiriman ini."
+        "Nomor resi wajib diisi."
       );
 
       return;
@@ -1624,69 +1926,41 @@
 
     try {
 
-      const oldStatus =
-        currentShipping?.shipping_status ||
-        null;
-
-
-      const shippingPayload = {
+      const payload = {
 
         order_id:
           orderId,
 
         courier:
-          courier || null,
+          courier,
 
         service:
           service || null,
 
         tracking_number:
-          trackingNumber || null,
+          trackingNumber,
 
         shipping_cost:
           getShipping(),
 
         shipping_status:
-          status,
+          currentShipping?.shipping_status ||
+          "belum_dikirim",
 
-        note:
-          note || null,
+        shipping_date:
+          currentShipping?.shipping_date ||
+          new Date()
+            .toISOString()
+            .slice(
+              0,
+              10
+            ),
 
         updated_at:
-          new Date().toISOString()
+          new Date()
+            .toISOString()
 
       };
-
-
-      if (
-        status !== "belum_dikirim" &&
-        !currentShipping?.shipping_date
-      ) {
-
-        shippingPayload.shipping_date =
-          new Date()
-            .toISOString()
-            .slice(
-              0,
-              10
-            );
-
-      }
-
-
-      if (
-        status === "terkirim"
-      ) {
-
-        shippingPayload.received_date =
-          new Date()
-            .toISOString()
-            .slice(
-              0,
-              10
-            );
-
-      }
 
 
       let shippingRecord;
@@ -1701,7 +1975,7 @@
           await client()
             .from("shipping")
             .update(
-              shippingPayload
+              payload
             )
             .eq(
               "id",
@@ -1729,7 +2003,7 @@
           await client()
             .from("shipping")
             .insert(
-              shippingPayload
+              payload
             )
             .select()
             .single();
@@ -1746,44 +2020,8 @@
       }
 
 
-      if (
-        oldStatus !== status ||
-        note
-      ) {
-
-        const {
-          error: historyError
-        } =
-          await client()
-            .from("shipping_history")
-            .insert({
-
-              shipping_id:
-                shippingRecord.id,
-
-              status:
-                status,
-
-              note:
-                note || null
-
-            });
-
-
-        if (historyError) {
-          throw historyError;
-        }
-
-      }
-
-
       currentShipping =
         shippingRecord;
-
-
-      document.getElementById(
-        "shippingNote"
-      ).value = "";
 
 
       await loadShipping();
@@ -1792,7 +2030,7 @@
 
 
       alert(
-        "Data pengiriman berhasil disimpan."
+        "Nomor resi berhasil disimpan."
       );
 
     }
@@ -1806,7 +2044,7 @@
 
       alert(
         error?.message ||
-        "Gagal menyimpan pengiriman."
+        "Gagal menyimpan nomor resi."
       );
 
     }
@@ -1817,17 +2055,21 @@
 
 
       button.textContent =
-        "Simpan Pengiriman";
+        "Simpan Resi";
 
     }
 
   }
+
+
 
   function renderAll() {
 
     renderHeader();
 
     renderCustomer();
+
+    renderShippingAddress();
 
     renderItems();
 
@@ -2034,6 +2276,8 @@
 
 
 })();
+
+
 
 
 

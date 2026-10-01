@@ -2,6 +2,7 @@
 <html lang="id">
 
 <head>
+
   <meta charset="UTF-8">
 
   <meta
@@ -16,15 +17,39 @@
 
   <title>Checkout - Memora</title>
 
-  <link rel="stylesheet" href="../css/style.css">
-  <link rel="stylesheet" href="../css/order.css">
-  <link rel="stylesheet" href="../css/responsive.css">
+
+  <link
+    rel="stylesheet"
+    href="../css/style.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../css/order.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../css/responsive.css"
+  >
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
+
 
 <body>
 
+
+  <!-- =====================================================
+       HEADER
+       ===================================================== -->
+
   <header class="site-header">
+
     <div class="container header-inner">
+
 
       <a
         href="../index.html"
@@ -34,15 +59,47 @@
         MEMORA
       </a>
 
+
       <nav
-  class="customer-nav"
-  id="customerNav"
->
-  <a href="../">Home</a>
-  <a href="./">Order</a>
-  <a href="../track/">Track</a>
-  <a href="../cart/">Cart</a>
-</nav>
+        class="desktop-nav"
+        aria-label="Navigasi utama"
+      >
+
+        <a
+          href="../order/"
+          class="nav-link"
+          aria-current="page"
+        >
+          Order
+        </a>
+
+
+        <a
+          href="../track/"
+          class="nav-link"
+        >
+          Track
+        </a>
+
+
+        <a
+          href="../cart/"
+          class="nav-link cart-nav"
+        >
+
+          Cart
+
+          <span
+            class="cart-count"
+            id="cartCount"
+          >
+            0
+          </span>
+
+        </a>
+
+      </nav>
+
 
       <button
         type="button"
@@ -51,27 +108,77 @@
         aria-label="Buka menu"
         aria-expanded="false"
       >
-        ☰
+        â˜°
       </button>
 
+
     </div>
+
   </header>
 
 
-  <nav
-  class="customer-nav"
-  id="customerNav"
->
-  <a href="../">Home</a>
-  <a href="./">Order</a>
-  <a href="../track/">Track</a>
-  <a href="../cart/">Cart</a>
-</nav>
 
+  <!-- =====================================================
+       MOBILE NAV
+       ===================================================== -->
+
+  <nav
+    class="mobile-nav"
+    id="mobileNav"
+    aria-label="Navigasi mobile"
+  >
+
+    <a href="../order/">
+
+      Order
+
+      <span>
+        â†’
+      </span>
+
+    </a>
+
+
+    <a href="../track/">
+
+      Track
+
+      <span>
+        â†’
+      </span>
+
+    </a>
+
+
+    <a href="../cart/">
+
+      <span>
+        Cart
+      </span>
+
+      <span
+        class="cart-count"
+        id="mobileCartCount"
+      >
+        0
+      </span>
+
+    </a>
+
+  </nav>
+
+
+
+  <!-- =====================================================
+       MAIN
+       ===================================================== -->
 
   <main class="checkout-page">
 
     <div class="container">
+
+
+      <!-- BREADCRUMB -->
 
       <div class="checkout-breadcrumb">
 
@@ -94,6 +201,9 @@
       </div>
 
 
+
+      <!-- PAGE HEADING -->
+
       <div class="checkout-page-heading">
 
         <span class="checkout-eyebrow">
@@ -111,6 +221,11 @@
 
       </div>
 
+
+
+      <!-- =================================================
+           EMPTY STATE
+           ================================================= -->
 
       <section
         class="checkout-empty"
@@ -145,12 +260,25 @@
       </section>
 
 
+
+      <!-- =================================================
+           CHECKOUT FORM
+           ================================================= -->
+
       <div
         class="checkout-layout"
         id="checkoutLayout"
       >
 
+
+        <!-- ===============================================
+             LEFT
+             =============================================== -->
+
         <div class="checkout-main">
+
+
+          <!-- CUSTOMER -->
 
           <section class="checkout-card">
 
@@ -161,6 +289,7 @@
               </span>
 
               <div>
+
                 <h2>
                   Data Customer
                 </h2>
@@ -169,12 +298,16 @@
                   Data ini digunakan untuk konfirmasi
                   pesanan dan pengiriman.
                 </p>
+
               </div>
 
             </div>
 
 
             <div class="checkout-form-grid">
+
+
+              <!-- NAME -->
 
               <div class="form-group">
 
@@ -197,10 +330,14 @@
                 <span
                   class="field-error"
                   id="customerNameError"
-                ></span>
+                >
+                </span>
 
               </div>
 
+
+
+              <!-- WHATSAPP -->
 
               <div class="form-group">
 
@@ -227,10 +364,14 @@
                 <span
                   class="field-error"
                   id="customerWhatsappError"
-                ></span>
+                >
+                </span>
 
               </div>
 
+
+
+              <!-- EMAIL -->
 
               <div class="form-group">
 
@@ -253,10 +394,14 @@
                 <span
                   class="field-error"
                   id="customerEmailError"
-                ></span>
+                >
+                </span>
 
               </div>
 
+
+
+              <!-- CITY -->
 
               <div class="form-group">
 
@@ -277,6 +422,9 @@
 
               </div>
 
+
+
+              <!-- POSTAL CODE -->
 
               <div class="form-group">
 
@@ -299,6 +447,9 @@
               </div>
 
 
+
+              <!-- ADDRESS -->
+
               <div class="form-group full">
 
                 <label
@@ -317,10 +468,14 @@
 
               </div>
 
+
             </div>
 
           </section>
 
+
+
+          <!-- ORDER NOTE -->
 
           <section class="checkout-card">
 
@@ -331,7 +486,88 @@
               </span>
 
               <div>
-                <h2>
+
+                
+<!-- MEMORA CHECKOUT ADDRESS START -->
+
+<section class="checkout-address-section" id="checkoutAddressSection">
+
+  <div class="checkout-section-heading">
+    <span class="checkout-section-eyebrow">
+      ALAMAT PENGIRIMAN
+    </span>
+
+    <h2>
+      Pilih Alamat
+    </h2>
+
+    <p>
+      Alamat utama otomatis dipilih. Kamu tetap bisa menggunakan alamat lain.
+    </p>
+  </div>
+
+
+  <div
+    class="checkout-address-loading"
+    id="checkoutAddressLoading"
+  >
+    Memuat alamat...
+  </div>
+
+
+  <div
+    class="checkout-address-list"
+    id="checkoutAddressList"
+  ></div>
+
+
+  <div
+    class="checkout-address-empty"
+    id="checkoutAddressEmpty"
+    hidden
+  >
+
+    <strong>
+      Belum ada alamat tersimpan
+    </strong>
+
+    <p>
+      Tambahkan alamat terlebih dahulu sebelum melanjutkan checkout.
+    </p>
+
+    <a
+      href="/account/addresses/"
+      class="checkout-address-add"
+    >
+      + Tambah Alamat
+    </a>
+
+  </div>
+
+
+  <div class="checkout-address-footer">
+
+    <a
+      href="/account/addresses/"
+      class="checkout-address-manage"
+    >
+      Kelola Alamat
+    </a>
+
+  </div>
+
+
+  <input
+    type="hidden"
+    id="selectedAddressId"
+    name="selected_address_id"
+  >
+
+</section>
+
+<!-- MEMORA CHECKOUT ADDRESS END -->
+
+<h2>
                   Catatan Pesanan
                 </h2>
 
@@ -339,6 +575,7 @@
                   Tambahkan informasi umum untuk
                   seluruh pesanan jika diperlukan.
                 </p>
+
               </div>
 
             </div>
@@ -365,13 +602,18 @@
           </section>
 
 
+
+          <!-- PAYMENT INFO -->
+
           <section class="checkout-information">
 
             <div class="checkout-information-icon">
               i
             </div>
 
+
             <div>
+
               <strong>
                 Konfirmasi & Pembayaran
               </strong>
@@ -382,14 +624,22 @@
                 WhatsApp untuk konfirmasi detail pesanan,
                 desain, DP, dan proses selanjutnya.
               </p>
+
             </div>
 
           </section>
 
+
         </div>
 
 
+
+        <!-- ===============================================
+             RIGHT SUMMARY
+             =============================================== -->
+
         <aside class="checkout-summary">
+
 
           <div class="checkout-summary-heading">
 
@@ -404,13 +654,21 @@
           </div>
 
 
+
+          <!-- ITEMS -->
+
           <div
             class="checkout-items"
             id="checkoutItems"
-          ></div>
+          >
+          </div>
 
+
+
+          <!-- TOTAL -->
 
           <div class="checkout-price-summary">
+
 
             <div class="checkout-price-row">
 
@@ -450,7 +708,9 @@
 
             </div>
 
+
           </div>
+
 
 
           <div class="checkout-total">
@@ -474,6 +734,9 @@
           </div>
 
 
+
+          <!-- SUBMIT -->
+
           <button
             type="button"
             class="create-order-button"
@@ -488,14 +751,18 @@
               class="button-loader"
               id="createOrderLoader"
               hidden
-            ></span>
+            >
+            </span>
 
           </button>
 
 
+
           <p class="checkout-agreement">
+
             Dengan membuat pesanan, kamu memastikan
             data yang diisi sudah benar.
+
           </p>
 
 
@@ -503,17 +770,25 @@
             href="../cart/"
             class="back-to-cart-link"
           >
-            ← Kembali ke Keranjang
+            â† Kembali ke Keranjang
           </a>
+
 
         </aside>
 
+
       </div>
+
 
     </div>
 
   </main>
 
+
+
+  <!-- =====================================================
+       ERROR MODAL
+       ===================================================== -->
 
   <div
     class="checkout-modal"
@@ -524,7 +799,8 @@
     <div
       class="checkout-modal-backdrop"
       data-close-error
-    ></div>
+    >
+    </div>
 
 
     <div
@@ -558,11 +834,18 @@
   </div>
 
 
+
+  <!-- =====================================================
+       FOOTER
+       ===================================================== -->
+
   <footer class="site-footer">
 
     <div class="container footer-inner">
 
+
       <div>
+
         <div class="footer-brand">
           MEMORA
         </div>
@@ -570,6 +853,7 @@
         <p class="footer-copy">
           Creative Printing & Personalized Stationery
         </p>
+
       </div>
 
 
@@ -593,20 +877,42 @@
 
       </div>
 
+
     </div>
 
   </footer>
 
 
+
+  <!-- =====================================================
+       SUPABASE JS
+       ===================================================== -->
+
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+
+  <!-- GLOBAL -->
+
   <script src="../js/main.js"></script>
+
+
+  <!-- SUPABASE CONFIG -->
+
   <script src="../js/supabase.js"></script>
-  <script src="../js/order.js"></script>
 
-<script src="../js/customer-nav.js"></script>
 
+  <!-- CHECKOUT -->
+<script src="../js/order.js"></script>
+
+
+<script src="../js/customer-auth-guard.js"></script>
+<script src="../js/checkout-address.js"></script>
+<script src="../js/checkout-customer-bridge.js"></script>
 </body>
 
 </html>
+
+
+
+
 

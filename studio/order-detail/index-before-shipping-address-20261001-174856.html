@@ -1,0 +1,935 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Order Detail - Memora Studio</title>
+
+  <link
+    rel="stylesheet"
+    href="../../css/style.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../../css/studio.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../../css/order-detail.css"
+  >
+
+</head>
+
+
+<body class="studio-body">
+
+
+<div
+  class="studio-mobile-overlay"
+  id="studioMobileOverlay"
+></div>
+
+
+<div class="studio-layout">
+
+
+  <aside
+    class="studio-sidebar"
+    id="studioSidebar"
+  >
+
+
+    <div class="studio-sidebar-header">
+
+      <a
+        href="../dashboard/"
+        class="studio-brand"
+      >
+        MEMORA
+      </a>
+
+      <span class="studio-brand-subtitle">
+        Studio
+      </span>
+
+    </div>
+
+
+    <nav class="studio-nav">
+
+      <a
+        href="../dashboard/"
+        class="studio-nav-item"
+      >
+        <span class="studio-nav-icon">◫</span>
+        <span>Dashboard</span>
+      </a>
+
+      <a
+        href="../orders/"
+        class="studio-nav-item active"
+      >
+        <span class="studio-nav-icon">◇</span>
+        <span>Orders</span>
+      </a>
+
+      <a
+        href="../production/"
+        class="studio-nav-item"
+      >
+        <span class="studio-nav-icon">◌</span>
+        <span>Production</span>
+      </a>
+
+      <a
+        href="../finance/"
+        class="studio-nav-item"
+      >
+        <span class="studio-nav-icon">Rp</span>
+        <span>Finance</span>
+      </a>
+
+      <a
+        href="../invoices/"
+        class="studio-nav-item"
+      >
+        <span class="studio-nav-icon">▤</span>
+        <span>Invoices</span>
+      </a>
+
+      <a
+        href="../customers/"
+        class="studio-nav-item"
+      >
+        <span class="studio-nav-icon">♡</span>
+        <span>Customers</span>
+      </a>
+
+      <a
+        href="../products/"
+        class="studio-nav-item"
+      >
+        <span class="studio-nav-icon">□</span>
+        <span>Products</span>
+      </a>
+
+      <a
+        href="../gallery/"
+        class="studio-nav-item"
+      >
+        <span class="studio-nav-icon">▧</span>
+        <span>Gallery</span>
+      </a>
+
+      <a
+        href="../archive/"
+        class="studio-nav-item"
+      >
+        <span class="studio-nav-icon">◱</span>
+        <span>Archive</span>
+      </a>
+
+    </nav>
+
+
+    <div class="studio-sidebar-bottom">
+
+      <div class="studio-owner">
+
+        <div class="studio-owner-main">
+
+          <div class="studio-owner-avatar">
+            TA
+          </div>
+
+          <div class="studio-owner-text">
+
+            <strong data-owner-name>
+              Tassya & Arif
+            </strong>
+
+            <span data-owner-role>
+              Owner
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <button
+          type="button"
+          class="studio-logout-button"
+          data-action="studio-logout"
+        >
+          Keluar
+        </button>
+
+      </div>
+
+    </div>
+
+
+  </aside>
+
+
+  <main class="studio-main">
+
+
+    <header class="studio-topbar">
+
+      <div class="studio-topbar-left">
+
+        <button
+          type="button"
+          class="studio-menu-button"
+          id="studioMenuButton"
+        >
+          ☰
+        </button>
+
+        <div>
+
+          <span class="studio-eyebrow">
+            Memora Studio
+          </span>
+
+          <h1>
+            Order Detail
+          </h1>
+
+        </div>
+
+      </div>
+
+
+      <div class="studio-topbar-right">
+
+        <a
+          href="../orders/"
+          class="order-detail-back"
+        >
+          ← Kembali ke Orders
+        </a>
+
+      </div>
+
+    </header>
+
+
+    <div class="studio-content">
+
+
+      <div
+        class="order-detail-loading"
+        id="orderDetailLoading"
+      >
+        Memuat detail order...
+      </div>
+
+
+      <div
+        id="orderDetailContent"
+        hidden
+      >
+
+
+        <section class="order-detail-header-card">
+
+
+          <div>
+
+            <span class="dashboard-section-label">
+              Order
+            </span>
+
+            <h2 id="detailOrderNumber">
+              -
+            </h2>
+
+            <p id="detailOrderDate">
+              -
+            </p>
+
+          </div>
+
+
+          <div class="order-detail-header-actions">
+
+            <span
+              id="detailPaymentBadge"
+              class="order-detail-badge"
+            >
+              -
+            </span>
+
+            <span
+              id="detailStatusBadge"
+              class="order-detail-badge"
+            >
+              -
+            </span>
+
+          </div>
+
+
+        </section>
+
+
+        <div class="order-detail-grid">
+
+
+          <div class="order-detail-main-column">
+
+
+            <!-- CUSTOMER -->
+
+            <section class="order-detail-panel">
+
+              <div class="order-detail-panel-heading">
+
+                <div>
+
+                  <span class="dashboard-section-label">
+                    Customer
+                  </span>
+
+                  <h3>
+                    Data Customer
+                  </h3>
+
+                </div>
+
+              </div>
+
+
+              <div class="order-detail-info-grid">
+
+                <div>
+
+                  <span>
+                    Nama
+                  </span>
+
+                  <strong id="detailCustomerName">
+                    -
+                  </strong>
+
+                </div>
+
+
+                <div>
+
+                  <span>
+                    WhatsApp
+                  </span>
+
+                  <strong id="detailCustomerWhatsapp">
+                    -
+                  </strong>
+
+                </div>
+
+
+                <div>
+
+                  <span>
+                    Email
+                  </span>
+
+                  <strong id="detailCustomerEmail">
+                    -
+                  </strong>
+
+                </div>
+
+
+                <div>
+
+                  <span>
+                    Alamat
+                  </span>
+
+                  <strong id="detailCustomerAddress">
+                    -
+                  </strong>
+
+                </div>
+
+              </div>
+
+            </section>
+
+
+            <!-- ITEMS -->
+
+            <section class="order-detail-panel">
+
+              <div class="order-detail-panel-heading">
+
+                <div>
+
+                  <span class="dashboard-section-label">
+                    Items
+                  </span>
+
+                  <h3>
+                    Produk Pesanan
+                  </h3>
+
+                </div>
+
+              </div>
+
+
+              <div
+                class="order-detail-items"
+                id="detailItems"
+              ></div>
+
+            </section>
+
+
+            <!-- CUSTOMER NOTE -->
+
+            <section class="order-detail-panel">
+
+              <div class="order-detail-panel-heading">
+
+                <div>
+
+                  <span class="dashboard-section-label">
+                    Notes
+                  </span>
+
+                  <h3>
+                    Catatan Customer
+                  </h3>
+
+                </div>
+
+              </div>
+
+
+              <div
+                class="order-detail-note"
+                id="detailCustomerNote"
+              >
+                -
+              </div>
+
+            </section>
+
+
+            <!-- HISTORY -->
+
+            <section class="order-detail-panel">
+
+              <div class="order-detail-panel-heading">
+
+                <div>
+
+                  <span class="dashboard-section-label">
+                    Timeline
+                  </span>
+
+                  <h3>
+                    Riwayat Status
+                  </h3>
+
+                </div>
+
+              </div>
+
+
+              <div
+                class="order-detail-timeline"
+                id="detailTimeline"
+              ></div>
+
+            </section>
+
+
+          </div>
+
+
+          <div class="order-detail-side-column">
+
+
+            <!-- TOTAL -->
+
+            <section class="order-detail-panel">
+
+              <div class="order-detail-panel-heading">
+
+                <div>
+
+                  <span class="dashboard-section-label">
+                    Summary
+                  </span>
+
+                  <h3>
+                    Ringkasan Order
+                  </h3>
+
+                </div>
+
+              </div>
+
+
+              <div class="order-detail-summary">
+
+                <div>
+
+                  <span>
+                    Subtotal
+                  </span>
+
+                  <strong id="detailSubtotal">
+                    Rp0
+                  </strong>
+
+                </div>
+
+
+                <div class="order-detail-shipping-row">
+
+                  <span>
+                    Ongkir
+                  </span>
+
+                  <strong id="detailShipping">
+                    Rp0
+                  </strong>
+
+                </div>
+
+
+                <div class="order-detail-summary-total">
+
+                  <span>
+                    Grand Total
+                  </span>
+
+                  <strong id="detailGrandTotal">
+                    Rp0
+                  </strong>
+
+                </div>
+
+              </div>
+
+
+              <div class="order-detail-shipping-editor">
+
+                <label for="shippingCostInput">
+                  Atur Ongkir
+                </label>
+
+                <div class="order-detail-shipping-input">
+
+                  <span>
+                    Rp
+                  </span>
+
+                  <input
+                    type="number"
+                    id="shippingCostInput"
+                    min="0"
+                    step="1000"
+                    value="0"
+                    placeholder="0"
+                  >
+
+                </div>
+
+
+                <small>
+                  Grand total akan otomatis diperbarui setelah ongkir disimpan.
+                </small>
+
+
+                <button
+                  type="button"
+                  class="order-detail-secondary-action"
+                  id="saveShippingButton"
+                >
+                  Simpan Ongkir
+                </button>
+
+              </div>
+
+            </section>
+
+
+            <!-- SHIPPING -->
+
+<section class="order-detail-panel">
+
+  <div class="order-detail-panel-heading">
+
+    <div>
+
+      <span class="dashboard-section-label">
+        Shipping
+      </span>
+
+      <h3>
+        Pengiriman
+      </h3>
+
+    </div>
+
+  </div>
+
+
+  <div class="order-detail-form-group">
+
+    <label for="shippingCourier">
+      Kurir
+    </label>
+
+    <select id="shippingCourier">
+
+      <option value="">
+        Pilih Kurir
+      </option>
+
+      <option value="JNE">
+        JNE
+      </option>
+
+      <option value="J&T Express">
+        J&T Express
+      </option>
+
+      <option value="SiCepat">
+        SiCepat
+      </option>
+
+      <option value="AnterAja">
+        AnterAja
+      </option>
+
+      <option value="Ninja Xpress">
+        Ninja Xpress
+      </option>
+
+      <option value="Pos Indonesia">
+        Pos Indonesia
+      </option>
+
+      <option value="Lion Parcel">
+        Lion Parcel
+      </option>
+
+      <option value="TIKI">
+        TIKI
+      </option>
+
+      <option value="Lainnya">
+        Lainnya
+      </option>
+
+    </select>
+
+  </div>
+
+
+  <div class="order-detail-form-group">
+
+    <label for="shippingService">
+      Layanan
+    </label>
+
+    <input
+      type="text"
+      id="shippingService"
+      placeholder="Contoh: REG, EZ, YES"
+    >
+
+  </div>
+
+
+  <div class="order-detail-form-group">
+
+    <label for="shippingTrackingNumber">
+      Nomor Resi
+    </label>
+
+    <input
+      type="text"
+      id="shippingTrackingNumber"
+      placeholder="Masukkan nomor resi"
+    >
+
+  </div>
+
+
+  <div class="shipping-auto-info">
+
+    <strong>
+      Tracking otomatis
+    </strong>
+
+    <p>
+      Setelah nomor resi disimpan, histori perjalanan paket akan diambil otomatis dari layanan tracking.
+    </p>
+
+  </div>
+
+
+  <button
+    type="button"
+    class="order-detail-primary-button"
+    id="saveShippingDetailButton"
+  >
+    Simpan Resi
+  </button>
+
+
+  <div
+    class="order-detail-shipping-history"
+    id="shippingHistoryAdmin"
+  ></div>
+
+</section>
+
+
+<!-- STATUS UPDATE -->
+
+            <section class="order-detail-panel">
+
+              <div class="order-detail-panel-heading">
+
+                <div>
+
+                  <span class="dashboard-section-label">
+                    Workflow
+                  </span>
+
+                  <h3>
+                    Update Status
+                  </h3>
+
+                </div>
+
+              </div>
+
+
+              <div class="order-detail-form-group">
+
+                <label for="detailStatusSelect">
+                  Status Order
+                </label>
+
+                <select id="detailStatusSelect">
+
+                  <option value="menunggu_konfirmasi">
+                    Menunggu Konfirmasi
+                  </option>
+
+                  <option value="data_belum_lengkap">
+                    Data Belum Lengkap
+                  </option>
+
+                  <option value="data_lengkap">
+                    Data Lengkap
+                  </option>
+
+                  <option value="desain">
+                    Desain
+                  </option>
+
+                  <option value="menunggu_approval">
+                    Menunggu Approval
+                  </option>
+
+                  <option value="revisi">
+                    Revisi
+                  </option>
+
+                  <option value="approved">
+                    Approved
+                  </option>
+
+                  <option value="printing">
+                    Printing
+                  </option>
+
+                  <option value="finishing">
+                    Finishing
+                  </option>
+
+                  <option value="quality_check">
+                    Quality Check
+                  </option>
+
+                  <option value="packing">
+                    Packing
+                  </option>
+
+                  <option value="dikirim">
+                    Dikirim
+                  </option>
+
+                  <option value="selesai">
+                    Selesai
+                  </option>
+
+                  <option value="dibatalkan">
+                    Dibatalkan
+                  </option>
+
+                </select>
+
+              </div>
+
+
+              <div class="order-detail-form-group">
+
+                <label for="detailStatusNote">
+                  Catatan Status
+                </label>
+
+                <textarea
+                  id="detailStatusNote"
+                  placeholder="Opsional..."
+                ></textarea>
+
+              </div>
+
+
+              <button
+                type="button"
+                class="order-detail-primary-button"
+                id="updateStatusButton"
+              >
+                Simpan Status
+              </button>
+
+            </section>
+
+
+            <!-- PAYMENT -->
+
+            <section class="order-detail-panel">
+
+              <div class="order-detail-panel-heading">
+
+                <div>
+
+                  <span class="dashboard-section-label">
+                    Payment
+                  </span>
+
+                  <h3>
+                    Pembayaran
+                  </h3>
+
+                </div>
+
+              </div>
+
+
+              <div class="order-detail-summary">
+
+                <div>
+
+                  <span>
+                    Status
+                  </span>
+
+                  <strong id="detailPaymentStatus">
+                    -
+                  </strong>
+
+                </div>
+
+
+                <div>
+
+                  <span>
+                    Sudah Dibayar
+                  </span>
+
+                  <strong id="detailPaidAmount">
+                    Rp0
+                  </strong>
+
+                </div>
+
+
+                <div>
+
+                  <span>
+                    Sisa
+                  </span>
+
+                  <strong id="detailRemainingAmount">
+                    Rp0
+                  </strong>
+
+                </div>
+
+              </div>
+
+
+              <a
+                href="../finance/"
+                class="order-detail-secondary-button"
+              >
+                Kelola di Finance
+              </a>
+
+            </section>
+
+
+          </div>
+
+
+        </div>
+
+
+      </div>
+
+
+      <div
+        class="order-detail-error"
+        id="orderDetailError"
+        hidden
+      ></div>
+
+
+    </div>
+
+
+  </main>
+
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="../../js/supabase.js"></script>
+<script src="../../js/studio/auth.js"></script>
+<script src="../../js/studio/guard.js"></script>
+<script src="../../js/studio/order-detail.js"></script>
+
+
+</body>
+
+</html>
+
+
+

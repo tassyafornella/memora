@@ -1,0 +1,521 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>AKUN SAYA - Memora</title>
+
+  <link
+    rel="stylesheet"
+    href="../css/style.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../css/account.css"
+  >
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+
+<body class="account-body">
+
+
+<header class="account-dashboard-header">
+
+  <a
+    href="../"
+    class="account-brand"
+  >
+    MEMORA
+  </a>
+
+
+  <nav
+  class="customer-nav"
+  id="customerNav"
+>
+  <a href="../">Home</a>
+  <a href="../order/">Order</a>
+  <a href="../track/">Track</a>
+  <a href="../cart/">Cart</a>
+  <a href="./">Profil Saya</a>
+</nav>
+
+</header>
+
+
+<main class="account-dashboard-page">
+
+
+  <section
+    class="account-dashboard-loading"
+    id="accountDashboardLoading"
+  >
+    Memuat akun...
+  </section>
+
+
+  <div
+    id="accountDashboardContent"
+    hidden
+  >
+
+
+    <section class="account-welcome-section">
+
+      <span class="account-eyebrow">
+        AKUN SAYA
+      </span>
+
+      <h1>
+        Halo,
+        <span id="accountWelcomeName">
+          Customer
+        </span>
+      </h1>
+
+      <p>
+        Kelola akun dan pesanan Memora-mu dalam satu tempat.
+      </p>
+
+    </section>
+
+
+    <section class="account-stat-grid">
+
+      <article class="account-stat-card">
+
+        <span>
+          Total Pesanan
+        </span>
+
+        <strong id="accountTotalPesanan Saya">
+          0
+        </strong>
+
+      </article>
+
+
+      <article class="account-stat-card">
+
+        <span>
+          Diproses
+        </span>
+
+        <strong id="accountActivePesanan Saya">
+          0
+        </strong>
+
+      </article>
+
+
+      <article class="account-stat-card">
+
+        <span>
+          Selesai
+        </span>
+
+        <strong id="accountSelesaiPesanan Saya">
+          0
+        </strong>
+
+      </article>
+
+
+      <article class="account-stat-card">
+
+        <span>
+          Total Belanja
+        </span>
+
+        <strong id="accountTotalSpending">
+          Rp0
+        </strong>
+
+      </article>
+
+    </section>
+
+
+    <div class="account-dashboard-grid">
+
+
+      <section class="account-dashboard-panel">
+
+        <div class="account-panel-heading">
+
+          <div>
+
+            <span class="account-eyebrow">
+              Profil Saya
+            </span>
+
+            <h2>
+              Informasi Profil
+            </h2>
+
+          </div>
+
+        </div>
+
+
+        <form
+          id="accountProfil SayaForm"
+          class="account-profile-form"
+        >
+
+
+          <div class="account-form-group">
+
+            <label for="accountFullName">
+              Nama Lengkap
+            </label>
+
+            <input
+              type="text"
+              id="accountFullName"
+              required
+            >
+
+          </div>
+
+
+          <div class="account-form-group">
+
+            <label for="accountEmail">
+              Email
+            </label>
+
+            <input
+              type="email"
+              id="accountEmail"
+              disabled
+            >
+
+          </div>
+
+
+          <div class="account-form-group">
+
+            <label for="accountWhatsapp">
+              WhatsApp
+            </label>
+
+            <input
+              type="tel"
+              id="accountWhatsapp"
+              required
+            >
+
+          </div>
+
+
+          <div class="account-form-group">
+
+            <label for="accountAddress">
+              Alamat Lengkap
+            </label>
+
+            <textarea
+              id="accountAddress"
+              rows="4"
+              placeholder="Alamat lengkap"
+            ></textarea>
+
+          </div>
+
+
+          <div class="account-profile-row">
+
+            <div class="account-form-group">
+
+              <label for="accountCity">
+                Kota / Kabupaten
+              </label>
+
+              <input
+                type="text"
+                id="accountCity"
+              >
+
+            </div>
+
+
+            <div class="account-form-group">
+
+              <label for="accountPostalCode">
+                Kode Pos
+              </label>
+
+              <input
+                type="text"
+                id="accountPostalCode"
+                inputmode="numeric"
+              >
+
+            </div>
+
+          </div>
+
+
+          <button
+            type="submit"
+            class="account-primary-button"
+            id="saveAccountProfil SayaButton"
+          >
+            Simpan Profil
+          </button>
+
+
+          <div
+            class="account-message"
+            id="accountProfil SayaMessage"
+            hidden
+          ></div>
+
+
+        </form>
+
+      </section>
+
+
+      <section class="account-dashboard-panel account-orders-panel">
+
+        <div class="account-panel-heading">
+
+          <div>
+
+            <span class="account-eyebrow">
+              Pesanan Saya
+            </span>
+
+            <h2>
+              My Pesanan Saya
+            </h2>
+
+          </div>
+
+
+          <button
+            type="button"
+            class="account-refresh-button"
+            id="accountPerbaruiPesanan Saya"
+          >
+            Perbarui
+          </button>
+
+        </div>
+
+
+        <div
+          class="account-order-list"
+          id="accountOrderList"
+        ></div>
+
+
+        <div
+          class="account-orders-empty"
+          id="accountPesanan SayaEmpty"
+          hidden
+        >
+
+          <strong>
+            Belum ada pesanan.
+          </strong>
+
+          <p>
+            Detail dan perkembangan pesananmu akan muncul di sini setelah kamu melakukan pemesanan.
+          </p>
+
+          <a
+            href="../#catalog"
+            class="account-shop-button"
+          >
+            Jelajahi Koleksi
+          </a>
+
+        </div>
+
+      </section>
+
+
+    </div>
+
+
+  </div>
+
+
+  <div
+    class="account-dashboard-error"
+    id="accountDashboardError"
+    hidden
+  ></div>
+
+
+</main>
+
+
+<div
+  class="account-order-modal"
+  id="accountOrderModal"
+  hidden
+>
+
+
+  <div
+    class="account-order-modal-backdrop"
+    data-close-account-order
+  ></div>
+
+
+  <div class="account-order-modal-card">
+
+
+    <div class="account-order-modal-header">
+
+      <div>
+
+        <span class="account-eyebrow">
+          Order Detail
+        </span>
+
+        <h3 id="accountOrderModalNumber">
+          -
+        </h3>
+
+      </div>
+
+
+      <button
+        type="button"
+        class="account-order-modal-close"
+        data-close-account-order
+      >
+        ×
+      </button>
+
+    </div>
+
+
+    <div class="account-order-detail-summary">
+
+      <div>
+
+        <span>
+          Status Order
+        </span>
+
+        <strong id="accountOrderModalStatus">
+          -
+        </strong>
+
+      </div>
+
+
+      <div>
+
+        <span>
+          Status Pembayaran
+        </span>
+
+        <strong id="accountOrderModalPayment">
+          -
+        </strong>
+
+      </div>
+
+
+      <div>
+
+        <span>
+          Grand Total
+        </span>
+
+        <strong id="accountOrderModalTotal">
+          Rp0
+        </strong>
+
+      </div>
+
+
+      <div>
+
+        <span>
+          Tanggal
+        </span>
+
+        <strong id="accountOrderModalDate">
+          -
+        </strong>
+
+      </div>
+
+    </div>
+
+
+    <div class="account-order-modal-section">
+
+      <span class="account-eyebrow">
+        Items
+      </span>
+
+      <div
+        id="accountOrderModalItems"
+        class="account-order-modal-items"
+      ></div>
+
+    </div>
+
+
+    <div class="account-order-modal-section">
+
+      <span class="account-eyebrow">
+        Timeline
+      </span>
+
+      <div
+        id="accountOrderModalHistory"
+        class="account-order-history"
+      ></div>
+
+    </div>
+
+
+    <a
+      href="#"
+      id="accountOrderTrackLink"
+      class="account-track-button"
+    >
+      Track Order
+    </a>
+
+
+  </div>
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="../js/supabase.js"></script>
+<script src="../js/account.js"></script>
+<script src="../js/customer-nav.js"></script>
+
+
+</body>
+
+</html>
+
+
+

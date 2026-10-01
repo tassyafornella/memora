@@ -1,0 +1,503 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Pesanan Saya | Memora</title>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../../css/style.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../../css/customer-account.css"
+  >
+
+  <style>
+
+    .orders-filter {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 25px;
+    }
+
+    .orders-filter-button {
+      min-height: 38px;
+      padding: 0 15px;
+
+      border: 1px solid #dce5df;
+      border-radius: 999px;
+
+      background: #ffffff;
+      color: #64736c;
+
+      font-size: 10px;
+      font-weight: 600;
+
+      cursor: pointer;
+    }
+
+    .orders-filter-button.active {
+      border-color: #173f35;
+      background: #173f35;
+      color: #ffffff;
+    }
+
+
+    .customer-orders-list {
+      display: grid;
+      gap: 14px;
+
+      margin-top: 22px;
+    }
+
+
+    .customer-order-card {
+      padding: 20px;
+
+      border: 1px solid #dde6e0;
+      border-radius: 18px;
+
+      background: #ffffff;
+
+      transition:
+        border-color 0.2s ease,
+        transform 0.2s ease;
+    }
+
+    .customer-order-card:hover {
+      border-color: #b8c9bf;
+      transform: translateY(-1px);
+    }
+
+
+    .customer-order-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+
+      gap: 14px;
+
+      padding-bottom: 15px;
+
+      border-bottom: 1px solid #edf1ee;
+    }
+
+
+    .customer-order-number {
+      margin: 0;
+
+      color: #173f35;
+
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+
+    .customer-order-date {
+      display: block;
+
+      margin-top: 4px;
+
+      color: #89958f;
+
+      font-size: 10px;
+    }
+
+
+    .customer-order-status {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+
+      min-height: 28px;
+
+      padding: 0 10px;
+
+      border-radius: 999px;
+
+      background: #e8f0eb;
+      color: #173f35;
+
+      font-size: 9px;
+      font-weight: 600;
+
+      white-space: nowrap;
+    }
+
+
+    .customer-order-body {
+      display: grid;
+
+      grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+      gap: 16px;
+
+      padding: 18px 0;
+    }
+
+
+    .customer-order-info span {
+      display: block;
+
+      margin-bottom: 4px;
+
+      color: #89958f;
+
+      font-size: 9px;
+    }
+
+
+    .customer-order-info strong {
+      color: #1e2925;
+
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+
+    .customer-order-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      gap: 15px;
+    }
+
+
+    .customer-order-total span {
+      display: block;
+
+      margin-bottom: 3px;
+
+      color: #89958f;
+
+      font-size: 9px;
+    }
+
+
+    .customer-order-total strong {
+      color: #173f35;
+
+      font-size: 17px;
+      font-weight: 600;
+    }
+
+
+    .customer-order-detail-button {
+      min-height: 40px;
+
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+
+      padding: 0 16px;
+
+      border: 1px solid #173f35;
+      border-radius: 999px;
+
+      background: #ffffff;
+      color: #173f35;
+
+      font-size: 10px;
+      font-weight: 600;
+
+      text-decoration: none;
+    }
+
+
+    .orders-loading {
+      padding: 40px 20px;
+
+      color: #7b8982;
+
+      font-size: 12px;
+
+      text-align: center;
+    }
+
+
+    .orders-error {
+      display: none;
+
+      margin-top: 20px;
+
+      padding: 13px 15px;
+
+      border-radius: 12px;
+
+      background: #f8eeee;
+      color: #6c2936;
+
+      font-size: 11px;
+    }
+
+    .orders-error.show {
+      display: block;
+    }
+
+
+    @media (max-width: 600px) {
+
+      .customer-order-top {
+        flex-direction: column;
+      }
+
+      .customer-order-body {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .customer-order-footer {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .customer-order-detail-button {
+        width: 100%;
+      }
+
+    }
+
+  
+    /* Pastikan empty state benar-benar hilang saat hidden */
+    #ordersEmpty[hidden] {
+      display: none !important;
+    }
+
+</style>
+
+
+<style>
+  .account-back-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    margin-bottom: 18px;
+
+    color: #173f35;
+
+    font-family: "Poppins", Arial, sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+
+    text-decoration: none;
+  }
+
+  .account-back-button:hover {
+    opacity: 0.75;
+  }
+</style>
+
+</head>
+
+<body>
+
+
+  <header class="site-header">
+
+    <div class="header-inner">
+
+      <a
+        href="/"
+        class="brand"
+      >
+        MEMORA
+      </a>
+
+      <nav
+        class="customer-nav"
+        id="customerNav"
+      ></nav>
+
+    </div>
+
+  </header>
+
+
+  <main class="account-shell">
+
+    <a
+      href="/account/"
+      class="account-back-button"
+    >
+      ‹ Kembali
+    </a>
+
+
+
+    <div class="account-breadcrumb">
+
+      <a href="/account/">
+        Akun Saya
+      </a>
+
+      <span>›</span>
+
+      <strong>
+        Pesanan Saya
+      </strong>
+
+    </div>
+
+
+    <span class="account-eyebrow">
+      PESANAN
+    </span>
+
+
+    <h1 class="account-title">
+      Pesanan Saya
+    </h1>
+
+
+    <p class="account-description">
+      Lihat seluruh pesanan dan perkembangan
+      proses pesanan Memora-mu.
+    </p>
+
+
+    <section class="account-content-card">
+
+
+      <h2 class="account-section-title">
+        Riwayat Pesanan
+      </h2>
+
+
+      <p class="account-section-description">
+        Pesanan dari akun ini akan tampil otomatis.
+      </p>
+
+
+      <div class="orders-filter">
+
+        <button
+          type="button"
+          class="orders-filter-button active"
+          data-order-filter="all"
+        >
+          Semua
+        </button>
+
+        <button
+          type="button"
+          class="orders-filter-button"
+          data-order-filter="process"
+        >
+          Diproses
+        </button>
+
+        <button
+          type="button"
+          class="orders-filter-button"
+          data-order-filter="production"
+        >
+          Produksi
+        </button>
+
+        <button
+          type="button"
+          class="orders-filter-button"
+          data-order-filter="shipping"
+        >
+          Dikirim
+        </button>
+
+        <button
+          type="button"
+          class="orders-filter-button"
+          data-order-filter="done"
+        >
+          Selesai
+        </button>
+
+      </div>
+
+
+      <div
+        class="orders-loading"
+        id="ordersLoading"
+      >
+        Memuat pesanan...
+      </div>
+
+
+      <div
+        class="customer-orders-list"
+        id="customerOrdersList"
+      ></div>
+
+
+      <div
+        class="account-empty"
+        id="ordersEmpty"
+        hidden
+      >
+
+        <div class="account-empty-icon">
+          O
+        </div>
+
+        <strong>
+          Belum ada pesanan
+        </strong>
+
+        <p>
+          Setelah kamu membuat pesanan,
+          detail dan perkembangan pesanan
+          akan tampil di halaman ini.
+        </p>
+
+        <a
+          href="/#collection"
+          class="account-primary-button"
+        >
+          Jelajahi Koleksi
+        </a>
+
+      </div>
+
+
+      <div
+        class="orders-error"
+        id="ordersError"
+      ></div>
+
+
+    </section>
+
+
+  </main>
+
+
+  <script
+    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+  ></script>
+
+  <script src="../../js/supabase.js"></script>
+  <script src="../../js/customer-auth-guard.js"></script>
+  <script src="../../js/customer-nav.js"></script>
+  <script src="../../js/customer-orders.js"></script>
+
+
+</body>
+</html>
+
+
