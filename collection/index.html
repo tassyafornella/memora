@@ -1,0 +1,354 @@
+﻿<!DOCTYPE html>
+
+<html lang="id">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+  >
+
+  <meta
+    name="theme-color"
+    content="#173F35"
+  >
+
+  <title>Collection — Memora</title>
+
+
+  <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+  >
+
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+
+  <link
+    rel="stylesheet"
+    href="/css/style.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="/css/customer-nav.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="/css/catalog-final.css"
+  >
+  <link rel="stylesheet" href="/css/customer-final.css?v=20261002-185048">
+</head>
+
+
+<body>
+
+
+  <main class="memora-catalog-page">
+
+
+    <!-- TOP -->
+
+    <div class="memora-catalog-top">
+
+      <a
+        href="/"
+        class="memora-catalog-back"
+      >
+        ← Kembali
+      </a>
+
+    </div>
+
+
+    <!-- HERO -->
+
+    <section class="memora-catalog-hero">
+
+      <span id="catalogEyebrow">
+        MEMORA COLLECTION
+      </span>
+
+
+      <h1 id="catalogTitle">
+        Collection
+      </h1>
+
+
+      <p id="catalogDescription">
+        Pilih paket dan desain yang paling sesuai dengan kebutuhanmu.
+      </p>
+
+    </section>
+
+
+    <!-- =====================================================
+         PRODUCT TYPE
+         Hanya tampil untuk Invitation
+         ===================================================== -->
+
+    <section
+      class="catalog-step"
+      id="productTypeStep"
+      hidden
+    >
+
+      <div class="catalog-step-heading">
+
+        <span>
+          01
+        </span>
+
+
+        <div>
+
+          <h2>
+            Pilih Jenis Undangan
+          </h2>
+
+          <p>
+            Pilih jenis produk yang ingin kamu pesan.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div
+        class="catalog-product-type-grid"
+        id="catalogProductTypeGrid"
+      ></div>
+
+    </section>
+
+
+    <!-- =====================================================
+         PACKAGE
+         ===================================================== -->
+
+    <section
+      class="catalog-step"
+      id="packageStep"
+    >
+
+      <div class="catalog-step-heading">
+
+        <span id="packageStepNumber">
+          01
+        </span>
+
+
+        <div>
+
+          <h2>
+            Pilih Paket
+          </h2>
+
+          <p>
+            Pilih Simple, Signature, atau Complete.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <button
+        type="button"
+        class="catalog-change-button"
+        id="changeProductButton"
+        hidden
+      >
+        ← Ganti jenis undangan
+      </button>
+
+
+      <div
+        class="catalog-package-grid"
+        id="catalogPackageGrid"
+      ></div>
+
+    </section>
+
+
+    <!-- =====================================================
+         DESIGNS
+         ===================================================== -->
+
+    <section
+      class="catalog-step"
+      id="designStep"
+      hidden
+    >
+
+      <div class="catalog-step-heading">
+
+        <span id="designStepNumber">
+          02
+        </span>
+
+
+        <div>
+
+          <h2 id="designTitle">
+            Pilih Desain
+          </h2>
+
+          <p>
+            Pilih foto desain yang ingin digunakan sebagai referensi.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <button
+        type="button"
+        class="catalog-change-button"
+        id="changePackageButton"
+      >
+        ← Ganti paket
+      </button>
+
+
+      <div
+        class="catalog-design-grid"
+        id="catalogDesignGrid"
+      ></div>
+
+
+      <div
+        class="catalog-empty"
+        id="catalogEmpty"
+        hidden
+      >
+
+        <strong>
+          Belum ada foto untuk paket ini.
+        </strong>
+
+
+        <p>
+          Foto katalog dapat ditambahkan melalui Gallery Memora.
+        </p>
+
+      </div>
+
+    </section>
+
+
+  </main>
+
+
+  <!-- =======================================================
+       PREVIEW MODAL
+       ======================================================= -->
+
+  <div
+    class="catalog-preview-modal"
+    id="catalogPreviewModal"
+    aria-hidden="true"
+  >
+
+    <button
+      type="button"
+      class="catalog-preview-backdrop"
+      data-close-preview
+      aria-label="Tutup"
+    ></button>
+
+
+    <div
+      class="catalog-preview-card"
+      role="dialog"
+      aria-modal="true"
+    >
+
+      <button
+        type="button"
+        class="catalog-preview-close"
+        data-close-preview
+      >
+        ×
+      </button>
+
+
+      <div class="catalog-preview-image-wrap">
+
+        <img
+          id="catalogPreviewImage"
+          src=""
+          alt=""
+        >
+
+      </div>
+
+
+      <div class="catalog-preview-content">
+
+        <span
+          id="catalogPreviewPackage"
+          class="catalog-preview-package"
+        >
+          Simple Package
+        </span>
+
+
+        <h2 id="catalogPreviewTitle">
+          Design
+        </h2>
+
+
+        <p>
+          Desain ini akan digunakan sebagai referensi utama.
+          Nama, teks, warna, dan detail acara tetap dapat dipersonalisasi.
+        </p>
+
+
+        <button
+          type="button"
+          class="catalog-order-button"
+          id="catalogOrderButton"
+        >
+          Pesan desain ini
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <script
+    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+  ></script>
+
+  <script src="/js/supabase.js"></script>
+
+  <script src="/js/customer-nav.js"></script>
+
+  <script src="/js/catalog-final.js"></script>
+
+
+</body>
+
+</html>
+
+
+

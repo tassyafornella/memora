@@ -1,101 +1,46 @@
-﻿(function () {
+﻿(() => {
 
   "use strict";
 
 
-  /* =========================================================
+  /* ============================================================
      MEMORA BULK PRICING
-     ========================================================= */
-
+     ============================================================ */
 
   const pricing = {
 
+    "bridesmaid-moh": {
 
-    /* ---------------------------------------------------------
-       CLASSIC FOLDED INVITATION
-       --------------------------------------------------------- */
-
-    "classic-invitation": {
-
-      unitLabel: "pcs",
+      unitLabel:
+        "pcs",
 
       variants: {
 
         simple: {
-
-          basePrice: 1500,
-
+          basePrice: 8000,
           tiers: [
-            {
-              min: 200,
-              price: 1200
-            },
-            {
-              min: 100,
-              price: 1300
-            },
-            {
-              min: 50,
-              price: 1400
-            },
-            {
-              min: 1,
-              price: 1500
-            }
+            { min: 5,   max: 9,    price: 8000 },
+            { min: 10,  max: 19,   price: 7500 },
+            { min: 20,  max: null, price: 7000 }
           ]
-
         },
-
 
         signature: {
-
-          basePrice: 2000,
-
+          basePrice: 12000,
           tiers: [
-            {
-              min: 200,
-              price: 1700
-            },
-            {
-              min: 100,
-              price: 1800
-            },
-            {
-              min: 50,
-              price: 1900
-            },
-            {
-              min: 1,
-              price: 2000
-            }
+            { min: 5,   max: 9,    price: 12000 },
+            { min: 10,  max: 19,   price: 11500 },
+            { min: 20,  max: null, price: 11000 }
           ]
-
         },
 
-
         complete: {
-
-          basePrice: 2500,
-
+          basePrice: 15000,
           tiers: [
-            {
-              min: 200,
-              price: 2200
-            },
-            {
-              min: 100,
-              price: 2300
-            },
-            {
-              min: 50,
-              price: 2400
-            },
-            {
-              min: 1,
-              price: 2500
-            }
+            { min: 5,   max: 9,    price: 15000 },
+            { min: 10,  max: 19,   price: 14500 },
+            { min: 20,  max: null, price: 14000 }
           ]
-
         }
 
       }
@@ -103,91 +48,203 @@
     },
 
 
-    /* ---------------------------------------------------------
-       WEDDING INVITATION SET
-       --------------------------------------------------------- */
+    keepsake: {
 
-    invitation: {
-
-      unitLabel: "set",
+      unitLabel:
+        "set",
 
       variants: {
 
         simple: {
-
-          basePrice: 7500,
-
+          basePrice: 50000,
           tiers: [
-            {
-              min: 200,
-              price: 6000
-            },
-            {
-              min: 100,
-              price: 6500
-            },
-            {
-              min: 50,
-              price: 7000
-            },
-            {
-              min: 1,
-              price: 7500
-            }
+            { min: 1, max: 2,    price: 50000 },
+            { min: 3, max: 4,    price: 47500 },
+            { min: 5, max: null, price: 45000 }
           ]
-
         },
-
 
         signature: {
-
-          basePrice: 12000,
-
+          basePrice: 80000,
           tiers: [
-            {
-              min: 200,
-              price: 10500
-            },
-            {
-              min: 100,
-              price: 11000
-            },
-            {
-              min: 50,
-              price: 11500
-            },
-            {
-              min: 1,
-              price: 12000
-            }
+            { min: 1, max: 2,    price: 80000 },
+            { min: 3, max: 4,    price: 76000 },
+            { min: 5, max: null, price: 72000 }
           ]
-
         },
 
+        complete: {
+          basePrice: 100000,
+          tiers: [
+            { min: 1, max: 2,    price: 100000 },
+            { min: 3, max: 4,    price: 95000 },
+            { min: 5, max: null, price: 90000 }
+          ]
+        }
+
+      }
+
+    },
+
+
+    hangtag: {
+
+      unitLabel:
+        "pcs",
+
+      variants: {
+
+        simple: {
+          basePrice: 500,
+          tiers: [
+            { min: 30,  max: 49,   price: 500 },
+            { min: 50,  max: 99,   price: 450 },
+            { min: 100, max: 199,  price: 400 },
+            { min: 200, max: null, price: 350 }
+          ]
+        },
+
+        signature: {
+          basePrice: 1500,
+          tiers: [
+            { min: 30,  max: 49,   price: 1500 },
+            { min: 50,  max: 99,   price: 1400 },
+            { min: 100, max: 199,  price: 1300 },
+            { min: 200, max: null, price: 1200 }
+          ]
+        },
 
         complete: {
-
-          basePrice: 17500,
-
+          basePrice: 2000,
           tiers: [
-            {
-              min: 200,
-              price: 16000
-            },
-            {
-              min: 100,
-              price: 16500
-            },
-            {
-              min: 50,
-              price: 17000
-            },
-            {
-              min: 1,
-              price: 17500
-            }
+            { min: 30,  max: 49,   price: 2000 },
+            { min: 50,  max: 99,   price: 1900 },
+            { min: 100, max: 199,  price: 1800 },
+            { min: 200, max: null, price: 1700 }
           ]
+        }
 
+      }
+
+    },
+
+
+    birthday: {
+
+      unitLabel:
+        "pcs",
+
+      variants: {
+
+        simple: {
+          basePrice: 8000,
+          tiers: [
+            { min: 5,   max: 9,    price: 8000 },
+            { min: 10,  max: 19,   price: 7500 },
+            { min: 20,  max: null, price: 7000 }
+          ]
+        },
+
+        signature: {
+          basePrice: 12000,
+          tiers: [
+            { min: 5,   max: 9,    price: 12000 },
+            { min: 10,  max: 19,   price: 11500 },
+            { min: 20,  max: null, price: 11000 }
+          ]
+        },
+
+        complete: {
+          basePrice: 15000,
+          tiers: [
+            { min: 5,   max: 9,    price: 15000 },
+            { min: 10,  max: 19,   price: 14500 },
+            { min: 20,  max: null, price: 14000 }
+          ]
+        }
+
+      }
+
+    },
+
+
+    "classic-invitation": {
+
+      unitLabel:
+        "pcs",
+
+      variants: {
+
+        simple: {
+          basePrice: 1500,
+          tiers: [
+            { min: 50,  max: 99,   price: 1500 },
+            { min: 100, max: 199,  price: 1400 },
+            { min: 200, max: 499,  price: 1300 },
+            { min: 500, max: null, price: 1200 }
+          ]
+        },
+
+        signature: {
+          basePrice: 2000,
+          tiers: [
+            { min: 50,  max: 99,   price: 2000 },
+            { min: 100, max: 199,  price: 1900 },
+            { min: 200, max: 499,  price: 1800 },
+            { min: 500, max: null, price: 1700 }
+          ]
+        },
+
+        complete: {
+          basePrice: 2500,
+          tiers: [
+            { min: 50,  max: 99,   price: 2500 },
+            { min: 100, max: 199,  price: 2400 },
+            { min: 200, max: 499,  price: 2300 },
+            { min: 500, max: null, price: 2200 }
+          ]
+        }
+
+      }
+
+    },
+
+
+    invitation: {
+
+      unitLabel:
+        "set",
+
+      variants: {
+
+        simple: {
+          basePrice: 5500,
+          tiers: [
+            { min: 50,  max: 99,   price: 5500 },
+            { min: 100, max: 199,  price: 5250 },
+            { min: 200, max: 499,  price: 5000 },
+            { min: 500, max: null, price: 4750 }
+          ]
+        },
+
+        signature: {
+          basePrice: 7500,
+          tiers: [
+            { min: 50,  max: 99,   price: 7500 },
+            { min: 100, max: 199,  price: 7250 },
+            { min: 200, max: 499,  price: 7000 },
+            { min: 500, max: null, price: 6750 }
+          ]
+        },
+
+        complete: {
+          basePrice: 10500,
+          tiers: [
+            { min: 50,  max: 99,   price: 10500 },
+            { min: 100, max: 199,  price: 10000 },
+            { min: 200, max: 499,  price: 9500 },
+            { min: 500, max: null, price: 9000 }
+          ]
         }
 
       }
@@ -197,17 +254,27 @@
   };
 
 
-  let currentProduct = null;
+  let currentProduct =
+    null;
 
+
+  /* ============================================================
+     FORMAT
+     ============================================================ */
 
   function formatRupiah(value) {
 
     return new Intl.NumberFormat(
       "id-ID",
       {
-        style: "currency",
-        currency: "IDR",
-        maximumFractionDigits: 0
+        style:
+          "currency",
+
+        currency:
+          "IDR",
+
+        maximumFractionDigits:
+          0
       }
     ).format(
       Number(value) || 0
@@ -216,29 +283,64 @@
   }
 
 
+  /* ============================================================
+     DETECT PRODUCT
+     ============================================================ */
+
   function detectProduct() {
 
-    const bodyProduct =
-      document.body?.dataset?.product;
-
-
-    if (
-      bodyProduct &&
-      pricing[bodyProduct]
-    ) {
-
-      return bodyProduct;
-
-    }
-
-
     const pathname =
-      window.location.pathname.toLowerCase();
+      window.location.pathname
+        .toLowerCase();
 
 
     if (
       pathname.includes(
-        "/classic-invitation"
+        "/product/bridesmaid"
+      )
+    ) {
+
+      return "bridesmaid-moh";
+
+    }
+
+
+    if (
+      pathname.includes(
+        "/product/keepsake"
+      )
+    ) {
+
+      return "keepsake";
+
+    }
+
+
+    if (
+      pathname.includes(
+        "/product/hangtag"
+      )
+    ) {
+
+      return "hangtag";
+
+    }
+
+
+    if (
+      pathname.includes(
+        "/product/birthday"
+      )
+    ) {
+
+      return "birthday";
+
+    }
+
+
+    if (
+      pathname.includes(
+        "/product/classic-invitation"
       )
     ) {
 
@@ -263,20 +365,56 @@
   }
 
 
+  /* ============================================================
+     SELECTED VARIANT
+     ============================================================ */
+
   function getSelectedVariant() {
 
-    const active =
+    const variantCard =
       document.querySelector(
         "[data-variant].active"
       );
 
 
     if (
-      active &&
-      active.dataset.variant
+      variantCard &&
+      variantCard.dataset.variant
     ) {
 
-      return active.dataset.variant;
+      return variantCard.dataset.variant;
+
+    }
+
+
+    const packageCard =
+      document.querySelector(
+        "[data-package].active"
+      );
+
+
+    if (
+      packageCard &&
+      packageCard.dataset.package
+    ) {
+
+      return packageCard.dataset.package;
+
+    }
+
+
+    const foldedCard =
+      document.querySelector(
+        "[data-folded-package].active"
+      );
+
+
+    if (
+      foldedCard &&
+      foldedCard.dataset.foldedPackage
+    ) {
+
+      return foldedCard.dataset.foldedPackage;
 
     }
 
@@ -286,12 +424,31 @@
   }
 
 
+  /* ============================================================
+     QUANTITY
+     ============================================================ */
+
+  function getQuantityInput() {
+
+    return (
+      document.getElementById(
+        "quantityInput"
+      ) ||
+      document.getElementById(
+        "invitationQuantity"
+      ) ||
+      document.querySelector(
+        'input[name="quantity"]'
+      )
+    );
+
+  }
+
+
   function getQuantity() {
 
     const input =
-      document.getElementById(
-        "quantityInput"
-      );
+      getQuantityInput();
 
 
     if (!input) {
@@ -323,6 +480,10 @@
   }
 
 
+  /* ============================================================
+     GET TIER
+     ============================================================ */
+
   function getTier(
     productKey,
     variantKey,
@@ -330,12 +491,16 @@
   ) {
 
     const product =
-      pricing[productKey];
+      pricing[
+        productKey
+      ];
 
 
     if (
       !product ||
-      !product.variants[variantKey]
+      !product.variants[
+        variantKey
+      ]
     ) {
 
       return null;
@@ -349,11 +514,28 @@
       ];
 
 
-    const tier =
-      variant.tiers.find(
-        item =>
-          quantity >= item.min
-      );
+    let activeTier =
+      variant.tiers[0];
+
+
+    variant.tiers.forEach(
+      tier => {
+
+        if (
+          quantity >= tier.min &&
+          (
+            tier.max === null ||
+            quantity <= tier.max
+          )
+        ) {
+
+          activeTier =
+            tier;
+
+        }
+
+      }
+    );
 
 
     return {
@@ -362,16 +544,36 @@
         variant.basePrice,
 
       unitPrice:
-        tier
-          ? tier.price
-          : variant.basePrice,
+        activeTier.price,
 
       tierMin:
-        tier
-          ? tier.min
-          : 1
+        activeTier.min,
+
+      tierMax:
+        activeTier.max
 
     };
+
+  }
+
+
+  /* ============================================================
+     BULK BOX
+     ============================================================ */
+
+  function findVariantGrid() {
+
+    return (
+      document.querySelector(
+        ".variant-grid"
+      ) ||
+      document.querySelector(
+        ".package-grid"
+      ) ||
+      document.querySelector(
+        ".invitation-package-grid"
+      )
+    );
 
   }
 
@@ -390,9 +592,7 @@
 
 
     const variantGrid =
-      document.querySelector(
-        ".variant-grid"
-      );
+      findVariantGrid();
 
 
     if (!variantGrid) {
@@ -424,6 +624,33 @@
   }
 
 
+  /* ============================================================
+     BULK TABLE
+     ============================================================ */
+
+  function makeQtyLabel(
+    tier,
+    unit
+  ) {
+
+    if (
+      tier.max === null
+    ) {
+
+      return (
+        `${tier.min}+ ${unit}`
+      );
+
+    }
+
+
+    return (
+      `${tier.min}–${tier.max} ${unit}`
+    );
+
+  }
+
+
   function renderBulkTable() {
 
     const box =
@@ -447,7 +674,9 @@
 
 
     const product =
-      pricing[currentProduct];
+      pricing[
+        currentProduct
+      ];
 
 
     const variant =
@@ -467,14 +696,6 @@
       product.unitLabel;
 
 
-    const tiers =
-      [...variant.tiers]
-        .sort(
-          (a, b) =>
-            a.min - b.min
-        );
-
-
     box.innerHTML = `
 
       <div class="bulk-pricing-heading">
@@ -482,7 +703,7 @@
         <div>
 
           <span class="bulk-pricing-label">
-            Bulk Price
+            Harga Quantity
           </span>
 
           <strong>
@@ -496,66 +717,31 @@
 
       <div class="bulk-price-grid">
 
-        ${tiers.map(
-          tier => {
+        ${variant.tiers.map(
+          tier => `
 
-            let qtyLabel;
+            <div class="bulk-price-item">
 
-            if (
-              tier.min === 1
-            ) {
+              <span>
+                ${makeQtyLabel(
+                  tier,
+                  unit
+                )}
+              </span>
 
-              qtyLabel =
-                `1–49 ${unit}`;
+              <strong>
+                ${formatRupiah(
+                  tier.price
+                )}
+              </strong>
 
-            }
-            else if (
-              tier.min === 50
-            ) {
+              <small>
+                / ${unit}
+              </small>
 
-              qtyLabel =
-                `50–99 ${unit}`;
+            </div>
 
-            }
-            else if (
-              tier.min === 100
-            ) {
-
-              qtyLabel =
-                `100–199 ${unit}`;
-
-            }
-            else {
-
-              qtyLabel =
-                `${tier.min}+ ${unit}`;
-
-            }
-
-
-            return `
-
-              <div class="bulk-price-item">
-
-                <span>
-                  ${qtyLabel}
-                </span>
-
-                <strong>
-                  ${formatRupiah(
-                    tier.price
-                  )}
-                </strong>
-
-                <small>
-                  / ${unit}
-                </small>
-
-              </div>
-
-            `;
-
-          }
+          `
         ).join("")}
 
       </div>
@@ -564,6 +750,10 @@
 
   }
 
+
+  /* ============================================================
+     SUMMARY DISCOUNT
+     ============================================================ */
 
   function createDiscountRows() {
 
@@ -609,6 +799,7 @@
       <div
         class="summary-row bulk-summary-row"
         id="bulkNormalPriceRow"
+        style="display:none;"
       >
 
         <span>
@@ -627,10 +818,11 @@
       <div
         class="summary-row bulk-summary-row"
         id="bulkDiscountRow"
+        style="display:none;"
       >
 
         <span>
-          Diskon Quantity
+          Hemat
         </span>
 
         <strong
@@ -652,6 +844,10 @@
 
   }
 
+
+  /* ============================================================
+     UPDATE PRICE
+     ============================================================ */
 
   function updatePricing() {
 
@@ -686,7 +882,9 @@
 
 
     const product =
-      pricing[currentProduct];
+      pricing[
+        currentProduct
+      ];
 
 
     const unit =
@@ -760,53 +958,10 @@
       );
 
 
-    if (normalPrice) {
-
-      normalPrice.textContent =
-        formatRupiah(
-          normalTotal
-        );
-
-    }
-
-
     const discountAmount =
       document.getElementById(
         "bulkDiscountAmount"
       );
-
-
-    if (discountAmount) {
-
-      if (
-        discount > 0
-      ) {
-
-        discountAmount.textContent =
-          "- " +
-          formatRupiah(
-            discount
-          );
-
-
-        discountAmount.classList.add(
-          "has-discount"
-        );
-
-      }
-      else {
-
-        discountAmount.textContent =
-          formatRupiah(0);
-
-
-        discountAmount.classList.remove(
-          "has-discount"
-        );
-
-      }
-
-    }
 
 
     const normalRow =
@@ -821,44 +976,129 @@
       );
 
 
+    if (normalPrice) {
+
+      normalPrice.textContent =
+        formatRupiah(
+          normalTotal
+        );
+
+    }
+
+
+    if (discountAmount) {
+
+      discountAmount.textContent =
+        "- " +
+        formatRupiah(
+          discount
+        );
+
+    }
+
+
     if (
-      discount <= 0
+      discount > 0
     ) {
 
       if (normalRow) {
-
-        normalRow.style.display =
-          "none";
-
+        normalRow.style.display = "";
       }
 
 
       if (discountRow) {
-
-        discountRow.style.display =
-          "none";
-
+        discountRow.style.display = "";
       }
 
     }
     else {
 
       if (normalRow) {
-
-        normalRow.style.display =
-          "";
-
+        normalRow.style.display = "none";
       }
 
 
       if (discountRow) {
-
-        discountRow.style.display =
-          "";
-
+        discountRow.style.display = "none";
       }
 
     }
+
+  }
+
+
+  /* ============================================================
+     CART PATCH
+     ============================================================ */
+
+  function normalizeValue(value) {
+
+    return String(
+      value || ""
+    )
+      .toLowerCase()
+      .trim();
+
+  }
+
+
+  function cartMatchesProduct(
+    item,
+    productKey
+  ) {
+
+    const combined =
+      normalizeValue(
+        [
+          item?.productId,
+          item?.product_id,
+          item?.product,
+          item?.productSlug,
+          item?.product_slug,
+          item?.productName,
+          item?.product_name
+        ]
+        .filter(Boolean)
+        .join(" ")
+      );
+
+
+    if (
+      productKey ===
+      "bridesmaid-moh"
+    ) {
+
+      return (
+        combined.includes(
+          "bridesmaid"
+        )
+      );
+
+    }
+
+
+    if (
+      productKey ===
+      "classic-invitation"
+    ) {
+
+      return (
+        combined.includes(
+          "classic"
+        ) &&
+        combined.includes(
+          "invitation"
+        )
+      );
+
+    }
+
+
+    return combined.includes(
+      normalizeValue(
+        productKey
+      )
+    );
 
   }
 
@@ -887,7 +1127,8 @@
     }
     catch {
 
-      cart = [];
+      cart =
+        [];
 
     }
 
@@ -925,24 +1166,26 @@
     }
 
 
-    let index = -1;
+    let index =
+      -1;
 
 
     for (
-      let i = cart.length - 1;
+      let i =
+        cart.length - 1;
       i >= 0;
       i--
     ) {
 
-      const item =
-        cart[i];
-
-
       if (
-        item.productId === currentProduct
+        cartMatchesProduct(
+          cart[i],
+          currentProduct
+        )
       ) {
 
-        index = i;
+        index =
+          i;
 
         break;
 
@@ -961,7 +1204,9 @@
 
 
     const item =
-      cart[index];
+      cart[
+        index
+      ];
 
 
     const normalSubtotal =
@@ -977,8 +1222,17 @@
     item.baseUnitPrice =
       tier.basePrice;
 
+    item.base_unit_price =
+      tier.basePrice;
+
 
     item.unitPrice =
+      tier.unitPrice;
+
+    item.unit_price =
+      tier.unitPrice;
+
+    item.price =
       tier.unitPrice;
 
 
@@ -1003,6 +1257,12 @@
     item.subtotal =
       finalSubtotal;
 
+    item.total =
+      finalSubtotal;
+
+    item.totalPrice =
+      finalSubtotal;
+
 
     item.pricingTier =
       tier.tierMin;
@@ -1013,7 +1273,9 @@
       tier.basePrice;
 
 
-    cart[index] =
+    cart[
+      index
+    ] =
       item;
 
 
@@ -1034,109 +1296,31 @@
   }
 
 
+  /* ============================================================
+     EVENTS
+     ============================================================ */
+
   function bindEvents() {
 
     const quantityInput =
-      document.getElementById(
-        "quantityInput"
-      );
+      getQuantityInput();
 
 
     if (quantityInput) {
 
-      quantityInput.addEventListener(
+      [
         "input",
-        () => {
-
-          setTimeout(
-            updatePricing,
-            0
-          );
-
-        }
-      );
-
-
-      quantityInput.addEventListener(
-        "change",
-        () => {
-
-          setTimeout(
-            updatePricing,
-            0
-          );
-
-        }
-      );
-
-    }
-
-
-    const decrease =
-      document.getElementById(
-        "decreaseQuantity"
-      );
-
-
-    if (decrease) {
-
-      decrease.addEventListener(
-        "click",
-        () => {
-
-          setTimeout(
-            updatePricing,
-            0
-          );
-
-        }
-      );
-
-    }
-
-
-    const increase =
-      document.getElementById(
-        "increaseQuantity"
-      );
-
-
-    if (increase) {
-
-      increase.addEventListener(
-        "click",
-        () => {
-
-          setTimeout(
-            updatePricing,
-            0
-          );
-
-        }
-      );
-
-    }
-
-
-    document
-      .querySelectorAll(
-        "[data-variant]"
-      )
+        "change"
+      ]
       .forEach(
-        button => {
+        eventName => {
 
-          button.addEventListener(
-            "click",
+          quantityInput.addEventListener(
+            eventName,
             () => {
 
               setTimeout(
-                () => {
-
-                  renderBulkTable();
-
-                  updatePricing();
-
-                },
+                updatePricing,
                 0
               );
 
@@ -1145,6 +1329,70 @@
 
         }
       );
+
+    }
+
+
+    [
+      "decreaseQuantity",
+      "increaseQuantity"
+    ]
+    .forEach(
+      id => {
+
+        const button =
+          document.getElementById(
+            id
+          );
+
+
+        if (button) {
+
+          button.addEventListener(
+            "click",
+            () => {
+
+              setTimeout(
+                updatePricing,
+                0
+              );
+
+            }
+          );
+
+        }
+
+      }
+    );
+
+
+    document.addEventListener(
+      "click",
+      event => {
+
+        const variant =
+          event.target.closest(
+            "[data-variant], [data-package], [data-folded-package]"
+          );
+
+
+        if (variant) {
+
+          setTimeout(
+            () => {
+
+              renderBulkTable();
+
+              updatePricing();
+
+            },
+            0
+          );
+
+        }
+
+      }
+    );
 
 
     const addToCart =
@@ -1159,15 +1407,9 @@
         "click",
         () => {
 
-          /*
-           * product.js / classic-invitation.js
-           * menyimpan Cart terlebih dahulu.
-           * Setelah itu kita koreksi menggunakan bulk price.
-           */
-
           setTimeout(
             patchLastCartItem,
-            50
+            80
           );
 
         }
@@ -1177,6 +1419,10 @@
 
   }
 
+
+  /* ============================================================
+     INIT
+     ============================================================ */
 
   document.addEventListener(
     "DOMContentLoaded",
@@ -1203,8 +1449,14 @@
 
 
       setTimeout(
-        updatePricing,
-        50
+        () => {
+
+          renderBulkTable();
+
+          updatePricing();
+
+        },
+        100
       );
 
     }

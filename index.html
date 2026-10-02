@@ -15,16 +15,15 @@
     content="#173F35"
   >
 
-  <title>Memora — Personalized Stationery</title>
-
   <meta
     name="description"
-    content="Personalized stationery untuk wedding, bridesmaid, special occasion, souvenir, dan little moments worth remembering."
+    content="Memora personalized stationery untuk wedding, celebration, gift, souvenir, dan momen spesial."
   >
+
+  <title>Memora - Personalized Stationery</title>
 
 
   <!-- POPPINS -->
-
   <link
     rel="preconnect"
     href="https://fonts.googleapis.com"
@@ -37,1555 +36,1265 @@
   >
 
   <link
-    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
     rel="stylesheet"
   >
 
-
-  <!-- CUSTOMER HOME -->
 
   <link
     rel="stylesheet"
-    href="css/home.css"
+    href="/css/home.css"
   >
 
+  <link rel="stylesheet" href="/css/customer-nav.css">
+  <link rel="stylesheet" href="/css/customer-final.css?v=20261002-185048">
 </head>
 
 
 <body>
 
 
-<!-- =========================================================
-     ANNOUNCEMENT BAR
-     ========================================================= -->
+  <!-- ======================================================
+       APP
+       ====================================================== -->
 
-<div class="announcement-bar">
-
-  <div class="announcement-inner">
-
-    <span>MADE TO ORDER</span>
-
-    <i></i>
-
-    <span>PERSONALIZED FOR YOU</span>
-
-    <i></i>
-
-    <span>CUSTOM DESIGN AVAILABLE</span>
-
-  </div>
-
-</div>
+  <div class="app-page">
 
 
+    <!-- ====================================================
+         HEADER
+         ==================================================== -->
 
-<!-- =========================================================
-     DESKTOP / TABLET HEADER
-     ========================================================= -->
+    <header class="app-header">
 
-<header class="main-header">
+      <div class="app-header-inner">
 
-  <div class="header-container">
+        <a
+          href="/"
+          class="app-brand"
+          aria-label="Memora"
+        >
+          MEMORA
+        </a>
 
 
-    <button
-      type="button"
-      class="mobile-menu-button"
-      id="mobileMenuButton"
-      aria-label="Buka menu"
-    >
+        <nav class="desktop-nav">
 
-      <svg
-        viewBox="0 0 24 24"
-        fill="none"
+          <a
+            href="/"
+            class="active"
+          >
+            Home
+          </a>
+
+          <a href="/cart/">
+            Keranjang
+          </a>
+
+          <a href="/account/orders/">
+            Pesanan
+          </a>
+
+          <a href="/account/">
+            Akun
+          </a>
+
+        </nav>
+
+
+        <div class="header-actions">
+
+          <a
+            href="/cart/"
+            class="header-icon-button"
+            aria-label="Keranjang"
+          >
+
+            <span class="icon-wrap">
+
+              <svg
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <path
+                  d="M3 4h2l2.2 9.1a2 2 0 0 0 1.9 1.5h7.8a2 2 0 0 0 1.9-1.4L20 8H7"
+                ></path>
+                <circle cx="10" cy="19" r="1.3"></circle>
+                <circle cx="17" cy="19" r="1.3"></circle>
+              </svg>
+
+              <span
+                class="cart-count"
+                data-cart-count
+              >
+                0
+              </span>
+
+            </span>
+
+          </a>
+
+        </div>
+
+      </div>
+
+    </header>
+
+
+
+    <!-- ====================================================
+         MAIN
+         ==================================================== -->
+
+    <main class="app-main">
+
+
+      <!-- ==================================================
+           GREETING
+           ================================================== -->
+
+      <section class="greeting-section">
+
+        <div>
+
+          <p class="greeting-small">
+            Selamat datang di Memora
+          </p>
+
+          <h1 id="homeGreeting">
+            Hai!
+          </h1>
+
+          <p class="greeting-copy">
+            Temukan detail kecil yang membuat momen spesialmu lebih personal.
+          </p>
+
+        </div>
+
+
+        <a
+          href="/account/"
+          class="profile-circle"
+          aria-label="Buka akun"
+        >
+
+          <svg
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+          >
+            <circle
+              cx="12"
+              cy="8"
+              r="4"
+            ></circle>
+            <path
+              d="M4.8 20c.8-4 3.5-6 7.2-6s6.4 2 7.2 6"
+            ></path>
+          </svg>
+
+        </a>
+
+      </section>
+
+
+
+      <!-- ==================================================
+           HERO BANNER
+           ================================================== -->
+
+      <section class="hero-card">
+
+        <div class="hero-copy">
+
+          <span class="hero-label">
+            PERSONALIZED STATIONERY
+          </span>
+
+          <h2>
+            Little details,
+            <br>
+            beautiful memories.
+          </h2>
+
+          <p>
+            Undangan, keepsake, bridesmaid card, sticker, dan stationery personalized lainnya.
+          </p>
+
+          <a
+            href="#koleksi"
+            class="hero-button"
+          >
+            Lihat Koleksi
+          </a>
+
+        </div>
+
+
+        <div
+          class="hero-art"
+          aria-hidden="true"
+        >
+
+          <div class="hero-paper hero-paper-one">
+
+            <span>
+              M
+            </span>
+
+          </div>
+
+
+          <div class="hero-paper hero-paper-two">
+
+            <small>
+              MEMORA
+            </small>
+
+            <strong>
+              Little
+              <br>
+              Memories
+            </strong>
+
+          </div>
+
+
+          <div class="hero-tag">
+
+            <span>
+              with love
+            </span>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+
+      <!-- ==================================================
+           QUICK CATEGORIES
+           ================================================== -->
+
+      <section class="app-section">
+
+        <div class="section-header">
+
+          <div>
+
+            <h2>
+              Mau buat apa hari ini?
+            </h2>
+
+            <p>
+              Pilih kategori sesuai kebutuhanmu.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="category-scroll">
+
+
+          <a
+            href="/product/classic-invitation/"
+            class="category-card"
+          >
+
+            <div class="category-icon">
+
+              <svg viewBox="0 0 24 24">
+                <rect
+                  x="4"
+                  y="5"
+                  width="16"
+                  height="14"
+                  rx="2"
+                ></rect>
+                <path d="M4 8l8 6 8-6"></path>
+              </svg>
+
+            </div>
+
+            <span>
+              Invitation
+            </span>
+
+          </a>
+
+
+          <a
+            href="/product/bridesmaid/"
+            class="category-card"
+          >
+
+            <div class="category-icon">
+
+              <svg viewBox="0 0 24 24">
+                <path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.5-7 10-7 10z"></path>
+              </svg>
+
+            </div>
+
+            <span>
+              Bridesmaid
+            </span>
+
+          </a>
+
+
+          <a
+            href="/product/keepsake/"
+            class="category-card"
+          >
+
+            <div class="category-icon">
+
+              <svg viewBox="0 0 24 24">
+                <rect
+                  x="5"
+                  y="4"
+                  width="14"
+                  height="16"
+                  rx="2"
+                ></rect>
+                <path d="M8 9h8"></path>
+                <path d="M8 13h5"></path>
+              </svg>
+
+            </div>
+
+            <span>
+              Keepsake
+            </span>
+
+          </a>
+
+
+          <a
+            href="/product/hangtag/"
+            class="category-card"
+          >
+
+            <div class="category-icon">
+
+              <svg viewBox="0 0 24 24">
+                <path d="M4 5h9l7 7-8 8-8-8z"></path>
+                <circle
+                  cx="9"
+                  cy="9"
+                  r="1.3"
+                ></circle>
+              </svg>
+
+            </div>
+
+            <span>
+              Hangtag
+            </span>
+
+          </a>
+
+
+          <a
+            href="/product/sticker/"
+            class="category-card"
+          >
+
+            <div class="category-icon">
+
+              <svg viewBox="0 0 24 24">
+                <path d="M12 3a9 9 0 1 0 9 9c0-1-.2-2-.5-2.9A6 6 0 0 1 15 15a6 6 0 0 1-6-6 6 6 0 0 1 3-5.2z"></path>
+              </svg>
+
+            </div>
+
+            <span>
+              Sticker
+            </span>
+
+          </a>
+
+
+          <a
+            href="/product/birthday/"
+            class="category-card"
+          >
+
+            <div class="category-icon">
+
+              <svg viewBox="0 0 24 24">
+                <path d="M5 10h14v10H5z"></path>
+                <path d="M4 10h16"></path>
+                <path d="M12 10v10"></path>
+                <path d="M12 10c-4 0-5-2-4-3.5 1-1.5 4 .2 4 3.5z"></path>
+                <path d="M12 10c4 0 5-2 4-3.5-1-1.5-4 .2-4 3.5z"></path>
+              </svg>
+
+            </div>
+
+            <span>
+              Birthday
+            </span>
+
+          </a>
+
+
+        </div>
+
+      </section>
+
+
+
+      <!-- ==================================================
+           PRODUCT COLLECTION
+           ================================================== -->
+
+      <section
+        class="app-section product-section"
+        id="koleksi"
       >
-        <path
-          d="M4 7H20M4 12H20M4 17H20"
-          stroke="currentColor"
-          stroke-width="1.8"
-          stroke-linecap="round"
-        />
-      </svg>
 
-    </button>
+        <div class="section-header">
 
+          <div>
 
-    <a
-      href="/"
-      class="brand-logo"
-    >
-      MEMORA
-    </a>
+            <h2>
+              Koleksi Memora
+            </h2>
+
+            <p>
+              Personalized stationery untuk berbagai momen.
+            </p>
+
+          </div>
 
 
-    <nav class="desktop-navigation">
+          <a
+            href="#allProducts"
+            class="section-link"
+          >
+            Lihat semua
+          </a>
+
+        </div>
+
+
+
+        <div
+          class="product-list"
+          id="allProducts"
+        >
+
+
+          <!-- CLASSIC INVITATION -->
+
+          <article class="product-row">
+
+            <a
+              href="/product/classic-invitation/"
+              class="product-image-link"
+            >
+
+              <img
+                src="/assets/products/classic-invitation.svg"
+                data-product-image="classic-invitation"
+                alt="Classic Folded Invitation"
+                class="product-image"
+                loading="lazy"
+              >
+
+            </a>
+
+
+            <div class="product-info">
+
+              <span class="product-category">
+                PRINTED INVITATION
+              </span>
+
+              <a href="/product/classic-invitation/">
+
+                <h3>
+                  Classic Folded Invitation
+                </h3>
+
+              </a>
+
+              <p>
+                Undangan cetak lipat personalized untuk wedding dan special occasion.
+              </p>
+
+              <strong>
+                Mulai Rp1.500
+              </strong>
+
+            </div>
+
+
+            <a
+              href="/product/classic-invitation/"
+              class="product-add"
+              aria-label="Lihat Classic Folded Invitation"
+            >
+              +
+            </a>
+
+          </article>
+
+
+
+          <!-- WEDDING INVITATION -->
+
+          <article class="product-row">
+
+            <a
+              href="/product/invitation/"
+              class="product-image-link"
+            >
+
+              <img
+                src="/assets/products/wedding-invitation.svg"
+                data-product-image="invitation"
+                alt="Wedding Invitation"
+                class="product-image"
+                loading="lazy"
+              >
+
+            </a>
+
+
+            <div class="product-info">
+
+              <span class="product-category">
+                WEDDING STATIONERY
+              </span>
+
+              <a href="/product/invitation/">
+
+                <h3>
+                  Wedding Invitation
+                </h3>
+
+              </a>
+
+              <p>
+                Personalized invitation set lengkap untuk hari spesialmu.
+              </p>
+
+              <strong>
+                Mulai Rp7.500
+              </strong>
+
+            </div>
+
+
+            <a
+              href="/product/invitation/"
+              class="product-add"
+              aria-label="Lihat Wedding Invitation"
+            >
+              +
+            </a>
+
+          </article>
+
+
+
+          <!-- BRIDESMAID -->
+
+          <article class="product-row">
+
+            <a
+              href="/product/bridesmaid/"
+              class="product-image-link"
+            >
+
+              <img
+                src="/assets/products/bridesmaid-card.svg"
+                data-product-image="bridesmaid"
+                alt="Bridesmaid Card"
+                class="product-image"
+                loading="lazy"
+              >
+
+            </a>
+
+
+            <div class="product-info">
+
+              <span class="product-category">
+                PERSONALIZED GIFT
+              </span>
+
+              <a href="/product/bridesmaid/">
+
+                <h3>
+                  Bridesmaid / MOH Card
+                </h3>
+
+              </a>
+
+              <p>
+                Card set personal untuk mengajak orang terdekat menemani hari spesialmu.
+              </p>
+
+              <strong>
+                Mulai Rp8.000
+              </strong>
+
+            </div>
+
+
+            <a
+              href="/product/bridesmaid/"
+              class="product-add"
+              aria-label="Lihat Bridesmaid Card"
+            >
+              +
+            </a>
+
+          </article>
+
+
+
+          <!-- KEEPSAKE -->
+
+          <article class="product-row">
+
+            <a
+              href="/product/keepsake/"
+              class="product-image-link"
+            >
+
+              <img
+                src="/assets/products/keepsake.svg"
+                data-product-image="keepsake"
+                alt="Keepsake"
+                class="product-image"
+                loading="lazy"
+              >
+
+            </a>
+
+
+            <div class="product-info">
+
+              <span class="product-category">
+                MEMORY STATIONERY
+              </span>
+
+              <a href="/product/keepsake/">
+
+                <h3>
+                  Keepsake Card Set
+                </h3>
+
+              </a>
+
+              <p>
+                Kumpulan little memories untuk disimpan dan dikenang.
+              </p>
+
+              <strong>
+                Mulai Rp12.000
+              </strong>
+
+            </div>
+
+
+            <a
+              href="/product/keepsake/"
+              class="product-add"
+              aria-label="Lihat Keepsake"
+            >
+              +
+            </a>
+
+          </article>
+
+
+
+          <!-- HANGTAG -->
+
+          <article class="product-row">
+
+            <a
+              href="/product/hangtag/"
+              class="product-image-link"
+            >
+
+              <img
+                src="/assets/products/hangtag.svg"
+                data-product-image="hangtag"
+                alt="Hangtag"
+                class="product-image"
+                loading="lazy"
+              >
+
+            </a>
+
+
+            <div class="product-info">
+
+              <span class="product-category">
+                SOUVENIR STATIONERY
+              </span>
+
+              <a href="/product/hangtag/">
+
+                <h3>
+                  Personalized Hangtag
+                </h3>
+
+              </a>
+
+              <p>
+                Detail personalized untuk souvenir, gift, hampers, dan packaging.
+              </p>
+
+              <strong>
+                Mulai Rp1.000
+              </strong>
+
+            </div>
+
+
+            <a
+              href="/product/hangtag/"
+              class="product-add"
+              aria-label="Lihat Hangtag"
+            >
+              +
+            </a>
+
+          </article>
+
+
+
+          <!-- STICKER -->
+
+          <article class="product-row">
+
+            <a
+              href="/product/sticker/"
+              class="product-image-link"
+            >
+
+              <img
+                src="/assets/products/sticker.svg"
+                data-product-image="sticker"
+                alt="Sticker"
+                class="product-image"
+                loading="lazy"
+              >
+
+            </a>
+
+
+            <div class="product-info">
+
+              <span class="product-category">
+                CUSTOM STICKER
+              </span>
+
+              <a href="/product/sticker/">
+
+                <h3>
+                  Custom Sticker
+                </h3>
+
+              </a>
+
+              <p>
+                Sticker custom untuk souvenir, brand, packaging, dan kebutuhan acara.
+              </p>
+
+              <strong>
+                Custom ukuran
+              </strong>
+
+            </div>
+
+
+            <a
+              href="/product/sticker/"
+              class="product-add"
+              aria-label="Lihat Sticker"
+            >
+              +
+            </a>
+
+          </article>
+
+
+
+          <!-- BIRTHDAY -->
+
+          <article class="product-row">
+
+            <a
+              href="/product/birthday/"
+              class="product-image-link"
+            >
+
+              <img
+                src="/assets/products/birthday-card.svg"
+                data-product-image="birthday"
+                alt="Birthday Card"
+                class="product-image"
+                loading="lazy"
+              >
+
+            </a>
+
+
+            <div class="product-info">
+
+              <span class="product-category">
+                PERSONALIZED CARD
+              </span>
+
+              <a href="/product/birthday/">
+
+                <h3>
+                  Birthday Card Set
+                </h3>
+
+              </a>
+
+              <p>
+                Personalized birthday card untuk pesan yang lebih personal.
+              </p>
+
+              <strong>
+                Mulai Rp7.000
+              </strong>
+
+            </div>
+
+
+            <a
+              href="/product/birthday/"
+              class="product-add"
+              aria-label="Lihat Birthday Card"
+            >
+              +
+            </a>
+
+          </article>
+
+
+        </div>
+
+      </section>
+
+
+
+      <!-- ==================================================
+           FEATURE CARDS
+           ================================================== -->
+
+      <section class="app-section">
+
+        <div class="section-header">
+
+          <div>
+
+            <h2>
+              Dibuat khusus untukmu
+            </h2>
+
+            <p>
+              Mulai dari template sampai desain yang lebih personal.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="feature-grid">
+
+
+          <article class="feature-card feature-green">
+
+            <div>
+
+              <span>
+                PERSONALIZED
+              </span>
+
+              <h3>
+                Sesuaikan dengan tema acaramu
+              </h3>
+
+              <p>
+                Nama, tanggal, warna, detail acara, dan kebutuhan lainnya dapat dipersonalisasi.
+              </p>
+
+            </div>
+
+            <a href="#koleksi">
+              Pilih produk
+            </a>
+
+          </article>
+
+
+          <article class="feature-card feature-light">
+
+            <div>
+
+              <span>
+                MADE TO ORDER
+              </span>
+
+              <h3>
+                Dicetak setelah detail siap
+              </h3>
+
+              <p>
+                Setiap pesanan diproses berdasarkan detail yang sudah dikonfirmasi.
+              </p>
+
+            </div>
+
+            <a href="#caraPesan">
+              Cara pesan
+            </a>
+
+          </article>
+
+
+        </div>
+
+      </section>
+
+
+
+      <!-- ==================================================
+           HOW TO ORDER
+           ================================================== -->
+
+      <section
+        class="app-section"
+        id="caraPesan"
+      >
+
+        <div class="section-header">
+
+          <div>
+
+            <h2>
+              Cara pesan
+            </h2>
+
+            <p>
+              Ringkas dan mudah dari pilih produk sampai produksi.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="steps-list">
+
+
+          <article class="step-row">
+
+            <div class="step-number">
+              1
+            </div>
+
+            <div>
+
+              <strong>
+                Pilih produk
+              </strong>
+
+              <p>
+                Tentukan produk, paket, jumlah, dan detail personalisasi.
+              </p>
+
+            </div>
+
+          </article>
+
+
+          <article class="step-row">
+
+            <div class="step-number">
+              2
+            </div>
+
+            <div>
+
+              <strong>
+                Buat pesanan
+              </strong>
+
+              <p>
+                Masukkan pesanan ke keranjang dan lanjutkan checkout.
+              </p>
+
+            </div>
+
+          </article>
+
+
+          <article class="step-row">
+
+            <div class="step-number">
+              3
+            </div>
+
+            <div>
+
+              <strong>
+                Konfirmasi desain
+              </strong>
+
+              <p>
+                Detail desain dan pembayaran akan dikoordinasikan bersama tim Memora.
+              </p>
+
+            </div>
+
+          </article>
+
+
+          <article class="step-row">
+
+            <div class="step-number">
+              4
+            </div>
+
+            <div>
+
+              <strong>
+                Produksi dan pengiriman
+              </strong>
+
+              <p>
+                Setelah desain disetujui, pesanan masuk proses produksi hingga dikirim.
+              </p>
+
+            </div>
+
+          </article>
+
+
+        </div>
+
+      </section>
+
+
+
+      <!-- ==================================================
+           ACCOUNT CTA
+           ================================================== -->
+
+      <section class="account-cta">
+
+        <div>
+
+          <span>
+            AKUN MEMORA
+          </span>
+
+          <h2>
+            Semua pesananmu dalam satu tempat.
+          </h2>
+
+          <p>
+            Simpan alamat, lihat status pesanan, dan lanjutkan checkout dengan lebih mudah.
+          </p>
+
+        </div>
+
+
+        <a
+          href="/account/"
+          class="account-button"
+        >
+          Buka Akun
+        </a>
+
+      </section>
+
+
+
+      <!-- ==================================================
+           FOOTER
+           ================================================== -->
+
+      <footer class="app-footer">
+
+        <strong>
+          MEMORA
+        </strong>
+
+        <p>
+          Personalized stationery for little moments worth remembering.
+        </p>
+
+        <div class="footer-links">
+
+          <a href="/">
+            Beranda
+          </a>
+
+          <a href="#koleksi">
+            Koleksi
+          </a>
+
+          <a href="/account/orders/">
+            Pesanan
+          </a>
+
+          <a href="/account/">
+            Akun
+          </a>
+
+        </div>
+
+        <small>
+          Made to order personalized stationery.
+        </small>
+
+      </footer>
+
+
+    </main>
+
+
+
+    <!-- ====================================================
+         BOTTOM NAVIGATION
+         ==================================================== -->
+
+    <nav class="bottom-nav">
+
 
       <a
         href="/"
-        class="active"
-      >
-        Beranda
-      </a>
-
-      <a href="#collection">
-        Koleksi
-      </a>
-
-      <a href="/cart/">
-        Keranjang
-      </a>
-
-      <a
-        href="/account/"
-        data-account-link
-      >
-        Saya
-      </a>
-
-    </nav>
-
-
-    <div class="header-actions">
-
-
-      <a
-        href="/account/"
-        class="header-icon-button desktop-account-button"
-        data-account-link
-        aria-label="Akun"
+        class="bottom-nav-item active"
       >
 
         <svg viewBox="0 0 24 24">
-
-          <circle
-            cx="12"
-            cy="8"
-            r="3.5"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.7"
-          />
-
-          <path
-            d="M5.5 20C6.2 16.1 8.6 14 12 14C15.4 14 17.8 16.1 18.5 20"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.7"
-            stroke-linecap="round"
-          />
-
+          <path d="M3 11l9-8 9 8"></path>
+          <path d="M5 10v10h14V10"></path>
+          <path d="M9 20v-6h6v6"></path>
         </svg>
 
+        <span>
+          Home
+        </span>
+
       </a>
+
 
 
       <a
         href="/cart/"
-        class="header-icon-button header-cart-button"
-        aria-label="Keranjang"
+        class="bottom-nav-item"
       >
 
-        <svg viewBox="0 0 24 24">
+        <div class="bottom-nav-icon">
 
-          <path
-            d="M4 5H6L8 15H17.5L19.5 8H7"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.7"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
+          <svg viewBox="0 0 24 24">
+            <path d="M3 4h2l2.2 9.1a2 2 0 0 0 1.9 1.5h7.8a2 2 0 0 0 1.9-1.4L20 8H7"></path>
+            <circle cx="10" cy="19" r="1.3"></circle>
+            <circle cx="17" cy="19" r="1.3"></circle>
+          </svg>
 
-          <circle
-            cx="10"
-            cy="19"
-            r="1.1"
-            fill="currentColor"
-          />
+          <span
+            class="bottom-cart-count"
+            data-cart-count
+          >
+            0
+          </span>
 
-          <circle
-            cx="17"
-            cy="19"
-            r="1.1"
-            fill="currentColor"
-          />
+        </div>
 
-        </svg>
-
-
-        <span
-          class="cart-badge"
-          id="headerCartBadge"
-        >
-          0
+        <span>
+          Keranjang
         </span>
 
       </a>
 
-    </div>
-
-  </div>
-
-</header>
 
 
-
-<!-- =========================================================
-     MOBILE DRAWER
-     ========================================================= -->
-
-<div
-  class="mobile-drawer"
-  id="mobileDrawer"
-  hidden
->
-
-  <div
-    class="mobile-drawer-overlay"
-    data-close-drawer
-  ></div>
-
-
-  <div class="mobile-drawer-panel">
-
-
-    <div class="mobile-drawer-header">
-
-      <span class="drawer-brand">
-        MEMORA
-      </span>
-
-
-      <button
-        type="button"
-        class="drawer-close-button"
-        data-close-drawer
-        aria-label="Tutup menu"
+      <a
+        href="/account/orders/"
+        class="bottom-nav-item"
       >
-        ×
-      </button>
 
-    </div>
+        <svg viewBox="0 0 24 24">
+          <path d="M6 3h12v18H6z"></path>
+          <path d="M9 7h6"></path>
+          <path d="M9 11h6"></path>
+          <path d="M9 15h4"></path>
+        </svg>
 
+        <span>
+          Pesanan
+        </span>
 
-    <nav class="mobile-drawer-navigation">
-
-      <a href="/">
-        Beranda
       </a>
 
-      <a href="#collection">
-        Koleksi
-      </a>
 
-      <a href="/cart/">
-        Keranjang
-      </a>
 
       <a
         href="/account/"
-        data-account-link
+        class="bottom-nav-item"
       >
-        Saya
+
+        <svg viewBox="0 0 24 24">
+          <circle cx="12" cy="8" r="4"></circle>
+          <path d="M4.8 20c.8-4 3.5-6 7.2-6s6.4 2 7.2 6"></path>
+        </svg>
+
+        <span>
+          Akun
+        </span>
+
       </a>
 
-      <a
-        href="/account/login/"
-        data-guest-link
-      >
-        Login
-      </a>
-
-      <a
-        href="/account/register/"
-        data-guest-link
-      >
-        Daftar Akun
-      </a>
-
-      <button
-        type="button"
-        class="drawer-logout-button"
-        data-logout
-        hidden
-      >
-        Logout
-      </button>
 
     </nav>
 
 
-    <div class="drawer-footer">
-
-      <span>
-        Little things,
-      </span>
-
-      <strong>
-        made memorable.
-      </strong>
-
-    </div>
-
-  </div>
-
-</div>
-
-
-
-<main>
-
-
-<!-- =========================================================
-     HERO
-     ========================================================= -->
-
-<section class="hero-section">
-
-
-  <div class="hero-copy">
-
-    <span class="eyebrow">
-      CREATIVE PRINTING & PERSONALIZED STATIONERY
-    </span>
-
-
-    <h1>
-      Little things,
-      <br>
-      made memorable.
-    </h1>
-
-
-    <p>
-      Personalized stationery untuk wedding,
-      celebration, gifts, dan momen kecil
-      yang ingin kamu simpan lebih lama.
-    </p>
-
-
-    <div class="hero-buttons">
-
-      <a
-        href="#collection"
-        class="button button-primary"
-      >
-        Explore Collection
-      </a>
-
-      <a
-        href="/order/"
-        class="button button-secondary"
-      >
-        Start Your Order
-      </a>
-
-    </div>
-
   </div>
 
 
 
-  <!-- DECORATIVE PRODUCT VISUAL -->
+  <!-- ======================================================
+       SCRIPT
+       ====================================================== -->
 
-  <div class="hero-visual">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-    <div class="stationery-card stationery-main">
+  <script src="/js/supabase.js"></script>
 
-      <span class="stationery-brand">
-        MEMORA
-      </span>
+  <script src="/js/home-v2.js"></script>
 
-      <div>
 
-        <small>
-          THE WEDDING OF
-        </small>
-
-        <strong>
-          Memora
-          <br>
-          Studio
-        </strong>
-
-        <span class="stationery-date">
-          MADE FOR YOU
-        </span>
-
-      </div>
-
-
-      <span class="stationery-bottom">
-        made for your moment
-      </span>
-
-    </div>
-
-
-    <div class="stationery-card stationery-green">
-
-      <span>
-        little
-        <br>
-        memories
-        <br>
-        to keep
-      </span>
-
-    </div>
-
-
-    <div class="stationery-tag">
-
-      <span>
-        T & A
-      </span>
-
-      <small>
-        THANK YOU
-      </small>
-
-    </div>
-
-  </div>
-
-</section>
-
-
-
-<!-- =========================================================
-     BENEFITS
-     ========================================================= -->
-
-<section class="benefit-strip">
-
-  <article>
-
-    <strong>
-      Personalized
-    </strong>
-
-    <span>
-      dibuat sesuai detail dan ceritamu
-    </span>
-
-  </article>
-
-
-  <article>
-
-    <strong>
-      Made to Order
-    </strong>
-
-    <span>
-      diproduksi khusus setelah pemesanan
-    </span>
-
-  </article>
-
-
-  <article>
-
-    <strong>
-      Designed with Care
-    </strong>
-
-    <span>
-      simple, personal, meaningful
-    </span>
-
-  </article>
-
-</section>
-
-
-
-<!-- =========================================================
-     COLLECTION
-     ========================================================= -->
-
-<section
-  class="page-section collection-section"
-  id="collection"
->
-
-  <div class="section-heading collection-heading">
-
-    <div>
-
-      <span class="eyebrow">
-        OUR COLLECTION
-      </span>
-
-      <h2>
-        Something special
-        <br>
-        for every moment.
-      </h2>
-
-    </div>
-
-
-    <p>
-      Pilih produk Memora yang sesuai dengan kebutuhanmu.
-      Kamu tetap bisa melihat koleksi dan harga tanpa membuat akun.
-    </p>
-
-  </div>
-
-
-
-  <div class="collection-grid">
-
-
-    <!-- ===================================================
-         CLASSIC FOLDED INVITATION
-         =================================================== -->
-
-    <article class="collection-card">
-
-      <a
-        href="/product/classic-invitation/"
-        class="collection-photo-link"
-        aria-label="Lihat Classic Folded Invitation"
-      >
-
-        <img
-          data-product-cover="classic-invitation" src="/assets/products/classic-invitation.svg"
-          alt="Classic Folded Invitation Memora"
-          class="collection-photo"
-          loading="lazy"
-        >
-
-      </a>
-
-
-      <div class="collection-content">
-
-        <span class="product-category">
-          PRINTED INVITATION
-        </span>
-
-        <h3>
-          Classic Folded Invitation
-        </h3>
-
-        <p>
-          Undangan cetak lipat personalized untuk wedding
-          dan special occasion.
-        </p>
-
-        <strong class="product-price">
-          Mulai Rp1.500 / pcs
-        </strong>
-
-        <a
-          href="/product/classic-invitation/"
-          class="product-button"
-        >
-          <span>
-            Lihat Produk
-          </span>
-
-          <span aria-hidden="true">
-            →
-          </span>
-        </a>
-
-      </div>
-
-    </article>
-
-
-
-    <!-- ===================================================
-         WEDDING INVITATION
-         =================================================== -->
-
-    <article class="collection-card">
-
-      <a
-        href="/product/invitation/"
-        class="collection-photo-link"
-        aria-label="Lihat Wedding Invitation"
-      >
-
-        <img
-          data-product-cover="wedding-invitation" src="/assets/products/wedding-invitation.svg"
-          alt="Wedding Invitation Set Memora"
-          class="collection-photo"
-          loading="lazy"
-        >
-
-      </a>
-
-
-      <div class="collection-content">
-
-        <span class="product-category">
-          WEDDING STATIONERY
-        </span>
-
-        <h3>
-          Wedding Invitation
-        </h3>
-
-        <p>
-          Personalized wedding stationery dengan pilihan
-          paket Simple, Signature, dan Complete.
-        </p>
-
-        <strong class="product-price">
-          Mulai Rp7.500 / set
-        </strong>
-
-        <a
-          href="/product/invitation/"
-          class="product-button"
-        >
-          <span>
-            Lihat Produk
-          </span>
-
-          <span aria-hidden="true">
-            →
-          </span>
-        </a>
-
-      </div>
-
-    </article>
-
-
-
-    <!-- ===================================================
-         BRIDESMAID CARD
-         =================================================== -->
-
-    <article class="collection-card">
-
-      <a
-        href="/product/bridesmaid/"
-        class="collection-photo-link"
-        aria-label="Lihat Bridesmaid Card"
-      >
-
-        <img
-          data-product-cover="bridesmaid" src="/assets/products/bridesmaid-card.svg"
-          alt="Bridesmaid Card Set Memora"
-          class="collection-photo"
-          loading="lazy"
-        >
-
-      </a>
-
-
-      <div class="collection-content">
-
-        <span class="product-category">
-          PERSONALIZED GIFT
-        </span>
-
-        <h3>
-          Bridesmaid Card
-        </h3>
-
-        <p>
-          Personalized stationery set untuk Bridesmaid
-          dan Maid of Honor.
-        </p>
-
-        <strong class="product-price">
-          Mulai Rp8.000 / set
-        </strong>
-
-        <a
-          href="/product/bridesmaid/"
-          class="product-button"
-        >
-          <span>
-            Lihat Produk
-          </span>
-
-          <span aria-hidden="true">
-            →
-          </span>
-        </a>
-
-      </div>
-
-    </article>
-
-
-
-    <!-- ===================================================
-         KEEPSAKE
-         =================================================== -->
-
-    <article class="collection-card">
-
-      <a
-        href="/product/keepsake/"
-        class="collection-photo-link"
-        aria-label="Lihat Keepsake"
-      >
-
-        <img
-          data-product-cover="keepsake" src="/assets/products/keepsake.svg"
-          alt="Keepsake Card Set Memora"
-          class="collection-photo"
-          loading="lazy"
-        >
-
-      </a>
-
-
-      <div class="collection-content">
-
-        <span class="product-category">
-          MEMORY STATIONERY
-        </span>
-
-        <h3>
-          Keepsake
-        </h3>
-
-        <p>
-          Personalized memory cards untuk menyimpan
-          cerita, foto, dan momen spesial.
-        </p>
-
-        <strong class="product-price">
-          Personalized Set
-        </strong>
-
-        <a
-          href="/product/keepsake/"
-          class="product-button"
-        >
-          <span>
-            Lihat Produk
-          </span>
-
-          <span aria-hidden="true">
-            →
-          </span>
-        </a>
-
-      </div>
-
-    </article>
-
-
-
-    <!-- ===================================================
-         HANGTAG
-         =================================================== -->
-
-    <article class="collection-card">
-
-      <a
-        href="/product/hangtag/"
-        class="collection-photo-link"
-        aria-label="Lihat Hangtag"
-      >
-
-        <img
-          data-product-cover="hangtag" src="/assets/products/hangtag.svg"
-          alt="Personalized Hangtag Memora"
-          class="collection-photo"
-          loading="lazy"
-        >
-
-      </a>
-
-
-      <div class="collection-content">
-
-        <span class="product-category">
-          SOUVENIR STATIONERY
-        </span>
-
-        <h3>
-          Hangtag
-        </h3>
-
-        <p>
-          Personalized hangtag untuk souvenir,
-          gift, packaging, dan special occasion.
-        </p>
-
-        <strong class="product-price">
-          Custom Quantity
-        </strong>
-
-        <a
-          href="/product/hangtag/"
-          class="product-button"
-        >
-          <span>
-            Lihat Produk
-          </span>
-
-          <span aria-hidden="true">
-            →
-          </span>
-        </a>
-
-      </div>
-
-    </article>
-
-
-
-    <!-- ===================================================
-         STICKER
-         =================================================== -->
-
-    <article class="collection-card">
-
-      <a
-        href="/product/sticker/"
-        class="collection-photo-link"
-        aria-label="Lihat Sticker"
-      >
-
-        <img
-          data-product-cover="sticker" src="/assets/products/sticker.svg"
-          alt="Custom Sticker Memora"
-          class="collection-photo"
-          loading="lazy"
-        >
-
-      </a>
-
-
-      <div class="collection-content">
-
-        <span class="product-category">
-          PERSONALIZED STICKER
-        </span>
-
-        <h3>
-          Sticker
-        </h3>
-
-        <p>
-          Personalized sticker untuk wedding, gift,
-          packaging, dan kebutuhan custom lainnya.
-        </p>
-
-        <strong class="product-price">
-          Custom Size & Quantity
-        </strong>
-
-        <a
-          href="/product/sticker/"
-          class="product-button"
-        >
-          <span>
-            Lihat Produk
-          </span>
-
-          <span aria-hidden="true">
-            →
-          </span>
-        </a>
-
-      </div>
-
-    </article>
-
-
-
-    <!-- ===================================================
-         BIRTHDAY CARD
-         =================================================== -->
-
-    <article class="collection-card">
-
-      <a
-        href="/product/birthday/"
-        class="collection-photo-link"
-        aria-label="Lihat Birthday Card"
-      >
-
-        <img
-          data-product-cover="birthday" src="/assets/products/birthday-card.svg"
-          alt="Birthday Card Set Memora"
-          class="collection-photo"
-          loading="lazy"
-        >
-
-      </a>
-
-
-      <div class="collection-content">
-
-        <span class="product-category">
-          PERSONALIZED CARD
-        </span>
-
-        <h3>
-          Birthday Card
-        </h3>
-
-        <p>
-          Personalized birthday card set untuk hadiah,
-          celebration, dan special occasion.
-        </p>
-
-        <strong class="product-price">
-          Custom Set
-        </strong>
-
-        <a
-          href="/product/birthday/"
-          class="product-button"
-        >
-          <span>
-            Lihat Produk
-          </span>
-
-          <span aria-hidden="true">
-            →
-          </span>
-        </a>
-
-      </div>
-
-    </article>
-
-
-  </div>
-
-</section>
-
-
-
-<!-- =========================================================
-     POPULAR
-     ========================================================= -->
-
-<section class="page-section popular-section">
-
-
-  <div class="section-heading section-heading-simple">
-
-    <div>
-
-      <span class="eyebrow">
-        POPULAR PICKS
-      </span>
-
-      <h2>
-        Memora favourites.
-      </h2>
-
-    </div>
-
-  </div>
-
-
-  <div class="popular-grid">
-
-
-    <a
-      href="/product/invitation/"
-      class="popular-card"
-    >
-
-      <div class="popular-art popular-art-green">
-
-        <span>
-          THE WEDDING OF
-        </span>
-
-        <strong>
-          Our
-          <br>
-          Little Story
-        </strong>
-
-      </div>
-
-
-      <div class="popular-info">
-
-        <span>
-          Wedding
-        </span>
-
-        <strong>
-          Wedding Invitation Set
-        </strong>
-
-        <small>
-          mulai Rp7.500 / set
-        </small>
-
-      </div>
-
-    </a>
-
-
-
-    <a
-      href="/product/bridesmaid/"
-      class="popular-card"
-    >
-
-      <div class="popular-art popular-art-burgundy">
-
-        <span>
-          FOR SOMEONE SPECIAL
-        </span>
-
-        <strong>
-          A little
-          <br>
-          letter for you
-        </strong>
-
-      </div>
-
-
-      <div class="popular-info">
-
-        <span>
-          Bridesmaid
-        </span>
-
-        <strong>
-          Bridesmaid Card Set
-        </strong>
-
-        <small>
-          mulai Rp8.000 / set
-        </small>
-
-      </div>
-
-    </a>
-
-
-
-    <a
-      href="/product/keepsake/"
-      class="popular-card"
-    >
-
-      <div class="popular-art popular-art-cream">
-
-        <span>
-          MEMORIES
-        </span>
-
-        <strong>
-          Things
-          <br>
-          worth keeping
-        </strong>
-
-      </div>
-
-
-      <div class="popular-info">
-
-        <span>
-          Keepsake
-        </span>
-
-        <strong>
-          Keepsake Card Set
-        </strong>
-
-        <small>
-          personalized
-        </small>
-
-      </div>
-
-    </a>
-
-
-  </div>
-
-</section>
-
-
-
-<!-- =========================================================
-     HOW IT WORKS
-     ========================================================= -->
-
-<section class="page-section how-section">
-
-
-  <div class="section-heading">
-
-    <div>
-
-      <span class="eyebrow">
-        HOW IT WORKS
-      </span>
-
-      <h2>
-        Made simple,
-        <br>
-        made for you.
-      </h2>
-
-    </div>
-
-
-    <p>
-      Mulai dari memilih produk sampai proses
-      produksi, semuanya dibuat sederhana agar
-      kamu tetap bisa memantau pesanan dengan mudah.
-    </p>
-
-  </div>
-
-
-  <div class="how-grid">
-
-
-    <article>
-
-      <span>
-        01
-      </span>
-
-      <h3>
-        Pilih Produk
-      </h3>
-
-      <p>
-        Jelajahi koleksi Memora dan pilih
-        produk yang sesuai kebutuhanmu.
-      </p>
-
-    </article>
-
-
-    <article>
-
-      <span>
-        02
-      </span>
-
-      <h3>
-        Personalisasi
-      </h3>
-
-      <p>
-        Pilih paket, jumlah, dan masukkan
-        detail personalisasi.
-      </p>
-
-    </article>
-
-
-    <article>
-
-      <span>
-        03
-      </span>
-
-      <h3>
-        Checkout
-      </h3>
-
-      <p>
-        Login saat akan melanjutkan transaksi
-        dan gunakan alamat yang tersimpan.
-      </p>
-
-    </article>
-
-
-    <article>
-
-      <span>
-        04
-      </span>
-
-      <h3>
-        Pantau Pesanan
-      </h3>
-
-      <p>
-        Lihat proses desain, produksi, hingga
-        pengiriman dari Pesanan Saya.
-      </p>
-
-    </article>
-
-
-  </div>
-
-</section>
-
-
-
-<!-- =========================================================
-     CUSTOM ORDER
-     ========================================================= -->
-
-<section class="custom-section">
-
-
-  <div class="custom-copy">
-
-    <span class="eyebrow eyebrow-light">
-      YOUR IDEA, YOUR STORY
-    </span>
-
-
-    <h2>
-      Have something
-      <br>
-      different in mind?
-    </h2>
-
-
-    <p>
-      Punya tema, warna, ukuran, atau konsep
-      khusus? Ceritakan idemu dan buat sesuatu
-      yang lebih personal bersama Memora.
-    </p>
-
-
-    <a
-      href="/order/"
-      class="button custom-button"
-    >
-      Start Custom Order
-    </a>
-
-  </div>
-
-
-
-  <div class="custom-art">
-
-    <div class="custom-paper custom-paper-one">
-
-      <span>
-        made
-        <br>
-        personal
-      </span>
-
-    </div>
-
-
-    <div class="custom-paper custom-paper-two">
-
-      <span>
-        your
-        <br>
-        little
-        <br>
-        story
-      </span>
-
-    </div>
-
-
-    <div class="custom-seal">
-      M
-    </div>
-
-  </div>
-
-</section>
-
-
-
-<!-- =========================================================
-     ACCOUNT
-     ========================================================= -->
-
-<section class="account-section">
-
-
-  <div>
-
-    <span class="eyebrow">
-      YOUR MEMORA ACCOUNT
-    </span>
-
-    <h2>
-      Your orders,
-      <br>
-      all in one place.
-    </h2>
-
-  </div>
-
-
-  <div class="account-copy">
-
-    <p>
-      Setelah login, kamu dapat menyimpan profile,
-      alamat pengiriman, melihat Pesanan Saya,
-      rincian order, timeline produksi, dan
-      informasi pengiriman.
-    </p>
-
-
-    <a
-      href="/account/"
-      class="account-link"
-      id="accountCallToAction"
-    >
-      Lihat Akun Saya →
-    </a>
-
-  </div>
-
-</section>
-
-
-
-<!-- =========================================================
-     FOOTER
-     ========================================================= -->
-
-<footer class="site-footer">
-
-
-  <div class="footer-top">
-
-
-    <div class="footer-brand">
-
-      <strong>
-        MEMORA
-      </strong>
-
-      <p>
-        Little things,
-        <br>
-        made memorable.
-      </p>
-
-    </div>
-
-
-
-    <div class="footer-links">
-
-
-      <div>
-
-        <span>
-          SHOP
-        </span>
-
-        <a href="#collection">
-          Koleksi
-        </a>
-
-        <a href="/order/">
-          Order
-        </a>
-
-        <a href="/cart/">
-          Keranjang
-        </a>
-
-      </div>
-
-
-      <div>
-
-        <span>
-          ACCOUNT
-        </span>
-
-        <a
-          href="/account/"
-          data-account-link
-        >
-          Saya
-        </a>
-
-        <a href="/account/login/">
-          Login
-        </a>
-
-        <a href="/account/register/">
-          Daftar
-        </a>
-
-      </div>
-
-    </div>
-
-
-  </div>
-
-
-  <div class="footer-bottom">
-
-    <span>
-      © 2026 MEMORA
-    </span>
-
-    <span>
-      Made with care.
-    </span>
-
-  </div>
-
-</footer>
-
-
-</main>
-
-
-
-<!-- =========================================================
-     MOBILE BOTTOM NAVIGATION
-     ========================================================= -->
-
-<nav class="bottom-navigation">
-
-
-  <a
-    href="/"
-    class="bottom-nav-item active"
-  >
-
-    <svg viewBox="0 0 24 24">
-
-      <path
-        d="M4 11L12 4L20 11V20H14V14H10V20H4V11Z"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="1.6"
-        stroke-linejoin="round"
-      />
-
-    </svg>
-
-    <span>
-      Beranda
-    </span>
-
-  </a>
-
-
-
-  <a
-    href="/cart/"
-    class="bottom-nav-item"
-  >
-
-    <div class="bottom-icon-wrap">
-
-      <svg viewBox="0 0 24 24">
-
-        <path
-          d="M4 5H6L8 15H17.5L19.5 8H7"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="1.6"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        />
-
-        <circle
-          cx="10"
-          cy="19"
-          r="1"
-          fill="currentColor"
-        />
-
-        <circle
-          cx="17"
-          cy="19"
-          r="1"
-          fill="currentColor"
-        />
-
-      </svg>
-
-
-      <small
-        class="bottom-cart-badge"
-        id="bottomCartBadge"
-      >
-        0
-      </small>
-
-    </div>
-
-    <span>
-      Keranjang
-    </span>
-
-  </a>
-
-
-
-  <a
-    href="/account/"
-    class="bottom-nav-item"
-    data-account-link
-  >
-
-    <svg viewBox="0 0 24 24">
-
-      <circle
-        cx="12"
-        cy="8"
-        r="3.4"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="1.6"
-      />
-
-      <path
-        d="M5.5 20C6.2 16.1 8.6 14 12 14C15.4 14 17.8 16.1 18.5 20"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="1.6"
-        stroke-linecap="round"
-      />
-
-    </svg>
-
-    <span>
-      Saya
-    </span>
-
-  </a>
-
-
-</nav>
-
-
-
-<!-- SUPABASE -->
-
-<script
-  src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
-></script>
-
-<script src="js/supabase.js"></script>
-
-<script src="js/home-v2.js"></script>
-<script src="js/customer-gallery.js"></script>
-
-
+  <script src="/js/customer-nav.js"></script>
+  <script src="/js/home-catalog-flow.js?v=20261002-180710"></script>
 </body>
 
 </html>
+
+
+
+
+
 
 
 

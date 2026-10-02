@@ -1,0 +1,390 @@
+﻿/* ==========================================================
+   MEMORA GLOBAL CUSTOMER NAV
+   Desktop:
+   MEMORA | Home | Keranjang | Pesanan | Akun
+
+   Mobile:
+   Home | Keranjang | Pesanan | Akun
+   ========================================================== */
+
+:root {
+  --memora-nav-green: #173F35;
+  --memora-nav-green-2: #245746;
+  --memora-nav-green-soft: #E8F0EB;
+  --memora-nav-bg: #FFFFFF;
+  --memora-nav-border: #DDE6E0;
+  --memora-nav-text: #1E2925;
+  --memora-nav-muted: #7B8982;
+  --memora-nav-burgundy: #6C2936;
+}
+
+
+body.memora-global-nav-ready {
+  font-family: "Poppins", Arial, sans-serif;
+}
+
+
+/* ==========================================================
+   DESKTOP HEADER
+   ========================================================== */
+
+.memora-global-header {
+  position: sticky;
+  top: 0;
+  z-index: 9990;
+
+  width: 100%;
+
+  border-bottom:
+    1px solid
+    rgba(221, 230, 224, 0.92);
+
+  background:
+    rgba(255, 255, 255, 0.97);
+
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+
+.memora-global-header-inner {
+  width: 100%;
+  max-width: 1240px;
+  height: 72px;
+
+  display: grid;
+  grid-template-columns: auto 1fr;
+
+  align-items: center;
+
+  margin: 0 auto;
+
+  padding:
+    0 32px;
+}
+
+
+.memora-global-brand {
+  color:
+    var(--memora-nav-green);
+
+  font-size: 21px;
+  font-weight: 700;
+
+  line-height: 1;
+
+  letter-spacing: 0.13em;
+
+  text-decoration: none;
+}
+
+
+.memora-global-desktop-nav {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  gap: 31px;
+}
+
+
+.memora-global-desktop-link {
+  position: relative;
+
+  min-height: 72px;
+
+  display: flex;
+  align-items: center;
+
+  color:
+    var(--memora-nav-muted);
+
+  font-size: 12px;
+  font-weight: 500;
+
+  text-decoration: none;
+
+  transition:
+    color 0.2s ease;
+}
+
+
+.memora-global-desktop-link:hover {
+  color:
+    var(--memora-nav-green);
+}
+
+
+.memora-global-desktop-link.is-active {
+  color:
+    var(--memora-nav-green);
+
+  font-weight: 600;
+}
+
+
+.memora-global-desktop-link.is-active::after {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  right: 0;
+  bottom: 15px;
+
+  height: 2px;
+
+  border-radius: 999px;
+
+  background:
+    var(--memora-nav-green);
+}
+
+
+/* CART BADGE DESKTOP */
+
+.memora-global-cart-link {
+  gap: 6px;
+}
+
+
+.memora-global-badge {
+  min-width: 17px;
+  height: 17px;
+
+  display: none;
+  align-items: center;
+  justify-content: center;
+
+  padding:
+    0 4px;
+
+  border-radius: 999px;
+
+  background:
+    var(--memora-nav-burgundy);
+
+  color: #FFFFFF;
+
+  font-size: 8px;
+  font-weight: 700;
+
+  line-height: 1;
+}
+
+
+.memora-global-badge.is-visible {
+  display: inline-flex;
+}
+
+
+/* ==========================================================
+   MOBILE BOTTOM NAV
+   ========================================================== */
+
+.memora-global-bottom-nav {
+  display: none;
+}
+
+
+/* ==========================================================
+   MOBILE
+   ========================================================== */
+
+@media (max-width: 699px) {
+
+  body.memora-global-nav-ready {
+    padding-bottom:
+      calc(
+        78px + env(safe-area-inset-bottom)
+      ) !important;
+  }
+
+
+  .memora-global-header-inner {
+    height: 60px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding:
+      0 18px;
+  }
+
+
+  .memora-global-brand {
+    font-size: 20px;
+
+    text-align: center;
+  }
+
+
+  .memora-global-desktop-nav {
+    display: none;
+  }
+
+
+  .memora-global-bottom-nav {
+    position: fixed;
+
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    z-index: 9995;
+
+    min-height: 70px;
+
+    display: grid;
+
+    grid-template-columns:
+      repeat(4, minmax(0, 1fr));
+
+    padding:
+      6px
+      7px
+      calc(
+        6px + env(safe-area-inset-bottom)
+      );
+
+    border-top:
+      1px solid
+      var(--memora-nav-border);
+
+    background:
+      rgba(255, 255, 255, 0.98);
+
+    box-shadow:
+      0 -8px 30px
+      rgba(23, 63, 53, 0.06);
+
+    backdrop-filter: blur(17px);
+    -webkit-backdrop-filter: blur(17px);
+  }
+
+
+  .memora-global-mobile-link {
+    position: relative;
+
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 4px;
+
+    padding:
+      5px
+      2px;
+
+    color:
+      #89958F;
+
+    font-size: 9px;
+    font-weight: 500;
+
+    line-height: 1.1;
+
+    text-align: center;
+
+    text-decoration: none;
+  }
+
+
+  .memora-global-mobile-link.is-active {
+    color:
+      var(--memora-nav-green);
+
+    font-weight: 600;
+  }
+
+
+  .memora-global-mobile-icon {
+    position: relative;
+
+    width: 22px;
+    height: 22px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+
+  .memora-global-mobile-icon svg {
+    width: 21px;
+    height: 21px;
+
+    fill: none;
+
+    stroke:
+      currentColor;
+
+    stroke-width: 1.8;
+
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+
+  .memora-global-mobile-badge {
+    position: absolute;
+
+    top: -7px;
+    right: -10px;
+
+    min-width: 16px;
+    height: 16px;
+
+    display: none;
+    align-items: center;
+    justify-content: center;
+
+    padding:
+      0 4px;
+
+    border:
+      2px solid
+      #FFFFFF;
+
+    border-radius: 999px;
+
+    background:
+      var(--memora-nav-burgundy);
+
+    color: #FFFFFF;
+
+    font-size: 7px;
+    font-weight: 700;
+
+    line-height: 1;
+  }
+
+
+  .memora-global-mobile-badge.is-visible {
+    display: flex;
+  }
+
+}
+
+
+/* ==========================================================
+   LARGE DESKTOP
+   ========================================================== */
+
+@media (min-width: 1200px) {
+
+  .memora-global-header-inner {
+    padding:
+      0 40px;
+  }
+
+
+  .memora-global-desktop-nav {
+    gap: 37px;
+  }
+
+}

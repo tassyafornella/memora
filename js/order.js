@@ -356,7 +356,7 @@ function createCheckoutItem(
 
 
   qty.textContent =
-    `${normalizeQuantity(item.quantity)} Ã— ${formatRupiah(item.unitPrice)}`;
+    `${normalizeQuantity(item.quantity)} × ${formatRupiah(item.unitPrice)}`;
 
 
   const subtotal =
@@ -1940,3 +1940,4 @@ function formatRupiah(
   );
 
 }
+

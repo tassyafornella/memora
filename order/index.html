@@ -36,6 +36,137 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/customer-nav.css">
+  <link rel="stylesheet" href="/css/checkout-clean.css?v=20261002-183306">
+<!-- MEMORA CHECKOUT COMPACT PATCH START -->
+<style>
+  /* ======================================================
+     MEMORA CHECKOUT - COMPACT & CLEAN
+     ====================================================== */
+
+  h1, h2, h3, h4, h5, h6,
+  p, span, label, a, button, input, textarea, select, div {
+    font-family: Poppins, sans-serif !important;
+    font-style: normal !important;
+  }
+
+  /* Section heading checkout */
+  .checkout-section h2,
+  .checkout-information h2,
+  .checkout-address-section h2,
+  .checkout-left h2,
+  .checkout-form h2,
+  h2 {
+    font-size: 15px !important;
+    line-height: 1.35 !important;
+    font-weight: 600 !important;
+    margin: 0 0 6px !important;
+    color: #153c33 !important;
+  }
+
+  /* Section paragraph / helper text */
+  .checkout-section p,
+  .checkout-information p,
+  .checkout-address-section p,
+  .checkout-left p,
+  .checkout-form p {
+    font-size: 12px !important;
+    line-height: 1.55 !important;
+    font-weight: 400 !important;
+    margin: 0 !important;
+    color: #7b8982 !important;
+  }
+
+  /* Block pembuka section biar tidak terlalu renggang */
+  .checkout-section-header,
+  .checkout-information-header,
+  .checkout-address-header {
+    margin-bottom: 12px !important;
+  }
+
+  /* Khusus area Catatan Pesanan */
+  label[for="orderNote"] {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    font-size: 13px !important;
+    line-height: 1.35 !important;
+    font-weight: 600 !important;
+    color: #153c33 !important;
+    margin: 0 0 10px !important;
+  }
+
+  /* Tulisan Opsional */
+  label[for="orderNote"] span,
+  label[for="orderNote"] small,
+  .optional-label,
+  .field-optional,
+  .form-optional {
+    font-size: 11px !important;
+    line-height: 1.2 !important;
+    font-weight: 500 !important;
+    color: #8b9892 !important;
+    margin-left: 2px !important;
+  }
+
+  /* Textarea catatan */
+  #orderNote {
+    width: 100% !important;
+    min-height: 120px !important;
+    margin-top: 0 !important;
+    padding: 16px 18px !important;
+    font-size: 12px !important;
+    line-height: 1.6 !important;
+    font-weight: 400 !important;
+    border-radius: 18px !important;
+    box-sizing: border-box !important;
+  }
+
+  #orderNote::placeholder {
+    font-size: 12px !important;
+    line-height: 1.6 !important;
+    font-weight: 400 !important;
+    color: #9aa7a1 !important;
+  }
+
+  /* Hilangkan jarak kebesaran di form group */
+  .form-group {
+    margin-bottom: 16px !important;
+  }
+
+  /* Helper text bawah "Konfirmasi & Pembayaran" */
+  .checkout-information p,
+  .payment-information p,
+  .confirmation-information p {
+    font-size: 10px !important;
+    line-height: 1.45 !important;
+  }
+
+  /* Agreement bawah tombol */
+  .checkout-agreement {
+    font-size: 10px !important;
+    line-height: 1.45 !important;
+    font-weight: 400 !important;
+    color: #7b8982 !important;
+    margin-top: 10px !important;
+    margin-bottom: 8px !important;
+  }
+
+  /* Link kembali ke keranjang */
+  .back-to-cart-link {
+    font-size: 11px !important;
+    line-height: 1.4 !important;
+  }
+
+  /* Sedikit rapikan spasi antar section checkout */
+  .checkout-section,
+  .checkout-information,
+  .checkout-address-section {
+    margin-bottom: 20px !important;
+  }
+</style>
+<!-- MEMORA CHECKOUT COMPACT PATCH END -->
+  <link rel="stylesheet" href="/css/customer-final.css?v=20261002-185048">
 </head>
 
 
@@ -108,7 +239,7 @@
         aria-label="Buka menu"
         aria-expanded="false"
       >
-        â˜°
+        ☰
       </button>
 
 
@@ -133,7 +264,7 @@
       Order
 
       <span>
-        â†’
+        →
       </span>
 
     </a>
@@ -144,7 +275,7 @@
       Track
 
       <span>
-        â†’
+        →
       </span>
 
     </a>
@@ -207,7 +338,7 @@
       <div class="checkout-page-heading">
 
         <span class="checkout-eyebrow">
-          Final Step
+          
         </span>
 
         <h1>
@@ -494,7 +625,7 @@
 
   <div class="checkout-section-heading">
     <span class="checkout-section-eyebrow">
-      ALAMAT PENGIRIMAN
+      Alamat Pengiriman
     </span>
 
     <h2>
@@ -583,13 +714,7 @@
 
             <div class="form-group">
 
-              <label
-                class="form-label"
-                for="orderNote"
-              >
-                Catatan
-                <span>Opsional</span>
-              </label>
+              
 
               <textarea
                 id="orderNote"
@@ -618,12 +743,19 @@
                 Konfirmasi & Pembayaran
               </strong>
 
-              <p>
-                Setelah pesanan berhasil dibuat,
-                tim Memora akan menghubungi kamu melalui
-                WhatsApp untuk konfirmasi detail pesanan,
-                desain, DP, dan proses selanjutnya.
-              </p>
+              <p style="margin:4px 0 0 !important; padding:0 !important;">
+  <span style="
+    display:block !important;
+    font-family:Poppins, sans-serif !important;
+    font-size:9px !important;
+    line-height:1.45 !important;
+    font-weight:400 !important;
+    letter-spacing:0 !important;
+    color:#7B8982 !important;
+  ">
+    Setelah pesanan berhasil dibuat, tim Memora akan menghubungi kamu melalui WhatsApp untuk konfirmasi detail pesanan, desain, DP, dan proses selanjutnya.
+  </span>
+</p>
 
             </div>
 
@@ -644,7 +776,7 @@
           <div class="checkout-summary-heading">
 
             <span>
-              Your Order
+              Ringkasan
             </span>
 
             <h2>
@@ -770,7 +902,7 @@
             href="../cart/"
             class="back-to-cart-link"
           >
-            â† Kembali ke Keranjang
+            Kembali ke Keranjang
           </a>
 
 
@@ -908,9 +1040,26 @@
 <script src="../js/customer-auth-guard.js"></script>
 <script src="../js/checkout-address.js"></script>
 <script src="../js/checkout-customer-bridge.js"></script>
+  <script src="/js/customer-nav.js"></script>
+  <script src="/js/minimum-quantity.js?v=20261002-145008"></script>
+  <script src="/js/custom-cart-guard.js"></script>
 </body>
 
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -1,0 +1,257 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+  >
+
+  <meta
+    name="robots"
+    content="noindex,nofollow,noarchive"
+  >
+
+  <title>Pesanan Khusus | Memora</title>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <link
+    rel="stylesheet"
+    href="/css/custom-order.css"
+  >
+  <link rel="stylesheet" href="/css/customer-final.css?v=20261002-185048">
+</head>
+
+
+<body>
+
+  <main class="custom-page">
+
+    <header class="custom-brand">
+
+      <strong>
+        MEMORA
+      </strong>
+
+      <span>
+        Private Order
+      </span>
+
+    </header>
+
+
+
+    <section
+      class="custom-state"
+      id="customLoading"
+    >
+
+      <div class="custom-spinner"></div>
+
+      <strong>
+        Membuka pesanan khususmu...
+      </strong>
+
+    </section>
+
+
+
+    <section
+      class="custom-state"
+      id="customInvalid"
+      hidden
+    >
+
+      <div class="state-icon">
+        ×
+      </div>
+
+      <h1 id="invalidTitle">
+        Link tidak tersedia
+      </h1>
+
+      <p id="invalidMessage">
+        Link custom order tidak dapat digunakan.
+      </p>
+
+    </section>
+
+
+
+    <section
+      class="custom-card"
+      id="customContent"
+      hidden
+    >
+
+      <div class="custom-heading">
+
+        <span class="custom-eyebrow">
+          PESANAN KHUSUS UNTUKMU
+        </span>
+
+        <h1>
+          Custom Order
+        </h1>
+
+        <p id="customerGreeting">
+          Berikut detail pesanan yang sudah disiapkan Memora.
+        </p>
+
+      </div>
+
+
+      <div
+        id="customerMessageBox"
+        class="customer-message-box"
+        hidden
+      >
+        <p id="customerMessage"></p>
+      </div>
+
+
+
+      <section class="custom-section">
+
+        <div class="section-heading">
+
+          <h2>
+            Detail Pesanan
+          </h2>
+
+          <span id="itemCount">
+            0 item
+          </span>
+
+        </div>
+
+
+        <div
+          id="customItems"
+          class="customer-item-list"
+        ></div>
+
+      </section>
+
+
+
+      <section class="custom-section">
+
+        <h2>
+          Personalisasi
+        </h2>
+
+        <p class="section-description">
+          Tambahkan informasi yang perlu diketahui Memora untuk
+          masing-masing produk. Detail desain tetap akan
+          dikonfirmasi kembali sebelum produksi.
+        </p>
+
+
+        <div
+          id="personalizationList"
+          class="personalization-list"
+        ></div>
+
+      </section>
+
+
+
+      <section class="custom-section">
+
+        <div class="summary-row total">
+
+          <span>
+            Subtotal
+          </span>
+
+          <strong id="grandTotal">
+            Rp0
+          </strong>
+
+        </div>
+
+
+        <small class="shipping-note">
+          Belum termasuk ongkir.
+        </small>
+
+      </section>
+
+
+
+      <button
+        type="button"
+        class="continue-button"
+        id="continueButton"
+      >
+        Tambahkan ke Keranjang
+      </button>
+
+
+      <p class="continue-note">
+        Quantity khusus dari link ini tidak akan mengikuti minimum
+        order katalog.
+      </p>
+
+    </section>
+
+
+
+    <section
+      class="custom-state"
+      id="customAdded"
+      hidden
+    >
+
+      <div class="state-icon success">
+        ✓
+      </div>
+
+      <span class="custom-eyebrow">
+        BERHASIL DITAMBAHKAN
+      </span>
+
+      <h1>
+        Pesanan masuk ke keranjang
+      </h1>
+
+      <p>
+        Quantity custom-mu sudah dikunci sesuai private link.
+      </p>
+
+
+      <a
+        href="/cart/"
+        class="continue-button link-button"
+      >
+        Buka Keranjang
+      </a>
+
+    </section>
+
+  </main>
+
+
+  <script
+    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+  ></script>
+
+  <script src="/js/supabase.js"></script>
+
+  <script src="/js/custom-order.js"></script>
+
+</body>
+
+</html>
+
+
+
+

@@ -1,0 +1,947 @@
+﻿/* ==========================================================
+   MEMORA CUSTOMER UI CLEANUP
+   Typography + spacing normalization
+   Customer side only
+   ========================================================== */
+
+
+:root {
+
+  --memora-font:
+    "Poppins",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+
+  --memora-text:
+    #1E2925;
+
+  --memora-muted:
+    #7B8982;
+
+  --memora-green:
+    #173F35;
+
+  --memora-green-medium:
+    #3F6F60;
+
+  --memora-soft:
+    #E8F0EB;
+
+  --memora-border:
+    #DDE6E0;
+
+  --memora-bg:
+    #F7F9F7;
+
+  --memora-white:
+    #FFFFFF;
+
+}
+
+
+/* ==========================================================
+   GLOBAL
+   ========================================================== */
+
+html {
+  font-size:
+    14px;
+}
+
+
+body {
+  font-family:
+    var(--memora-font) !important;
+
+  font-size:
+    14px !important;
+
+  line-height:
+    1.6 !important;
+
+  color:
+    var(--memora-text);
+}
+
+
+body,
+button,
+input,
+select,
+textarea {
+  font-family:
+    var(--memora-font) !important;
+}
+
+
+button,
+input,
+select,
+textarea {
+  font-size:
+    13px !important;
+}
+
+
+p,
+li,
+td,
+th,
+label,
+span,
+a {
+  line-height:
+    1.55;
+}
+
+
+em,
+i {
+  font-style:
+    normal !important;
+}
+
+
+/* ==========================================================
+   PAGE TITLE
+   ========================================================== */
+
+main h1,
+.page-title,
+.product-heading h1,
+.account-title,
+.checkout-title,
+.cart-title,
+.orders-title,
+.profile-title,
+.address-title,
+.memora-catalog-hero h1 {
+
+  font-size:
+    clamp(
+      22px,
+      2.5vw,
+      26px
+    ) !important;
+
+  line-height:
+    1.3 !important;
+
+  font-weight:
+    600 !important;
+
+  letter-spacing:
+    -0.02em !important;
+
+}
+
+
+/* ==========================================================
+   SECTION TITLE
+   ========================================================== */
+
+main h2,
+.section-title,
+.config-group h2,
+.summary-card h2,
+.checkout-section h2,
+.account-section h2,
+.cart-summary h2,
+.catalog-step-heading h2 {
+
+  font-size:
+    18px !important;
+
+  line-height:
+    1.35 !important;
+
+  font-weight:
+    600 !important;
+
+  letter-spacing:
+    -0.01em;
+
+}
+
+
+/* ==========================================================
+   CARD / SUB TITLE
+   ========================================================== */
+
+main h3,
+.card-title,
+.cart-item-title,
+.order-card h3,
+.address-card h3,
+.product-card h3,
+.collection-card h3 {
+
+  font-size:
+    15px !important;
+
+  line-height:
+    1.4 !important;
+
+  font-weight:
+    600 !important;
+
+}
+
+
+/* ==========================================================
+   BODY TEXT
+   ========================================================== */
+
+main p,
+.product-description,
+.product-heading p,
+.helper-text,
+.form-helper,
+.cart-item-content,
+.checkout-content,
+.account-content {
+
+  font-size:
+    14px !important;
+
+  line-height:
+    1.6 !important;
+
+}
+
+
+/* ==========================================================
+   SMALL / MUTED TEXT
+   ========================================================== */
+
+small,
+.helper-text,
+.form-helper,
+.muted,
+.text-muted,
+.product-category,
+.cart-item-product-type,
+.catalog-preview-package,
+.memora-catalog-selection-label,
+.breadcrumb,
+.breadcrumb a,
+.breadcrumb span {
+
+  font-size:
+    12px !important;
+
+  line-height:
+    1.5 !important;
+
+  color:
+    var(--memora-muted);
+
+}
+
+
+/* ==========================================================
+   EYEBROW / LABEL
+   ========================================================== */
+
+.eyebrow,
+.section-eyebrow,
+.product-category,
+.config-label,
+.form-label,
+.field-label,
+.summary-label,
+.cart-summary-label,
+.checkout-label,
+.address-label,
+.catalog-step-number,
+.memora-catalog-selection-label {
+
+  font-size:
+    12px !important;
+
+  line-height:
+    1.4 !important;
+
+  font-weight:
+    600 !important;
+
+  letter-spacing:
+    .04em !important;
+
+}
+
+
+/* ==========================================================
+   NAVIGATION
+   ========================================================== */
+
+.customer-nav a,
+.customer-nav button,
+.bottom-nav a,
+.bottom-nav button,
+.header-actions a,
+.mobile-nav a {
+
+  font-size:
+    13px !important;
+
+  font-weight:
+    500 !important;
+
+  line-height:
+    1.3 !important;
+
+}
+
+
+/* ==========================================================
+   BUTTONS
+   ========================================================== */
+
+button,
+.btn,
+.button,
+.primary-button,
+.secondary-button,
+.add-to-cart-button,
+#addToCartButton,
+#placeOrderButton,
+.catalog-order-button {
+
+  font-size:
+    13px !important;
+
+  font-weight:
+    600 !important;
+
+  line-height:
+    1.25 !important;
+
+  min-height:
+    44px;
+
+}
+
+
+/* ==========================================================
+   INPUT
+   ========================================================== */
+
+input,
+select,
+textarea {
+
+  font-size:
+    14px !important;
+
+  line-height:
+    1.4 !important;
+
+}
+
+
+input::placeholder,
+textarea::placeholder {
+
+  font-size:
+    13px !important;
+
+  color:
+    #96A19B;
+
+}
+
+
+/* ==========================================================
+   PRODUCT PACKAGE / VARIANT
+   ========================================================== */
+
+.variant-card,
+.package-option,
+.hangtag-package,
+.invitation-package,
+.catalog-package-card {
+
+  font-size:
+    13px !important;
+
+}
+
+
+.variant-card .variant-label,
+.package-option span,
+.hangtag-package-label {
+
+  font-size:
+    12px !important;
+
+}
+
+
+.variant-card strong,
+.package-option strong,
+.hangtag-package strong,
+.invitation-package strong {
+
+  font-size:
+    15px !important;
+
+  font-weight:
+    600 !important;
+
+}
+
+
+.variant-card p,
+.package-option p,
+.hangtag-package p,
+.invitation-package p {
+
+  font-size:
+    12px !important;
+
+  line-height:
+    1.5 !important;
+
+}
+
+
+/* ==========================================================
+   PRICE
+   ========================================================== */
+
+.product-price,
+.package-price,
+.variant-price,
+.cart-item-price,
+.summary-total,
+.checkout-total,
+.order-total,
+.grand-total,
+#summaryTotal,
+#checkoutGrandTotal {
+
+  font-size:
+    18px !important;
+
+  font-weight:
+    600 !important;
+
+  line-height:
+    1.3 !important;
+
+}
+
+
+.cart-item-subtotal strong,
+.checkout-grand-total strong,
+.summary-grand-total strong {
+
+  font-size:
+    20px !important;
+
+  font-weight:
+    600 !important;
+
+}
+
+
+/* ==========================================================
+   CART
+   ========================================================== */
+
+.cart-item-title {
+
+  font-size:
+    16px !important;
+
+}
+
+
+.cart-item-package {
+
+  font-size:
+    12px !important;
+
+}
+
+
+.cart-item-price-info span,
+.cart-item-subtotal span {
+
+  font-size:
+    12px !important;
+
+}
+
+
+.remove-cart-item {
+
+  font-size:
+    12px !important;
+
+  min-height:
+    auto !important;
+
+}
+
+
+/* ==========================================================
+   CHECKOUT
+   ========================================================== */
+
+.checkout-section-title,
+.checkout-address-title {
+
+  font-size:
+    17px !important;
+
+  font-weight:
+    600 !important;
+
+}
+
+
+.checkout-item h3 {
+
+  font-size:
+    15px !important;
+
+}
+
+
+.checkout-item,
+.checkout-summary,
+.checkout-address-card {
+
+  font-size:
+    14px !important;
+
+}
+
+
+/* ==========================================================
+   ACCOUNT
+   ========================================================== */
+
+.account-menu-title,
+.profile-name,
+.address-name,
+.order-number {
+
+  font-size:
+    15px !important;
+
+  font-weight:
+    600 !important;
+
+}
+
+
+.account-menu-description,
+.profile-email,
+.address-detail,
+.order-meta {
+
+  font-size:
+    13px !important;
+
+  color:
+    var(--memora-muted);
+
+}
+
+
+/* ==========================================================
+   COLLECTION
+   ========================================================== */
+
+.memora-catalog-hero > span {
+
+  font-size:
+    12px !important;
+
+}
+
+
+.catalog-step-heading > span {
+
+  font-size:
+    12px !important;
+
+}
+
+
+.catalog-design-card strong {
+
+  font-size:
+    14px !important;
+
+}
+
+
+.catalog-design-card span {
+
+  font-size:
+    12px !important;
+
+}
+
+
+.catalog-package-card strong {
+
+  font-size:
+    15px !important;
+
+}
+
+
+.catalog-package-price {
+
+  font-size:
+    16px !important;
+
+}
+
+
+.catalog-package-unit {
+
+  font-size:
+    12px !important;
+
+}
+
+
+/* ==========================================================
+   PRODUCT SELECTED DESIGN
+   ========================================================== */
+
+.memora-catalog-selection-copy strong {
+
+  font-size:
+    14px !important;
+
+}
+
+
+.memora-catalog-selection-copy span {
+
+  font-size:
+    12px !important;
+
+}
+
+
+.memora-catalog-selection-note {
+
+  font-size:
+    12px !important;
+
+}
+
+
+/* ==========================================================
+   PERSONALIZATION
+   ========================================================== */
+
+.personalization-row,
+.personalization-row span,
+.personalization-row strong {
+
+  font-size:
+    13px !important;
+
+}
+
+
+.personalization-label {
+
+  font-size:
+    12px !important;
+
+  font-weight:
+    600 !important;
+
+}
+
+
+/* ==========================================================
+   GENERAL SPACING
+   ========================================================== */
+
+main {
+  line-height:
+    1.6;
+}
+
+
+.config-group,
+.checkout-section,
+.account-section,
+.cart-item,
+.summary-card {
+
+  margin-bottom:
+    18px;
+
+}
+
+
+.config-label,
+.form-label {
+
+  display:
+    block;
+
+  margin-bottom:
+    8px;
+
+}
+
+
+/* ==========================================================
+   FOOTER
+   ========================================================== */
+
+footer,
+.footer {
+
+  font-size:
+    13px !important;
+
+}
+
+
+footer a,
+.footer a {
+
+  font-size:
+    13px !important;
+
+}
+
+
+/* ==========================================================
+   MOBILE
+   ========================================================== */
+
+@media (
+  max-width: 640px
+) {
+
+  html {
+    font-size:
+      14px;
+  }
+
+
+  body {
+    font-size:
+      14px !important;
+  }
+
+
+  main h1,
+  .page-title,
+  .product-heading h1,
+  .memora-catalog-hero h1 {
+
+    font-size:
+      22px !important;
+
+  }
+
+
+  main h2,
+  .section-title,
+  .catalog-step-heading h2 {
+
+    font-size:
+      17px !important;
+
+  }
+
+
+  main h3,
+  .cart-item-title {
+
+    font-size:
+      15px !important;
+
+  }
+
+
+  main p,
+  .product-heading p {
+
+    font-size:
+      14px !important;
+
+  }
+
+
+  button,
+  .btn,
+  .button,
+  #addToCartButton,
+  #placeOrderButton {
+
+    min-height:
+      46px;
+
+    font-size:
+      13px !important;
+
+  }
+
+
+  input,
+  select,
+  textarea {
+
+    min-height:
+      44px;
+
+    font-size:
+      14px !important;
+
+  }
+
+
+  textarea {
+
+    min-height:
+      100px;
+
+  }
+
+
+  .customer-nav a,
+  .bottom-nav a {
+
+    font-size:
+      12px !important;
+
+  }
+
+
+  .product-price,
+  .summary-total,
+  .checkout-total {
+
+    font-size:
+      18px !important;
+
+  }
+
+}
+
+
+/* ==========================================================
+   VERY SMALL SCREEN
+   ========================================================== */
+
+@media (
+  max-width: 380px
+) {
+
+  main h1,
+  .page-title,
+  .product-heading h1 {
+
+    font-size:
+      21px !important;
+
+  }
+
+
+  main h2 {
+
+    font-size:
+      16px !important;
+
+  }
+
+}
+
+/* ==========================================================
+   SMALL PAYMENT NOTE
+   ========================================================== */
+
+.cart-payment-note,
+.cart-summary-note,
+.checkout-payment-note {
+  font-size: 11px !important;
+  line-height: 1.5 !important;
+  color: #7B8982 !important;
+}
+
+
+/* ==========================================================
+   CHECKOUT HELPER TEXT
+   ========================================================== */
+
+/* Setelah pesanan berhasil dibuat... */
+.checkout-payment-info,
+.checkout-confirmation-note,
+.checkout-info-note,
+
+/* Dengan membuat pesanan... */
+.checkout-submit-note,
+.order-submit-note,
+
+/* Tambahkan informasi umum... */
+.checkout-note-description,
+.order-note-description,
+.checkout-section-description {
+  font-size: 11px !important;
+  line-height: 1.5 !important;
+  color: #7B8982 !important;
+}
+
+
+/* Judul Catatan Pesanan */
+.checkout-note-section h2,
+.checkout-note-section h3,
+.order-note-section h2,
+.order-note-section h3 {
+  font-size: 15px !important;
+  line-height: 1.4 !important;
+  font-weight: 600 !important;
+}
+
+
+/* ==========================================================
+   CHECKOUT SMALL HELPER TEXT - FINAL
+   ========================================================== */
+
+.checkout-note-title {
+  font-size: 14px !important;
+  line-height: 1.35 !important;
+  font-weight: 600 !important;
+  margin-bottom: 4px !important;
+}
+
+.checkout-note-helper,
+.checkout-confirmation-helper,
+.checkout-agreement {
+  font-size: 10.5px !important;
+  line-height: 1.5 !important;
+  font-weight: 400 !important;
+  color: #7B8982 !important;
+}
+
+.checkout-note-helper {
+  margin-top: 3px !important;
+}
+
+.checkout-confirmation-helper {
+  margin-top: 4px !important;
+}
+
+.checkout-agreement {
+  margin-top: 8px !important;
+}
+

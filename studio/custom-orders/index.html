@@ -1,0 +1,873 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Custom Orders - Memora Studio</title>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../../css/style.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../../css/studio.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../../css/custom-orders.css"
+  >
+  <link rel="stylesheet" href="/css/studio-final.css?v=20261002-211912">
+</head>
+
+
+<body class="studio-body">
+
+  <aside class="studio-sidebar">
+
+    <div class="studio-sidebar-brand">
+
+      <strong>MEMORA</strong>
+
+      <span>Studio</span>
+
+    </div>
+
+
+    <nav class="studio-nav">
+
+      <a
+        href="../dashboard/"
+        class="studio-nav-item"
+      >
+        <span class="studio-nav-icon">⌂</span>
+        <span>Dashboard</span>
+      </a>
+
+
+      <a
+        href="../orders/"
+        class="studio-nav-item"
+      >
+        <span class="studio-nav-icon">◇</span>
+        <span>Orders</span>
+      </a>
+
+
+      <a
+        href="../custom-orders/"
+        class="studio-nav-item active"
+      >
+        <span class="studio-nav-icon">＋</span>
+        <span>Custom Orders</span>
+      </a>
+
+
+      <a
+        href="../production/"
+        class="studio-nav-item"
+      >
+        <span class="studio-nav-icon">◌</span>
+        <span>Production</span>
+      </a>
+
+
+      <a
+        href="../finance/"
+        class="studio-nav-item"
+      >
+        <span class="studio-nav-icon">Rp</span>
+        <span>Finance</span>
+      </a>
+
+
+      <a
+        href="../invoices/"
+        class="studio-nav-item"
+      >
+        <span class="studio-nav-icon">▤</span>
+        <span>Invoices</span>
+      </a>
+
+
+      <a
+        href="../customers/"
+        class="studio-nav-item"
+      >
+        <span class="studio-nav-icon">♡</span>
+        <span>Customers</span>
+      </a>
+
+
+      <a
+        href="../products/"
+        class="studio-nav-item"
+      >
+        <span class="studio-nav-icon">□</span>
+        <span>Products</span>
+      </a>
+
+
+      <a
+        href="../gallery/"
+        class="studio-nav-item"
+      >
+        <span class="studio-nav-icon">▧</span>
+        <span>Gallery</span>
+      </a>
+
+    </nav>
+
+  </aside>
+
+
+
+  <main class="studio-main">
+
+    <header class="custom-admin-header">
+
+      <div>
+
+        <span class="custom-admin-eyebrow">
+          MEMORA STUDIO
+        </span>
+
+        <h1>
+          Custom Orders
+        </h1>
+
+        <p>
+          Buat satu private link untuk beberapa produk dengan
+          quantity khusus tanpa mengubah harga katalog.
+        </p>
+
+      </div>
+
+
+      <button
+        type="button"
+        id="openCreateButton"
+        class="custom-primary-button"
+      >
+        + Buat Custom Order
+      </button>
+
+    </header>
+
+
+
+    <section class="custom-stats">
+
+      <div>
+        <span>Total</span>
+        <strong id="statTotal">0</strong>
+      </div>
+
+      <div>
+        <span>Aktif</span>
+        <strong id="statActive">0</strong>
+      </div>
+
+      <div>
+        <span>Sudah Dipakai</span>
+        <strong id="statUsed">0</strong>
+      </div>
+
+      <div>
+        <span>Expired</span>
+        <strong id="statExpired">0</strong>
+      </div>
+
+    </section>
+
+
+
+    <section class="custom-admin-card">
+
+      <div class="custom-toolbar">
+
+        <input
+          type="search"
+          id="customSearch"
+          placeholder="Cari customer atau produk..."
+        >
+
+
+        <select id="customStatusFilter">
+
+          <option value="all">
+            Semua Status
+          </option>
+
+          <option value="active">
+            Aktif
+          </option>
+
+          <option value="used">
+            Sudah dipakai
+          </option>
+
+          <option value="expired">
+            Expired
+          </option>
+
+          <option value="disabled">
+            Dinonaktifkan
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <div
+        class="custom-order-list"
+        id="customOrderList"
+      >
+        <div class="custom-empty">
+          Memuat custom order...
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+
+
+  <!-- ======================================================
+       CREATE CUSTOM ORDER MODAL
+       ====================================================== -->
+
+  <div
+    class="custom-modal-backdrop"
+    id="customModal"
+    hidden
+  >
+
+    <div class="custom-modal custom-modal-large">
+
+      <div class="custom-modal-heading">
+
+        <div>
+
+          <span class="custom-admin-eyebrow">
+            PRIVATE CUSTOM CART
+          </span>
+
+          <h2>
+            Buat Custom Order
+          </h2>
+
+          <p>
+            Tambahkan semua kebutuhan customer ke dalam satu link.
+          </p>
+
+        </div>
+
+
+        <button
+          type="button"
+          id="closeCreateButton"
+          class="custom-close"
+         onclick="return window.memoraForceCloseCustomOrder(event)">
+          ×
+        </button>
+
+      </div>
+
+
+      <form id="customOrderForm">
+
+        <section class="custom-form-section">
+
+          <h3>Customer</h3>
+
+
+          <div class="form-grid">
+
+            <label>
+
+              Nama Customer
+
+              <input
+                type="text"
+                id="customerName"
+                placeholder="Contoh: Alya"
+              >
+
+            </label>
+
+
+            <label>
+
+              WhatsApp
+
+              <input
+                type="text"
+                id="customerWhatsapp"
+                placeholder="08xxxxxxxxxx"
+              >
+
+            </label>
+
+          </div>
+
+        </section>
+
+
+
+        <section class="custom-form-section">
+
+          <div class="builder-heading">
+
+            <div>
+
+              <h3>Produk Custom</h3>
+
+              <p>
+                Quantity di sini boleh di bawah minimum katalog.
+              </p>
+
+            </div>
+
+
+            <button
+              type="button"
+              id="addProductButton"
+              class="custom-secondary-button"
+            >
+              + Tambah Produk
+            </button>
+
+          </div>
+
+
+          <div
+            id="customProductRows"
+            class="custom-product-rows"
+          ></div>
+
+        </section>
+
+
+
+        <section class="custom-form-section">
+
+          <h3>Ringkasan</h3>
+
+
+          <div
+            id="customSummary"
+            class="custom-summary"
+          >
+
+            <div class="custom-summary-empty">
+              Tambahkan produk untuk melihat ringkasan.
+            </div>
+
+          </div>
+
+
+          <div class="custom-grand-total">
+
+            <span>
+              Total
+            </span>
+
+            <strong id="customGrandTotal">
+              Rp0
+            </strong>
+
+          </div>
+
+        </section>
+
+
+
+        <section class="custom-form-section">
+
+          <div class="form-grid">
+
+            <label>
+
+              Berlaku Sampai
+
+              <input
+                type="datetime-local"
+                id="expiresAt"
+              >
+
+            </label>
+
+
+            <label>
+
+              Maksimal Pemakaian Link
+
+              <input
+                type="number"
+                id="maxUses"
+                min="1"
+                value="1"
+              >
+
+            </label>
+
+
+            <label class="full">
+
+              Pesan untuk Customer
+
+              <textarea
+                id="customerMessage"
+                rows="3"
+                placeholder="Contoh: Berikut pesanan khusus yang sudah kami siapkan untuk Kakak."
+              ></textarea>
+
+            </label>
+
+
+            <label class="full">
+
+              Catatan Internal
+
+              <textarea
+                id="adminNote"
+                rows="3"
+                placeholder="Hanya terlihat oleh tim Memora."
+              ></textarea>
+
+            </label>
+
+          </div>
+
+        </section>
+
+
+
+        <div class="modal-actions">
+
+          <button
+            type="button"
+            id="cancelCreateButton"
+            class="custom-secondary-button"
+           onclick="return window.memoraForceCloseCustomOrder(event)">
+            Batal
+          </button>
+
+
+          <button
+            type="submit"
+            id="saveCustomOrderButton"
+            class="custom-primary-button"
+          >
+            Generate Private Link
+          </button>
+
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+
+
+
+  <script
+    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+  ></script>
+
+  <script src="../../js/supabase.js"></script>
+
+  <script src="../../js/studio/auth.js"></script>
+
+  <script src="../../js/studio/guard.js"></script>
+
+  <script src="../../js/studio/custom-orders.js"></script>
+<!-- MEMORA FORCE CUSTOM MODAL START -->
+<script>
+(function () {
+    "use strict";
+
+    function getModalPanel() {
+        return document.querySelector(".custom-modal");
+    }
+
+
+    function getModalWrapper() {
+
+        var panel = getModalPanel();
+
+        if (!panel) {
+            return null;
+        }
+
+
+        var current = panel;
+
+
+        while (
+            current &&
+            current.parentElement &&
+            current.parentElement !== document.body
+        ) {
+
+            var parent = current.parentElement;
+
+            var cls =
+                String(
+                    parent.className || ""
+                ).toLowerCase();
+
+            var id =
+                String(
+                    parent.id || ""
+                ).toLowerCase();
+
+
+            var style =
+                window.getComputedStyle(parent);
+
+
+            /*
+             * Cari wrapper modal asli:
+             * - position fixed
+             * - class/id modal
+             * - overlay/backdrop
+             */
+
+            if (
+                style.position === "fixed" ||
+                cls.indexOf("overlay") !== -1 ||
+                cls.indexOf("backdrop") !== -1 ||
+                cls.indexOf("modal") !== -1 ||
+                id.indexOf("modal") !== -1
+            ) {
+
+                current = parent;
+
+            }
+            else {
+
+                break;
+            }
+        }
+
+
+        /*
+         * Kalau loop tidak menemukan wrapper,
+         * minimal gunakan parent dari .custom-modal.
+         */
+
+        if (
+            current === panel &&
+            panel.parentElement &&
+            panel.parentElement !== document.body
+        ) {
+
+            current =
+                panel.parentElement;
+        }
+
+
+        return current;
+    }
+
+
+    window.memoraForceCloseCustomOrder =
+        function (event) {
+
+            if (event) {
+
+                event.preventDefault();
+
+                event.stopPropagation();
+
+                if (
+                    typeof event.stopImmediatePropagation ===
+                    "function"
+                ) {
+
+                    event.stopImmediatePropagation();
+                }
+            }
+
+
+            var panel =
+                getModalPanel();
+
+            var wrapper =
+                getModalWrapper();
+
+
+            /*
+             * PAKSA wrapper hilang.
+             */
+
+            if (wrapper) {
+
+                wrapper.style.setProperty(
+                    "display",
+                    "none",
+                    "important"
+                );
+
+                wrapper.style.setProperty(
+                    "visibility",
+                    "hidden",
+                    "important"
+                );
+
+                wrapper.style.setProperty(
+                    "opacity",
+                    "0",
+                    "important"
+                );
+
+                wrapper.style.setProperty(
+                    "pointer-events",
+                    "none",
+                    "important"
+                );
+
+                wrapper.hidden = true;
+
+                wrapper.setAttribute(
+                    "aria-hidden",
+                    "true"
+                );
+
+
+                wrapper.classList.remove(
+                    "active",
+                    "open",
+                    "show",
+                    "visible",
+                    "is-open"
+                );
+            }
+
+
+            /*
+             * Backup: panel juga dipaksa hilang.
+             */
+
+            if (panel) {
+
+                panel.style.setProperty(
+                    "display",
+                    "none",
+                    "important"
+                );
+
+                panel.style.setProperty(
+                    "visibility",
+                    "hidden",
+                    "important"
+                );
+
+                panel.style.setProperty(
+                    "pointer-events",
+                    "none",
+                    "important"
+                );
+            }
+
+
+            document.body.classList.remove(
+                "modal-open",
+                "custom-modal-open",
+                "no-scroll",
+                "overflow-hidden"
+            );
+
+
+            document.documentElement.classList.remove(
+                "modal-open",
+                "custom-modal-open",
+                "no-scroll",
+                "overflow-hidden"
+            );
+
+
+            return false;
+        };
+
+
+    function restoreModalDisplay() {
+
+        var panel =
+            getModalPanel();
+
+        if (!panel) {
+            return;
+        }
+
+
+        /*
+         * Bersihkan style paksa dari panel.
+         */
+
+        panel.style.removeProperty(
+            "display"
+        );
+
+        panel.style.removeProperty(
+            "visibility"
+        );
+
+        panel.style.removeProperty(
+            "opacity"
+        );
+
+        panel.style.removeProperty(
+            "pointer-events"
+        );
+
+        panel.hidden = false;
+
+
+        /*
+         * Bersihkan semua ancestor yang mungkin
+         * pernah kita hide.
+         */
+
+        var current =
+            panel.parentElement;
+
+
+        while (
+            current &&
+            current !== document.body
+        ) {
+
+            current.style.removeProperty(
+                "display"
+            );
+
+            current.style.removeProperty(
+                "visibility"
+            );
+
+            current.style.removeProperty(
+                "opacity"
+            );
+
+            current.style.removeProperty(
+                "pointer-events"
+            );
+
+
+            current.hidden = false;
+
+            current.removeAttribute(
+                "aria-hidden"
+            );
+
+
+            current =
+                current.parentElement;
+        }
+    }
+
+
+    /*
+     * Tangkap tombol + Buat Custom Order.
+     * Existing JS tetap membuka modal,
+     * lalu style paksa lama kita bersihkan.
+     */
+
+    document.addEventListener(
+        "click",
+        function (event) {
+
+            var button =
+                event.target.closest(
+                    "button"
+                );
+
+
+            if (!button) {
+                return;
+            }
+
+
+            var text =
+                String(
+                    button.textContent || ""
+                )
+                .replace(/\s+/g, " ")
+                .trim()
+                .toLowerCase();
+
+
+            if (
+                text === "buat custom order" ||
+                text === "+ buat custom order"
+            ) {
+
+                setTimeout(
+                    restoreModalDisplay,
+                    50
+                );
+
+                setTimeout(
+                    restoreModalDisplay,
+                    200
+                );
+            }
+
+        },
+        false
+    );
+
+
+    /*
+     * Escape juga tutup.
+     */
+
+    document.addEventListener(
+        "keydown",
+        function (event) {
+
+            if (
+                event.key === "Escape"
+            ) {
+
+                window.memoraForceCloseCustomOrder(
+                    event
+                );
+            }
+
+        },
+        true
+    );
+
+})();
+</script>
+<!-- MEMORA FORCE CUSTOM MODAL END -->
+</body>
+
+</html>
+
+
+
+
+
+

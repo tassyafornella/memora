@@ -1,0 +1,190 @@
+﻿/* ==========================================================
+   MEMORA - ALL PRODUCT DETAIL SQUARE IMAGE
+   ========================================================== */
+
+
+/* DESKTOP */
+
+.product-gallery {
+  width: 100% !important;
+}
+
+
+#productImageWrapper,
+.product-image-wrapper {
+  width: 300px !important;
+  min-width: 300px !important;
+  max-width: 300px !important;
+
+  height: 300px !important;
+  min-height: 300px !important;
+  max-height: 300px !important;
+
+  aspect-ratio: auto !important;
+
+  margin: 0 auto 14px !important;
+
+  padding: 0 !important;
+
+  overflow: hidden !important;
+
+  border-radius: 20px !important;
+
+  background: #f6f3ee !important;
+}
+
+
+#productImageWrapper #productImage,
+.product-image-wrapper img,
+#productImage {
+  width: 300px !important;
+  min-width: 300px !important;
+  max-width: 300px !important;
+
+  height: 300px !important;
+  min-height: 300px !important;
+  max-height: 300px !important;
+
+  display: block !important;
+
+  object-fit: cover !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+
+  border-radius: 20px !important;
+}
+
+
+.product-preview-caption {
+  width: 300px !important;
+
+  box-sizing: border-box !important;
+
+  margin: 8px auto 0 !important;
+}
+
+
+
+/* ==========================================================
+   TABLET
+   ========================================================== */
+
+@media (max-width: 900px) {
+
+  #productImageWrapper,
+  .product-image-wrapper {
+    width: 260px !important;
+    min-width: 260px !important;
+    max-width: 260px !important;
+
+    height: 260px !important;
+    min-height: 260px !important;
+    max-height: 260px !important;
+
+    border-radius: 18px !important;
+  }
+
+
+  #productImageWrapper #productImage,
+  .product-image-wrapper img,
+  #productImage {
+    width: 260px !important;
+    min-width: 260px !important;
+    max-width: 260px !important;
+
+    height: 260px !important;
+    min-height: 260px !important;
+    max-height: 260px !important;
+
+    border-radius: 18px !important;
+  }
+
+
+  .product-preview-caption {
+    width: 260px !important;
+  }
+
+}
+
+
+
+/* ==========================================================
+   MOBILE
+   ========================================================== */
+
+@media (max-width: 699px) {
+
+  #productImageWrapper,
+  .product-image-wrapper {
+    width: 230px !important;
+    min-width: 230px !important;
+    max-width: 230px !important;
+
+    height: 230px !important;
+    min-height: 230px !important;
+    max-height: 230px !important;
+
+    border-radius: 17px !important;
+  }
+
+
+  #productImageWrapper #productImage,
+  .product-image-wrapper img,
+  #productImage {
+    width: 230px !important;
+    min-width: 230px !important;
+    max-width: 230px !important;
+
+    height: 230px !important;
+    min-height: 230px !important;
+    max-height: 230px !important;
+
+    border-radius: 17px !important;
+  }
+
+
+  .product-preview-caption {
+    width: 230px !important;
+  }
+
+}
+
+
+
+/* ==========================================================
+   SMALL PHONE
+   ========================================================== */
+
+@media (max-width: 390px) {
+
+  #productImageWrapper,
+  .product-image-wrapper {
+    width: 210px !important;
+    min-width: 210px !important;
+    max-width: 210px !important;
+
+    height: 210px !important;
+    min-height: 210px !important;
+    max-height: 210px !important;
+  }
+
+
+  #productImageWrapper #productImage,
+  .product-image-wrapper img,
+  #productImage {
+    width: 210px !important;
+    min-width: 210px !important;
+    max-width: 210px !important;
+
+    height: 210px !important;
+    min-height: 210px !important;
+    max-height: 210px !important;
+  }
+
+
+  .product-preview-caption {
+    width: 210px !important;
+  }
+
+}

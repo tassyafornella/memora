@@ -1,0 +1,366 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="theme-color"
+    content="#173F35"
+  >
+
+  <title>Password Baru - Memora</title>
+
+  <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+  >
+
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: #F7F9F7;
+      color: #1E2925;
+      font-family: "Poppins", sans-serif;
+      font-style: normal;
+    }
+
+    button,
+    input {
+      font: inherit;
+      font-style: normal;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .auth-page {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 18px;
+    }
+
+    .auth-shell {
+      width: 100%;
+      max-width: 440px;
+    }
+
+    .auth-brand {
+      display: block;
+      margin-bottom: 26px;
+      text-align: center;
+      color: #173F35;
+      font-size: 23px;
+      font-weight: 700;
+      letter-spacing: .16em;
+    }
+
+    .auth-card {
+      padding: 34px;
+      border: 1px solid #DDE6E0;
+      border-radius: 24px;
+      background: #FFFFFF;
+      box-shadow: 0 16px 48px rgba(23, 63, 53, .07);
+    }
+
+    .auth-eyebrow {
+      margin: 0 0 7px;
+      color: #3F6F60;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      color: #173F35;
+      font-size: 27px;
+      line-height: 1.25;
+    }
+
+    .auth-description {
+      margin: 12px 0 26px;
+      color: #7B8982;
+      font-size: 13px;
+      line-height: 1.75;
+    }
+
+    .field {
+      margin-bottom: 17px;
+    }
+
+    .field label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .password-wrap {
+      position: relative;
+    }
+
+    .field input {
+      width: 100%;
+      height: 50px;
+      padding: 0 72px 0 15px;
+      border: 1px solid #DDE6E0;
+      border-radius: 13px;
+      outline: none;
+      background: #FFFFFF;
+      color: #1E2925;
+      font-size: 13px;
+    }
+
+    .field input:focus {
+      border-color: #3F6F60;
+      box-shadow: 0 0 0 3px rgba(63, 111, 96, .10);
+    }
+
+    .password-toggle {
+      position: absolute;
+      top: 50%;
+      right: 13px;
+      transform: translateY(-50%);
+      padding: 4px;
+      border: 0;
+      background: transparent;
+      color: #3F6F60;
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .auth-button {
+      width: 100%;
+      min-height: 50px;
+      margin-top: 5px;
+      border: 0;
+      border-radius: 13px;
+      background: #173F35;
+      color: #FFFFFF;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .auth-button:hover {
+      background: #245746;
+    }
+
+    .auth-button:disabled {
+      cursor: wait;
+      opacity: .65;
+    }
+
+    .auth-message {
+      display: none;
+      margin: 16px 0 0;
+      padding: 12px 14px;
+      border-radius: 12px;
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    .auth-message.show {
+      display: block;
+    }
+
+    .auth-message.success {
+      background: #E8F0EB;
+      color: #245746;
+    }
+
+    .auth-message.error {
+      background: #F7EAEC;
+      color: #6C2936;
+    }
+
+    .auth-back {
+      display: block;
+      margin-top: 22px;
+      text-align: center;
+      color: #3F6F60;
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    @media (max-width: 520px) {
+
+      .auth-page {
+        align-items: flex-start;
+        padding-top: 60px;
+      }
+
+      .auth-card {
+        padding: 26px 20px;
+        border-radius: 20px;
+      }
+
+      h1 {
+        font-size: 24px;
+      }
+
+    }
+
+  </style>
+
+  <link rel="stylesheet" href="/css/customer-nav.css">
+  <link rel="stylesheet" href="/css/customer-final.css?v=20261002-185048">
+</head>
+
+<body>
+
+  <main class="auth-page">
+
+    <div class="auth-shell">
+
+      <a
+        href="/"
+        class="auth-brand"
+      >
+        MEMORA
+      </a>
+
+      <section class="auth-card">
+
+        <p class="auth-eyebrow">
+          Keamanan Akun
+        </p>
+
+        <h1>
+          Buat Password Baru
+        </h1>
+
+        <p class="auth-description">
+          Gunakan password baru minimal 8 karakter untuk akun Memora kamu.
+        </p>
+
+        <form id="resetPasswordForm">
+
+          <div class="field">
+
+            <label for="newPassword">
+              Password Baru
+            </label>
+
+            <div class="password-wrap">
+
+              <input
+                id="newPassword"
+                type="password"
+                minlength="8"
+                autocomplete="new-password"
+                required
+              >
+
+              <button
+                type="button"
+                class="password-toggle"
+                data-toggle-password="newPassword"
+              >
+                Lihat
+              </button>
+
+            </div>
+
+          </div>
+
+          <div class="field">
+
+            <label for="confirmNewPassword">
+              Konfirmasi Password Baru
+            </label>
+
+            <div class="password-wrap">
+
+              <input
+                id="confirmNewPassword"
+                type="password"
+                minlength="8"
+                autocomplete="new-password"
+                required
+              >
+
+              <button
+                type="button"
+                class="password-toggle"
+                data-toggle-password="confirmNewPassword"
+              >
+                Lihat
+              </button>
+
+            </div>
+
+          </div>
+
+          <button
+            id="resetPasswordButton"
+            class="auth-button"
+            type="submit"
+          >
+            Simpan Password Baru
+          </button>
+
+          <div
+            id="resetPasswordMessage"
+            class="auth-message"
+            role="status"
+          ></div>
+
+        </form>
+
+        <a
+          class="auth-back"
+          href="../login/"
+        >
+          ← Kembali ke Masuk
+        </a>
+
+      </section>
+
+    </div>
+
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../../js/supabase.js"></script>
+  <script src="../../js/password-recovery.js"></script>
+
+  <script src="/js/customer-nav.js"></script>
+</body>
+
+</html>
+
+
+
+
+

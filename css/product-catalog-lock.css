@@ -1,0 +1,276 @@
+﻿/* ==========================================================
+   MEMORA CATALOG SELECTION
+   ========================================================== */
+
+.memora-catalog-selection {
+  width:
+    100%;
+
+  margin:
+    14px 0
+    18px;
+
+  padding:
+    12px;
+
+  border:
+    1px solid
+    #DDE6E0;
+
+  border-radius:
+    14px;
+
+  background:
+    #F7F9F7;
+}
+
+
+.memora-catalog-selection-head {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    space-between;
+
+  gap:
+    10px;
+
+  margin-bottom:
+    10px;
+}
+
+
+.memora-catalog-selection-label {
+  color:
+    #3F6F60;
+
+  font-size:
+    9px !important;
+
+  font-weight:
+    600;
+
+  letter-spacing:
+    .08em;
+
+  text-transform:
+    uppercase;
+}
+
+
+.memora-change-catalog-design {
+  padding:
+    0;
+
+  border:
+    0;
+
+  background:
+    transparent;
+
+  color:
+    #173F35;
+
+  font-family:
+    inherit;
+
+  font-size:
+    9px !important;
+
+  font-weight:
+    500;
+
+  cursor:
+    pointer;
+}
+
+
+.memora-catalog-selection-body {
+  display:
+    grid;
+
+  grid-template-columns:
+    82px
+    minmax(0,1fr);
+
+  gap:
+    11px;
+
+  align-items:
+    center;
+}
+
+
+.memora-catalog-selection-thumb {
+  width:
+    82px;
+
+  height:
+    82px;
+
+  display:
+    block;
+
+  object-fit:
+    cover;
+
+  border-radius:
+    10px;
+
+  background:
+    #E8F0EB;
+}
+
+
+.memora-catalog-selection-copy strong {
+  display:
+    block;
+
+  margin-bottom:
+    3px;
+
+  color:
+    #1E2925;
+
+  font-size:
+    11px !important;
+
+  font-weight:
+    600;
+}
+
+
+.memora-catalog-selection-copy span {
+  display:
+    block;
+
+  color:
+    #7B8982;
+
+  font-size:
+    9.5px !important;
+}
+
+
+.memora-catalog-selection-note {
+  margin:
+    9px 0
+    0;
+
+  color:
+    #7B8982;
+
+  font-size:
+    9px !important;
+
+  line-height:
+    1.55 !important;
+}
+
+
+/* ==========================================================
+   PACKAGE LOCK
+   ========================================================== */
+
+.memora-package-locked {
+  position:
+    relative;
+
+  opacity:
+    .38 !important;
+
+  cursor:
+    not-allowed !important;
+
+  pointer-events:
+    none !important;
+
+  filter:
+    grayscale(.15);
+}
+
+
+.memora-package-locked::after {
+  content:
+    "LOCK";
+
+  position:
+    absolute;
+
+  top:
+    6px;
+
+  right:
+    7px;
+
+  padding:
+    2px 5px;
+
+  border-radius:
+    999px;
+
+  background:
+    #E8F0EB;
+
+  color:
+    #3F6F60;
+
+  font-size:
+    7px;
+
+  font-weight:
+    600;
+
+  letter-spacing:
+    .04em;
+}
+
+
+.memora-package-selected {
+  opacity:
+    1 !important;
+
+  pointer-events:
+    auto !important;
+}
+
+
+.memora-package-lock-note {
+  margin:
+    7px 0
+    0;
+
+  color:
+    #7B8982;
+
+  font-size:
+    9px !important;
+
+  line-height:
+    1.55;
+}
+
+
+@media (
+  max-width: 520px
+) {
+
+  .memora-catalog-selection-body {
+    grid-template-columns:
+      68px
+      minmax(0,1fr);
+  }
+
+
+  .memora-catalog-selection-thumb {
+    width:
+      68px;
+
+    height:
+      68px;
+  }
+
+}

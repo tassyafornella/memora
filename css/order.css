@@ -1683,3 +1683,160 @@
   display: none !important;
 }
 
+
+/* ==========================================================
+   MEMORA CHECKOUT - COMPACT PRODUCT THUMBNAIL
+   ========================================================== */
+
+.checkout-item {
+  grid-template-columns:
+    72px
+    minmax(0, 1fr);
+
+  gap: 12px;
+}
+
+
+.checkout-item-image {
+  width: 72px;
+  height: 72px;
+
+  border-radius: 12px;
+
+  flex-shrink: 0;
+}
+
+
+.checkout-item-image img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+}
+
+
+.checkout-item-image-fallback {
+  width: 100%;
+  height: 100%;
+}
+
+
+@media (max-width: 520px) {
+
+  .checkout-item {
+    grid-template-columns:
+      68px
+      minmax(0, 1fr);
+
+    gap: 11px;
+  }
+
+
+  .checkout-item-image {
+    width: 68px;
+    height: 68px;
+
+    border-radius: 11px;
+  }
+
+}
+
+/* ==========================================================
+   FINAL COMPACT CHECKOUT PRODUCT IMAGE
+   ========================================================== */
+
+.checkout-item {
+  display: grid !important;
+
+  grid-template-columns:
+    58px
+    minmax(0, 1fr) !important;
+
+  gap: 11px !important;
+
+  align-items: start !important;
+}
+
+
+.checkout-item-image {
+  width: 58px !important;
+  min-width: 58px !important;
+  max-width: 58px !important;
+
+  height: 58px !important;
+  min-height: 58px !important;
+  max-height: 58px !important;
+
+  overflow: hidden !important;
+
+  border-radius: 10px !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+
+.checkout-item-image img {
+  width: 58px !important;
+  min-width: 58px !important;
+  max-width: 58px !important;
+
+  height: 58px !important;
+  min-height: 58px !important;
+  max-height: 58px !important;
+
+  display: block !important;
+
+  object-fit: cover !important;
+
+  margin: 0 !important;
+}
+
+
+.checkout-item-image-fallback {
+  width: 58px !important;
+  height: 58px !important;
+}
+
+
+@media (max-width: 520px) {
+
+  .checkout-item {
+    grid-template-columns:
+      52px
+      minmax(0, 1fr) !important;
+
+    gap: 10px !important;
+  }
+
+
+  .checkout-item-image {
+    width: 52px !important;
+    min-width: 52px !important;
+    max-width: 52px !important;
+
+    height: 52px !important;
+    min-height: 52px !important;
+    max-height: 52px !important;
+
+    border-radius: 9px !important;
+  }
+
+
+  .checkout-item-image img {
+    width: 52px !important;
+    min-width: 52px !important;
+    max-width: 52px !important;
+
+    height: 52px !important;
+    min-height: 52px !important;
+    max-height: 52px !important;
+  }
+
+
+  .checkout-item-image-fallback {
+    width: 52px !important;
+    height: 52px !important;
+  }
+
+}

@@ -991,23 +991,6 @@
     }
 
 
-    const maxSize =
-      10 * 1024 * 1024;
-
-
-    if (
-      file.size > maxSize
-    ) {
-
-      showUploadError(
-        "Ukuran foto maksimal 10 MB."
-      );
-
-      return;
-
-    }
-
-
     selectedFile =
       file;
 
@@ -2014,3 +1997,4 @@
   }
 
 });
+

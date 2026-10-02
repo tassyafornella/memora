@@ -1,0 +1,136 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+  <title>Reset Memora</title>
+
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      background: #F7F9F7;
+      font-family: Arial, sans-serif;
+      color: #1E2925;
+    }
+
+    .card {
+      width: min(420px, calc(100% - 32px));
+      padding: 28px;
+      border: 1px solid #DDE6E0;
+      border-radius: 16px;
+      background: #FFFFFF;
+      text-align: center;
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-size: 20px;
+    }
+
+    p {
+      margin: 0;
+      color: #7B8982;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    a {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 12px 20px;
+      border-radius: 10px;
+      background: #173F35;
+      color: white;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="card">
+
+    <h1 id="title">
+      Membersihkan data Memora...
+    </h1>
+
+    <p id="message">
+      Tunggu sebentar.
+    </p>
+
+    <a
+      href="/"
+      id="homeButton"
+      style="display:none"
+    >
+      Kembali ke Home
+    </a>
+
+  </div>
+
+
+  <script>
+
+    try {
+
+      localStorage.removeItem(
+        "memora_cart"
+      );
+
+      sessionStorage.removeItem(
+        "memora_catalog_selection"
+      );
+
+      sessionStorage.removeItem(
+        "memora_locked_design"
+      );
+
+      sessionStorage.removeItem(
+        "memora_catalog_reference"
+      );
+
+      document.getElementById(
+        "title"
+      ).textContent =
+        "Data berhasil dibersihkan";
+
+
+      document.getElementById(
+        "message"
+      ).textContent =
+        "Keranjang lama dan pilihan katalog lama sudah dihapus. Silakan kembali ke Home dan buat pesanan baru dari katalog.";
+
+
+      document.getElementById(
+        "homeButton"
+      ).style.display =
+        "inline-block";
+
+    }
+    catch (error) {
+
+      document.getElementById(
+        "title"
+      ).textContent =
+        "Gagal membersihkan data";
+
+
+      document.getElementById(
+        "message"
+      ).textContent =
+        error.message;
+
+    }
+
+  </script>
+
+</body>
+</html>

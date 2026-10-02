@@ -3,47 +3,83 @@
   "use strict";
 
 
+  const PRODUCT_SLUG_ALIASES = {
+
+    "classic-invitation":
+      [
+        "classic-invitation"
+      ],
+
+    "invitation":
+      [
+        "invitation",
+        "wedding-invitation"
+      ],
+
+    "bridesmaid":
+      [
+        "bridesmaid",
+        "bridesmaid-card"
+      ],
+
+    "keepsake":
+      [
+        "keepsake"
+      ],
+
+    "hangtag":
+      [
+        "hangtag"
+      ],
+
+    "sticker":
+      [
+        "sticker"
+      ],
+
+    "birthday":
+      [
+        "birthday",
+        "birthday-card"
+      ]
+
+  };
+
+
   function getSupabase() {
 
-    return window.memoraSupabase || null;
+    return (
+      window.memoraSupabase ||
+      null
+    );
 
   }
 
-
-  /* =======================================================
-     CART
-     ======================================================= */
 
   function getCart() {
 
     try {
 
-      const raw =
-        localStorage.getItem(
-          "memora_cart"
+      const value =
+        JSON.parse(
+          localStorage.getItem(
+            "memora_cart"
+          ) ||
+          "[]"
         );
 
 
-      if (!raw) {
-
-        return [];
-
-      }
-
-
-      const cart =
-        JSON.parse(raw);
-
-
-      return Array.isArray(cart)
-        ? cart
-        : [];
+      return (
+        Array.isArray(value)
+          ? value
+          : []
+      );
 
     }
     catch (error) {
 
-      console.error(
-        "Cart read:",
+      console.warn(
+        "Cart:",
         error
       );
 
@@ -59,18 +95,27 @@
 
     return getCart()
       .reduce(
-        function (
+        (
           total,
           item
-        ) {
+        ) => {
 
-          const quantity =
+          const qty =
             Number(
-              item.quantity
-            ) || 1;
+              item?.quantity ||
+              item?.qty ||
+              1
+            );
 
 
-          return total + quantity;
+          return (
+            total +
+            (
+              Number.isFinite(qty)
+                ? Math.max(qty, 1)
+                : 1
+            )
+          );
 
         },
         0
@@ -79,313 +124,75 @@
   }
 
 
-  function updateCartBadge() {
+  function renderCartCount() {
 
     const count =
       getCartCount();
 
 
-    const headerBadge =
-      document.getElementById(
-        "headerCartBadge"
+    document
+      .querySelectorAll(
+        "[data-cart-count]"
+      )
+      .forEach(
+        function (badge) {
+
+          badge.textContent =
+            count > 99
+              ? "99+"
+              : String(count);
+
+
+          badge.classList.toggle(
+            "show",
+            count > 0
+          );
+
+        }
       );
-
-
-    const bottomBadge =
-      document.getElementById(
-        "bottomCartBadge"
-      );
-
-
-    if (headerBadge) {
-
-      headerBadge.textContent =
-        count;
-
-
-      headerBadge.style.display =
-        count > 0
-          ? "flex"
-          : "none";
-
-    }
-
-
-    if (bottomBadge) {
-
-      bottomBadge.textContent =
-        count;
-
-
-      bottomBadge.style.display =
-        count > 0
-          ? "flex"
-          : "none";
-
-    }
 
   }
 
 
+  function cleanDisplayName(value) {
 
-  /* =======================================================
-     DRAWER
-     ======================================================= */
+    const name =
+      String(
+        value ||
+        ""
+      )
+        .trim()
+        .split(/\s+/)[0];
 
-  function openDrawer() {
 
-    const drawer =
+    if (!name) {
+      return "";
+    }
+
+
+    return (
+      name.charAt(0)
+        .toUpperCase() +
+      name
+        .slice(1)
+        .toLowerCase()
+    );
+
+  }
+
+
+  async function renderGreeting() {
+
+    const heading =
       document.getElementById(
-        "mobileDrawer"
+        "homeGreeting"
       );
 
 
-    if (!drawer) {
-
+    if (!heading) {
       return;
-
     }
 
-
-    drawer.hidden =
-      false;
-
-
-    document.body
-      .classList
-      .add(
-        "drawer-open"
-      );
-
-  }
-
-
-  function closeDrawer() {
-
-    const drawer =
-      document.getElementById(
-        "mobileDrawer"
-      );
-
-
-    if (!drawer) {
-
-      return;
-
-    }
-
-
-    drawer.hidden =
-      true;
-
-
-    document.body
-      .classList
-      .remove(
-        "drawer-open"
-      );
-
-  }
-
-
-  function bindDrawer() {
-
-    document
-      .getElementById(
-        "mobileMenuButton"
-      )
-      ?.addEventListener(
-        "click",
-        openDrawer
-      );
-
-
-    document
-      .querySelectorAll(
-        "[data-close-drawer]"
-      )
-      .forEach(
-        function (
-          element
-        ) {
-
-          element
-            .addEventListener(
-              "click",
-              closeDrawer
-            );
-
-        }
-      );
-
-
-    document
-      .querySelectorAll(
-        ".mobile-drawer-navigation a"
-      )
-      .forEach(
-        function (
-          link
-        ) {
-
-          link
-            .addEventListener(
-              "click",
-              closeDrawer
-            );
-
-        }
-      );
-
-  }
-
-
-
-  /* =======================================================
-     AUTH
-     ======================================================= */
-
-  function setLoggedOut() {
-
-    document
-      .querySelectorAll(
-        "[data-account-link]"
-      )
-      .forEach(
-        function (
-          element
-        ) {
-
-          element.href =
-            "/account/login/";
-
-        }
-      );
-
-
-    document
-      .querySelectorAll(
-        "[data-guest-link]"
-      )
-      .forEach(
-        function (
-          element
-        ) {
-
-          element.hidden =
-            false;
-
-        }
-      );
-
-
-    document
-      .querySelectorAll(
-        "[data-logout]"
-      )
-      .forEach(
-        function (
-          element
-        ) {
-
-          element.hidden =
-            true;
-
-        }
-      );
-
-
-    const accountCTA =
-      document.getElementById(
-        "accountCallToAction"
-      );
-
-
-    if (accountCTA) {
-
-      accountCTA.href =
-        "/account/login/";
-
-
-      accountCTA.textContent =
-        "Login ke Akun Saya →";
-
-    }
-
-  }
-
-
-  function setLoggedIn() {
-
-    document
-      .querySelectorAll(
-        "[data-account-link]"
-      )
-      .forEach(
-        function (
-          element
-        ) {
-
-          element.href =
-            "/account/";
-
-        }
-      );
-
-
-    document
-      .querySelectorAll(
-        "[data-guest-link]"
-      )
-      .forEach(
-        function (
-          element
-        ) {
-
-          element.hidden =
-            true;
-
-        }
-      );
-
-
-    document
-      .querySelectorAll(
-        "[data-logout]"
-      )
-      .forEach(
-        function (
-          element
-        ) {
-
-          element.hidden =
-            false;
-
-        }
-      );
-
-
-    const accountCTA =
-      document.getElementById(
-        "accountCallToAction"
-      );
-
-
-    if (accountCTA) {
-
-      accountCTA.href =
-        "/account/";
-
-
-      accountCTA.textContent =
-        "Lihat Pesanan Saya →";
-
-    }
-
-  }
-
-
-  async function initializeAuth() {
 
     const supabase =
       getSupabase();
@@ -393,10 +200,159 @@
 
     if (!supabase) {
 
-      setLoggedOut();
+      heading.textContent =
+        "Hai!";
 
       return;
 
+    }
+
+
+    try {
+
+      const {
+        data: sessionData
+      } =
+        await supabase
+          .auth
+          .getSession();
+
+
+      const user =
+        sessionData
+          ?.session
+          ?.user;
+
+
+      if (!user) {
+
+        heading.textContent =
+          "Hai!";
+
+        return;
+
+      }
+
+
+      let displayName =
+        cleanDisplayName(
+          user
+            ?.user_metadata
+            ?.full_name
+        );
+
+
+      if (!displayName) {
+
+        try {
+
+          const {
+            data: customer
+          } =
+            await supabase
+              .from(
+                "customers"
+              )
+              .select(
+                "full_name"
+              )
+              .eq(
+                "auth_user_id",
+                user.id
+              )
+              .maybeSingle();
+
+
+          displayName =
+            cleanDisplayName(
+              customer
+                ?.full_name
+            );
+
+        }
+        catch (error) {
+
+          console.warn(
+            "Customer greeting:",
+            error
+          );
+
+        }
+
+      }
+
+
+      heading.textContent =
+        displayName
+          ? `Hai, ${displayName}!`
+          : "Hai!";
+
+    }
+    catch (error) {
+
+      console.warn(
+        "Greeting:",
+        error
+      );
+
+
+      heading.textContent =
+        "Hai!";
+
+    }
+
+  }
+
+
+  function findProductImageElement(
+    databaseSlug
+  ) {
+
+    const entries =
+      Object.entries(
+        PRODUCT_SLUG_ALIASES
+      );
+
+
+    for (
+      const [
+        uiSlug,
+        aliases
+      ]
+      of entries
+    ) {
+
+      if (
+        aliases.includes(
+          databaseSlug
+        )
+      ) {
+
+        return (
+          document
+            .querySelector(
+              `[data-product-image="${uiSlug}"]`
+            )
+        );
+
+      }
+
+    }
+
+
+    return null;
+
+  }
+
+
+  async function loadProductImages() {
+
+    const supabase =
+      getSupabase();
+
+
+    if (!supabase) {
+      return;
     }
 
 
@@ -407,144 +363,251 @@
         error
       } =
         await supabase
-          .auth
-          .getUser();
+          .from(
+            "product_gallery"
+          )
+          .select(`
+            id,
+            product_id,
+            image_url,
+            image_type,
+            is_cover,
+            is_active,
+            created_at,
+            products (
+              id,
+              slug,
+              name
+            )
+          `)
+          .eq(
+            "is_active",
+            true
+          )
+          .order(
+            "created_at",
+            {
+              ascending:
+                false
+            }
+          );
+
+
+      if (error) {
+        throw error;
+      }
 
 
       if (
-        error ||
-        !data?.user
+        !Array.isArray(data)
       ) {
-
-        setLoggedOut();
-
         return;
-
       }
 
 
-      setLoggedIn();
-
-    }
-    catch (error) {
-
-      console.error(
-        "Homepage auth:",
-        error
-      );
+      const byProduct =
+        new Map();
 
 
-      setLoggedOut();
+      data.forEach(
+        function (item) {
 
-    }
-
-  }
-
-
-  async function logout() {
-
-    const supabase =
-      getSupabase();
+          const productId =
+            item.product_id;
 
 
-    if (supabase) {
-
-      try {
-
-        await supabase
-          .auth
-          .signOut();
-
-      }
-      catch (error) {
-
-        console.error(
-          "Logout:",
-          error
-        );
-
-      }
-
-    }
+          if (!productId) {
+            return;
+          }
 
 
-    localStorage.removeItem(
-      "memora_customer"
-    );
+          if (
+            !byProduct.has(
+              productId
+            )
+          ) {
+
+            byProduct.set(
+              productId,
+              []
+            );
+
+          }
 
 
-    window.location.href =
-      "/";
-
-  }
-
-
-  function bindLogout() {
-
-    document
-      .querySelectorAll(
-        "[data-logout]"
-      )
-      .forEach(
-        function (
-          button
-        ) {
-
-          button
-            .addEventListener(
-              "click",
-              logout
+          byProduct
+            .get(
+              productId
+            )
+            .push(
+              item
             );
 
         }
       );
 
+
+      byProduct
+        .forEach(
+          function (items) {
+
+            const preferred =
+              items.find(
+                item =>
+                  item.is_cover ===
+                  true
+              ) ||
+              items.find(
+                item =>
+                  item.image_type ===
+                  "gallery"
+              ) ||
+              items.find(
+                item =>
+                  item.image_type ===
+                  "variant"
+              ) ||
+              items[0];
+
+
+            if (
+              !preferred
+                ?.image_url
+            ) {
+
+              return;
+
+            }
+
+
+            const databaseSlug =
+              preferred
+                ?.products
+                ?.slug;
+
+
+            if (!databaseSlug) {
+              return;
+            }
+
+
+            const image =
+              findProductImageElement(
+                databaseSlug
+              );
+
+
+            if (!image) {
+              return;
+            }
+
+
+            image.src =
+              preferred.image_url;
+
+          }
+        );
+
+    }
+    catch (error) {
+
+      console.error(
+        "Home product images:",
+        error
+      );
+
+    }
+
   }
 
 
+  function setupImageFallbacks() {
 
-  /* =======================================================
-     INIT
-     ======================================================= */
+    document
+      .querySelectorAll(
+        ".product-image"
+      )
+      .forEach(
+        function (image) {
 
-  function initialize() {
-
-    updateCartBadge();
-
-    bindDrawer();
-
-    bindLogout();
-
-    initializeAuth();
-
-  }
+          const fallback =
+            image.getAttribute(
+              "src"
+            );
 
 
-  document
-    .addEventListener(
-      "DOMContentLoaded",
-      initialize
-    );
+          image.addEventListener(
+            "error",
+            function () {
 
+              if (
+                image.src !==
+                fallback
+              ) {
 
-  window
-    .addEventListener(
-      "storage",
-      function (
-        event
-      ) {
+                image.src =
+                  fallback;
 
-        if (
-          event.key ===
-          "memora_cart"
-        ) {
+              }
 
-          updateCartBadge();
+            },
+            {
+              once: true
+            }
+          );
 
         }
+      );
+
+  }
+
+
+  async function initialize() {
+
+    renderCartCount();
+
+    setupImageFallbacks();
+
+
+    await Promise.allSettled([
+      renderGreeting(),
+      loadProductImages()
+    ]);
+
+  }
+
+
+  document.addEventListener(
+    "DOMContentLoaded",
+    initialize
+  );
+
+
+  window.addEventListener(
+    "storage",
+    function (event) {
+
+      if (
+        event.key ===
+        "memora_cart"
+      ) {
+
+        renderCartCount();
 
       }
-    );
+
+    }
+  );
+
+
+  window.addEventListener(
+    "pageshow",
+    function () {
+
+      renderCartCount();
+
+    }
+  );
 
 
 })();
