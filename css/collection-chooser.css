@@ -1,0 +1,393 @@
+﻿/* ==========================================================
+   MEMORA COLLECTION CHOOSER
+   ========================================================== */
+
+.memora-collection-chooser {
+    min-height:
+        calc(100vh - 130px);
+
+    padding:
+        34px 18px 110px;
+
+    background:
+        #F7F9F7;
+
+    font-family:
+        "Poppins",
+        sans-serif;
+}
+
+
+.memora-collection-chooser-inner {
+    width:
+        min(960px, 100%);
+
+    margin:
+        0 auto;
+}
+
+
+.memora-collection-back {
+    display:
+        inline-flex;
+
+    align-items:
+        center;
+
+    gap:
+        6px;
+
+    margin-bottom:
+        24px;
+
+    color:
+        #617069;
+
+    text-decoration:
+        none;
+
+    font-size:
+        12px;
+
+    font-weight:
+        500;
+}
+
+
+.memora-collection-back:hover {
+    color:
+        #173F35;
+}
+
+
+.memora-collection-eyebrow {
+    display:
+        block;
+
+    margin-bottom:
+        7px;
+
+    font-size:
+        10px;
+
+    font-weight:
+        600;
+
+    letter-spacing:
+        .09em;
+
+    color:
+        #3F6F60;
+}
+
+
+.memora-collection-title {
+    margin:
+        0;
+
+    color:
+        #1E2925;
+
+    font-size:
+        clamp(26px, 5vw, 38px);
+
+    line-height:
+        1.2;
+
+    font-weight:
+        600;
+
+    letter-spacing:
+        -.035em;
+}
+
+
+.memora-collection-description {
+    max-width:
+        560px;
+
+    margin:
+        10px 0 0;
+
+    color:
+        #7B8982;
+
+    font-size:
+        13px;
+
+    line-height:
+        1.7;
+}
+
+
+.memora-collection-grid {
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap:
+        14px;
+
+    margin-top:
+        30px;
+}
+
+
+.memora-collection-card {
+    position:
+        relative;
+
+    min-height:
+        190px;
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    justify-content:
+        space-between;
+
+    padding:
+        20px;
+
+    background:
+        #FFFFFF;
+
+    border:
+        1px solid #DDE6E0;
+
+    border-radius:
+        18px;
+
+    color:
+        #1E2925;
+
+    text-decoration:
+        none;
+
+    overflow:
+        hidden;
+
+    transition:
+        transform .18s ease,
+        border-color .18s ease,
+        box-shadow .18s ease;
+}
+
+
+.memora-collection-card:hover {
+    transform:
+        translateY(-3px);
+
+    border-color:
+        #B9CDC2;
+
+    box-shadow:
+        0 12px 30px
+        rgba(23,63,53,.07);
+}
+
+
+.memora-collection-card-icon {
+    width:
+        48px;
+
+    height:
+        48px;
+
+    display:
+        grid;
+
+    place-items:
+        center;
+
+    border-radius:
+        14px;
+
+    background:
+        #E8F0EB;
+
+    color:
+        #245746;
+}
+
+
+.memora-collection-card-icon svg {
+    width:
+        23px;
+
+    height:
+        23px;
+
+    fill:
+        none;
+
+    stroke:
+        currentColor;
+
+    stroke-width:
+        1.6;
+
+    stroke-linecap:
+        round;
+
+    stroke-linejoin:
+        round;
+}
+
+
+.memora-collection-card-copy {
+    margin-top:
+        30px;
+}
+
+
+.memora-collection-card strong {
+    display:
+        block;
+
+    margin-bottom:
+        4px;
+
+    font-size:
+        15px;
+
+    font-weight:
+        600;
+
+    color:
+        #173F35;
+}
+
+
+.memora-collection-card span {
+    display:
+        block;
+
+    font-size:
+        10.5px;
+
+    line-height:
+        1.55;
+
+    color:
+        #7B8982;
+}
+
+
+.memora-collection-arrow {
+    position:
+        absolute;
+
+    top:
+        20px;
+
+    right:
+        20px;
+
+    color:
+        #95A59D;
+
+    font-size:
+        17px;
+
+    transition:
+        transform .18s ease;
+}
+
+
+.memora-collection-card:hover
+.memora-collection-arrow {
+    transform:
+        translateX(3px);
+
+    color:
+        #245746;
+}
+
+
+@media (max-width: 760px) {
+
+    .memora-collection-chooser {
+        padding:
+            24px 14px 105px;
+    }
+
+
+    .memora-collection-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+        gap:
+            10px;
+
+        margin-top:
+            24px;
+    }
+
+
+    .memora-collection-card {
+        min-height:
+            165px;
+
+        padding:
+            16px;
+
+        border-radius:
+            15px;
+    }
+
+
+    .memora-collection-card-icon {
+        width:
+            42px;
+
+        height:
+            42px;
+
+        border-radius:
+            12px;
+    }
+
+
+    .memora-collection-card-copy {
+        margin-top:
+            23px;
+    }
+
+
+    .memora-collection-card strong {
+        font-size:
+            13px;
+    }
+
+
+    .memora-collection-card span {
+        font-size:
+            9.5px;
+    }
+
+
+    .memora-collection-arrow {
+        top:
+            16px;
+
+        right:
+            16px;
+    }
+
+}
+
+
+@media (max-width: 380px) {
+
+    .memora-collection-grid {
+        grid-template-columns:
+            1fr;
+    }
+
+}
