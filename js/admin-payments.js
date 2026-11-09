@@ -12,34 +12,27 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     let orders = [];
-
     let customers = [];
-
     let confirmations = [];
 
 
     const PAYMENT_STATUS = [
-
       [
         "belum_ada_pembayaran",
         "Belum Ada Pembayaran"
       ],
-
       [
         "dp_diterima",
         "DP Diterima"
       ],
-
       [
         "sebagian",
         "Pembayaran Sebagian"
       ],
-
       [
         "lunas",
         "Lunas"
       ]
-
     ];
 
 
@@ -58,15 +51,16 @@ document.addEventListener("DOMContentLoaded", () => {
           </h1>
 
           <p>
-            Kelola dan perbarui status pembayaran customer.
+            Kelola status pembayaran customer dan konfirmasi pembayaran.
           </p>
 
         </div>
 
+
         <button
           type="button"
           class="btn"
-          id="refreshPayments"
+          id="refreshPayment"
         >
           Refresh
         </button>
@@ -85,7 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
             Belum Bayar
           </span>
 
-          <strong id="paymentUnpaid">
+          <strong id="statUnpaid">
             0
           </strong>
 
@@ -98,7 +92,7 @@ document.addEventListener("DOMContentLoaded", () => {
             DP / Sebagian
           </span>
 
-          <strong id="paymentPartial">
+          <strong id="statPartial">
             0
           </strong>
 
@@ -111,7 +105,7 @@ document.addEventListener("DOMContentLoaded", () => {
             Lunas
           </span>
 
-          <strong id="paymentPaid">
+          <strong id="statPaid">
             0
           </strong>
 
@@ -124,7 +118,7 @@ document.addEventListener("DOMContentLoaded", () => {
             Confirmation
           </span>
 
-          <strong id="paymentConfirmationTotal">
+          <strong id="statConfirmation">
             0
           </strong>
 
@@ -139,9 +133,9 @@ document.addEventListener("DOMContentLoaded", () => {
           style="
             display:flex;
             justify-content:space-between;
+            align-items:center;
             gap:14px;
             flex-wrap:wrap;
-            align-items:center;
             margin-bottom:18px;
           "
         >
@@ -149,7 +143,7 @@ document.addEventListener("DOMContentLoaded", () => {
           <div>
 
             <h2 style="margin:0;">
-              Order Payment Status
+              Payment Status
             </h2>
 
             <p
@@ -158,7 +152,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 color:#7a837e;
               "
             >
-              Pilih status pembayaran lalu simpan.
+              Ubah status pembayaran pesanan.
             </p>
 
           </div>
@@ -166,10 +160,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
           <input
             type="search"
-            class="input"
             id="paymentSearch"
-            placeholder="Cari order/customer..."
-            style="max-width:280px;"
+            class="input"
+            placeholder="Cari order atau customer..."
+            style="max-width:290px;"
           >
 
         </div>
@@ -192,7 +186,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             </thead>
 
-            <tbody id="paymentOrderRows"></tbody>
+            <tbody id="paymentRows"></tbody>
 
           </table>
 
@@ -207,7 +201,7 @@ document.addEventListener("DOMContentLoaded", () => {
       >
 
         <div class="eyebrow">
-          Customer Confirmation
+          Customer Upload
         </div>
 
         <h2>
@@ -220,7 +214,7 @@ document.addEventListener("DOMContentLoaded", () => {
             margin-top:5px;
           "
         >
-          Konfirmasi yang dikirim customer akan tampil di sini.
+          Bukti pembayaran yang dikirim customer akan tampil di sini.
         </p>
 
 
@@ -253,27 +247,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
       <div
-        id="paymentSuccess"
+        id="paymentNotice"
         style="
           display:none;
           position:fixed;
           right:24px;
           bottom:24px;
           z-index:9999;
-          max-width:360px;
-          padding:14px 17px;
-          border-radius:12px;
           background:#315844;
           color:#fff;
+          padding:14px 18px;
+          border-radius:12px;
+          box-shadow:0 12px 30px rgba(0,0,0,.18);
           font-weight:600;
-          box-shadow:0 14px 35px rgba(0,0,0,.18);
         "
       ></div>
 
     `;
 
 
-    function escapeHtml(value) {
+    function esc(value) {
 
       return MemoraAdmin.escapeHtml(
         value ?? ""
@@ -282,28 +275,26 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    function customerFor(order) {
+    function findCustomer(order) {
 
       return customers.find(
-        item =>
-          String(item.id) ===
+        customer =>
+          String(customer.id) ===
           String(order.customer_id)
       ) || null;
 
     }
 
 
-    function showSuccess() {
+    function showNotice(message) {
 
       const box =
         document.getElementById(
-          "paymentSuccess"
+          "paymentNotice"
         );
 
-
       box.textContent =
-        "Status pembayaran berhasil diperbarui.";
-
+        message;
 
       box.style.display =
         "block";
@@ -311,12 +302,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
       setTimeout(
         () => {
-
           box.style.display =
             "none";
-
         },
-        3500
+        3000
       );
 
     }
@@ -324,40 +313,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     async function loadData() {
 
-      const [
-        orderResult,
-        customerResult,
-        confirmationResult
-      ] =
-        await Promise.all([
-
-          db
-            .from("orders")
-            .select("*")
-            .order(
-              "created_at",
-              {
-                ascending:false
-              }
-            ),
-
-          db
-            .from("customers")
-            .select("*"),
-
-          db
-            .from(
-              "payment_confirmations"
-            )
-            .select("*")
-            .order(
-              "submitted_at",
-              {
-                ascending:false
-              }
-            )
-
-        ]);
+      const orderResult =
+        await db
+          .from("orders")
+          .select("*")
+          .order(
+            "created_at",
+            {
+              ascending:false
+            }
+          );
 
 
       if (orderResult.error) {
@@ -366,8 +331,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
       orders =
-        orderResult.data ||
-        [];
+        orderResult.data || [];
+
+
+      const customerResult =
+        await db
+          .from("customers")
+          .select("*");
 
 
       customers =
@@ -379,13 +349,36 @@ document.addEventListener("DOMContentLoaded", () => {
             );
 
 
-      confirmations =
-        confirmationResult.error
-          ? []
-          : (
-              confirmationResult.data ||
-              []
-            );
+      const confirmationResult =
+        await db
+          .from("payment_confirmations")
+          .select("*")
+          .order(
+            "submitted_at",
+            {
+              ascending:false
+            }
+          );
+
+
+      if (confirmationResult.error) {
+
+        console.warn(
+          "payment_confirmations:",
+          confirmationResult.error
+        );
+
+        confirmations =
+          [];
+
+      }
+      else {
+
+        confirmations =
+          confirmationResult.data ||
+          [];
+
+      }
 
 
       renderStats();
@@ -398,42 +391,42 @@ document.addEventListener("DOMContentLoaded", () => {
     function renderStats() {
 
       document.getElementById(
-        "paymentUnpaid"
+        "statUnpaid"
       ).textContent =
         orders.filter(
-          item =>
-            !item.payment_status ||
-            item.payment_status ===
+          order =>
+            !order.payment_status ||
+            order.payment_status ===
               "belum_ada_pembayaran"
         ).length;
 
 
       document.getElementById(
-        "paymentPartial"
+        "statPartial"
       ).textContent =
         orders.filter(
-          item =>
+          order =>
             [
               "dp_diterima",
               "sebagian"
             ].includes(
-              item.payment_status
+              order.payment_status
             )
         ).length;
 
 
       document.getElementById(
-        "paymentPaid"
+        "statPaid"
       ).textContent =
         orders.filter(
-          item =>
-            item.payment_status ===
+          order =>
+            order.payment_status ===
             "lunas"
         ).length;
 
 
       document.getElementById(
-        "paymentConfirmationTotal"
+        "statConfirmation"
       ).textContent =
         confirmations.length;
 
@@ -454,32 +447,38 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
       const filtered =
-        orders.filter(order => {
+        orders.filter(
+          order => {
 
-          const customer =
-            customerFor(order);
-
-
-          const haystack =
-            `${order.order_number || ""} ${customer?.full_name || ""} ${customer?.name || ""}`
-              .toLowerCase();
+            const customer =
+              findCustomer(order);
 
 
-          return (
-            !search ||
-            haystack.includes(search)
-          );
-
-        });
+            const text =
+              `${order.order_number || ""} ${customer?.full_name || ""} ${customer?.name || ""}`
+                .toLowerCase();
 
 
-      document.getElementById(
-        "paymentOrderRows"
-      ).innerHTML =
+            return (
+              !search ||
+              text.includes(search)
+            );
+
+          }
+        );
+
+
+      const tbody =
+        document.getElementById(
+          "paymentRows"
+        );
+
+
+      tbody.innerHTML =
         filtered.map(order => {
 
           const customer =
-            customerFor(order);
+            findCustomer(order);
 
 
           const current =
@@ -494,7 +493,7 @@ document.addEventListener("DOMContentLoaded", () => {
               <td>
 
                 <strong>
-                  ${escapeHtml(
+                  ${esc(
                     order.order_number ||
                     "-"
                   )}
@@ -503,7 +502,7 @@ document.addEventListener("DOMContentLoaded", () => {
               </td>
 
               <td>
-                ${escapeHtml(
+                ${esc(
                   customer?.full_name ||
                   customer?.name ||
                   "-"
@@ -531,24 +530,25 @@ document.addEventListener("DOMContentLoaded", () => {
                 >
 
                   ${
+                    PAYMENT_STATUS
+                      .map(
+                        option => `
 
-                    PAYMENT_STATUS.map(
-                      item => `
+                          <option
+                            value="${option[0]}"
+                            ${
+                              option[0] ===
+                              current
+                                ? "selected"
+                                : ""
+                            }
+                          >
+                            ${option[1]}
+                          </option>
 
-                        <option
-                          value="${item[0]}"
-                          ${
-                            current === item[0]
-                              ? "selected"
-                              : ""
-                          }
-                        >
-                          ${item[1]}
-                        </option>
-
-                      `
-                    ).join("")
-
+                        `
+                      )
+                      .join("")
                   }
 
                 </select>
@@ -593,84 +593,94 @@ document.addEventListener("DOMContentLoaded", () => {
         .querySelectorAll(
           "[data-save-payment]"
         )
-        .forEach(button => {
+        .forEach(
+          button => {
 
-          button.addEventListener(
-            "click",
-            () => {
+            button.addEventListener(
+              "click",
+              () => {
 
-              savePaymentStatus(
-                button.dataset.savePayment,
-                button
-              );
+                saveStatus(
+                  button.dataset.savePayment,
+                  button
+                );
 
-            }
-          );
+              }
+            );
 
-        });
+          }
+        );
 
     }
 
 
     function renderConfirmations() {
 
-      document.getElementById(
-        "confirmationRows"
-      ).innerHTML =
-        confirmations.map(item => {
-
-          const order =
-            orders.find(
-              data =>
-                String(data.id) ===
-                String(item.order_id)
-            );
+      const tbody =
+        document.getElementById(
+          "confirmationRows"
+        );
 
 
-          return `
+      tbody.innerHTML =
+        confirmations.map(
+          confirmation => {
 
-            <tr>
+            const order =
+              orders.find(
+                item =>
+                  String(item.id) ===
+                  String(confirmation.order_id)
+              );
 
-              <td>
-                ${MemoraAdmin.date(
-                  item.submitted_at
-                )}
-              </td>
 
-              <td>
-                ${escapeHtml(
-                  order?.order_number ||
-                  "-"
-                )}
-              </td>
+            return `
 
-              <td>
-                ${MemoraAdmin.money(
-                  item.amount
-                )}
-              </td>
+              <tr>
 
-              <td>
-                ${escapeHtml(
-                  item.payment_method ||
-                  "-"
-                )}
-              </td>
+                <td>
+                  ${MemoraAdmin.date(
+                    confirmation.submitted_at
+                  )}
+                </td>
 
-              <td>
-                <span class="badge">
-                  ${escapeHtml(
-                    item.status ||
+                <td>
+                  ${esc(
+                    order?.order_number ||
                     "-"
                   )}
-                </span>
-              </td>
+                </td>
 
-            </tr>
+                <td>
+                  ${MemoraAdmin.money(
+                    confirmation.amount
+                  )}
+                </td>
 
-          `;
+                <td>
+                  ${esc(
+                    confirmation.payment_method ||
+                    "-"
+                  )}
+                </td>
 
-        }).join("") ||
+                <td>
+
+                  <span class="badge">
+                    ${esc(
+                      confirmation.status ||
+                      "-"
+                    )}
+                  </span>
+
+                </td>
+
+              </tr>
+
+            `;
+
+          }
+        ).join("") ||
 
         `
 
@@ -690,7 +700,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    async function savePaymentStatus(
+    async function saveStatus(
       orderId,
       button
     ) {
@@ -699,6 +709,11 @@ document.addEventListener("DOMContentLoaded", () => {
         document.querySelector(
           `[data-payment-status="${orderId}"]`
         );
+
+
+      if (!select) {
+        return;
+      }
 
 
       const status =
@@ -736,8 +751,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const index =
           orders.findIndex(
-            item =>
-              String(item.id) ===
+            order =>
+              String(order.id) ===
               String(orderId)
           );
 
@@ -753,7 +768,9 @@ document.addEventListener("DOMContentLoaded", () => {
         renderStats();
 
 
-        showSuccess();
+        showNotice(
+          "Status pembayaran berhasil diperbarui."
+        );
 
 
         alert(
@@ -764,8 +781,10 @@ document.addEventListener("DOMContentLoaded", () => {
       catch (error) {
 
         console.error(
+          "Payment update:",
           error
         );
+
 
         alert(
           error.message ||
@@ -786,23 +805,83 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    document.getElementById(
-      "paymentSearch"
-    ).addEventListener(
-      "input",
-      renderOrders
-    );
+    document
+      .getElementById(
+        "paymentSearch"
+      )
+      .addEventListener(
+        "input",
+        renderOrders
+      );
 
 
-    document.getElementById(
-      "refreshPayments"
-    ).addEventListener(
-      "click",
-      loadData
-    );
+    document
+      .getElementById(
+        "refreshPayment"
+      )
+      .addEventListener(
+        "click",
+        async () => {
+
+          try {
+
+            await loadData();
+
+          }
+          catch (error) {
+
+            console.error(error);
+
+            alert(
+              error.message ||
+              "Payment gagal dimuat."
+            );
+
+          }
+
+        }
+      );
 
 
-    await loadData();
+    try {
+
+      await loadData();
+
+    }
+    catch (error) {
+
+      console.error(
+        "MEMORA Payment:",
+        error
+      );
+
+
+      page.innerHTML += `
+
+        <section
+          class="panel"
+          style="
+            margin-top:18px;
+            border-color:#e4b8b8;
+          "
+        >
+
+          <strong>
+            Payment gagal dimuat
+          </strong>
+
+          <p>
+            ${esc(
+              error.message ||
+              "Terjadi kesalahan."
+            )}
+          </p>
+
+        </section>
+
+      `;
+
+    }
 
   });
 
