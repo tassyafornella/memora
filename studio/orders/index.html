@@ -3,230 +3,33 @@
 
 <head>
 
-  <meta charset="UTF-8">
+  <meta charset="utf-8">
 
   <meta
     name="viewport"
-    content="width=device-width, initial-scale=1"
+    content="width=device-width,initial-scale=1"
   >
 
-  <title>
-    Orders - MEMORA Studio
-  </title>
-
-  <link
-    rel="preconnect"
-    href="https://fonts.googleapis.com"
-  >
-
-  <link
-    rel="preconnect"
-    href="https://fonts.gstatic.com"
-    crossorigin
-  >
-
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
-    rel="stylesheet"
-  >
+  <title>Orders - MEMORA Studio</title>
 
   <link
     rel="stylesheet"
-    href="/css/app.css"
-  >
-
-  <link
-    rel="stylesheet"
-    href="/css/studio.css"
+    href="/css/admin.css?v=20261109-full"
   >
 
 </head>
 
-
 <body>
 
-  <main class="studio-page">
+  <div id="adminApp"></div>
 
-    <header class="studio-header">
-
-      <div>
-
-        <span class="studio-eyebrow">
-          MEMORA Studio
-        </span>
-
-        <h1>
-          Orders
-        </h1>
-
-        <p>
-          Kelola pesanan customer dan status proses order.
-        </p>
-
-      </div>
-
-
-      <div class="studio-header-actions">
-
-        <a
-          href="/studio/payments/"
-          class="studio-secondary-link"
-        >
-          Payments
-        </a>
-
-        <a
-          href="/studio/production/"
-          class="studio-secondary-link"
-        >
-          Production
-        </a>
-
-      </div>
-
-    </header>
-
-
-    <section class="studio-stats">
-
-      <article>
-
-        <span>
-          Total Order
-        </span>
-
-        <strong id="ordersTotal">
-          0
-        </strong>
-
-      </article>
-
-
-      <article>
-
-        <span>
-          Waiting
-        </span>
-
-        <strong id="ordersWaiting">
-          0
-        </strong>
-
-      </article>
-
-
-      <article>
-
-        <span>
-          Processing
-        </span>
-
-        <strong id="ordersProcessing">
-          0
-        </strong>
-
-      </article>
-
-    </section>
-
-
-    <section class="studio-panel">
-
-      <div class="studio-toolbar studio-toolbar-orders">
-
-        <input
-          type="search"
-          id="ordersSearch"
-          placeholder="Cari order atau customer..."
-        >
-
-
-        <select id="ordersStatusFilter">
-
-          <option value="">
-            Semua Status
-          </option>
-
-          <option value="menunggu_konfirmasi">
-            Menunggu Konfirmasi
-          </option>
-
-          <option value="desain">
-            Desain
-          </option>
-
-          <option value="produksi">
-            Produksi
-          </option>
-
-          <option value="finishing">
-            Finishing
-          </option>
-
-          <option value="quality_check">
-            Quality Check
-          </option>
-
-          <option value="packing">
-            Packing
-          </option>
-
-          <option value="dikirim">
-            Dikirim
-          </option>
-
-          <option value="selesai">
-            Selesai
-          </option>
-
-          <option value="dibatalkan">
-            Dibatalkan
-          </option>
-
-        </select>
-
-      </div>
-
-
-      <div
-        class="studio-loading"
-        id="ordersLoading"
-      >
-        Memuat orders...
-      </div>
-
-
-      <div
-        class="admin-order-list"
-        id="ordersList"
-      ></div>
-
-
-      <div
-        class="studio-empty"
-        id="ordersEmpty"
-        hidden
-      >
-        Belum ada order.
-      </div>
-
-
-      <div
-        class="studio-message"
-        id="ordersMessage"
-      ></div>
-
-    </section>
-
-  </main>
-
-
-  <script
-    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
-  ></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <script src="/js/supabase.js"></script>
-  <script src="/js/studio-orders.js"></script>
+
+  <script src="/js/admin-core.js"></script>
+
+  <script src="/js/admin-orders.js"></script>
 
 </body>
 

@@ -3,215 +3,33 @@
 
 <head>
 
-  <meta charset="UTF-8">
+  <meta charset="utf-8">
 
   <meta
     name="viewport"
-    content="width=device-width, initial-scale=1"
+    content="width=device-width,initial-scale=1"
   >
 
-  <title>
-    Production - MEMORA Studio
-  </title>
-
-  <link
-    rel="preconnect"
-    href="https://fonts.googleapis.com"
-  >
-
-  <link
-    rel="preconnect"
-    href="https://fonts.gstatic.com"
-    crossorigin
-  >
-
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
-    rel="stylesheet"
-  >
+  <title>Production - MEMORA Studio</title>
 
   <link
     rel="stylesheet"
-    href="/css/app.css"
-  >
-
-  <link
-    rel="stylesheet"
-    href="/css/studio.css"
+    href="/css/admin.css?v=20261109-full"
   >
 
 </head>
 
-
 <body>
 
-  <main class="studio-page">
+  <div id="adminApp"></div>
 
-    <header class="studio-header">
-
-      <div>
-
-        <span class="studio-eyebrow">
-          MEMORA Studio
-        </span>
-
-        <h1>
-          Production
-        </h1>
-
-        <p>
-          Pantau proses produksi seluruh pesanan.
-        </p>
-
-      </div>
-
-
-      <div class="studio-header-actions">
-
-        <a
-          href="/studio/orders/"
-          class="studio-secondary-link"
-        >
-          Orders
-        </a>
-
-      </div>
-
-    </header>
-
-
-    <section class="studio-stats">
-
-      <article>
-
-        <span>
-          Design
-        </span>
-
-        <strong id="productionDesign">
-          0
-        </strong>
-
-      </article>
-
-
-      <article>
-
-        <span>
-          Production
-        </span>
-
-        <strong id="productionProcess">
-          0
-        </strong>
-
-      </article>
-
-
-      <article>
-
-        <span>
-          Ready / Shipping
-        </span>
-
-        <strong id="productionShipping">
-          0
-        </strong>
-
-      </article>
-
-    </section>
-
-
-    <section class="studio-panel">
-
-      <div class="studio-toolbar studio-toolbar-orders">
-
-        <input
-          type="search"
-          id="productionSearch"
-          placeholder="Cari order..."
-        >
-
-
-        <select id="productionFilter">
-
-          <option value="">
-            Semua Tahap
-          </option>
-
-          <option value="desain">
-            Desain
-          </option>
-
-          <option value="produksi">
-            Produksi
-          </option>
-
-          <option value="finishing">
-            Finishing
-          </option>
-
-          <option value="quality_check">
-            Quality Check
-          </option>
-
-          <option value="packing">
-            Packing
-          </option>
-
-          <option value="dikirim">
-            Dikirim
-          </option>
-
-          <option value="selesai">
-            Selesai
-          </option>
-
-        </select>
-
-      </div>
-
-
-      <div
-        class="studio-loading"
-        id="productionLoading"
-      >
-        Memuat production...
-      </div>
-
-
-      <div
-        class="production-board"
-        id="productionBoard"
-      ></div>
-
-
-      <div
-        class="studio-empty"
-        id="productionEmpty"
-        hidden
-      >
-        Belum ada order produksi.
-      </div>
-
-
-      <div
-        class="studio-message"
-        id="productionMessage"
-      ></div>
-
-    </section>
-
-  </main>
-
-
-  <script
-    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
-  ></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <script src="/js/supabase.js"></script>
-  <script src="/js/studio-production.js"></script>
+
+  <script src="/js/admin-core.js"></script>
+
+  <script src="/js/admin-production.js"></script>
 
 </body>
 

@@ -3,200 +3,33 @@
 
 <head>
 
-  <meta charset="UTF-8">
+  <meta charset="utf-8">
 
   <meta
     name="viewport"
-    content="width=device-width, initial-scale=1"
+    content="width=device-width,initial-scale=1"
   >
 
-  <title>
-    Payment Verification - MEMORA Studio
-  </title>
-
-  <link
-    rel="preconnect"
-    href="https://fonts.googleapis.com"
-  >
-
-  <link
-    rel="preconnect"
-    href="https://fonts.gstatic.com"
-    crossorigin
-  >
-
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
-    rel="stylesheet"
-  >
+  <title>Payments - MEMORA Studio</title>
 
   <link
     rel="stylesheet"
-    href="/css/app.css"
-  >
-
-  <link
-    rel="stylesheet"
-    href="/css/studio.css"
+    href="/css/admin.css?v=20261109-full"
   >
 
 </head>
 
-
 <body>
 
+  <div id="adminApp"></div>
 
-  <main class="studio-page">
-
-
-    <header class="studio-header">
-
-      <div>
-
-        <span class="studio-eyebrow">
-          MEMORA Studio
-        </span>
-
-        <h1>
-          Payment Verification
-        </h1>
-
-        <p>
-          Periksa konfirmasi pembayaran customer.
-        </p>
-
-      </div>
-
-
-      <button
-        type="button"
-        class="studio-secondary-button"
-        id="studioLogoutButton"
-      >
-        Logout
-      </button>
-
-    </header>
-
-
-    <section class="studio-stats">
-
-      <article>
-
-        <span>
-          Waiting
-        </span>
-
-        <strong id="waitingCount">
-          0
-        </strong>
-
-      </article>
-
-
-      <article>
-
-        <span>
-          Verified
-        </span>
-
-        <strong id="verifiedCount">
-          0
-        </strong>
-
-      </article>
-
-
-      <article>
-
-        <span>
-          Rejected
-        </span>
-
-        <strong id="rejectedCount">
-          0
-        </strong>
-
-      </article>
-
-    </section>
-
-
-    <section class="studio-panel">
-
-      <div class="studio-toolbar">
-
-        <input
-          type="search"
-          id="paymentSearch"
-          placeholder="Cari order atau customer..."
-        >
-
-
-        <select id="paymentStatusFilter">
-
-          <option value="">
-            Semua Status
-          </option>
-
-          <option value="waiting_verification">
-            Waiting
-          </option>
-
-          <option value="verified">
-            Verified
-          </option>
-
-          <option value="rejected">
-            Rejected
-          </option>
-
-        </select>
-
-      </div>
-
-
-      <div
-        class="studio-loading"
-        id="studioPaymentLoading"
-      >
-        Memuat payment confirmation...
-      </div>
-
-
-      <div
-        class="studio-payment-list"
-        id="studioPaymentList"
-      ></div>
-
-
-      <div
-        class="studio-empty"
-        id="studioPaymentEmpty"
-        hidden
-      >
-        Tidak ada payment confirmation.
-      </div>
-
-
-      <div
-        class="studio-message"
-        id="studioPaymentMessage"
-      ></div>
-
-    </section>
-
-
-  </main>
-
-
-  <script
-    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
-  ></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <script src="/js/supabase.js"></script>
 
-  <script src="/js/studio-payments.js"></script>
+  <script src="/js/admin-core.js"></script>
+
+  <script src="/js/admin-payments.js"></script>
 
 </body>
 

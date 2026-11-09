@@ -2,138 +2,88 @@
 <html lang="id">
 
 <head>
-
-  <meta charset="UTF-8">
-
+  <meta charset="utf-8">
   <meta
     name="viewport"
-    content="width=device-width, initial-scale=1"
+    content="width=device-width,initial-scale=1"
   >
 
-  <title>
-    MEMORA Studio Login
-  </title>
-
-  <link
-    rel="preconnect"
-    href="https://fonts.googleapis.com"
-  >
-
-  <link
-    rel="preconnect"
-    href="https://fonts.gstatic.com"
-    crossorigin
-  >
-
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
-    rel="stylesheet"
-  >
+  <title>MEMORA Studio Login</title>
 
   <link
     rel="stylesheet"
-    href="/css/app.css"
+    href="/css/admin.css?v=1"
   >
-
-  <link
-    rel="stylesheet"
-    href="/css/studio.css"
-  >
-
 </head>
-
 
 <body>
 
+  <main class="admin-login-page">
 
-  <main class="studio-login-page">
+    <section class="admin-login-card">
 
-    <section class="studio-login-card">
-
-      <span class="studio-eyebrow">
-        MEMORA Studio
-      </span>
+      <div class="admin-brand">
+        MEMORA
+      </div>
 
       <h1>
-        Admin Login
+        Studio Login
       </h1>
 
       <p>
-        Login menggunakan akun owner atau admin MEMORA.
+        Masuk menggunakan akun Administrator MEMORA.
       </p>
 
+      <form id="loginForm">
 
-      <form id="studioLoginForm">
-
-        <div class="studio-field">
-
-          <label for="studioEmail">
+        <div class="field">
+          <label for="email">
             Email
           </label>
 
           <input
+            id="email"
             type="email"
-            id="studioEmail"
-            required
             autocomplete="email"
+            required
           >
-
         </div>
 
-
-        <div class="studio-field">
-
-          <label for="studioPassword">
+        <div class="field">
+          <label for="password">
             Password
           </label>
 
           <input
+            id="password"
             type="password"
-            id="studioPassword"
-            required
             autocomplete="current-password"
+            required
           >
-
         </div>
 
-
-        <div
-          class="studio-message"
-          id="studioLoginMessage"
-        ></div>
-
-
         <button
+          class="btn btn-primary btn-block"
           type="submit"
-          class="studio-primary-button"
-          id="studioLoginButton"
         >
           Login
         </button>
 
+        <div
+          id="loginMessage"
+          class="message"
+          hidden
+        ></div>
+
       </form>
-
-
-      <a
-        href="/"
-        class="studio-home-link"
-      >
-        Back to MEMORA
-      </a>
 
     </section>
 
   </main>
 
-
-  <script
-    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
-  ></script>
-
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="/js/supabase.js"></script>
-
-  <script src="/js/studio-login.js"></script>
+  <script src="/js/admin-login.js"></script>
 
 </body>
-
 </html>
