@@ -10,860 +10,990 @@ document.addEventListener("DOMContentLoaded", () => {
         "adminPage"
       );
 
+
     const params =
       new URLSearchParams(
         window.location.search
       );
 
+
     const orderId =
-      params.get("id");
+      params.get("id") ||
+      params.get("order");
+
+
+    const STATUS_OPTIONS = [
+
+      [
+        "menunggu_konfirmasi",
+        "Menunggu Konfirmasi"
+      ],
+
+      [
+        "data_belum_lengkap",
+        "Data Belum Lengkap"
+      ],
+
+      [
+        "data_lengkap",
+        "Data Lengkap"
+      ],
+
+      [
+        "desain",
+        "Desain"
+      ],
+
+      [
+        "menunggu_approval",
+        "Menunggu Approval"
+      ],
+
+      [
+        "revisi",
+        "Revisi"
+      ],
+
+      [
+        "approved",
+        "Approved"
+      ],
+
+      [
+        "printing",
+        "Printing"
+      ],
+
+      [
+        "finishing",
+        "Finishing"
+      ],
+
+      [
+        "quality_check",
+        "Quality Check"
+      ],
+
+      [
+        "packing",
+        "Packing"
+      ],
+
+      [
+        "dikirim",
+        "Dikirim"
+      ],
+
+      [
+        "selesai",
+        "Selesai"
+      ],
+
+      [
+        "dibatalkan",
+        "Dibatalkan"
+      ]
+
+    ];
+
 
     if (!orderId) {
 
       page.innerHTML = `
-        <div class="page-head">
-          <div>
-            <h1>Order Detail</h1>
-          </div>
-        </div>
 
-        <div class="panel">
-          <div class="empty">
-            Order ID tidak ditemukan.
-          </div>
-        </div>
+        <section class="panel">
+
+          <h2>
+            Order tidak ditemukan
+          </h2>
+
+          <a
+            href="/studio/orders/"
+            class="btn"
+          >
+            Kembali ke Orders
+          </a>
+
+        </section>
+
       `;
 
       return;
+
     }
 
 
     page.innerHTML = `
+
       <div class="page-head">
 
         <div>
 
           <div class="eyebrow">
-            Order Management
+            TC-15
           </div>
 
-          <h1 id="detailNumber">
+          <h1 id="orderTitle">
             Order Detail
           </h1>
 
-          <p id="detailDate">
-            Memuat data...
+          <p>
+            Perbarui data dan status pesanan.
           </p>
 
         </div>
 
-        <div class="actions">
-
-          <a
-            class="btn"
-            href="/studio/orders/"
-          >
-            Back to Orders
-          </a>
-
-          <button
-            class="btn btn-danger"
-            id="archiveOrder"
-            type="button"
-          >
-            Archive
-          </button>
-
-        </div>
+        <a
+          href="/studio/orders/"
+          class="btn"
+        >
+          Back to Orders
+        </a>
 
       </div>
 
+
       <div
-        class="detail-grid"
-        id="detailContent"
-      ></div>
+        id="orderLoading"
+        class="panel"
+      >
+        Memuat order...
+      </div>
+
+
+      <div
+        id="orderContent"
+        hidden
+      >
+
+        <div
+          class="detail-grid"
+          style="
+            display:grid;
+            grid-template-columns:minmax(0,1.4fr) minmax(300px,.6fr);
+            gap:18px;
+          "
+        >
+
+          <section class="panel">
+
+            <div class="eyebrow">
+              Order Information
+            </div>
+
+            <h2 id="detailOrderNumber">
+              -
+            </h2>
+
+
+            <div
+              class="form-grid"
+              style="margin-top:22px;"
+            >
+
+              <label class="field">
+
+                <span>
+                  Status Pesanan
+                </span>
+
+                <select
+                  class="input"
+                  id="orderStatusInput"
+                >
+
+                  ${
+
+                    STATUS_OPTIONS.map(
+                      item => `
+
+                        <option value="${item[0]}">
+                          ${item[1]}
+                        </option>
+
+                      `
+                    ).join("")
+
+                  }
+
+                </select>
+
+              </label>
+
+
+              <label class="field">
+
+                <span>
+                  Tanggal Acara
+                </span>
+
+                <input
+                  type="date"
+                  class="input"
+                  id="eventDateInput"
+                >
+
+              </label>
+
+
+              <label
+                class="field"
+                style="grid-column:1/-1;"
+              >
+
+                <span>
+                  Catatan Customer
+                </span>
+
+                <textarea
+                  class="input"
+                  id="customerNoteInput"
+                  rows="4"
+                  placeholder="Catatan pesanan..."
+                ></textarea>
+
+              </label>
+
+
+              <label
+                class="field"
+                style="grid-column:1/-1;"
+              >
+
+                <span>
+                  Catatan Perubahan Status
+                </span>
+
+                <textarea
+                  class="input"
+                  id="statusNoteInput"
+                  rows="3"
+                  placeholder="Opsional..."
+                ></textarea>
+
+              </label>
+
+            </div>
+
+
+            <div
+              id="orderUpdateMessage"
+              style="
+                display:none;
+                margin-top:16px;
+                padding:12px 14px;
+                border-radius:10px;
+                background:#edf5ef;
+                color:#315844;
+                font-weight:600;
+              "
+            ></div>
+
+
+            <div
+              style="
+                margin-top:18px;
+                display:flex;
+                justify-content:flex-end;
+              "
+            >
+
+              <button
+                type="button"
+                class="btn btn-primary"
+                id="saveOrderButton"
+              >
+                Simpan Perubahan
+              </button>
+
+            </div>
+
+          </section>
+
+
+          <section class="panel">
+
+            <div class="eyebrow">
+              Summary
+            </div>
+
+            <div
+              id="orderSummary"
+              style="margin-top:14px;"
+            ></div>
+
+          </section>
+
+        </div>
+
+
+        <section
+          class="panel"
+          style="margin-top:18px;"
+        >
+
+          <div class="eyebrow">
+            Products
+          </div>
+
+          <h2>
+            Order Items
+          </h2>
+
+          <div class="table-wrap">
+
+            <table>
+
+              <thead>
+
+                <tr>
+                  <th>Item</th>
+                  <th>Variant</th>
+                  <th>Qty</th>
+                  <th>Unit Price</th>
+                  <th>Total</th>
+                </tr>
+
+              </thead>
+
+              <tbody id="orderItemRows"></tbody>
+
+            </table>
+
+          </div>
+
+        </section>
+
+
+        <section
+          class="panel"
+          style="margin-top:18px;"
+        >
+
+          <div class="eyebrow">
+            History
+          </div>
+
+          <h2>
+            Status History
+          </h2>
+
+          <div id="statusHistory"></div>
+
+        </section>
+
+      </div>
+
     `;
 
 
-    const orderResult =
-      await db
-        .from("orders")
-        .select("*")
-        .eq("id", orderId)
-        .single();
+    let order = null;
+
+    let customer = null;
+
+    let items = [];
+
+    let history = [];
 
 
-    if (orderResult.error) {
-      throw orderResult.error;
+    function escapeHtml(value) {
+
+      return MemoraAdmin.escapeHtml(
+        value ?? ""
+      );
+
     }
 
 
-    const order =
-      orderResult.data;
+    function dateInput(value) {
+
+      if (!value) {
+        return "";
+      }
+
+      return String(value).slice(
+        0,
+        10
+      );
+
+    }
 
 
-    let customer =
-      null;
+    function render() {
+
+      document.getElementById(
+        "orderLoading"
+      ).hidden =
+        true;
 
 
-    if (order.customer_id) {
+      document.getElementById(
+        "orderContent"
+      ).hidden =
+        false;
 
-      const result =
+
+      document.getElementById(
+        "orderTitle"
+      ).textContent =
+        order.order_number ||
+        "Order Detail";
+
+
+      document.getElementById(
+        "detailOrderNumber"
+      ).textContent =
+        order.order_number ||
+        "-";
+
+
+      document.getElementById(
+        "orderStatusInput"
+      ).value =
+        order.status ||
+        "menunggu_konfirmasi";
+
+
+      document.getElementById(
+        "eventDateInput"
+      ).value =
+        dateInput(
+          order.event_date
+        );
+
+
+      document.getElementById(
+        "customerNoteInput"
+      ).value =
+        order.customer_note ||
+        "";
+
+
+      document.getElementById(
+        "orderSummary"
+      ).innerHTML = `
+
+        <div
+          style="
+            display:grid;
+            gap:13px;
+          "
+        >
+
+          <div>
+
+            <span
+              style="
+                display:block;
+                color:#7a837e;
+                font-size:12px;
+              "
+            >
+              Customer
+            </span>
+
+            <strong>
+              ${escapeHtml(
+                customer?.full_name ||
+                customer?.name ||
+                "-"
+              )}
+            </strong>
+
+          </div>
+
+
+          <div>
+
+            <span
+              style="
+                display:block;
+                color:#7a837e;
+                font-size:12px;
+              "
+            >
+              Payment
+            </span>
+
+            <strong>
+              ${escapeHtml(
+                MemoraAdmin.statusLabel(
+                  order.payment_status
+                )
+              )}
+            </strong>
+
+          </div>
+
+
+          <div>
+
+            <span
+              style="
+                display:block;
+                color:#7a837e;
+                font-size:12px;
+              "
+            >
+              Grand Total
+            </span>
+
+            <strong>
+              ${MemoraAdmin.money(
+                order.grand_total
+              )}
+            </strong>
+
+          </div>
+
+
+          <div>
+
+            <span
+              style="
+                display:block;
+                color:#7a837e;
+                font-size:12px;
+              "
+            >
+              Paid
+            </span>
+
+            <strong>
+              ${MemoraAdmin.money(
+                order.total_paid
+              )}
+            </strong>
+
+          </div>
+
+        </div>
+
+      `;
+
+
+      document.getElementById(
+        "orderItemRows"
+      ).innerHTML =
+        items.map(item => `
+
+          <tr>
+
+            <td>
+              <strong>
+                ${escapeHtml(
+                  item.product_name ||
+                  "-"
+                )}
+              </strong>
+            </td>
+
+            <td>
+              ${escapeHtml(
+                item.variant_name ||
+                "-"
+              )}
+            </td>
+
+            <td>
+              ${Number(
+                item.quantity ||
+                0
+              )}
+            </td>
+
+            <td>
+              ${MemoraAdmin.money(
+                item.unit_price
+              )}
+            </td>
+
+            <td>
+              ${MemoraAdmin.money(
+                item.subtotal
+              )}
+            </td>
+
+          </tr>
+
+        `).join("") ||
+
+        `
+
+          <tr>
+
+            <td
+              colspan="5"
+              class="empty"
+            >
+              Belum ada item.
+            </td>
+
+          </tr>
+
+        `;
+
+
+      document.getElementById(
+        "statusHistory"
+      ).innerHTML =
+        history.map(item => `
+
+          <div
+            style="
+              padding:12px 0;
+              border-bottom:1px solid #eceeec;
+            "
+          >
+
+            <strong>
+              ${escapeHtml(
+                MemoraAdmin.statusLabel(
+                  item.status
+                )
+              )}
+            </strong>
+
+            <div
+              style="
+                margin-top:4px;
+                color:#7a837e;
+                font-size:12px;
+              "
+            >
+              ${escapeHtml(
+                item.note ||
+                "-"
+              )}
+            </div>
+
+          </div>
+
+        `).join("") ||
+
+        `
+
+          <div class="empty">
+            Belum ada history.
+          </div>
+
+        `;
+
+    }
+
+
+    async function loadOrder() {
+
+      const orderResult =
         await db
-          .from("customers")
+          .from("orders")
           .select("*")
           .eq(
             "id",
-            order.customer_id
+            orderId
           )
-          .maybeSingle();
+          .single();
 
 
-      if (!result.error) {
-        customer = result.data;
+      if (orderResult.error) {
+        throw orderResult.error;
+      }
+
+
+      order =
+        orderResult.data;
+
+
+      const [
+        customerResult,
+        itemResult,
+        historyResult
+      ] =
+        await Promise.all([
+
+          order.customer_id
+            ? db
+                .from("customers")
+                .select("*")
+                .eq(
+                  "id",
+                  order.customer_id
+                )
+                .maybeSingle()
+
+            : Promise.resolve({
+                data:null,
+                error:null
+              }),
+
+          db
+            .from("order_items")
+            .select("*")
+            .eq(
+              "order_id",
+              orderId
+            )
+            .order(
+              "created_at",
+              {
+                ascending:true
+              }
+            ),
+
+          db
+            .from("order_status_history")
+            .select("*")
+            .eq(
+              "order_id",
+              orderId
+            )
+            .order(
+              "created_at",
+              {
+                ascending:false
+              }
+            )
+
+        ]);
+
+
+      customer =
+        customerResult.data ||
+        null;
+
+
+      items =
+        itemResult.error
+          ? []
+          : (
+              itemResult.data ||
+              []
+            );
+
+
+      history =
+        historyResult.error
+          ? []
+          : (
+              historyResult.data ||
+              []
+            );
+
+
+      render();
+
+    }
+
+
+    async function saveOrder() {
+
+      const button =
+        document.getElementById(
+          "saveOrderButton"
+        );
+
+
+      const newStatus =
+        document.getElementById(
+          "orderStatusInput"
+        ).value;
+
+
+      const eventDate =
+        document.getElementById(
+          "eventDateInput"
+        ).value ||
+        null;
+
+
+      const customerNote =
+        document.getElementById(
+          "customerNoteInput"
+        ).value.trim();
+
+
+      const statusNote =
+        document.getElementById(
+          "statusNoteInput"
+        ).value.trim();
+
+
+      const oldStatus =
+        order.status;
+
+
+      button.disabled =
+        true;
+
+      button.textContent =
+        "Menyimpan...";
+
+
+      try {
+
+        const updatePayload = {
+
+          status:
+            newStatus,
+
+          event_date:
+            eventDate,
+
+          customer_note:
+            customerNote ||
+            null
+
+        };
+
+
+        const result =
+          await db
+            .from("orders")
+            .update(
+              updatePayload
+            )
+            .eq(
+              "id",
+              orderId
+            )
+            .select("*")
+            .single();
+
+
+        if (result.error) {
+          throw result.error;
+        }
+
+
+        order =
+          result.data;
+
+
+        if (
+          newStatus !== oldStatus ||
+          statusNote
+        ) {
+
+          const historyResult =
+            await db
+              .from(
+                "order_status_history"
+              )
+              .insert({
+
+                order_id:
+                  orderId,
+
+                status:
+                  newStatus,
+
+                note:
+                  statusNote ||
+                  "Data pesanan diperbarui melalui MEMORA Studio."
+
+              });
+
+
+          if (historyResult.error) {
+
+            console.warn(
+              "History tidak tercatat:",
+              historyResult.error
+            );
+
+          }
+
+        }
+
+
+        const historyReload =
+          await db
+            .from(
+              "order_status_history"
+            )
+            .select("*")
+            .eq(
+              "order_id",
+              orderId
+            )
+            .order(
+              "created_at",
+              {
+                ascending:false
+              }
+            );
+
+
+        history =
+          historyReload.error
+            ? history
+            : (
+                historyReload.data ||
+                []
+              );
+
+
+        document.getElementById(
+          "statusNoteInput"
+        ).value =
+          "";
+
+
+        render();
+
+
+        const message =
+          document.getElementById(
+            "orderUpdateMessage"
+          );
+
+
+        message.textContent =
+          "Data pesanan berhasil diperbarui.";
+
+        message.style.display =
+          "block";
+
+
+        alert(
+          "Data pesanan berhasil diperbarui."
+        );
+
+      }
+      catch (error) {
+
+        console.error(
+          error
+        );
+
+        alert(
+          error.message ||
+          "Data pesanan gagal diperbarui."
+        );
+
+      }
+      finally {
+
+        button.disabled =
+          false;
+
+        button.textContent =
+          "Simpan Perubahan";
+
       }
 
     }
 
 
-    const [
-      itemResult,
-      historyResult,
-      paymentResult
-    ] =
-      await Promise.all([
-
-        db
-          .from("order_items")
-          .select("*")
-          .eq("order_id", orderId)
-          .order(
-            "created_at",
-            {
-              ascending:true
-            }
-          ),
-
-        db
-          .from(
-            "order_status_history"
-          )
-          .select("*")
-          .eq("order_id", orderId)
-          .order(
-            "created_at",
-            {
-              ascending:false
-            }
-          ),
-
-        db
-          .from("payments")
-          .select("*")
-          .eq("order_id", orderId)
-          .order(
-            "payment_date",
-            {
-              ascending:false
-            }
-          )
-
-      ]);
-
-
-    const items =
-      itemResult.error
-        ? []
-        : itemResult.data || [];
-
-
-    const history =
-      historyResult.error
-        ? []
-        : historyResult.data || [];
-
-
-    const payments =
-      paymentResult.error
-        ? []
-        : paymentResult.data || [];
-
-
     document.getElementById(
-      "detailNumber"
-    ).textContent =
-      order.order_number ||
-      "Order Detail";
+      "saveOrderButton"
+    ).addEventListener(
+      "click",
+      saveOrder
+    );
 
 
-    document.getElementById(
-      "detailDate"
-    ).textContent =
-      "Dibuat " +
-      MemoraAdmin.date(
-        order.created_at
-      );
-
-
-    const statusOptions = [
-      "menunggu_konfirmasi",
-      "data_belum_lengkap",
-      "desain",
-      "menunggu_approval",
-      "revisi",
-      "approved",
-      "printing",
-      "printing",
-      "finishing",
-      "quality_check",
-      "packing",
-      "dikirim",
-      "selesai",
-      "dibatalkan"
-    ];
-
-
-    const itemHtml =
-      items.map(item => `
-
-        <div class="item-card">
-
-          <div class="item-head">
-
-            <div>
-
-              <strong>
-                ${MemoraAdmin.escapeHtml(
-                  item.product_name ||
-                  "-"
-                )}
-              </strong>
-
-              <div class="item-meta">
-
-                <span>
-                  ${
-                    MemoraAdmin.escapeHtml(
-                      item.variant_name ||
-                      "-"
-                    )
-                  }
-                </span>
-
-                <span>
-                  Qty ${Number(
-                    item.quantity || 0
-                  )}
-                </span>
-
-              </div>
-
-            </div>
-
-            <strong>
-              ${
-                MemoraAdmin.money(
-                  item.subtotal
-                )
-              }
-            </strong>
-
-          </div>
-
-        </div>
-
-      `).join("") ||
-      `
-        <div class="empty">
-          Tidak ada item.
-        </div>
-      `;
-
-
-    const paymentHtml =
-      payments.map(item => `
-
-        <div class="detail-row">
-
-          <span>
-            ${
-              MemoraAdmin.date(
-                item.payment_date
-              )
-            }
-          </span>
-
-          <strong>
-            ${
-              MemoraAdmin.money(
-                item.amount
-              )
-            }
-            -
-            ${
-              MemoraAdmin.escapeHtml(
-                item.payment_method ||
-                item.payment_type ||
-                "-"
-              )
-            }
-          </strong>
-
-        </div>
-
-      `).join("") ||
-      `
-        <div class="empty">
-          Belum ada pembayaran.
-        </div>
-      `;
-
-
-    const historyHtml =
-      history.map(item => `
-
-        <div class="timeline-item">
-
-          <div class="timeline-dot"></div>
-
-          <div>
-
-            <strong>
-              ${
-                MemoraAdmin.statusLabel(
-                  item.status
-                )
-              }
-            </strong>
-
-            <span>
-              ${
-                MemoraAdmin.date(
-                  item.created_at
-                )
-              }
-            </span>
-
-            ${
-              item.note
-                ? `
-                    <p>
-                      ${
-                        MemoraAdmin.escapeHtml(
-                          item.note
-                        )
-                      }
-                    </p>
-                  `
-                : ""
-            }
-
-          </div>
-
-        </div>
-
-      `).join("") ||
-      `
-        <div class="empty">
-          Belum ada riwayat.
-        </div>
-      `;
-
-
-    const address =
-      [
-        order.shipping_recipient_name,
-        order.shipping_phone,
-        order.shipping_address,
-        order.shipping_district,
-        order.shipping_city,
-        order.shipping_province,
-        order.shipping_postal_code
-      ]
-        .filter(Boolean)
-        .join(", ");
-
-
-    document.getElementById(
-      "detailContent"
-    ).innerHTML = `
-
-      <div class="detail-stack">
-
-        <section class="panel">
-
-          <div class="panel-head">
-
-            <h2>
-              Customer
-            </h2>
-
-          </div>
-
-          <div class="panel-body detail-list">
-
-            <div class="detail-row">
-
-              <span>
-                Nama
-              </span>
-
-              <strong>
-                ${
-                  MemoraAdmin.escapeHtml(
-                    customer?.full_name ||
-                    customer?.name ||
-                    "-"
-                  )
-                }
-              </strong>
-
-            </div>
-
-            <div class="detail-row">
-
-              <span>
-                Email
-              </span>
-
-              <strong>
-                ${
-                  MemoraAdmin.escapeHtml(
-                    customer?.email ||
-                    "-"
-                  )
-                }
-              </strong>
-
-            </div>
-
-            <div class="detail-row">
-
-              <span>
-                WhatsApp
-              </span>
-
-              <strong>
-                ${
-                  MemoraAdmin.escapeHtml(
-                    customer?.whatsapp ||
-                    customer?.phone ||
-                    "-"
-                  )
-                }
-              </strong>
-
-            </div>
-
-            <div class="detail-row">
-
-              <span>
-                Alamat
-              </span>
-
-              <strong>
-                ${
-                  MemoraAdmin.escapeHtml(
-                    address ||
-                    "-"
-                  )
-                }
-              </strong>
-
-            </div>
-
-          </div>
-
-        </section>
-
-
-        <section class="panel">
-
-          <div class="panel-head">
-
-            <h2>
-              Items
-            </h2>
-
-          </div>
-
-          <div class="panel-body">
-
-            ${itemHtml}
-
-          </div>
-
-        </section>
-
-
-        <section class="panel">
-
-          <div class="panel-head">
-
-            <h2>
-              Payment Records
-            </h2>
-
-          </div>
-
-          <div class="panel-body">
-
-            ${paymentHtml}
-
-          </div>
-
-        </section>
-
-      </div>
-
-
-      <div class="detail-stack">
-
-        <section class="panel">
-
-          <div class="panel-head">
-
-            <h2>
-              Status
-            </h2>
-
-          </div>
-
-          <div class="panel-body">
-
-            <div class="field">
-
-              <label>
-                Status Order
-              </label>
-
-              <select id="detailStatus">
-
-                ${
-                  statusOptions
-                    .map(status => `
-
-                      <option
-                        value="${status}"
-                        ${
-                          status ===
-                          order.status
-                            ? "selected"
-                            : ""
-                        }
-                      >
-                        ${
-                          MemoraAdmin.statusLabel(
-                            status
-                          )
-                        }
-                      </option>
-
-                    `)
-                    .join("")
-                }
-
-              </select>
-
-            </div>
-
-            <div class="field">
-
-              <label>
-                Catatan Status
-              </label>
-
-              <textarea
-                id="detailStatusNote"
-                placeholder="Catatan opsional..."
-              ></textarea>
-
-            </div>
-
-            <button
-              class="btn btn-primary btn-block"
-              id="saveDetailStatus"
-              type="button"
-            >
-              Save Status
-            </button>
-
-          </div>
-
-        </section>
-
-
-        <section class="panel">
-
-          <div class="panel-head">
-
-            <h2>
-              Payment Summary
-            </h2>
-
-          </div>
-
-          <div class="panel-body">
-
-            <div class="total-list">
-
-              <div class="total-row">
-
-                <span>
-                  Subtotal
-                </span>
-
-                <strong>
-                  ${
-                    MemoraAdmin.money(
-                      order.subtotal
-                    )
-                  }
-                </strong>
-
-              </div>
-
-              <div class="total-row">
-
-                <span>
-                  Shipping
-                </span>
-
-                <strong>
-                  ${
-                    MemoraAdmin.money(
-                      order.shipping_cost
-                    )
-                  }
-                </strong>
-
-              </div>
-
-              <div class="total-row">
-
-                <span>
-                  Discount
-                </span>
-
-                <strong>
-                  ${
-                    MemoraAdmin.money(
-                      order.discount_amount
-                    )
-                  }
-                </strong>
-
-              </div>
-
-              <div class="total-row">
-
-                <span>
-                  Paid
-                </span>
-
-                <strong>
-                  ${
-                    MemoraAdmin.money(
-                      order.total_paid
-                    )
-                  }
-                </strong>
-
-              </div>
-
-              <div class="total-row">
-
-                <span>
-                  Remaining
-                </span>
-
-                <strong>
-                  ${
-                    MemoraAdmin.money(
-                      order.remaining_amount
-                    )
-                  }
-                </strong>
-
-              </div>
-
-              <div class="total-row grand">
-
-                <span>
-                  Grand Total
-                </span>
-
-                <strong>
-                  ${
-                    MemoraAdmin.money(
-                      order.grand_total
-                    )
-                  }
-                </strong>
-
-              </div>
-
-            </div>
-
-          </div>
-
-        </section>
-
-
-        <section class="panel">
-
-          <div class="panel-head">
-
-            <h2>
-              History
-            </h2>
-
-          </div>
-
-          <div class="panel-body timeline">
-
-            ${historyHtml}
-
-          </div>
-
-        </section>
-
-      </div>
-
-    `;
-
-
-    document
-      .getElementById(
-        "saveDetailStatus"
-      )
-      .addEventListener(
-        "click",
-        async () => {
-
-          const status =
-            document.getElementById(
-              "detailStatus"
-            ).value;
-
-          const note =
-            document.getElementById(
-              "detailStatusNote"
-            ).value.trim();
-
-
-          const updateResult =
-            await db
-              .from("orders")
-              .update({
-                status
-              })
-              .eq(
-                "id",
-                orderId
-              );
-
-
-          if (updateResult.error) {
-
-            alert(
-              updateResult.error.message
-            );
-
-            return;
-          }
-
-
-          const historyPayload = {
-            order_id:
-              orderId,
-
-            status:
-              status
-          };
-
-
-          if (note) {
-            historyPayload.note = note;
-          }
-
-
-          const historyInsert =
-            await db
-              .from(
-                "order_status_history"
-              )
-              .insert(
-                historyPayload
-              );
-
-
-          if (
-            historyInsert.error
-          ) {
-
-            console.warn(
-              historyInsert.error
-            );
-
-          }
-
-
-          alert(
-            "Data pesanan berhasil diperbarui."
-          );
-
-
-          window.location.reload();
-
-        }
-      );
-
-
-    document
-      .getElementById(
-        "archiveOrder"
-      )
-      .addEventListener(
-        "click",
-        async () => {
-
-          if (
-            !confirm(
-              "Archive order ini?"
-            )
-          ) {
-            return;
-          }
-
-
-          const result =
-            await db
-              .from("orders")
-              .update({
-                is_archived:true
-              })
-              .eq(
-                "id",
-                orderId
-              );
-
-
-          if (result.error) {
-
-            alert(
-              result.error.message
-            );
-
-            return;
-          }
-
-
-          window.location.href =
-            "/studio/archive/";
-
-        }
-      );
+    await loadOrder();
 
   });
 
