@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const statuses = [
       "desain",
       "menunggu_approval",
-      "produksi",
+      "printing",
       "finishing",
       "quality_check",
       "packing",

@@ -50,7 +50,7 @@
       data_belum_lengkap:"Data Belum Lengkap",
       menunggu_approval:"Menunggu Approval",
       desain:"Desain",
-      produksi:"Produksi",
+      printing:"Printing",
       finishing:"Finishing",
       quality_check:"Quality Check",
       packing:"Packing",

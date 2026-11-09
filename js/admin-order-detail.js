@@ -213,7 +213,7 @@ document.addEventListener("DOMContentLoaded", () => {
       "revisi",
       "approved",
       "printing",
-      "produksi",
+      "printing",
       "finishing",
       "quality_check",
       "packing",
