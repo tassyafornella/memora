@@ -1516,3 +1516,301 @@ textarea {
   }
 
 }
+
+/* ============================================================
+   MEMORA TYPOGRAPHY SYSTEM
+============================================================ */
+
+:root {
+  --font-sans:
+    "Inter",
+    "SF Pro Text",
+    "SF Pro Display",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Helvetica Neue",
+    Arial,
+    sans-serif;
+
+  --fs-xs: 12px;
+  --fs-sm: 13px;
+  --fs-base: 14px;
+  --fs-md: 15px;
+  --fs-lg: 18px;
+  --fs-xl: 24px;
+  --fs-2xl: 32px;
+  --fs-3xl: 44px;
+
+  --lh-tight: 1.2;
+  --lh-normal: 1.55;
+  --lh-relaxed: 1.7;
+}
+
+
+/* GLOBAL */
+
+html,
+body,
+button,
+input,
+select,
+textarea {
+  font-family: var(--font-sans) !important;
+}
+
+
+body {
+  font-size: var(--fs-base);
+  line-height: var(--lh-normal);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+
+/* HEADINGS */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-sans) !important;
+  color: var(--text);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+}
+
+
+h1 {
+  font-size: clamp(34px, 4vw, 46px) !important;
+  line-height: 1.08;
+}
+
+
+h2 {
+  font-size: clamp(24px, 3vw, 32px) !important;
+  line-height: 1.15;
+}
+
+
+h3 {
+  font-size: 20px !important;
+  line-height: 1.25;
+}
+
+
+h4 {
+  font-size: 17px !important;
+  line-height: 1.3;
+}
+
+
+/* BODY TEXT */
+
+p,
+li,
+td,
+th {
+  font-size: var(--fs-base);
+  line-height: var(--lh-normal);
+}
+
+
+small,
+.helper-text,
+.form-helper,
+.product-category,
+.account-eyebrow,
+.payment-eyebrow,
+.studio-eyebrow,
+.auth-eyebrow {
+  font-size: var(--fs-xs) !important;
+  line-height: 1.4;
+}
+
+
+/* NAVIGATION */
+
+.memora-nav-link,
+.memora-action-text,
+.memora-mobile-menu a,
+.account-breadcrumb,
+.payment-breadcrumb {
+  font-size: 13px !important;
+}
+
+
+.memora-logo {
+  font-size: 17px !important;
+}
+
+
+/* FORM */
+
+label,
+.form-label,
+.auth-field label,
+.payment-field label,
+.studio-field label {
+  font-size: 13px !important;
+  line-height: 1.4;
+  font-weight: 500;
+}
+
+
+input,
+select,
+textarea {
+  font-size: 14px !important;
+}
+
+
+input::placeholder,
+textarea::placeholder {
+  font-size: 13px !important;
+}
+
+
+/* BUTTON */
+
+button,
+a[class*="button"],
+.auth-submit,
+.payment-submit,
+.order-view,
+.detail-back-button,
+.detail-payment-button,
+.studio-primary-button,
+.studio-secondary-button,
+.studio-secondary-link {
+  font-size: 13px !important;
+  font-weight: 600;
+}
+
+
+/* PRODUCT */
+
+.product-heading p,
+.product-preview-caption,
+.config-section,
+.variant-card,
+.product-form-grid,
+.quantity-unit,
+.product-summary,
+.product-summary span {
+  font-size: 14px !important;
+}
+
+
+.variant-card .variant-label,
+.selected-package-label {
+  font-size: 13px !important;
+}
+
+
+/* ACCOUNT */
+
+.account-heading p,
+.account-card,
+.profile-list,
+.account-menu,
+.order-date,
+.detail-address,
+.detail-note p,
+.timeline-content span,
+.timeline-content p {
+  font-size: 13px !important;
+}
+
+
+.account-stats span,
+.profile-list span,
+.detail-note span {
+  font-size: 12px !important;
+}
+
+
+.account-stats strong {
+  font-size: 22px !important;
+}
+
+
+.order-number,
+.order-total,
+.detail-item strong {
+  font-size: 14px !important;
+}
+
+
+/* PAYMENT */
+
+.payment-heading p,
+.payment-side p,
+.payment-order-info span,
+.payment-field small,
+.payment-status-box span,
+.payment-status-box strong {
+  font-size: 13px !important;
+}
+
+
+/* STUDIO */
+
+.studio-header p,
+.studio-login-card > p,
+.payment-review-customer,
+.payment-review-amount span,
+.admin-order-customer,
+.production-card span {
+  font-size: 13px !important;
+}
+
+
+.studio-stats span {
+  font-size: 12px !important;
+}
+
+
+.studio-stats strong {
+  font-size: 22px !important;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 760px) {
+
+  body {
+    font-size: 14px;
+  }
+
+
+  h1 {
+    font-size: 32px !important;
+  }
+
+
+  h2 {
+    font-size: 24px !important;
+  }
+
+
+  h3 {
+    font-size: 18px !important;
+  }
+
+
+  .memora-nav-link,
+  .memora-action-text,
+  .memora-mobile-menu a,
+  button,
+  a[class*="button"],
+  label,
+  input,
+  select,
+  textarea {
+    font-size: 13px !important;
+  }
+
+}

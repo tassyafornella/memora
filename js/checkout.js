@@ -586,9 +586,9 @@
 
                   <p>
                     ${esc(item.packageName)}
-                    ·
+                    -
                     ${esc(item.design)}
-                    ·
+                    -
                     ${Number(item.quantity)} ${esc(item.unit || "pcs")}
                   </p>
 
