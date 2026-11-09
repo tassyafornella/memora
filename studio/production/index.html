@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
 
 <head>
@@ -7,444 +7,212 @@
 
   <meta
     name="viewport"
-    content="width=device-width, initial-scale=1.0"
+    content="width=device-width, initial-scale=1"
   >
 
-  <meta
-    name="description"
-    content="Memora Studio Production"
-  >
-
-  <title>Production - Memora Studio</title>
+  <title>
+    Production - MEMORA Studio
+  </title>
 
   <link
-    rel="stylesheet"
-    href="../../css/style.css"
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
   >
 
   <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
     rel="stylesheet"
-    href="../../css/studio.css"
   >
 
   <link
     rel="stylesheet"
-    href="../../css/production.css"
+    href="/css/app.css"
   >
-  <link rel="stylesheet" href="/css/studio-final.css?v=20261002-211912">
+
+  <link
+    rel="stylesheet"
+    href="/css/studio.css"
+  >
+
 </head>
 
 
-<body class="studio-body">
+<body>
 
+  <main class="studio-page">
 
-<div
-  class="studio-mobile-overlay"
-  id="studioMobileOverlay"
-></div>
+    <header class="studio-header">
 
+      <div>
 
-<div class="studio-layout">
+        <span class="studio-eyebrow">
+          MEMORA Studio
+        </span>
 
+        <h1>
+          Production
+        </h1>
 
-  <!-- SIDEBAR -->
-
-  <aside
-    class="studio-sidebar"
-    id="studioSidebar"
-  >
-
-
-    <div class="studio-sidebar-header">
-
-      <a
-        href="../dashboard/"
-        class="studio-brand"
-      >
-        MEMORA
-      </a>
-
-      <span class="studio-brand-subtitle">
-        Studio
-      </span>
-
-    </div>
-
-
-    <nav class="studio-nav">
-
-      <a
-        href="../dashboard/"
-        class="studio-nav-item"
-      >
-        <span class="studio-nav-icon">◫</span>
-        <span>Dashboard</span>
-      </a>
-
-
-      <a
-        href="../orders/"
-        class="studio-nav-item"
-      >
-        <span class="studio-nav-icon">◇</span>
-        <span>Orders</span>
-      </a>
-      <a
-        href="../custom-orders/"
-        class="studio-nav-item"
-      >
-        <span class="studio-nav-icon">＋</span>
-        <span>Custom Orders</span>
-      </a>
-
-
-      <a
-        href="../production/"
-        class="studio-nav-item active"
-      >
-        <span class="studio-nav-icon">◌</span>
-        <span>Production</span>
-      </a>
-
-
-      <a
-        href="../finance/"
-        class="studio-nav-item"
-      >
-        <span class="studio-nav-icon">Rp</span>
-        <span>Finance</span>
-      </a>
-
-
-      <a
-        href="../invoices/"
-        class="studio-nav-item"
-      >
-        <span class="studio-nav-icon">▤</span>
-        <span>Invoices</span>
-      </a>
-
-
-      <a
-        href="../customers/"
-        class="studio-nav-item"
-      >
-        <span class="studio-nav-icon">♡</span>
-        <span>Customers</span>
-      </a>
-
-
-      <a
-        href="../products/"
-        class="studio-nav-item"
-      >
-        <span class="studio-nav-icon">□</span>
-        <span>Products</span>
-      </a>
-
-
-      <a
-        href="../gallery/"
-        class="studio-nav-item"
-      >
-        <span class="studio-nav-icon">▧</span>
-        <span>Gallery</span>
-      </a>
-
-
-      <a
-        href="../archive/"
-        class="studio-nav-item"
-      >
-        <span class="studio-nav-icon">◱</span>
-        <span>Archive</span>
-      </a>
-
-    </nav>
-
-
-    <div class="studio-sidebar-bottom">
-
-      <div class="studio-owner">
-
-        <div class="studio-owner-main">
-
-          <div class="studio-owner-avatar">
-            TA
-          </div>
-
-          <div class="studio-owner-text">
-
-            <strong data-owner-name>
-              Tassya & Arif
-            </strong>
-
-            <span data-owner-role>
-              Owner
-            </span>
-
-          </div>
-
-        </div>
-
-
-        <button
-          type="button"
-          class="studio-logout-button"
-          data-action="studio-logout"
-        >
-          Keluar
-        </button>
-
-      </div>
-
-    </div>
-
-
-  </aside>
-
-
-  <!-- MAIN -->
-
-  <main class="studio-main">
-
-
-    <header class="studio-topbar">
-
-      <div class="studio-topbar-left">
-
-        <button
-          type="button"
-          class="studio-menu-button"
-          id="studioMenuButton"
-        >
-          ☰
-        </button>
-
-
-        <div>
-
-          <span class="studio-eyebrow">
-            Memora Studio
-          </span>
-
-          <h1>
-            Production
-          </h1>
-
-        </div>
+        <p>
+          Pantau proses produksi seluruh pesanan.
+        </p>
 
       </div>
 
 
-      <div class="studio-topbar-right">
+      <div class="studio-header-actions">
 
-        <button
-          type="button"
-          class="production-refresh-button"
-          id="productionRefreshButton"
+        <a
+          href="/studio/orders/"
+          class="studio-secondary-link"
         >
-          Refresh
-        </button>
+          Orders
+        </a>
 
       </div>
 
     </header>
 
 
-    <div class="studio-content">
+    <section class="studio-stats">
 
+      <article>
 
-      <!-- HEADING -->
+        <span>
+          Design
+        </span>
 
-      <section class="production-heading">
-
-        <div>
-
-          <span class="dashboard-section-label">
-            Production Workflow
-          </span>
-
-          <h2>
-            Proses Produksi
-          </h2>
-
-          <p>
-            Pantau setiap order dari proses desain hingga pengiriman.
-          </p>
-
-        </div>
-
-      </section>
-
-
-      <!-- SUMMARY -->
-
-      <section class="production-stat-grid">
-
-        <article class="production-stat-card">
-
-          <span>
-            Dalam Produksi
-          </span>
-
-          <strong id="productionActiveCount">
-            0
-          </strong>
-
-        </article>
-
-
-        <article class="production-stat-card">
-
-          <span>
-            Menunggu Approval
-          </span>
-
-          <strong id="productionApprovalCount">
-            0
-          </strong>
-
-        </article>
-
-
-        <article class="production-stat-card">
-
-          <span>
-            Printing
-          </span>
-
-          <strong id="productionPrintingCount">
-            0
-          </strong>
-
-        </article>
-
-
-        <article class="production-stat-card">
-
-          <span>
-            Siap / Sedang Dikirim
-          </span>
-
-          <strong id="productionShippingCount">
-            0
-          </strong>
-
-        </article>
-
-      </section>
-
-
-      <!-- TOOLBAR -->
-
-      <section class="production-toolbar">
-
-        <div class="production-search">
-
-          <input
-            type="search"
-            id="productionSearch"
-            placeholder="Cari Order ID, customer, atau WhatsApp..."
-          >
-
-        </div>
-
-
-        <div class="production-toolbar-right">
-
-          <select id="productionStageFilter">
-
-  <option value="">
-    Semua Tahap
-  </option>
-
-  <option value="desain">
-    Desain
-  </option>
-
-  <option value="approval">
-    Approval
-  </option>
-
-  <option value="produksi">
-    Produksi
-  </option>
-
-  <option value="packing">
-    Packing
-  </option>
-
-  <option value="dikirim">
-    Dikirim
-  </option>
-
-</select>
-
-
-          <button
-            type="button"
-            id="productionResetButton"
-            class="production-reset-button"
-          >
-            Reset
-          </button>
-
-        </div>
-
-      </section>
-
-
-      <!-- BOARD -->
-
-      <section class="production-board-wrapper">
-
-        <div
-          class="production-board"
-          id="productionBoard"
-        ></div>
-
-      </section>
-
-
-      <div
-        class="production-empty"
-        id="productionEmpty"
-        hidden
-      >
-
-        <strong>
-          Belum ada order dalam proses produksi.
+        <strong id="productionDesign">
+          0
         </strong>
 
-        <p>
-          Order akan muncul setelah status masuk ke tahap desain atau produksi.
-        </p>
+      </article>
+
+
+      <article>
+
+        <span>
+          Production
+        </span>
+
+        <strong id="productionProcess">
+          0
+        </strong>
+
+      </article>
+
+
+      <article>
+
+        <span>
+          Ready / Shipping
+        </span>
+
+        <strong id="productionShipping">
+          0
+        </strong>
+
+      </article>
+
+    </section>
+
+
+    <section class="studio-panel">
+
+      <div class="studio-toolbar studio-toolbar-orders">
+
+        <input
+          type="search"
+          id="productionSearch"
+          placeholder="Cari order..."
+        >
+
+
+        <select id="productionFilter">
+
+          <option value="">
+            Semua Tahap
+          </option>
+
+          <option value="desain">
+            Desain
+          </option>
+
+          <option value="produksi">
+            Produksi
+          </option>
+
+          <option value="finishing">
+            Finishing
+          </option>
+
+          <option value="quality_check">
+            Quality Check
+          </option>
+
+          <option value="packing">
+            Packing
+          </option>
+
+          <option value="dikirim">
+            Dikirim
+          </option>
+
+          <option value="selesai">
+            Selesai
+          </option>
+
+        </select>
 
       </div>
 
 
-    </div>
+      <div
+        class="studio-loading"
+        id="productionLoading"
+      >
+        Memuat production...
+      </div>
 
+
+      <div
+        class="production-board"
+        id="productionBoard"
+      ></div>
+
+
+      <div
+        class="studio-empty"
+        id="productionEmpty"
+        hidden
+      >
+        Belum ada order produksi.
+      </div>
+
+
+      <div
+        class="studio-message"
+        id="productionMessage"
+      ></div>
+
+    </section>
 
   </main>
 
 
-</div>
+  <script
+    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+  ></script>
 
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<script src="../../js/supabase.js"></script>
-<script src="../../js/studio/auth.js"></script>
-<script src="../../js/studio/guard.js"></script>
-<script src="../../js/studio/production.js"></script>
-
+  <script src="/js/supabase.js"></script>
+  <script src="/js/studio-production.js"></script>
 
 </body>
 
 </html>
-
-
-
-

@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
 
 <head>
@@ -7,511 +7,142 @@
 
   <meta
     name="viewport"
-    content="width=device-width, initial-scale=1.0"
+    content="width=device-width, initial-scale=1"
   >
 
-  <title>Alamat Saya | Memora</title>
+  <title>
+    Addresses ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â MEMORA
+  </title>
 
   <link
-    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+  >
+
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
     rel="stylesheet"
   >
 
   <link
     rel="stylesheet"
-    href="../../css/style.css"
+    href="/css/app.css"
   >
 
   <link
     rel="stylesheet"
-    href="../../css/customer-account.css"
+    href="/css/address.css"
   >
 
-  <style>
-
-    .address-toolbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 14px;
-      margin-top: 26px;
-    }
-
-    .address-count {
-      color: #7b8982;
-      font-size: 12px;
-    }
-
-    .address-add-button {
-      min-height: 44px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0 18px;
-      border: 1px solid #173f35;
-      border-radius: 999px;
-      background: #173f35;
-      color: #ffffff;
-      font-size: 11px;
-      font-weight: 600;
-      cursor: pointer;
-    }
-
-    .address-add-button:disabled {
-      opacity: 0.45;
-      cursor: not-allowed;
-    }
-
-    .address-list {
-      display: grid;
-      gap: 14px;
-      margin-top: 20px;
-    }
-
-    .address-card {
-      padding: 20px;
-      border: 1px solid #dce5df;
-      border-radius: 18px;
-      background: #ffffff;
-    }
-
-    .address-card.primary {
-      border-color: #3f6f60;
-      background: #f8faf8;
-    }
-
-    .address-card-title {
-      display: flex;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .address-card-title strong {
-      color: #173f35;
-      font-size: 14px;
-      font-weight: 600;
-    }
-
-    .address-badge {
-      display: inline-flex;
-      align-items: center;
-      min-height: 23px;
-      padding: 0 9px;
-      border-radius: 999px;
-      background: #e8f0eb;
-      color: #173f35;
-      font-size: 9px;
-      font-weight: 600;
-    }
-
-    .address-card-name {
-      margin: 14px 0 4px;
-      color: #1e2925;
-      font-size: 13px;
-      font-weight: 600;
-    }
-
-    .address-card-phone {
-      margin: 0;
-      color: #7b8982;
-      font-size: 12px;
-    }
-
-    .address-card-detail {
-      margin: 11px 0 0;
-      color: #4d5c55;
-      font-size: 12px;
-      line-height: 1.75;
-    }
-
-    .address-card-landmark {
-      margin: 8px 0 0;
-      color: #7b8982;
-      font-size: 11px;
-      line-height: 1.6;
-    }
-
-    .address-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 18px;
-    }
-
-    .address-action-button {
-      min-height: 38px;
-      padding: 0 14px;
-      border: 1px solid #d8e2dc;
-      border-radius: 999px;
-      background: #ffffff;
-      color: #173f35;
-      font-size: 10px;
-      font-weight: 600;
-      cursor: pointer;
-    }
-
-    .address-action-button.delete {
-      color: #6c2936;
-    }
-
-
-    /* MODAL */
-
-    .address-modal[hidden] {
-      display: none !important;
-    }
-
-    .address-modal {
-      position: fixed;
-      inset: 0;
-      z-index: 4000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-    }
-
-    .address-modal-overlay {
-      position: absolute;
-      inset: 0;
-      background: rgba(17, 35, 28, 0.48);
-      backdrop-filter: blur(4px);
-    }
-
-    .address-modal-dialog {
-      position: relative;
-      z-index: 1;
-      width: min(100%, 760px);
-      max-height: 90vh;
-      overflow-y: auto;
-      padding: 26px;
-      border-radius: 22px;
-      background: #ffffff;
-      box-shadow: 0 30px 80px rgba(23, 63, 53, 0.22);
-    }
-
-    .address-modal-close {
-      position: absolute;
-      top: 12px;
-      right: 14px;
-      width: 38px;
-      height: 38px;
-      border: 0;
-      background: transparent;
-      color: #6e7b75;
-      font-size: 25px;
-      cursor: pointer;
-    }
-
-    .address-modal-heading {
-      padding-right: 45px;
-    }
-
-    .address-modal-heading span {
-      display: block;
-      margin-bottom: 7px;
-      color: #3f6f60;
-      font-size: 9px;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-    }
-
-    .address-modal-heading h2 {
-      margin: 0;
-      color: #173f35;
-      font-size: 23px;
-      font-weight: 600;
-    }
-
-    .address-modal-heading p {
-      margin: 8px 0 0;
-      color: #7b8982;
-      font-size: 12px;
-      line-height: 1.65;
-    }
-
-    .address-form {
-      margin-top: 24px;
-    }
-
-    .address-form-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 17px;
-    }
-
-    .address-field.full {
-      grid-column: 1 / -1;
-    }
-
-    .address-field label {
-      display: block;
-      margin-bottom: 7px;
-      color: #3d4d45;
-      font-size: 11px;
-      font-weight: 500;
-    }
-
-    .address-field input,
-    .address-field select,
-    .address-field textarea {
-      width: 100%;
-      min-height: 48px;
-      padding: 11px 13px;
-      border: 1px solid #dbe4de;
-      border-radius: 12px;
-      background: #ffffff;
-      color: #1e2925;
-      font-size: 12px;
-      outline: none;
-    }
-
-    .address-field select:disabled,
-    .address-field input:read-only {
-      background: #f5f7f5;
-      color: #89958f;
-      cursor: not-allowed;
-    }
-
-    .address-field textarea {
-      min-height: 110px;
-      resize: vertical;
-    }
-
-    .address-field input:focus,
-    .address-field select:focus,
-    .address-field textarea:focus {
-      border-color: #3f6f60;
-      box-shadow: 0 0 0 3px rgba(63, 111, 96, 0.08);
-    }
-
-    .address-field-hint {
-      display: block;
-      margin-top: 6px;
-      color: #8b9791;
-      font-size: 9px;
-      line-height: 1.5;
-    }
-
-    .address-checkbox {
-      display: flex;
-      align-items: center;
-      gap: 9px;
-      margin-top: 18px;
-    }
-
-    .address-checkbox input {
-      width: 17px;
-      height: 17px;
-    }
-
-    .address-checkbox label {
-      color: #4d5c55;
-      font-size: 11px;
-    }
-
-    .address-form-actions {
-      display: flex;
-      justify-content: flex-end;
-      flex-wrap: wrap;
-      gap: 9px;
-      margin-top: 24px;
-    }
-
-    .address-cancel-button,
-    .address-save-button {
-      min-height: 44px;
-      padding: 0 18px;
-      border-radius: 999px;
-      font-size: 11px;
-      font-weight: 600;
-      cursor: pointer;
-    }
-
-    .address-cancel-button {
-      border: 1px solid #d8e2dc;
-      background: #ffffff;
-      color: #173f35;
-    }
-
-    .address-save-button {
-      border: 1px solid #173f35;
-      background: #173f35;
-      color: #ffffff;
-    }
-
-    .address-message {
-      display: none;
-      margin-top: 14px;
-      padding: 11px 13px;
-      border-radius: 11px;
-      font-size: 11px;
-      line-height: 1.6;
-    }
-
-    .address-message.show {
-      display: block;
-    }
-
-    .address-message.success {
-      background: #e8f0eb;
-      color: #173f35;
-    }
-
-    .address-message.error {
-      background: #f8eeee;
-      color: #6c2936;
-    }
-
-    body.address-modal-open {
-      overflow: hidden;
-    }
-
-    @media (max-width: 700px) {
-
-      .address-toolbar {
-        align-items: flex-start;
-        flex-direction: column;
-      }
-
-      .address-add-button {
-        width: 100%;
-      }
-
-      .address-form-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .address-field.full {
-        grid-column: auto;
-      }
-
-      .address-modal {
-        align-items: flex-end;
-        padding: 10px;
-      }
-
-      .address-modal-dialog {
-        max-height: 92vh;
-        padding: 22px 18px;
-        border-radius: 22px 22px 16px 16px;
-      }
-
-      .address-form-actions {
-        flex-direction: column-reverse;
-      }
-
-      .address-cancel-button,
-      .address-save-button {
-        width: 100%;
-      }
-
-    }
-
-  </style>
-
-
-  <style>
-
-    .account-back-button {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-
-      margin-bottom: 18px;
-
-      color: #173f35;
-
-      font-family: "Poppins", Arial, sans-serif;
-      font-size: 12px;
-      font-weight: 600;
-
-      text-decoration: none;
-    }
-
-    .account-back-button:hover {
-      opacity: 0.75;
-    }
-
-  </style>
-
-  <link rel="stylesheet" href="/css/customer-nav.css">
-  <link rel="stylesheet" href="/css/customer-final.css?v=20261002-185048">
 </head>
+
 
 <body>
 
-  <header class="site-header">
+  <div class="memora-page-back memora-address-back">
+  <a
+    href="/account/"
+    id="addressBackButton"
+    data-memora-back
+  >
+    Back
+  </a>
+</div>
 
-    <div class="header-inner">
+<main class="address-page">
 
-      <a href="/" class="brand">
-        MEMORA
+
+    <div class="address-breadcrumb">
+
+      <a href="/">
+        Home
       </a>
 
-      <nav
-        class="customer-nav"
-        id="customerNav"
-      ></nav>
+      <span>/</span>
 
-    </div>
-
-  </header>
-
-
-  <main class="account-shell">
-
-    <a
-      href="/account/"
-      class="account-back-button"
-    >
-      ‹ Kembali
-    </a>
+      <span>
+        Addresses
+      </span>
 
     </div>
 
 
-    
+    <header class="address-heading">
 
-    <h1 class="account-title">
-      Alamat Saya
-    </h1>
+      <div>
 
-    <p class="account-description">
-      Kelola alamat pengiriman pesanan Memora.
-      Kamu dapat menyimpan maksimal 5 alamat.
-    </p>
-
-
-    <section class="account-content-card">
-
-      <h2 class="account-section-title">
-        Alamat Tersimpan
-      </h2>
-
-      <p class="account-section-description">
-        Pilih satu alamat sebagai alamat utama
-        untuk mempermudah proses checkout.
-      </p>
-
-
-      <div class="address-toolbar">
-
-        <span
-          class="address-count"
-          id="addressCount"
-        >
-          0 dari 5 alamat
+        <span class="address-eyebrow">
+          Account
         </span>
 
-        <button
-          type="button"
-          class="address-add-button"
-          id="addAddressButton"
-        >
-          + Tambah Alamat
-        </button>
+        <h1>
+          Alamat Pengiriman
+        </h1>
+
+        <p>
+          Simpan maksimal 5 alamat pengiriman.
+        </p>
+
+      </div>
+
+
+      <button
+        type="button"
+        class="add-address-button"
+        id="addAddressButton"
+      >
+        + Tambah Alamat
+      </button>
+
+    </header>
+
+
+    <div
+      class="address-message"
+      id="pageAddressMessage"
+    ></div>
+
+
+    <section
+      class="address-login-required"
+      id="addressLoginRequired"
+      hidden
+    >
+
+      <h2>
+        Login diperlukan.
+      </h2>
+
+      <p>
+        Silakan login untuk mengelola alamat.
+      </p>
+
+      <a
+        href="/account/login/?next=/account/addresses/"
+      >
+        Login
+      </a>
+
+    </section>
+
+
+    <section
+      class="address-content"
+      id="addressContent"
+      hidden
+    >
+
+      <div class="address-count">
+
+        <span id="addressCount">
+          0 dari 5 alamat
+        </span>
 
       </div>
 
@@ -523,38 +154,31 @@
 
 
       <div
-        class="account-empty"
+        class="address-empty"
         id="addressEmpty"
         hidden
       >
 
-        <div class="account-empty-icon">
-          A
-        </div>
-
         <strong>
-          Belum ada alamat tersimpan
+          Belum ada alamat.
         </strong>
 
         <p>
-          Tambahkan alamat pertama untuk digunakan
-          dalam proses pengiriman pesanan.
+          Tambahkan alamat pertama untuk
+          melanjutkan proses checkout.
         </p>
 
       </div>
 
-
-      <div
-        class="address-message"
-        id="pageAddressMessage"
-      ></div>
-
     </section>
+
 
   </main>
 
 
-  <!-- ADDRESS MODAL -->
+  <!-- ======================================================
+       MODAL
+  ======================================================= -->
 
   <div
     class="address-modal"
@@ -563,49 +187,38 @@
   >
 
     <div
-      class="address-modal-overlay"
-      data-close-address-modal
+      class="address-backdrop"
+      data-close-address
     ></div>
 
 
-    <div
-      class="address-modal-dialog"
-      role="dialog"
-      aria-modal="true"
-    >
+    <div class="address-dialog">
 
-      <button
-        type="button"
-        class="address-modal-close"
-        data-close-address-modal
-        aria-label="Tutup"
-      >
-        ×
-      </button>
+      <div class="address-dialog-header">
+
+        <div>
+
+          <span class="address-eyebrow">
+            Delivery Address
+          </span>
+
+          <h2 id="addressModalTitle">
+            Tambah Alamat
+          </h2>
+
+        </div>
 
 
-      <div class="address-modal-heading">
-
-        <span>
-          ALAMAT PENGIRIMAN
-        </span>
-
-        <h2 id="addressModalTitle">
-          Tambah Alamat
-        </h2>
-
-        <p>
-          Pilih wilayah pengiriman, lalu lengkapi
-          detail jalan dan nomor rumah.
-        </p>
+        <button
+          type="button"
+          class="address-close"
+          data-close-address
+        >x</button>
 
       </div>
 
 
-      <form
-        class="address-form"
-        id="addressForm"
-      >
+      <form id="addressForm">
 
         <input
           type="hidden"
@@ -619,10 +232,13 @@
           <div class="address-field">
 
             <label for="addressLabel">
-              Label Alamat
+              Label Alamat *
             </label>
 
-            <select id="addressLabel">
+            <select
+              id="addressLabel"
+              required
+            >
 
               <option value="Rumah">
                 Rumah
@@ -630,6 +246,10 @@
 
               <option value="Kantor">
                 Kantor
+              </option>
+
+              <option value="Apartemen">
+                Apartemen
               </option>
 
               <option value="Lainnya">
@@ -644,7 +264,7 @@
           <div class="address-field">
 
             <label for="addressRecipient">
-              Nama Penerima
+              Nama Penerima *
             </label>
 
             <input
@@ -656,114 +276,82 @@
           </div>
 
 
-          <div class="address-field full">
+          <div class="address-field">
 
             <label for="addressPhone">
-              Nomor Telepon
+              Nomor Telepon *
             </label>
 
             <input
               type="tel"
               id="addressPhone"
-              placeholder="08xxxxxxxxxx"
               required
             >
 
           </div>
 
-
-          <!-- PROVINSI -->
 
           <div class="address-field">
 
             <label for="addressProvince">
-              Provinsi
+              Provinsi *
             </label>
 
-            <select
+            <input
+              type="text"
               id="addressProvince"
+              placeholder="Contoh: Jawa Tengah"
               required
             >
 
-              <option value="">
-                Memuat provinsi...
-              </option>
-
-            </select>
-
           </div>
 
-
-          <!-- KOTA -->
 
           <div class="address-field">
 
             <label for="addressCity">
-              Kota / Kabupaten
+              Kota / Kabupaten *
             </label>
 
-            <select
+            <input
+              type="text"
               id="addressCity"
-              disabled
+              placeholder="Contoh: Pemalang"
               required
             >
 
-              <option value="">
-                Pilih provinsi terlebih dahulu
-              </option>
-
-            </select>
-
           </div>
 
-
-          <!-- KECAMATAN -->
 
           <div class="address-field">
 
             <label for="addressDistrict">
-              Kecamatan
+              Kecamatan *
             </label>
 
-            <select
+            <input
+              type="text"
               id="addressDistrict"
-              disabled
               required
             >
 
-              <option value="">
-                Pilih kota / kabupaten terlebih dahulu
-              </option>
-
-            </select>
-
           </div>
 
-
-          <!-- KELURAHAN -->
 
           <div class="address-field">
 
             <label for="addressVillage">
-              Kelurahan / Desa
+              Kelurahan / Desa *
             </label>
 
-            <select
+            <input
+              type="text"
               id="addressVillage"
-              disabled
               required
             >
 
-              <option value="">
-                Pilih kecamatan terlebih dahulu
-              </option>
-
-            </select>
-
           </div>
 
-
-          <!-- POSTAL -->
 
           <div class="address-field">
 
@@ -773,32 +361,24 @@
 
             <input
               type="text"
+              inputmode="numeric"
               id="addressPostalCode"
-              placeholder="Otomatis"
-              readonly
             >
 
           </div>
 
 
-          <!-- ADDRESS DETAIL -->
-
           <div class="address-field full">
 
             <label for="addressLine">
-              Alamat Lengkap
+              Alamat Lengkap *
             </label>
 
             <textarea
               id="addressLine"
-              placeholder="Contoh: Jl. Melati No. 12, RT 03/RW 05, Blok B"
+              placeholder="Nama jalan, nomor rumah, RT/RW, blok, kompleks, dll."
               required
             ></textarea>
-
-            <small class="address-field-hint">
-              Isi nama jalan, nomor rumah, RT/RW,
-              blok, kompleks, apartemen, atau detail lokasi lainnya.
-            </small>
 
           </div>
 
@@ -812,12 +392,8 @@
             <input
               type="text"
               id="addressLandmark"
-              placeholder="Contoh: sebelah minimarket, pagar warna putih"
+              placeholder="Opsional"
             >
-
-            <small class="address-field-hint">
-              Opsional, tetapi dapat membantu kurir menemukan alamat.
-            </small>
 
           </div>
 
@@ -825,22 +401,22 @@
         </div>
 
 
-        <div class="address-checkbox">
+        <label class="primary-checkbox">
 
           <input
             type="checkbox"
             id="addressPrimary"
           >
 
-          <label for="addressPrimary">
+          <span>
             Jadikan sebagai alamat utama
-          </label>
+          </span>
 
-        </div>
+        </label>
 
 
         <div
-          class="address-message"
+          class="address-form-message"
           id="addressFormMessage"
         ></div>
 
@@ -850,7 +426,7 @@
           <button
             type="button"
             class="address-cancel-button"
-            data-close-address-modal
+            data-close-address
           >
             Batal
           </button>
@@ -865,6 +441,7 @@
 
         </div>
 
+
       </form>
 
     </div>
@@ -876,22 +453,14 @@
     src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
   ></script>
 
-  <script src="../../js/supabase.js"></script>
-  <script src="../../js/customer-auth-guard.js"></script>
-  <script src="../../js/customer-nav.js"></script>
-  <script src="../../js/customer-addresses.js"></script>
+  <script src="/js/supabase.js"></script>
+
+  <script src="/js/app.js"></script>
+
+  <script src="/js/addresses.js"></script>
+
+  <script src="/js/customer-flow.js"></script>
+  <script src="/js/back-navigation.js"></script>
 </body>
+
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-

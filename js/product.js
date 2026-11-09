@@ -1,1588 +1,926 @@
-﻿/* =========================================================
-   MEMORA
-   UNIVERSAL PRODUCT DETAIL
-   ========================================================= */
+(function () {
+
+  "use strict";
 
 
-/* =========================================================
-   PRODUCT CONFIGURATION
-   ========================================================= */
-
-const memoraProducts = {
+  const CART_KEY =
+    "memora_cart";
 
 
-  /* =======================================================
-     INVITATION
-     ======================================================= */
+  const PRODUCTS = {
 
-  invitation: {
+    invitation: {
 
-    productId: "invitation",
+      name:
+        "Wedding Invitation",
 
-    productName: "Wedding Invitation",
+      category:
+        "Invitation",
 
-    defaultQuantity: 50,
+      minimum:
+        50,
 
-    variants: {
+      unit:
+        "pcs",
 
-      simple: {
+      description:
+        "Personalized wedding invitation untuk momen pernikahan dengan pilihan paket dan desain yang dapat disesuaikan.",
 
-        name: "Simple",
+      previewEyebrow:
+        "THE WEDDING OF",
 
-        price: 7500,
+      previewTitle:
+        "Amora",
 
-        image:
-          "../../assets/images/products/invitation/simple.jpg",
+      previewSmall:
+        "Wedding Invitation",
 
-        contents: [
-          "Main Invitation Card",
-          "Detail / Rundown Card",
-          "Basic personalized design"
-        ]
+      packages: {
 
-      },
+        simple: {
+          name:
+            "Simple",
+
+          price:
+            5500,
+
+          description:
+            "Main invitation card + personalized design"
+        },
+
+        signature: {
+          name:
+            "Signature",
+
+          price:
+            7500,
+
+          description:
+            "Invitation set dengan detail lebih lengkap"
+        }
+
+      }
+
+    },
 
 
-      signature: {
+    bridesmaid: {
 
-        name: "Signature",
+      name:
+        "Bridesmaid Card",
 
-        price: 12000,
+      category:
+        "Bridesmaid",
 
-        image:
-          "../../assets/images/products/invitation/signature.jpg",
+      minimum:
+        5,
 
-        contents: [
-          "Main Invitation Card",
-          "Detail / Rundown Card",
-          "RSVP Card",
-          "Photo Card",
-          "Personalized theme design"
-        ]
+      unit:
+        "pcs",
 
-      },
+      description:
+        "Personalized bridesmaid card untuk mengajak orang terdekat menjadi bagian dari hari spesialmu.",
+
+      previewEyebrow:
+        "WILL YOU BE MY",
+
+      previewTitle:
+        "Bridesmaid?",
+
+      previewSmall:
+        "With Love",
+
+      packages: {
+
+        simple: {
+          name:
+            "Simple",
+
+          price:
+            8000,
+
+          description:
+            "Personalized name + basic card design"
+        },
+
+        signature: {
+          name:
+            "Signature",
+
+          price:
+            12000,
+
+          description:
+            "Card set dengan message dan wedding details"
+        }
+
+      }
+
+    },
 
 
-      complete: {
+    keepsake: {
 
-        name: "Complete",
+      name:
+        "Keepsake",
 
-        price: 17500,
+      category:
+        "Keepsake",
 
-        image:
-          "../../assets/images/products/invitation/complete.jpg",
+      minimum:
+        1,
 
-        contents: [
-          "Main Invitation Card",
-          "Detail / Rundown Card",
-          "RSVP Card",
-          "Photo Card",
-          "Additional personalized card",
-          "Complete personalized theme design"
-        ]
+      unit:
+        "pcs",
+
+      description:
+        "Personalized keepsake untuk menyimpan detail dan kenangan dalam bentuk stationery yang lebih personal.",
+
+      previewEyebrow:
+        "MEMORA",
+
+      previewTitle:
+        "Keepsake",
+
+      previewSmall:
+        "Made to Remember",
+
+      packages: {
+
+        simple: {
+          name:
+            "Simple",
+
+          price:
+            12000,
+
+          description:
+            "Basic personalized keepsake"
+        },
+
+        signature: {
+          name:
+            "Signature",
+
+          price:
+            18000,
+
+          description:
+            "Complete personalized keepsake set"
+        }
 
       }
 
     }
 
-  },
+  };
 
 
+  let productKey =
+    "";
 
-  /* =======================================================
-     BRIDESMAID
-     ======================================================= */
+  let product =
+    null;
 
-  bridesmaid: {
+  let selectedPackage =
+    "simple";
 
-    productId: "bridesmaid",
+  let selectedDesign =
+    "Design 01";
 
-    productName:
-      "Bridesmaid / MOH Set",
-
-    defaultQuantity: 7,
-
-    variants: {
-
-      simple: {
-
-        name: "Simple",
-
-        price: 8000,
-
-        image:
-          "../../assets/images/products/bridesmaid/simple.jpg",
-
-        contents: [
-          "Personalized Bridesmaid / MOH Card",
-          "Personalized Name",
-          "Basic theme design"
-        ]
-
-      },
+  let quantity =
+    20;
 
 
-      signature: {
+  function rupiah(value) {
 
-        name: "Signature",
+    return new Intl.NumberFormat(
+      "id-ID",
+      {
+        style:
+          "currency",
 
-        price: 12000,
+        currency:
+          "IDR",
 
-        image:
-          "../../assets/images/products/bridesmaid/signature.jpg",
-
-        contents: [
-          "Personalized Bridesmaid / MOH Card",
-          "Personalized Name",
-          "Message Card",
-          "Wedding Detail Card",
-          "Personalized theme design"
-        ]
-
-      },
-
-
-      complete: {
-
-        name: "Complete",
-
-        price: 18000,
-
-        image:
-          "../../assets/images/products/bridesmaid/complete.jpg",
-
-        contents: [
-          "Personalized Bridesmaid / MOH Card",
-          "Personalized Name",
-          "Message Card",
-          "Wedding Detail Card",
-          "Photo / Memory Card",
-          "Complete personalized theme design"
-        ]
-
+        maximumFractionDigits:
+          0
       }
+    ).format(
+      Number(value) || 0
+    );
+
+  }
+
+
+  function detectProduct() {
+
+    const fromBody =
+      String(
+        document.body.dataset.product ||
+        ""
+      )
+      .trim()
+      .toLowerCase();
+
+
+    if (
+      PRODUCTS[fromBody]
+    ) {
+
+      return fromBody;
 
     }
 
-  },
 
+    const path =
+      location.pathname
+        .toLowerCase();
 
 
-  /* =======================================================
-     KEEPSAKE
-     ======================================================= */
+    return Object.keys(
+      PRODUCTS
+    ).find(
+      key =>
+        path.includes(
+          `/product/${key}/`
+        )
+    ) || "";
 
-  keepsake: {
+  }
 
-    productId: "keepsake",
 
-    productName:
-      "Keepsake Set",
+  function currentPackage() {
 
-    defaultQuantity: 1,
+    return product
+      .packages[
+        selectedPackage
+      ];
 
-    variants: {
+  }
 
-      simple: {
 
-        name: "Simple",
+  function setText(
+    id,
+    value
+  ) {
 
-        price: 12000,
+    const element =
+      document.getElementById(
+        id
+      );
 
-        image:
-          "../../assets/images/products/keepsake/simple.jpg",
 
-        contents: [
-          "6 Personalized Keepsake Cards",
-          "Basic personalized design",
-          "Decorative sticker elements"
-        ]
+    if (element) {
 
-      },
-
-
-      signature: {
-
-        name: "Signature",
-
-        price: 18000,
-
-        image:
-          "../../assets/images/products/keepsake/signature.jpg",
-
-        contents: [
-          "8 Personalized Keepsake Cards",
-          "Personalized theme design",
-          "Photo / memory card",
-          "Decorative sticker elements"
-        ]
-
-      },
-
-
-      complete: {
-
-        name: "Complete",
-
-        price: 25000,
-
-        image:
-          "../../assets/images/products/keepsake/complete.jpg",
-
-        contents: [
-          "10 Personalized Keepsake Cards",
-          "Complete personalized design",
-          "Photo / memory cards",
-          "Message cards",
-          "Decorative sticker elements"
-        ]
-
-      }
-
-    }
-
-  },
-
-
-
-  /* =======================================================
-     BIRTHDAY
-     ======================================================= */
-
-  birthday: {
-
-    productId: "birthday",
-
-    productName:
-      "Birthday Card Set",
-
-    defaultQuantity: 1,
-
-    variants: {
-
-      simple: {
-
-        name: "Simple",
-
-        price: 8000,
-
-        image:
-          "../../assets/images/products/birthday/simple.jpg",
-
-        contents: [
-          "Personalized Birthday Card",
-          "Message Card",
-          "Basic personalized design"
-        ]
-
-      },
-
-
-      signature: {
-
-        name: "Signature",
-
-        price: 12000,
-
-        image:
-          "../../assets/images/products/birthday/signature.jpg",
-
-        contents: [
-          "Personalized Birthday Card",
-          "Message Card",
-          "Photo Card",
-          "Personalized theme design"
-        ]
-
-      },
-
-
-      complete: {
-
-        name: "Complete",
-
-        price: 18000,
-
-        image:
-          "../../assets/images/products/birthday/complete.jpg",
-
-        contents: [
-          "Personalized Birthday Card",
-          "Message Card",
-          "Photo Card",
-          "Memory / Wish Card",
-          "Complete personalized theme design"
-        ]
-
-      }
-
-    }
-
-  },
-
-
-
-  /* =======================================================
-     HANGTAG
-     ======================================================= */
-
-  hangtag: {
-
-    productId: "hangtag",
-
-    productName:
-      "Hangtag Set",
-
-    defaultQuantity: 50,
-
-    variants: {
-
-      simple: {
-
-        name: "Simple",
-
-        price: 1500,
-
-        image:
-          "../../assets/images/products/hangtag/simple.jpg",
-
-        contents: [
-          "1 Main Personalized Hangtag",
-          "Basic personalized design"
-        ]
-
-      },
-
-
-      signature: {
-
-        name: "Signature",
-
-        price: 2500,
-
-        image:
-          "../../assets/images/products/hangtag/signature.jpg",
-
-        contents: [
-          "2 Personalized Hangtags",
-          "Main Event / Name Tag",
-          "Date / Initial Tag",
-          "Personalized theme design"
-        ]
-
-      },
-
-
-      complete: {
-
-        name: "Complete",
-
-        price: 3500,
-
-        image:
-          "../../assets/images/products/hangtag/complete.jpg",
-
-        contents: [
-          "3 Personalized Hangtags",
-          "Main Event / Name Tag",
-          "Date / Initial Tag",
-          "Decorative / Thank You Tag",
-          "Complete personalized theme design"
-        ]
-
-      }
-
-    }
-
-  },
-
-
-  sticker: {
-
-    productId:
-      "sticker",
-
-    productName:
-      "Sticker Set",
-
-    defaultQuantity:
-      1,
-
-    variants: {
-
-      simple: {
-
-        name:
-          "Simple",
-
-        price:
-          5000,
-
-        image:
-          "../../assets/images/products/sticker/simple.jpg",
-
-        contents: [
-          "1 Personalized Sticker Design",
-          "Standard Shape",
-          "Basic Personalized Theme"
-        ]
-
-      },
-
-
-      signature: {
-
-        name:
-          "Signature",
-
-        price:
-          8000,
-
-        image:
-          "../../assets/images/products/sticker/signature.jpg",
-
-        contents: [
-          "3 Personalized Sticker Designs",
-          "Personalized Name / Event",
-          "Custom Color Theme",
-          "Choice of Sticker Shape"
-        ]
-
-      },
-
-
-      complete: {
-
-        name:
-          "Complete",
-
-        price:
-          12000,
-
-        image:
-          "../../assets/images/products/sticker/complete.jpg",
-
-        contents: [
-          "5 Personalized Sticker Designs",
-          "Personalized Name / Event",
-          "Mixed Sticker Shapes",
-          "Decorative Sticker Set",
-          "Complete Personalized Theme"
-        ]
-
-      }
+      element.textContent =
+        value;
 
     }
 
   }
-};
 
 
+  function renderProduct() {
 
-/* =========================================================
-   STATE
-   ========================================================= */
-
-const currentProductKey =
-  document.body.dataset.product ||
-  "invitation";
-
-
-const currentProduct =
-  memoraProducts[currentProductKey] ||
-  memoraProducts.invitation;
-
-
-let selectedVariantKey =
-  "simple";
-
-
-let quantity =
-  currentProduct.defaultQuantity ||
-  1;
-
-
-
-/* =========================================================
-   INIT
-   ========================================================= */
-
-document.addEventListener(
-  "DOMContentLoaded",
-  () => {
-
-    restoreDraft();
-
-    initVariantSelector();
-
-    initQuantitySelector();
-
-    initPersonalizationInputs();
-
-    initAddToCart();
-
-    updateActiveVariantButton();
-
-    renderProduct();
-
-  }
-);
-
-
-
-/* =========================================================
-   VARIANT SELECTOR
-   ========================================================= */
-
-function initVariantSelector() {
-
-  const buttons =
-    document.querySelectorAll(
-      ".variant-card"
+    setText(
+      "productCategory",
+      product.category
     );
 
 
-  buttons.forEach(
-    button => {
-
-      button.addEventListener(
-        "click",
-        () => {
-
-          const variantKey =
-            button.dataset.variant;
+    setText(
+      "productName",
+      product.name
+    );
 
 
-          if (
-            !variantKey ||
-            !currentProduct
-              .variants[variantKey]
-          ) {
-
-            return;
-
-          }
+    setText(
+      "productDescription",
+      product.description
+    );
 
 
-          selectedVariantKey =
-            variantKey;
+    setText(
+      "previewEyebrow",
+      product.previewEyebrow
+    );
 
 
-          updateActiveVariantButton();
+    setText(
+      "previewTitle",
+      product.previewTitle
+    );
 
-          renderProduct();
+
+    setText(
+      "previewSmall",
+      product.previewSmall
+    );
+
+
+    setText(
+      "minimumValue",
+      `${product.minimum} ${product.unit}`
+    );
+
+
+    const simple =
+      product.packages.simple;
+
+
+    const signature =
+      product.packages.signature;
+
+
+    setText(
+      "simplePrice",
+      rupiah(
+        simple.price
+      )
+    );
+
+
+    setText(
+      "simpleDescription",
+      simple.description
+    );
+
+
+    setText(
+      "signaturePrice",
+      rupiah(
+        signature.price
+      )
+    );
+
+
+    setText(
+      "signatureDescription",
+      signature.description
+    );
+
+
+    quantity =
+      product.minimum;
+
+
+    const quantityInput =
+      document.getElementById(
+        "quantityInput"
+      );
+
+
+    if (quantityInput) {
+
+      quantityInput.value =
+        String(quantity);
+
+    }
+
+
+    renderSummary();
+
+    validateQuantity();
+
+  }
+
+
+  function renderSummary() {
+
+    const pkg =
+      currentPackage();
+
+
+    const total =
+      pkg.price *
+      quantity;
+
+
+    setText(
+      "summaryPackage",
+      pkg.name
+    );
+
+
+    setText(
+      "summaryDesign",
+      selectedDesign
+    );
+
+
+    setText(
+      "summaryQuantity",
+      `${quantity} ${product.unit}`
+    );
+
+
+    setText(
+      "summaryUnitPrice",
+      rupiah(
+        pkg.price
+      )
+    );
+
+
+    setText(
+      "summaryTotal",
+      rupiah(total)
+    );
+
+
+    setText(
+      "productPrice",
+      `${rupiah(pkg.price)} / ${product.unit}`
+    );
+
+  }
+
+
+  function selectPackage(
+    packageKey
+  ) {
+
+    if (
+      !product.packages[
+        packageKey
+      ]
+    ) {
+
+      return;
+
+    }
+
+
+    selectedPackage =
+      packageKey;
+
+
+    document
+      .querySelectorAll(
+        "[data-package]"
+      )
+      .forEach(
+        button => {
+
+          button
+            .classList
+            .toggle(
+              "active",
+              button.dataset.package ===
+                packageKey
+            );
 
         }
       );
 
-    }
-  );
 
-}
-
-
-
-/* =========================================================
-   ACTIVE VARIANT
-   ========================================================= */
-
-function updateActiveVariantButton() {
-
-  const buttons =
-    document.querySelectorAll(
-      ".variant-card"
-    );
-
-
-  buttons.forEach(
-    button => {
-
-      button.classList.toggle(
-        "active",
-        button.dataset.variant ===
-          selectedVariantKey
-      );
-
-    }
-  );
-
-}
-
-
-
-/* =========================================================
-   QUANTITY
-   ========================================================= */
-
-function initQuantitySelector() {
-
-  const input =
-    document.getElementById(
-      "quantityInput"
-    );
-
-
-  const decrease =
-    document.getElementById(
-      "decreaseQuantity"
-    );
-
-
-  const increase =
-    document.getElementById(
-      "increaseQuantity"
-    );
-
-
-  if (!input) {
-    return;
-  }
-
-
-  input.value =
-    quantity;
-
-
-  decrease?.addEventListener(
-    "click",
-    () => {
-
-      quantity =
-        Math.max(
-          1,
-          quantity - 1
-        );
-
-
-      input.value =
-        quantity;
-
-
-      renderSummary();
-
-      saveDraft();
-
-    }
-  );
-
-
-  increase?.addEventListener(
-    "click",
-    () => {
-
-      quantity += 1;
-
-
-      input.value =
-        quantity;
-
-
-      renderSummary();
-
-      saveDraft();
-
-    }
-  );
-
-
-  input.addEventListener(
-    "input",
-    () => {
-
-      quantity =
-        Math.max(
-          1,
-          Number(input.value) || 1
-        );
-
-
-      renderSummary();
-
-      saveDraft();
-
-    }
-  );
-
-
-  input.addEventListener(
-    "blur",
-    () => {
-
-      input.value =
-        quantity;
-
-    }
-  );
-
-}
-
-
-
-/* =========================================================
-   PERSONALIZATION
-   ========================================================= */
-
-function initPersonalizationInputs() {
-
-  const fields =
-    document.querySelectorAll(
-      "[data-personalization]"
-    );
-
-
-  fields.forEach(
-    field => {
-
-      field.addEventListener(
-        "input",
-        saveDraft
-      );
-
-
-      field.addEventListener(
-        "change",
-        saveDraft
-      );
-
-    }
-  );
-
-}
-
-
-
-/* =========================================================
-   GET PERSONALIZATION
-   ========================================================= */
-
-function getPersonalization() {
-
-  const data = {};
-
-
-  const fields =
-    document.querySelectorAll(
-      "[data-personalization]"
-    );
-
-
-  fields.forEach(
-    field => {
-
-      const key =
-        field.id ||
-        field.name;
-
-
-      if (!key) {
-        return;
-      }
-
-
-      data[key] = {
-
-        label:
-          field.dataset.label ||
-          key,
-
-        value:
-          field.value?.trim() ||
-          ""
-
-      };
-
-    }
-  );
-
-
-  return data;
-
-}
-
-
-
-/* =========================================================
-   RENDER PRODUCT
-   ========================================================= */
-
-function renderProduct() {
-
-  renderVariantImage();
-
-  renderPackageContent();
-
-  renderSummary();
-
-  saveDraft();
-
-}
-
-
-
-/* =========================================================
-   VARIANT IMAGE
-   ========================================================= */
-
-function renderVariantImage() {
-
-  const variant =
-    getSelectedVariant();
-
-
-  const wrapper =
-    document.getElementById(
-      "productImageWrapper"
-    ) ||
-    document.querySelector(
-      ".product-image-wrapper"
-    );
-
-
-  if (wrapper) {
-
-    wrapper.innerHTML = "";
-
-
-    const image =
-      document.createElement(
-        "img"
-      );
-
-
-    image.id =
-      "productImage";
-
-
-    image.src =
-      variant.image;
-
-
-    image.alt =
-      `${currentProduct.productName} ${variant.name}`;
-
-
-    image.addEventListener(
-      "error",
-      () => {
-
-        renderImageFallback(
-          wrapper,
-          variant
-        );
-
-      },
-      {
-        once: true
-      }
-    );
-
-
-    wrapper.appendChild(
-      image
-    );
+    renderSummary();
 
   }
 
 
-  setTextById(
-    "previewPackageName",
-    variant.name
-  );
+  function selectDesign(
+    design
+  ) {
+
+    selectedDesign =
+      design;
 
 
-  setTextById(
-    "selectedPackageLabel",
-    variant.name
-  );
+    document
+      .querySelectorAll(
+        "[data-design]"
+      )
+      .forEach(
+        button => {
 
-}
+          button
+            .classList
+            .toggle(
+              "active",
+              button.dataset.design ===
+                design
+            );
 
-
-
-/* =========================================================
-   IMAGE FALLBACK
-   ========================================================= */
-
-function renderImageFallback(
-  wrapper,
-  variant
-) {
-
-  wrapper.innerHTML =
-    "";
+        }
+      );
 
 
-  const fallback =
-    document.createElement(
-      "div"
-    );
+    renderSummary();
 
-
-  fallback.className =
-    "variant-image-fallback";
-
-
-  const title =
-    document.createElement(
-      "strong"
-    );
-
-
-  title.textContent =
-    `${variant.name} Package`;
-
-
-  const description =
-    document.createElement(
-      "span"
-    );
-
-
-  description.textContent =
-    "Tambahkan foto contoh produk dari Canva";
-
-
-  fallback.append(
-    title,
-    description
-  );
-
-
-  wrapper.appendChild(
-    fallback
-  );
-
-}
-
-
-
-/* =========================================================
-   INLINE ERROR COMPATIBILITY
-   ========================================================= */
-
-function handleVariantImageError(
-  image
-) {
-
-  if (!image) {
-    return;
   }
 
 
-  const wrapper =
-    image.parentElement;
+  function validateQuantity() {
 
-
-  if (!wrapper) {
-    return;
-  }
-
-
-  renderImageFallback(
-    wrapper,
-    getSelectedVariant()
-  );
-
-}
-
-
-
-/* =========================================================
-   PACKAGE CONTENT
-   ========================================================= */
-
-function renderPackageContent() {
-
-  const variant =
-    getSelectedVariant();
-
-
-  setTextById(
-    "packageContentName",
-    variant.name
-  );
-
-
-  const list =
-    document.getElementById(
-      "packageContentList"
-    );
-
-
-  if (!list) {
-    return;
-  }
-
-
-  list.innerHTML =
-    "";
-
-
-  variant.contents.forEach(
-    content => {
-
-      const item =
-        document.createElement(
-          "li"
-        );
-
-
-      item.textContent =
-        content;
-
-
-      list.appendChild(
-        item
-      );
-
-    }
-  );
-
-}
-
-
-
-/* =========================================================
-   SUMMARY
-   ========================================================= */
-
-function renderSummary() {
-
-  const variant =
-    getSelectedVariant();
-
-
-  const total =
-    variant.price *
-    quantity;
-
-
-  setTextById(
-    "summaryPackage",
-    variant.name
-  );
-
-
-  setTextById(
-    "summaryUnitPrice",
-    formatRupiah(
-      variant.price
-    )
-  );
-
-
-  setTextById(
-    "summaryQuantity",
-    `${quantity} set`
-  );
-
-
-  setTextById(
-    "summaryTotal",
-    formatRupiah(
-      total
-    )
-  );
-
-}
-
-
-
-/* =========================================================
-   ADD TO CART
-   ========================================================= */
-
-function initAddToCart() {
-
-  const button =
-    document.getElementById(
-      "addToCartButton"
-    );
-
-
-  if (!button) {
-    return;
-  }
-
-
-  button.addEventListener(
-    "click",
-    () => {
-
-      const cartItem =
-        buildCartItem();
-
-
-      const cart =
-        getStoredCart();
-
-
-      cart.push(
-        cartItem
+    const warning =
+      document.getElementById(
+        "minimumWarning"
       );
 
 
-      localStorage.setItem(
-        "memora_cart",
-        JSON.stringify(
-          cart
-        )
+    const addButton =
+      document.getElementById(
+        "addToCartButton"
       );
 
 
-      window.dispatchEvent(
-        new Event(
-          "memora-cart-updated"
-        )
+    const valid =
+      Number.isFinite(
+        quantity
+      ) &&
+      quantity >=
+        product.minimum;
+
+
+    warning
+      ?.classList
+      .toggle(
+        "show",
+        !valid
       );
 
 
-      if (
-        typeof window
-          .memoraUpdateCartCount
-        === "function"
-      ) {
+    if (warning) {
 
-        window
-          .memoraUpdateCartCount();
+      warning.querySelector(
+        "[data-minimum]"
+      ).textContent =
+        `${product.minimum} ${product.unit}`;
 
-      }
-
-
-      showCartToast();
-
-    }
-  );
-
-}
-
-
-
-/* =========================================================
-   BUILD CART ITEM
-   ========================================================= */
-
-function buildCartItem() {
-
-  const variant =
-    getSelectedVariant();
-
-
-  return {
-
-    cartItemId:
-      generateCartItemId(),
-
-    productId:
-      currentProduct.productId,
-
-    productName:
-      currentProduct.productName,
-
-    variant:
-      selectedVariantKey,
-
-    variantName:
-      variant.name,
-
-    variantImage:
-      variant.image,
-
-    packageContents:
-      [...variant.contents],
-
-    unitPrice:
-      variant.price,
-
-    quantity:
-      quantity,
-
-    subtotal:
-      variant.price *
-      quantity,
-
-    personalization:
-      getPersonalization(),
-
-    addedAt:
-      new Date()
-        .toISOString()
-
-  };
-
-}
-
-
-
-/* =========================================================
-   STORED CART
-   ========================================================= */
-
-function getStoredCart() {
-
-  try {
-
-    const stored =
-      localStorage.getItem(
-        "memora_cart"
-      );
-
-
-    if (!stored) {
-      return [];
     }
 
 
-    const parsed =
-      JSON.parse(
-        stored
-      );
+    if (addButton) {
+
+      addButton.disabled =
+        !valid;
 
 
-    return Array.isArray(
-      parsed
-    )
-      ? parsed
-      : [];
+      addButton.textContent =
+        valid
+          ? "Tambah ke Keranjang"
+          : `Pembelian minimal ${product.minimum} ${product.unit}`;
 
-  }
-
-  catch (error) {
-
-    console.error(
-      "Gagal membaca cart:",
-      error
-    );
-
-
-    return [];
-
-  }
-
-}
-
-
-
-/* =========================================================
-   SAVE DRAFT
-   ========================================================= */
-
-function saveDraft() {
-
-  const draft = {
-
-    variant:
-      selectedVariantKey,
-
-    quantity:
-      quantity,
-
-    personalization:
-      getPersonalization()
-
-  };
-
-
-  localStorage.setItem(
-    getDraftKey(),
-    JSON.stringify(
-      draft
-    )
-  );
-
-}
-
-
-
-/* =========================================================
-   RESTORE DRAFT
-   ========================================================= */
-
-function restoreDraft() {
-
-  try {
-
-    const stored =
-      localStorage.getItem(
-        getDraftKey()
-      );
-
-
-    if (!stored) {
-      return;
     }
 
 
-    const draft =
-      JSON.parse(
-        stored
-      );
+    return valid;
+
+  }
+
+
+  function updateQuantity(
+    value
+  ) {
+
+    quantity =
+      Number(value);
 
 
     if (
-      draft.variant &&
-      currentProduct
-        .variants[draft.variant]
-    ) {
-
-      selectedVariantKey =
-        draft.variant;
-
-    }
-
-
-    if (
-      Number(draft.quantity) > 0
+      !Number.isFinite(
+        quantity
+      )
     ) {
 
       quantity =
-        Number(
-          draft.quantity
-        );
+        0;
 
     }
 
 
-    const personalization =
-      draft.personalization ||
+    renderSummary();
+
+    validateQuantity();
+
+  }
+
+
+  function personalization() {
+
+    const fields =
+      document.querySelectorAll(
+        "[data-personalization]"
+      );
+
+
+    const result =
       {};
 
 
-    Object.entries(
-      personalization
-    ).forEach(
-      ([key, item]) => {
+    fields.forEach(
+      field => {
 
-        const field =
-          document.getElementById(
-            key
-          );
-
-
-        if (!field) {
-          return;
-        }
-
-
-        if (
-          typeof item === "object" &&
-          item !== null
-        ) {
-
-          field.value =
-            item.value || "";
-
-        }
-
-        else {
-
-          field.value =
-            item || "";
-
-        }
+        result[
+          field.name ||
+          field.id
+        ] =
+          field.value.trim();
 
       }
     );
 
+
+    return result;
+
   }
 
-  catch (error) {
 
-    console.error(
-      "Gagal memulihkan draft:",
-      error
+  function readCart() {
+
+    try {
+
+      const parsed =
+        JSON.parse(
+          localStorage.getItem(
+            CART_KEY
+          ) || "[]"
+        );
+
+
+      return Array.isArray(parsed)
+        ? parsed
+        : [];
+
+    }
+
+    catch {
+
+      return [];
+
+    }
+
+  }
+
+
+  function addToCart() {
+
+    if (
+      !validateQuantity()
+    ) {
+
+      return;
+
+    }
+
+
+    const pkg =
+      currentPackage();
+
+
+    const cart =
+      readCart();
+
+
+    cart.push({
+
+      cartItemId:
+        `${Date.now()}-${Math.random()
+          .toString(16)
+          .slice(2)}`,
+
+      productId:
+        productKey,
+
+      productName:
+        product.name,
+
+      packageKey:
+        selectedPackage,
+
+      packageName:
+        pkg.name,
+
+      design:
+        selectedDesign,
+
+      quantity:
+        quantity,
+
+      unit:
+        product.unit,
+
+      unitPrice:
+        pkg.price,
+
+      subtotal:
+        pkg.price *
+        quantity,
+
+      personalization:
+        personalization(),
+
+      addedAt:
+        new Date()
+          .toISOString()
+
+    });
+
+
+    localStorage.setItem(
+      CART_KEY,
+      JSON.stringify(cart)
     );
 
-  }
 
-}
-
-
-
-/* =========================================================
-   DRAFT KEY
-   ========================================================= */
-
-function getDraftKey() {
-
-  return (
-    `memora_${currentProductKey}_draft`
-  );
-
-}
-
-
-
-/* =========================================================
-   SELECTED VARIANT
-   ========================================================= */
-
-function getSelectedVariant() {
-
-  return (
-    currentProduct
-      .variants[selectedVariantKey]
-    ||
-    currentProduct
-      .variants.simple
-  );
-
-}
-
-
-
-/* =========================================================
-   TOAST
-   ========================================================= */
-
-let cartToastTimer =
-  null;
-
-
-function showCartToast() {
-
-  const toast =
-    document.getElementById(
-      "cartToast"
+    window.dispatchEvent(
+      new Event(
+        "memora-cart-updated"
+      )
     );
 
 
-  if (!toast) {
-    return;
-  }
+    setText(
+      "cartSuccess",
+      "Produk berhasil ditambahkan ke keranjang."
+    );
 
 
-  toast.classList.add(
-    "show"
-  );
-
-
-  clearTimeout(
-    cartToastTimer
-  );
-
-
-  cartToastTimer =
     setTimeout(
       () => {
 
-        toast.classList.remove(
-          "show"
+        setText(
+          "cartSuccess",
+          ""
         );
 
       },
-      3200
+      2800
     );
-
-}
-
-
-
-/* =========================================================
-   TEXT
-   ========================================================= */
-
-function setTextById(
-  id,
-  value
-) {
-
-  const element =
-    document.getElementById(
-      id
-    );
-
-
-  if (element) {
-
-    element.textContent =
-      value;
 
   }
 
-}
+
+  function bindEvents() {
+
+    document
+      .querySelectorAll(
+        "[data-package]"
+      )
+      .forEach(
+        button => {
+
+          button.addEventListener(
+            "click",
+            () => {
+
+              selectPackage(
+                button.dataset.package
+              );
+
+            }
+          );
+
+        }
+      );
 
 
+    document
+      .querySelectorAll(
+        "[data-design]"
+      )
+      .forEach(
+        button => {
 
-/* =========================================================
-   RUPIAH
-   ========================================================= */
+          button.addEventListener(
+            "click",
+            () => {
 
-function formatRupiah(
-  value
-) {
+              selectDesign(
+                button.dataset.design
+              );
 
-  if (
-    typeof window
-      .memoraFormatRupiah
-    === "function"
-  ) {
+            }
+          );
 
-    return window
-      .memoraFormatRupiah(
-        value
+        }
+      );
+
+
+    const quantityInput =
+      document.getElementById(
+        "quantityInput"
+      );
+
+
+    quantityInput
+      ?.addEventListener(
+        "input",
+        () => {
+
+          updateQuantity(
+            quantityInput.value
+          );
+
+        }
+      );
+
+
+    document
+      .getElementById(
+        "decreaseQuantity"
+      )
+      ?.addEventListener(
+        "click",
+        () => {
+
+          const next =
+            Math.max(
+              1,
+              quantity - 1
+            );
+
+
+          quantityInput.value =
+            String(next);
+
+
+          updateQuantity(next);
+
+        }
+      );
+
+
+    document
+      .getElementById(
+        "increaseQuantity"
+      )
+      ?.addEventListener(
+        "click",
+        () => {
+
+          const next =
+            Math.max(
+              1,
+              quantity + 1
+            );
+
+
+          quantityInput.value =
+            String(next);
+
+
+          updateQuantity(next);
+
+        }
+      );
+
+
+    document
+      .getElementById(
+        "addToCartButton"
+      )
+      ?.addEventListener(
+        "click",
+        addToCart
       );
 
   }
 
 
-  return new Intl.NumberFormat(
-    "id-ID",
-    {
-      style:
-        "currency",
+  function init() {
 
-      currency:
-        "IDR",
+    productKey =
+      detectProduct();
 
-      maximumFractionDigits:
-        0
+
+    product =
+      PRODUCTS[
+        productKey
+      ];
+
+
+    if (!product) {
+
+      return;
+
     }
-  ).format(
-    Number(value) || 0
-  );
-
-}
 
 
+    renderProduct();
 
-/* =========================================================
-   CART ITEM ID
-   ========================================================= */
-
-function generateCartItemId() {
-
-  if (
-    typeof crypto !==
-      "undefined" &&
-    typeof crypto.randomUUID ===
-      "function"
-  ) {
-
-    return (
-      "cart-" +
-      crypto.randomUUID()
-    );
+    bindEvents();
 
   }
 
 
-  return (
-    "cart-" +
-    Date.now() +
-    "-" +
-    Math.random()
-      .toString(36)
-      .slice(2, 9)
-  );
+  if (
+    document.readyState ===
+    "loading"
+  ) {
 
-}
+    document.addEventListener(
+      "DOMContentLoaded",
+      init
+    );
 
+  }
+  else {
 
+    init();
 
-/* =========================================================
-   GLOBAL
-   ========================================================= */
+  }
 
-window.handleVariantImageError =
-  handleVariantImageError;
+})();

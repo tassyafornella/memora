@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="id">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  >
+
+  <title>
+    Konfirmasi Pembayaran - MEMORA
+  </title>
+
+  <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+  >
+
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <link
+    rel="stylesheet"
+    href="/css/app.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="/css/payment.css"
+  >
+
+</head>
+
+
+<body>
+
+
+  <main class="payment-page">
+
+    <div class="payment-breadcrumb">
+
+      <a href="/">
+        Home
+      </a>
+
+      <span>/</span>
+
+      <a href="/account/orders/">
+        Orders
+      </a>
+
+      <span>/</span>
+
+      <span>
+        Payment Confirmation
+      </span>
+
+    </div>
+
+
+    <div class="memora-page-back">
+  <a
+    href="/account/orders/"
+    id="paymentBackButton"
+    data-memora-back
+  >
+    Back to Order
+  </a>
+</div>
+
+<header class="payment-heading">
+
+      <span class="payment-eyebrow">
+        Payment
+      </span>
+
+      <h1>
+        Konfirmasi Pembayaran
+      </h1>
+
+      <p>
+        Kirim bukti pembayaran untuk diverifikasi oleh tim MEMORA.
+      </p>
+
+    </header>
+
+
+    <section
+      class="payment-loading"
+      id="paymentLoading"
+    >
+      Memuat pesanan...
+    </section>
+
+
+    <section
+      class="payment-layout"
+      id="paymentContent"
+      hidden
+    >
+
+
+      <div class="payment-card">
+
+        <div class="payment-order-info">
+
+          <div>
+
+            <span>
+              Order Number
+            </span>
+
+            <strong id="paymentOrderNumber">
+              -
+            </strong>
+
+          </div>
+
+
+          <div>
+
+            <span>
+              Total Order
+            </span>
+
+            <strong id="paymentOrderTotal">
+              Rp0
+            </strong>
+
+          </div>
+
+
+          <div>
+
+            <span>
+              Sisa Pembayaran
+            </span>
+
+            <strong id="paymentRemaining">
+              Rp0
+            </strong>
+
+          </div>
+
+        </div>
+
+
+        <form id="paymentConfirmationForm">
+
+
+          <div class="payment-field">
+
+            <label for="paymentAmount">
+              Payment Amount *
+            </label>
+
+            <input
+              type="number"
+              id="paymentAmount"
+              min="1"
+              step="1"
+              required
+              placeholder="Contoh: 250000"
+            >
+
+          </div>
+
+
+          <div class="payment-field">
+
+            <label for="paymentMethod">
+              Bank / Payment Method *
+            </label>
+
+            <select
+              id="paymentMethod"
+              required
+            >
+
+              <option value="">
+                Pilih metode
+              </option>
+
+              <option value="BCA">
+                BCA
+              </option>
+
+              <option value="Mandiri">
+                Mandiri
+              </option>
+
+              <option value="BNI">
+                BNI
+              </option>
+
+              <option value="Other">
+                Other
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <div class="payment-field">
+
+            <label for="paymentProof">
+              Upload Payment Proof *
+            </label>
+
+            <input
+              type="file"
+              id="paymentProof"
+              accept="image/jpeg,image/png,image/webp,application/pdf"
+              required
+            >
+
+            <small>
+              JPG, PNG, WEBP, atau PDF. Maksimal 5 MB.
+            </small>
+
+          </div>
+
+
+          <div class="payment-field">
+
+            <label for="paymentNote">
+              Catatan
+            </label>
+
+            <textarea
+              id="paymentNote"
+              placeholder="Opsional"
+            ></textarea>
+
+          </div>
+
+
+          <div
+            class="payment-message"
+            id="paymentMessage"
+          ></div>
+
+
+          <button
+            type="submit"
+            class="payment-submit"
+            id="paymentSubmitButton"
+          >
+            Send Confirmation
+          </button>
+
+
+        </form>
+
+      </div>
+
+
+      <aside class="payment-side">
+
+        <span class="payment-eyebrow">
+          Verification
+        </span>
+
+        <h2>
+          Waiting for Verification
+        </h2>
+
+        <p>
+          Bukti pembayaran tidak langsung dianggap lunas.
+          Tim MEMORA akan memeriksa pembayaran terlebih dahulu.
+        </p>
+
+        <div class="payment-status-box">
+
+          <span>
+            Payment Status
+          </span>
+
+          <strong>
+            Waiting for Verification
+          </strong>
+
+        </div>
+
+      </aside>
+
+
+    </section>
+
+
+  </main>
+
+
+  <script
+    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+  ></script>
+
+  <script src="/js/supabase.js"></script>
+  <script src="/js/app.js"></script>
+  <script src="/js/payment-confirmation.js"></script>
+
+  <script src="/js/customer-flow.js"></script>
+  <script src="/js/back-navigation.js"></script>
+</body>
+
+</html>

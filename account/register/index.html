@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
 
 <head>
@@ -7,232 +7,289 @@
 
   <meta
     name="viewport"
-    content="width=device-width, initial-scale=1.0"
+    content="width=device-width, initial-scale=1"
   >
 
-  <title>Register - Memora</title>
+  <title>
+    Register - MEMORA
+  </title>
+
+  <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+  >
+
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
 
   <link
     rel="stylesheet"
-    href="../../css/style.css"
+    href="/css/app.css"
   >
 
   <link
     rel="stylesheet"
-    href="../../css/account.css"
+    href="/css/auth.css"
   >
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/css/customer-nav.css">
-  <link rel="stylesheet" href="/css/customer-final.css?v=20261002-185048">
 </head>
 
 
-<body class="account-body">
+<body>
 
 
-<main class="account-auth-page">
+  <main class="auth-page">
+
+    <section class="auth-layout">
 
 
-  <section class="account-auth-card">
+      <div class="auth-visual">
 
-
-    <a
-      href="../../"
-      class="account-brand"
-    >
-      MEMORA
-    </a>
-
-
-    <div class="account-auth-heading">
-
-      <span>
-        Create Account
-      </span>
-
-      <h1>
-        Daftar Akun
-      </h1>
-
-      <p>
-        Create your account and keep your moments beautifully organized.
-      </p>
-
-    </div>
-
-
-    <form
-      id="registerForm"
-      class="account-form"
-    >
-
-
-      <div class="account-form-group">
-
-        <label for="registerName">
-          Nama Lengkap
-        </label>
-
-        <input
-          type="text"
-          id="registerName"
-          autocomplete="name"
-          required
-          placeholder="Nama lengkap"
+        <a
+          href="/"
+          class="auth-brand"
         >
-
-      </div>
-
-
-      <div class="account-form-group">
-
-        <label for="registerEmail">
-          Email
-        </label>
-
-        <input
-          type="email"
-          id="registerEmail"
-          autocomplete="email"
-          required
-          placeholder="nama@email.com"
-        >
-
-      </div>
+          MEMORA
+        </a>
 
 
-      <div class="account-form-group">
+        <div class="auth-visual-copy">
 
-        <label for="registerWhatsapp">
-          WhatsApp
-        </label>
+          <span class="auth-eyebrow">
+            Customer Account
+          </span>
 
-        <input
-          type="tel"
-          id="registerWhatsapp"
-          autocomplete="tel"
-          required
-          placeholder="08xxxxxxxxxx"
-        >
+          <h1>
+            Create your account.
+          </h1>
 
-      </div>
+          <p>
+            Buat akun untuk menyimpan alamat
+            dan melakukan pemesanan melalui MEMORA.
+          </p>
+
+        </div>
 
 
-      <div class="account-form-group">
+        <div class="auth-paper">
 
-        <label for="registerPassword">
-          Password
-        </label>
+          <span>
+            MEMORA
+          </span>
 
-        <div class="account-password-field">
-
-          <input
-            type="password"
-            id="registerPassword"
-            autocomplete="new-password"
-            required
-            minlength="8"
-            placeholder="Minimal 8 karakter"
-          >
-
-          <button
-            type="button"
-            class="account-password-toggle"
-            data-password-toggle="registerPassword"
-          >
-            Lihat
-          </button>
+          <strong>
+            Your story,
+            printed personally.
+          </strong>
 
         </div>
 
       </div>
 
 
-      <div class="account-form-group">
+      <div class="auth-content">
 
-        <label for="registerPasswordConfirm">
-          Konfirmasi Password
-        </label>
+        <div class="auth-card">
 
-        <div class="account-password-field">
-
-          <input
-            type="password"
-            id="registerPasswordConfirm"
-            autocomplete="new-password"
-            required
-            minlength="8"
-            placeholder="Ulangi password"
+          <a
+            href="/"
+            class="auth-back"
           >
+            Back to Home
+          </a>
 
-          <button
-            type="button"
-            class="account-password-toggle"
-            data-password-toggle="registerPasswordConfirm"
-          >
-            Lihat
-          </button>
+
+          <span class="auth-eyebrow">
+            Create Account
+          </span>
+
+
+          <h2>
+            Register
+          </h2>
+
+
+          <p class="auth-intro">
+            Lengkapi data berikut untuk membuat akun customer.
+          </p>
+
+
+          <form id="registerForm">
+
+
+            <div class="auth-field">
+
+              <label for="registerName">
+                Nama Lengkap
+              </label>
+
+              <input
+                type="text"
+                id="registerName"
+                autocomplete="name"
+                required
+                placeholder="Nama lengkap"
+              >
+
+            </div>
+
+
+            <div class="auth-field">
+
+              <label for="registerEmail">
+                Email
+              </label>
+
+              <input
+                type="email"
+                id="registerEmail"
+                autocomplete="email"
+                required
+                placeholder="nama@email.com"
+              >
+
+            </div>
+
+
+            <div class="auth-field">
+
+              <label for="registerWhatsapp">
+                WhatsApp
+              </label>
+
+              <input
+                type="tel"
+                id="registerWhatsapp"
+                autocomplete="tel"
+                required
+                placeholder="08xxxxxxxxxx"
+              >
+
+            </div>
+
+
+            <div class="auth-field">
+
+              <label for="registerPassword">
+                Password
+              </label>
+
+              <div class="password-wrap">
+
+                <input
+                  type="password"
+                  id="registerPassword"
+                  autocomplete="new-password"
+                  required
+                  minlength="8"
+                  placeholder="Minimal 8 karakter"
+                >
+
+                <button
+                  type="button"
+                  class="password-toggle"
+                  data-password-toggle="registerPassword"
+                >
+                  Lihat
+                </button>
+
+              </div>
+
+            </div>
+
+
+            <div class="auth-field">
+
+              <label for="registerPasswordConfirm">
+                Konfirmasi Password
+              </label>
+
+              <div class="password-wrap">
+
+                <input
+                  type="password"
+                  id="registerPasswordConfirm"
+                  autocomplete="new-password"
+                  required
+                  minlength="8"
+                  placeholder="Ulangi password"
+                >
+
+                <button
+                  type="button"
+                  class="password-toggle"
+                  data-password-toggle="registerPasswordConfirm"
+                >
+                  Lihat
+                </button>
+
+              </div>
+
+            </div>
+
+
+            <div
+              class="auth-message"
+              id="registerMessage"
+              hidden
+            ></div>
+
+
+            <button
+              type="submit"
+              class="auth-submit"
+              id="registerButton"
+            >
+              Daftar
+            </button>
+
+
+          </form>
+
+
+          <div class="auth-footer">
+
+            <span>
+              Sudah punya akun?
+            </span>
+
+            <a
+              href="/account/login/"
+              id="loginLink"
+            >
+              Login
+            </a>
+
+          </div>
+
 
         </div>
 
       </div>
 
 
-      <button
-        type="submit"
-        class="account-primary-button"
-        id="registerButton"
-      >
-        Daftar
-      </button>
+    </section>
+
+  </main>
 
 
-      <div
-        class="account-message"
-        id="registerMessage"
-        hidden
-      ></div>
+  <script
+    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+  ></script>
+
+  <script src="/js/supabase.js"></script>
+
+  <script src="/js/auth.js"></script>
 
 
-    </form>
-
-
-    <div class="account-auth-footer">
-
-      <span>
-        Sudah punya akun?
-      </span>
-
-      <a href="../login/">
-        Login
-      </a>
-
-    </div>
-
-
-  </section>
-
-
-</main>
-
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<script src="../../js/supabase.js"></script>
-<script src="../../js/account.js"></script>
-
-
-  <script src="/js/customer-nav.js"></script>
 </body>
 
 </html>
-
-
-
-
-
-
-

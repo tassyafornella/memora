@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
 
 <head>
@@ -7,10 +7,10 @@
 
   <meta
     name="viewport"
-    content="width=device-width, initial-scale=1.0"
+    content="width=device-width, initial-scale=1"
   >
 
-  <title>Akun Saya | Memora</title>
+  <title>Account - MEMORA</title>
 
   <link
     rel="preconnect"
@@ -24,184 +24,334 @@
   >
 
   <link
-    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
     rel="stylesheet"
   >
 
   <link
     rel="stylesheet"
-    href="../css/style.css"
+    href="/css/app.css"
   >
 
   <link
     rel="stylesheet"
-    href="../css/customer-account.css"
+    href="/css/account.css"
   >
 
-  <link rel="stylesheet" href="/css/customer-nav.css">
-  <link rel="stylesheet" href="/css/customer-final.css?v=20261002-185048">
 </head>
+
 
 <body>
 
 
-  <header class="site-header">
+  <main class="account-page">
 
-    <div class="header-inner">
+    <div class="account-breadcrumb">
 
-      <a
-        href="/"
-        class="brand"
-      >
-        MEMORA
+      <a href="/">
+        Home
       </a>
 
-      <nav
-        class="customer-nav"
-        id="customerNav"
-      ></nav>
+      <span>/</span>
+
+      <span>
+        Account
+      </span>
 
     </div>
 
-  </header>
 
+    <header class="account-heading">
 
-  <main class="account-shell">
+      <div>
 
-    <span class="account-eyebrow">
-      AKUN MEMORA
-    </span>
-
-    <h1
-      class="account-title"
-      id="accountHubGreeting"
-    >
-      Akun Saya
-    </h1>
-
-    <p class="account-description">
-      Kelola informasi akun, alamat pengiriman,
-      dan pesanan Memora-mu dalam satu tempat.
-    </p>
-
-
-    <div class="account-hub-card">
-
-
-      <a
-        href="/account/profile/"
-        class="account-hub-item"
-      >
-
-        <span class="account-hub-icon">
-          P
+        <span class="account-eyebrow">
+          Customer Account
         </span>
 
-        <span class="account-hub-copy">
+        <h1>
+          Hello,
+          <span id="accountName">
+            Customer
+          </span>
+        </h1>
 
-          <strong>
-            Profil Saya
-          </strong>
+        <p>
+          Kelola pesanan dan alamat MEMORA kamu.
+        </p>
 
-          <small>
-            Kelola nama, kontak, dan informasi akun
-          </small>
-
-        </span>
-
-        <span class="account-hub-arrow">
-          →
-        </span>
-
-      </a>
-
-
-      <a
-        href="/account/addresses/"
-        class="account-hub-item"
-      >
-
-        <span class="account-hub-icon">
-          A
-        </span>
-
-        <span class="account-hub-copy">
-
-          <strong>
-            Alamat Saya
-          </strong>
-
-          <small>
-            Kelola alamat untuk pengiriman pesanan
-          </small>
-
-        </span>
-
-        <span class="account-hub-arrow">
-          →
-        </span>
-
-      </a>
-
-
-      <a
-        href="/account/orders/"
-        class="account-hub-item"
-      >
-
-        <span class="account-hub-icon">
-          O
-        </span>
-
-        <span class="account-hub-copy">
-
-          <strong>
-            Pesanan Saya
-          </strong>
-
-          <small>
-            Lihat pesanan dan perkembangan prosesnya
-          </small>
-
-        </span>
-
-        <span class="account-hub-arrow">
-          →
-        </span>
-
-      </a>
+      </div>
 
 
       <button
         type="button"
-        class="account-hub-item logout"
-        id="accountHubLogout"
+        class="logout-button"
+        id="logoutButton"
       >
-
-        <span class="account-hub-icon">
-          ↗
-        </span>
-
-        <span class="account-hub-copy">
-
-          <strong>
-            Keluar
-          </strong>
-
-          <small>
-            Keluar dari akun Memora
-          </small>
-
-        </span>
-
-        <span class="account-hub-arrow">
-          →
-        </span>
-
+        Logout
       </button>
 
+    </header>
 
-    </div>
+
+    <section
+      class="account-loading"
+      id="accountLoading"
+    >
+      Memuat account...
+    </section>
+
+
+    <section
+      class="account-content"
+      id="accountContent"
+      hidden
+    >
+
+
+      <div class="account-stats">
+
+        <article>
+
+          <span>
+            Total Pesanan
+          </span>
+
+          <strong id="totalOrders">
+            0
+          </strong>
+
+        </article>
+
+
+        <article>
+
+          <span>
+            Pesanan Aktif
+          </span>
+
+          <strong id="activeOrders">
+            0
+          </strong>
+
+        </article>
+
+
+        <article>
+
+          <span>
+            Selesai
+          </span>
+
+          <strong id="completedOrders">
+            0
+          </strong>
+
+        </article>
+
+
+        <article>
+
+          <span>
+            Total Belanja
+          </span>
+
+          <strong id="totalSpending">
+            Rp0
+          </strong>
+
+        </article>
+
+      </div>
+
+
+      <div class="account-grid">
+
+
+        <section class="account-card">
+
+          <div class="account-card-heading">
+
+            <div>
+
+              <span class="account-eyebrow">
+                Profile
+              </span>
+
+              <h2>
+                Data Customer
+              </h2>
+
+            </div>
+
+          </div>
+
+
+          <div class="profile-list">
+
+            <div>
+
+              <span>
+                Nama
+              </span>
+
+              <strong id="profileName">
+                -
+              </strong>
+
+            </div>
+
+
+            <div>
+
+              <span>
+                Email
+              </span>
+
+              <strong id="profileEmail">
+                -
+              </strong>
+
+            </div>
+
+
+            <div>
+
+              <span>
+                WhatsApp
+              </span>
+
+              <strong id="profileWhatsapp">
+                -
+              </strong>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <section class="account-card">
+
+          <div class="account-card-heading">
+
+            <div>
+
+              <span class="account-eyebrow">
+                Quick Access
+              </span>
+
+              <h2>
+                Menu
+              </h2>
+
+            </div>
+
+          </div>
+
+
+          <div class="account-menu">
+
+            <a href="/account/orders/">
+
+              <span>
+                My Orders
+              </span>
+
+              <strong>
+                View
+              </strong>
+
+            </a>
+
+
+            <a href="/account/addresses/">
+
+              <span>
+                Alamat Pengiriman
+              </span>
+
+              <strong>
+                Manage
+              </strong>
+
+            </a>
+
+
+            <a href="/#collection">
+
+              <span>
+                Shop Collection
+              </span>
+
+              <strong>
+                Shop
+              </strong>
+
+            </a>
+
+          </div>
+
+        </section>
+
+
+      </div>
+
+
+      <section class="account-orders-preview">
+
+        <div class="account-card-heading">
+
+          <div>
+
+            <span class="account-eyebrow">
+              Recent Orders
+            </span>
+
+            <h2>
+              Pesanan Terbaru
+            </h2>
+
+          </div>
+
+
+          <a
+            href="/account/orders/"
+            class="view-all-link"
+          >
+            View All
+          </a>
+
+        </div>
+
+
+        <div
+          class="recent-orders"
+          id="recentOrders"
+        ></div>
+
+
+        <div
+          class="account-empty"
+          id="recentOrdersEmpty"
+          hidden
+        >
+
+          Belum ada pesanan.
+
+        </div>
+
+      </section>
+
+
+    </section>
+
+
+    <div
+      class="account-message"
+      id="accountMessage"
+    ></div>
 
   </main>
 
@@ -210,19 +360,15 @@
     src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
   ></script>
 
-  <script src="../js/supabase.js"></script>
+  <script src="/js/supabase.js"></script>
 
-  <script src="../js/customer-auth-guard.js"></script>
+  <script src="/js/app.js"></script>
 
-  <script src="../js/customer-nav.js"></script>
-
-  <script src="../js/account-hub.js"></script>
+  <script src="/js/account-dashboard.js"></script>
 
 
+  <script src="/js/customer-flow.js"></script>
+  <script src="/js/back-navigation.js"></script>
 </body>
+
 </html>
-
-
-
-
-

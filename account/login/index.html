@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
 
 <head>
@@ -7,179 +7,224 @@
 
   <meta
     name="viewport"
-    content="width=device-width, initial-scale=1.0"
+    content="width=device-width, initial-scale=1"
   >
 
-  <title>Login - Memora</title>
+  <title>
+    Login - MEMORA
+  </title>
+
+  <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+  >
+
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
 
   <link
     rel="stylesheet"
-    href="../../css/style.css"
+    href="/css/app.css"
   >
 
   <link
     rel="stylesheet"
-    href="../../css/account.css"
+    href="/css/auth.css"
   >
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/css/customer-nav.css">
-  <link rel="stylesheet" href="/css/customer-final.css?v=20261002-185048">
 </head>
 
 
-<body class="account-body">
+<body>
 
 
-<main class="account-auth-page">
+  <main class="auth-page">
+
+    <section class="auth-layout">
 
 
-  <section class="account-auth-card">
+      <div class="auth-visual">
 
-
-    <a
-      href="../../"
-      class="account-brand"
-    >
-      MEMORA
-    </a>
-
-
-    <div class="account-auth-heading">
-
-      <span>
-        Customer Account
-      </span>
-
-      <h1>
-        Login
-      </h1>
-
-      <p>
-        Welcome back. Continue your journey with Memora.
-      </p>
-
-    </div>
-
-
-    <form
-      id="loginForm"
-      class="account-form"
-    >
-
-
-      <div class="account-form-group">
-
-        <label for="loginEmail">
-          Email
-        </label>
-
-        <input
-          type="email"
-          id="loginEmail"
-          autocomplete="email"
-          required
-          placeholder="nama@email.com"
+        <a
+          href="/"
+          class="auth-brand"
         >
+          MEMORA
+        </a>
+
+
+        <div class="auth-visual-copy">
+
+          <span class="auth-eyebrow">
+            Customer Account
+          </span>
+
+          <h1>
+            Welcome back.
+          </h1>
+
+          <p>
+            Login untuk melanjutkan checkout,
+            melihat pesanan, dan mengelola alamat.
+          </p>
+
+        </div>
+
+
+        <div class="auth-paper">
+
+          <span>
+            MEMORA
+          </span>
+
+          <strong>
+            Made for
+            meaningful moments.
+          </strong>
+
+        </div>
 
       </div>
 
 
-      <div class="account-form-group">
+      <div class="auth-content">
 
-        <div class="account-label-row">
-
-          <label for="loginPassword">
-            Password
-          </label>
+        <div class="auth-card">
 
           <a
-            href="../forgot-password/"
-            class="account-forgot-link"
+            href="/"
+            class="auth-back"
           >
-            Lupa password?
+            Back to Home
           </a>
 
-        </div>
+
+          <span class="auth-eyebrow">
+            Sign In
+          </span>
 
 
-        <div class="account-password-field">
+          <h2>
+            Login
+          </h2>
 
-          <input
-            type="password"
-            id="loginPassword"
-            autocomplete="current-password"
-            required
-            placeholder="Password"
-          >
 
-          <button
-            type="button"
-            class="account-password-toggle"
-            data-password-toggle="loginPassword"
-          >
-            Lihat
-          </button>
+          <p class="auth-intro">
+            Masuk menggunakan akun customer MEMORA.
+          </p>
+
+
+          <form id="loginForm">
+
+
+            <div class="auth-field">
+
+              <label for="loginEmail">
+                Email
+              </label>
+
+              <input
+                type="email"
+                id="loginEmail"
+                autocomplete="email"
+                required
+                placeholder="nama@email.com"
+              >
+
+            </div>
+
+
+            <div class="auth-field">
+
+              <label for="loginPassword">
+                Password
+              </label>
+
+              <div class="password-wrap">
+
+                <input
+                  type="password"
+                  id="loginPassword"
+                  autocomplete="current-password"
+                  required
+                  placeholder="Password"
+                >
+
+                <button
+                  type="button"
+                  class="password-toggle"
+                  data-password-toggle="loginPassword"
+                >
+                  Lihat
+                </button>
+
+              </div>
+
+            </div>
+
+
+            <div
+              class="auth-message"
+              id="loginMessage"
+              hidden
+            ></div>
+
+
+            <button
+              type="submit"
+              class="auth-submit"
+              id="loginButton"
+            >
+              Login
+            </button>
+
+
+          </form>
+
+
+          <div class="auth-footer">
+
+            <span>
+              Belum punya akun?
+            </span>
+
+            <a
+              href="/account/register/"
+              id="registerLink"
+            >
+              Daftar
+            </a>
+
+          </div>
+
 
         </div>
 
       </div>
 
 
-      <button
-        type="submit"
-        class="account-primary-button"
-        id="loginButton"
-      >
-        Login
-      </button>
+    </section>
+
+  </main>
 
 
-      <div
-        class="account-message"
-        id="loginMessage"
-        hidden
-      ></div>
+  <script
+    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+  ></script>
+
+  <script src="/js/supabase.js"></script>
+
+  <script src="/js/auth.js"></script>
 
 
-    </form>
-
-
-    <div class="account-auth-footer">
-
-      <span>
-        Belum punya akun?
-      </span>
-
-      <a href="../register/">
-        Daftar
-      </a>
-
-    </div>
-
-
-  </section>
-
-
-</main>
-
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<script src="../../js/supabase.js"></script>
-<script src="../../js/account.js"></script>
-
-
-  <script src="/js/customer-nav.js"></script>
 </body>
 
 </html>
-
-
-
-
-
-
-

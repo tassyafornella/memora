@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="id">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  >
+
+  <title>
+    Order Success ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â MEMORA
+  </title>
+
+  <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+  >
+
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <link
+    rel="stylesheet"
+    href="/css/app.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="/css/checkout.css"
+  >
+
+</head>
+
+
+<body>
+
+  <main class="success-page">
+
+    <section class="success-card">
+
+      <div class="success-icon">OK</div>
+
+      <span class="success-eyebrow">
+        Order Created
+      </span>
+
+      <h1>
+        Pesanan berhasil dibuat.
+      </h1>
+
+      <p>
+        Nomor pesanan kamu:
+      </p>
+
+      <strong
+        class="success-order-number"
+        id="successOrderNumber"
+      >
+        -
+      </strong>
+
+      <div class="success-actions">
+
+        <a
+          href="/account/orders/"
+          class="success-primary"
+        >
+          Lihat Pesanan
+        </a>
+
+        <a
+          href="/"
+          class="success-secondary"
+        >
+          Kembali ke Home
+        </a>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <script>
+
+    const params =
+      new URLSearchParams(
+        location.search
+      );
+
+    document.getElementById(
+      "successOrderNumber"
+    ).textContent =
+      params.get("number") || "-";
+
+  </script>
+
+  <script src="/js/app.js"></script>
+  <script src="/js/customer-flow.js"></script>
+  <script src="/js/back-navigation.js"></script>
+</body>
+
+</html>

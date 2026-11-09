@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
 
 <head>
@@ -7,702 +7,226 @@
 
   <meta
     name="viewport"
-    content="width=device-width, initial-scale=1.0"
+    content="width=device-width, initial-scale=1"
   >
 
-  <meta
-    name="description"
-    content="Keranjang belanja Memora - Creative Printing & Personalized Stationery."
+  <title>
+    Cart Ã¢â‚¬â€ MEMORA
+  </title>
+
+  <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
   >
 
-  <title>Cart - Memora</title>
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
 
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
 
-  <!-- GLOBAL STYLE -->
   <link
     rel="stylesheet"
-    href="../css/style.css"
+    href="/css/app.css"
   >
 
-
-  <!-- CART STYLE -->
   <link
     rel="stylesheet"
-    href="../css/cart.css"
+    href="/css/cart.css"
   >
 
-
-  <!-- RESPONSIVE -->
-  <link
-    rel="stylesheet"
-    href="../css/responsive.css"
-  >
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/css/customer-nav.css">
-  <link rel="stylesheet" href="/css/customer-final.css?v=20261002-185048">
 </head>
 
 
 <body>
 
-
-  <!-- =====================================================
-       HEADER
-       ===================================================== -->
-
-  <header class="site-header">
-
-    <div class="container header-inner">
+  <main class="cart-page">
 
 
-      <!-- BRAND -->
+    <div class="cart-breadcrumb">
 
-      <a
-        href="../index.html"
-        class="brand"
-        aria-label="Memora Home"
-      >
-        MEMORA
+      <a href="/">
+        Home
       </a>
 
+      <span>/</span>
 
-      <!-- DESKTOP NAV -->
+      <span>
+        Cart
+      </span>
 
-      <nav class="customer-nav" id="customerNav"></nav>
+    </div>
 
 
-      <!-- MOBILE MENU BUTTON -->
+    <div class="cart-heading">
+
+      <div>
+
+        <span class="cart-eyebrow">
+          Your Selection
+        </span>
+
+        <h1>
+          Shopping Cart
+        </h1>
+
+      </div>
+
 
       <button
         type="button"
-        class="mobile-menu-button"
-        id="mobileMenuButton"
-        aria-label="Buka menu"
-        aria-expanded="false"
+        class="clear-cart-button"
+        id="clearCartButton"
       >
-        ☰
+        Clear Cart
       </button>
 
     </div>
 
-  </header>
 
+    <section
+      class="cart-empty"
+      id="cartEmpty"
+      hidden
+    >
 
-
-  <!-- =====================================================
-       MOBILE NAV
-       ===================================================== -->
-
-  
-
-
-
-  <!-- =====================================================
-       MAIN
-       ===================================================== -->
-
-  <main class="cart-page">
-
-
-    <div class="container">
-
-
-      <!-- =================================================
-           BREADCRUMB
-           ================================================= -->
-
-      <div class="cart-breadcrumb">
-
-        <a href="../index.html">
-          Beranda
-        </a>
-
-        <span>
-          /
-        </span>
-
-        <strong>
-          Cart
-        </strong>
-
+      <div class="empty-icon">
+        M
       </div>
 
+      <h2>
+        Keranjang masih kosong.
+      </h2>
 
+      <p>
+        Pilih produk MEMORA dan tambahkan
+        ke keranjang terlebih dahulu.
+      </p>
 
-      <!-- =================================================
-           HEADING
-           ================================================= -->
-
-      <div class="cart-page-heading">
-
-
-        <div>
-
-          <span class="cart-eyebrow">
-            Your Selection
-          </span>
-
-
-          <h1>
-            Keranjang
-          </h1>
-
-
-          <p>
-            Periksa kembali produk, paket, jumlah,
-            dan detail personalisasi sebelum melanjutkan
-            ke checkout.
-          </p>
-
-        </div>
-
-
-        <button
-          type="button"
-          class="clear-cart-button"
-          id="clearCartButton"
-        >
-          Kosongkan Keranjang
-        </button>
-
-
-      </div>
-
-
-
-      <!-- =================================================
-           CART CONTENT
-           ================================================= -->
-
-      <div
-        class="cart-layout"
-        id="cartLayout"
+      <a
+        href="/#collection"
+        class="cart-secondary-button"
       >
+        Lihat Collection
+      </a>
 
+    </section>
 
-        <!-- ===============================================
-             CART ITEMS
-             =============================================== -->
 
-        <section
-          class="cart-items-section"
-          aria-label="Daftar produk di keranjang"
-        >
+    <section
+      class="cart-layout"
+      id="cartLayout"
+      hidden
+    >
 
 
-          <div class="cart-section-header">
+      <div class="cart-list">
 
-            <div>
-
-              <span>
-                Produk
-              </span>
-
-              <strong id="cartItemLabel">
-                0 item
-              </strong>
-
-            </div>
-
-
-            <a
-              href="../index.html#catalog"
-              class="continue-shopping-link"
-            >
-              + Tambah Produk
-            </a>
-
-          </div>
-
-
-
-          <!-- ITEM LIST -->
-
-          <div
-            class="cart-items-list"
-            id="cartItemsList"
-          >
-          </div>
-
-
-        </section>
-
-
-
-        <!-- ===============================================
-             ORDER SUMMARY
-             =============================================== -->
-
-        <aside class="cart-summary-card">
-
-
-          <div class="cart-summary-heading">
-
-            <span>
-              Order Summary
-            </span>
-
-            <h2>
-              Ringkasan Pesanan
-            </h2>
-
-          </div>
-
-
-
-          <div class="cart-summary-content">
-
-
-            <div class="cart-summary-row">
-
-              <span>
-                Total Item
-              </span>
-
-              <strong id="summaryItemCount">
-                0
-              </strong>
-
-            </div>
-
-
-            <div class="cart-summary-row">
-
-              <span>
-                Subtotal
-              </span>
-
-              <strong id="summarySubtotal">
-                Rp0
-              </strong>
-
-            </div>
-
-
-            <div class="cart-summary-row">
-
-              <span>
-                Ongkir
-              </span>
-
-              <strong class="summary-muted">
-                Dihitung kemudian
-              </strong>
-
-            </div>
-
-
-          </div>
-
-
-
-          <div class="cart-summary-total">
-
-            <div>
-
-              <span>
-                Estimasi Total
-              </span>
-
-              <small>
-                Belum termasuk ongkir
-              </small>
-
-            </div>
-
-
-            <strong id="summaryGrandTotal">
-              Rp0
-            </strong>
-
-          </div>
-
-
-
-          <a
-            href="../order/"
-            class="checkout-button"
-            id="checkoutButton"
-          >
-            Lanjut Checkout
-          </a>
-
-
-          <p class="cart-summary-note">
-
-            Detail pembayaran akan dikonfirmasi
-            langsung oleh tim Memora melalui WhatsApp
-            setelah pesanan dibuat.
-
-          </p>
-
-
-        </aside>
-
+        <div
+          id="cartItems"
+          class="cart-items"
+        ></div>
 
       </div>
 
 
+      <aside class="cart-summary">
 
-      <!-- =================================================
-           EMPTY CART
-           ================================================= -->
-
-      <section
-        class="cart-empty"
-        id="cartEmpty"
-        hidden
-      >
-
-
-        <div class="empty-cart-icon">
-          M
-        </div>
-
-
-        <span class="cart-eyebrow">
-          Your Cart
+        <span class="summary-eyebrow">
+          Order Summary
         </span>
-
 
         <h2>
-          Keranjangmu masih kosong.
+          Ringkasan Pesanan
         </h2>
 
 
-        <p>
-          Pilih produk Memora dan tambahkan paket
-          yang kamu suka ke keranjang.
-        </p>
+        <div class="summary-divider"></div>
+
+
+        <div class="summary-line">
+
+          <span>
+            Total Item
+          </span>
+
+          <strong id="summaryItemCount">
+            0
+          </strong>
+
+        </div>
+
+
+        <div class="summary-line">
+
+          <span>
+            Total Quantity
+          </span>
+
+          <strong id="summaryQuantity">
+            0 pcs
+          </strong>
+
+        </div>
+
+
+        <div class="summary-divider"></div>
+
+
+        <div class="summary-total">
+
+          <span>
+            Total
+          </span>
+
+          <strong id="summaryTotal">
+            Rp0
+          </strong>
+
+        </div>
 
 
         <a
-          href="../index.html#catalog"
-          class="btn btn-primary"
+          href="/checkout/"
+          class="checkout-button"
+          id="checkoutButton"
         >
-          Lihat Katalog
+          Lanjut ke Checkout
         </a>
 
 
-      </section>
+        <a
+          href="/#collection"
+          class="continue-shopping"
+        >
+          Ã¢â€ Â Continue Shopping
+        </a>
 
+      </aside>
 
-    </div>
+    </section>
+
 
   </main>
 
 
-
-  <!-- =====================================================
-       DELETE CONFIRMATION MODAL
-       ===================================================== -->
-
   <div
-    class="cart-modal"
-    id="deleteModal"
-    aria-hidden="true"
-  >
-
-
-    <div
-      class="cart-modal-backdrop"
-      data-close-modal
-    >
-    </div>
-
-
-    <div
-      class="cart-modal-dialog"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="deleteModalTitle"
-    >
-
-
-      <span class="modal-eyebrow">
-        Memora Cart
-      </span>
-
-
-      <h2 id="deleteModalTitle">
-        Hapus produk?
-      </h2>
-
-
-      <p id="deleteModalDescription">
-        Produk ini akan dihapus dari keranjang.
-      </p>
-
-
-      <div class="cart-modal-actions">
-
-
-        <button
-          type="button"
-          class="modal-button secondary"
-          data-close-modal
-        >
-          Batal
-        </button>
-
-
-        <button
-          type="button"
-          class="modal-button danger"
-          id="confirmDeleteButton"
-        >
-          Hapus
-        </button>
-
-
-      </div>
-
-
-    </div>
-
-
-  </div>
-
-
-
-  <!-- =====================================================
-       CLEAR CART MODAL
-       ===================================================== -->
-
-  <div
-    class="cart-modal"
-    id="clearModal"
-    aria-hidden="true"
-  >
-
-
-    <div
-      class="cart-modal-backdrop"
-      data-close-clear-modal
-    >
-    </div>
-
-
-    <div
-      class="cart-modal-dialog"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="clearModalTitle"
-    >
-
-
-      <span class="modal-eyebrow">
-        Memora Cart
-      </span>
-
-
-      <h2 id="clearModalTitle">
-        Kosongkan keranjang?
-      </h2>
-
-
-      <p>
-        Semua produk yang sudah kamu tambahkan
-        akan dihapus dari keranjang.
-      </p>
-
-
-      <div class="cart-modal-actions">
-
-
-        <button
-          type="button"
-          class="modal-button secondary"
-          data-close-clear-modal
-        >
-          Batal
-        </button>
-
-
-        <button
-          type="button"
-          class="modal-button danger"
-          id="confirmClearButton"
-        >
-          Kosongkan
-        </button>
-
-
-      </div>
-
-
-    </div>
-
-
-  </div>
-
-
-
-  <!-- =====================================================
-       FOOTER
-       ===================================================== -->
-
-  <footer class="site-footer">
-
-    <div class="container footer-inner">
-
-
-      <div>
-
-        <div class="footer-brand">
-          MEMORA
-        </div>
-
-
-        <p class="footer-copy">
-          Creative Printing & Personalized Stationery
-        </p>
-
-      </div>
-
-
-      <div class="footer-links">
-
-        <a href="../index.html">
-          Beranda
-        </a>
-
-        <a href="../order/">
-          Order
-        </a>
-
-        <a href="../track/">
-          Track
-        </a>
-
-        <a href="../cart/">
-          Cart
-        </a>
-
-      </div>
-
-
-    </div>
-
-  </footer>
-
-
-
-  <!-- =====================================================
-       SCRIPT
-       ===================================================== -->
-
-  <script src="../js/main.js"></script>
-
-  <script src="/js/cart-item-id-fix.js?v=20261002-181837"></script>
-<script src="../js/cart.js"></script>
-
-
-<script src="../js/customer-nav.js"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="../js/supabase.js"></script>
-
-
-<!-- =========================================================
-     CHECKOUT LOGIN GATE
-     ========================================================= -->
-
-<div
-  class="checkout-login-modal"
-  id="checkoutLoginModal"
-  hidden
-  aria-hidden="true"
->
-
-  <div
-    class="checkout-login-overlay"
-    data-close-checkout-login
+    class="cart-toast"
+    id="cartToast"
+    hidden
   ></div>
 
-  <div
-    class="checkout-login-dialog"
-    role="dialog"
-    aria-modal="true"
-    aria-labelledby="checkoutLoginTitle"
-  >
 
-    <button
-      type="button"
-      class="checkout-login-close"
-      data-close-checkout-login
-      aria-label="Tutup"
-    >
-      ×
-    </button>
+  <script src="/js/app.js"></script>
+  <script src="/js/cart.js"></script>
 
-    <span class="checkout-login-eyebrow">
-      LANJUTKAN PESANAN
-    </span>
-
-    <h2 id="checkoutLoginTitle">
-      Masuk untuk melanjutkan pesanan
-    </h2>
-
-    <p>
-      Dengan akun Memora, detail pesanan dan keranjangmu akan tersimpan sehingga proses checkout dapat dilanjutkan dengan lebih mudah.
-    </p>
-
-    <div class="checkout-login-actions">
-
-      <a
-        href="/account/login/?next=%2Forder%2F"
-        class="checkout-login-primary"
-        id="checkoutLoginButton"
-      >
-        Masuk
-      </a>
-
-      <a
-        href="/account/register/?next=%2Forder%2F"
-        class="checkout-login-secondary"
-        id="checkoutRegisterButton"
-      >
-        Daftar Akun
-      </a>
-
-      <button
-        type="button"
-        class="checkout-login-later"
-        data-close-checkout-login
-      >
-        Nanti Saja
-      </button>
-
-    </div>
-
-  </div>
-
-</div>
-
-<script src="../js/cart-login-gate.js"></script>
-  <script src="/js/minimum-quantity.js?v=20261002-145008"></script>
-  <script src="/js/custom-cart-guard.js"></script>
+  <script src="/js/customer-flow.js"></script>
+  <script src="/js/back-navigation.js"></script>
 </body>
 
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
