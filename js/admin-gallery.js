@@ -1,746 +1,891 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener(
+  "DOMContentLoaded",
+  async function () {
 
-  MemoraAdmin.start(async () => {
+    const admin =
+      await MemoraAdmin.initialize();
+
+
+    if (!admin) {
+      return;
+    }
+
 
     const db =
-      MemoraAdmin.db;
+      admin.db;
 
-    const page =
+
+    const content =
       document.getElementById(
-        "adminPage"
+        "adminContent"
       );
 
 
-    page.innerHTML = `
+    let products = [];
+    let gallery = [];
 
-      <div class="page-head">
 
-        <div>
+    function esc(value) {
 
-          <div class="eyebrow">
-            Catalog Media
-          </div>
+      return MemoraAdmin.escapeHtml(
+        value ?? ""
+      );
 
-          <h1>
-            Gallery
-          </h1>
+    }
 
-          <p>
-            Kelola cover dan foto variant produk.
-          </p>
+
+    function getProduct(productId) {
+
+      return products.find(
+        function (product) {
+
+          return (
+            String(product.id) ===
+            String(productId)
+          );
+
+        }
+      ) || null;
+
+    }
+
+
+    content.innerHTML = `
+
+      <div>
+
+        <div class="eyebrow">
+          Product Gallery
+        </div>
+
+        <h1 class="page-title">
+          Gallery
+        </h1>
+
+        <p class="page-description">
+          Kelola gambar katalog produk MEMORA.
+        </p>
+
+      </div>
+
+
+      <div class="stats">
+
+        <div class="stat">
+
+          <span>
+            Total Foto
+          </span>
+
+          <strong id="galleryTotal">
+            0
+          </strong>
+
+        </div>
+
+
+        <div class="stat">
+
+          <span>
+            Produk
+          </span>
+
+          <strong id="galleryProducts">
+            0
+          </strong>
+
+        </div>
+
+
+        <div class="stat">
+
+          <span>
+            Cover
+          </span>
+
+          <strong id="galleryCover">
+            0
+          </strong>
+
+        </div>
+
+
+        <div class="stat">
+
+          <span>
+            Aktif
+          </span>
+
+          <strong id="galleryActive">
+            0
+          </strong>
 
         </div>
 
       </div>
 
 
-      <section class="panel">
+      <div class="gallery-toolbar">
 
-        <div class="panel-head">
-          <h2>Upload Image</h2>
+        <input
+          type="search"
+          class="input"
+          id="gallerySearch"
+          placeholder="Cari judul atau produk..."
+        >
+
+
+        <select
+          class="input"
+          id="galleryProductFilter"
+        >
+
+          <option value="">
+            Semua Produk
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <section class="gallery-add-card">
+
+        <div class="eyebrow">
+          Add Image
         </div>
 
-        <div class="panel-body">
+        <h2
+          style="
+            margin:6px 0 0;
+            font-size:18px;
+          "
+        >
+          Tambah Foto Gallery
+        </h2>
 
-          <div class="upload-box">
-
-            <div class="form-grid-2">
-
-              <div class="field">
-
-                <label>
-                  Product
-                </label>
-
-                <select id="galleryProduct"></select>
-
-              </div>
-
-
-              <div class="field">
-
-                <label>
-                  Variant
-                </label>
-
-                <select id="galleryVariant">
-
-                  <option value="">
-                    No Variant
-                  </option>
-
-                </select>
-
-              </div>
-
-            </div>
+        <p
+          style="
+            color:#77807b;
+            font-size:12px;
+          "
+        >
+          Gunakan URL gambar yang sudah tersedia di storage atau website.
+        </p>
 
 
-            <div class="form-grid-2">
+        <form
+          class="gallery-form"
+          id="galleryForm"
+        >
 
-              <div class="field">
+          <div class="gallery-field">
 
-                <label>
-                  Image Type
-                </label>
+            <label for="galleryProduct">
+              Produk
+            </label>
 
-                <select id="galleryType">
+            <select
+              class="input"
+              id="galleryProduct"
+              required
+            ></select>
 
-                  <option value="gallery">
-                    Gallery
-                  </option>
-
-                  <option value="variant">
-                    Variant
-                  </option>
-
-                  <option value="cover">
-                    Cover
-                  </option>
-
-                </select>
-
-              </div>
+          </div>
 
 
-              <div class="field">
+          <div class="gallery-field">
 
-                <label>
-                  Title
-                </label>
+            <label for="galleryTitle">
+              Judul
+            </label>
 
+            <input
+              type="text"
+              class="input"
+              id="galleryTitle"
+              required
+            >
+
+          </div>
+
+
+          <div class="gallery-field full">
+
+            <label for="galleryUrl">
+              Image URL
+            </label>
+
+            <input
+              type="url"
+              class="input"
+              id="galleryUrl"
+              placeholder="https://..."
+              required
+            >
+
+          </div>
+
+
+          <div class="gallery-field">
+
+            <label for="galleryType">
+              Tipe
+            </label>
+
+            <select
+              class="input"
+              id="galleryType"
+            >
+
+              <option value="catalog">
+                Catalog
+              </option>
+
+              <option value="detail">
+                Detail
+              </option>
+
+              <option value="reference">
+                Reference
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <div class="gallery-field">
+
+            <label>
+              Opsi
+            </label>
+
+            <div
+              style="
+                min-height:46px;
+                display:flex;
+                align-items:center;
+                gap:18px;
+                padding:0 12px;
+                border:1px solid #d5d8d4;
+                border-radius:8px;
+              "
+            >
+
+              <label
+                style="
+                  display:flex;
+                  align-items:center;
+                  gap:7px;
+                  font-size:11px;
+                "
+              >
                 <input
-                  id="galleryTitle"
-                  placeholder="Optional title"
+                  type="checkbox"
+                  id="galleryCoverInput"
                 >
-
-              </div>
-
-            </div>
-
-
-            <div class="field">
-
-              <label>
-                Image File
+                Cover
               </label>
 
-              <input
-                id="galleryFile"
-                type="file"
-                accept="image/*"
+              <label
+                style="
+                  display:flex;
+                  align-items:center;
+                  gap:7px;
+                  font-size:11px;
+                "
               >
+                <input
+                  type="checkbox"
+                  id="galleryActiveInput"
+                  checked
+                >
+                Aktif
+              </label>
 
             </div>
 
+          </div>
+
+
+          <div class="gallery-field full">
 
             <button
-              class="btn btn-primary"
-              id="uploadGallery"
-              type="button"
+              type="submit"
+              class="gallery-button"
+              id="gallerySaveButton"
             >
-              Upload Image
+              Simpan Foto
             </button>
 
           </div>
 
-        </div>
+        </form>
+
+
+        <div
+          class="gallery-message"
+          id="galleryMessage"
+        ></div>
 
       </section>
-
-
-      <div style="height:18px"></div>
 
 
       <div
         class="gallery-grid"
         id="galleryGrid"
-      ></div>
+      >
+
+        <div class="gallery-empty">
+          Memuat gallery...
+        </div>
+
+      </div>
+
     `;
 
 
-    const [
-      productResult,
-      variantResult,
-      galleryResult
-    ] =
-      await Promise.all([
-
-        db
-          .from("products")
-          .select("*")
-          .order("slug"),
-
-        db
-          .from("product_variants")
-          .select("*")
-          .order("name"),
-
-        db
-          .from("product_gallery")
-          .select("*")
-          .order(
-            "created_at",
-            {
-              ascending:false
-            }
-          )
-
-      ]);
+    const search =
+      document.getElementById(
+        "gallerySearch"
+      );
 
 
-    if (productResult.error) {
-      throw productResult.error;
-    }
-
-    if (variantResult.error) {
-      throw variantResult.error;
-    }
-
-    if (galleryResult.error) {
-      throw galleryResult.error;
-    }
+    const filter =
+      document.getElementById(
+        "galleryProductFilter"
+      );
 
 
-    const products =
-      productResult.data || [];
-
-
-    const variants =
-      variantResult.data || [];
-
-
-    const gallery =
-      galleryResult.data || [];
-
-
-    const productSelect =
+    const productInput =
       document.getElementById(
         "galleryProduct"
       );
 
 
-    const variantSelect =
+    const message =
       document.getElementById(
-        "galleryVariant"
+        "galleryMessage"
       );
 
 
-    productSelect.innerHTML =
-      products.map(item => `
+    const saveButton =
+      document.getElementById(
+        "gallerySaveButton"
+      );
 
-        <option value="${item.id}">
-          ${
-            MemoraAdmin.escapeHtml(
-              item.name ||
-              item.slug ||
-              item.id
-            )
+
+    function showMessage(
+      text,
+      type
+    ) {
+
+      message.textContent =
+        text;
+
+      message.className =
+        "gallery-message " +
+        type;
+
+    }
+
+
+    function renderStats() {
+
+      document.getElementById(
+        "galleryTotal"
+      ).textContent =
+        gallery.length;
+
+
+      document.getElementById(
+        "galleryProducts"
+      ).textContent =
+        products.length;
+
+
+      document.getElementById(
+        "galleryCover"
+      ).textContent =
+        gallery.filter(
+          function (item) {
+
+            return (
+              item.is_cover ===
+              true
+            );
+
           }
-        </option>
-
-      `).join("");
+        ).length;
 
 
-    function refreshVariants() {
+      document.getElementById(
+        "galleryActive"
+      ).textContent =
+        gallery.filter(
+          function (item) {
 
-      const productId =
-        productSelect.value;
+            return (
+              item.is_active !==
+              false
+            );
+
+          }
+        ).length;
+
+    }
 
 
-      variantSelect.innerHTML =
+    function renderProductOptions() {
+
+      const options =
+        products.map(
+          function (product) {
+
+            return `
+
+              <option
+                value="${product.id}"
+              >
+                ${esc(
+                  product.name ||
+                  "Produk"
+                )}
+              </option>
+
+            `;
+
+          }
+        ).join("");
+
+
+      productInput.innerHTML =
+        options;
+
+
+      filter.innerHTML =
         `
+
           <option value="">
-            No Variant
+            Semua Produk
           </option>
+
         ` +
-        variants
-          .filter(
-            item =>
+        options;
+
+    }
+
+
+    function renderGallery() {
+
+      const keyword =
+        String(
+          search.value ||
+          ""
+        )
+          .trim()
+          .toLowerCase();
+
+
+      const selectedProduct =
+        filter.value;
+
+
+      const filtered =
+        gallery.filter(
+          function (item) {
+
+            const product =
+              getProduct(
+                item.product_id
+              );
+
+
+            const searchable =
+              [
+                item.title,
+                item.image_type,
+                product?.name
+              ]
+                .filter(Boolean)
+                .join(" ")
+                .toLowerCase();
+
+
+            const searchMatch =
+              !keyword ||
+              searchable.includes(
+                keyword
+              );
+
+
+            const productMatch =
+              !selectedProduct ||
               String(
                 item.product_id
               ) ===
               String(
-                productId
-              )
-          )
-          .map(item => `
-
-            <option value="${item.id}">
-              ${
-                MemoraAdmin.escapeHtml(
-                  item.name ||
-                  item.code ||
-                  item.id
-                )
-              }
-            </option>
-
-          `)
-          .join("");
-
-    }
+                selectedProduct
+              );
 
 
-    productSelect.addEventListener(
-      "change",
-      refreshVariants
-    );
+            return (
+              searchMatch &&
+              productMatch
+            );
 
-
-    refreshVariants();
-
-
-    function productName(id) {
-
-      const product =
-        products.find(
-          item =>
-            String(item.id) ===
-            String(id)
+          }
         );
 
 
-      return (
-        product?.name ||
-        product?.slug ||
-        "-"
-      );
-
-    }
+      const grid =
+        document.getElementById(
+          "galleryGrid"
+        );
 
 
-    function render() {
+      if (!filtered.length) {
 
-      document.getElementById(
-        "galleryGrid"
-      ).innerHTML =
-        gallery.map(item => `
+        grid.innerHTML = `
 
-          <article class="gallery-card">
-
-            <div class="gallery-image">
-
-              ${
-                item.image_url
-                  ? `
-                      <img
-                        src="${MemoraAdmin.escapeHtml(item.image_url)}"
-                        alt=""
-                      >
-                    `
-                  : ""
-              }
-
-            </div>
-
-            <div class="gallery-info">
-
-              <strong>
-                ${
-                  MemoraAdmin.escapeHtml(
-                    item.title ||
-                    productName(
-                      item.product_id
-                    )
-                  )
-                }
-              </strong>
-
-              <span>
-                ${
-                  MemoraAdmin.escapeHtml(
-                    item.image_type ||
-                    "gallery"
-                  )
-                }
-              </span>
-
-              ${
-                item.is_cover
-                  ? `
-                      <span>
-                        Cover Image
-                      </span>
-                    `
-                  : ""
-              }
-
-            </div>
-
-            <div class="gallery-actions">
-
-              <button
-                class="btn"
-                data-cover="${item.id}"
-                type="button"
-              >
-                Set Cover
-              </button>
-
-              <button
-                class="btn btn-danger"
-                data-delete="${item.id}"
-                type="button"
-              >
-                Delete
-              </button>
-
-            </div>
-
-          </article>
-
-        `).join("") ||
-
-        `
-          <div class="panel">
-            <div class="empty">
-              Gallery masih kosong.
-            </div>
+          <div class="gallery-empty">
+            Belum ada foto gallery.
           </div>
+
         `;
 
+        return;
 
-      document
-        .querySelectorAll(
-          "[data-cover]"
-        )
-        .forEach(button => {
-
-          button.addEventListener(
-            "click",
-            async () => {
-
-              const id =
-                button.dataset.cover;
+      }
 
 
-              const item =
-                gallery.find(
-                  x => x.id === id
-                );
+      grid.innerHTML =
+        filtered.map(
+          function (item) {
+
+            const product =
+              getProduct(
+                item.product_id
+              );
 
 
-              if (!item) {
-                return;
-              }
+            return `
+
+              <article class="gallery-card">
+
+                <div class="gallery-image-wrap">
+
+                  <img
+                    src="${esc(
+                      item.image_url ||
+                      ""
+                    )}"
+                    alt="${esc(
+                      item.title ||
+                      "Gallery"
+                    )}"
+                    class="gallery-image"
+                    loading="lazy"
+                  >
+
+                </div>
 
 
-              await db
-                .from(
-                  "product_gallery"
-                )
-                .update({
-                  is_cover:false
-                })
-                .eq(
-                  "product_id",
-                  item.product_id
-                );
+                <div class="gallery-card-body">
+
+                  <strong>
+                    ${esc(
+                      item.title ||
+                      "Untitled"
+                    )}
+                  </strong>
+
+                  <span>
+                    ${esc(
+                      product?.name ||
+                      "Produk"
+                    )}
+                  </span>
+
+                  <span>
+                    ${esc(
+                      item.image_type ||
+                      "catalog"
+                    )}
+                  </span>
 
 
-              const result =
-                await db
-                  .from(
-                    "product_gallery"
-                  )
-                  .update({
-                    is_cover:true,
-                    image_type:"cover",
-                    is_active:true
-                  })
-                  .eq(
-                    "id",
-                    id
-                  );
+                  ${
+                    item.is_cover
+                      ? `
+                        <div class="gallery-badge">
+                          Cover
+                        </div>
+                      `
+                      : ""
+                  }
 
+                </div>
 
-              if (result.error) {
+              </article>
 
-                alert(
-                  result.error.message
-                );
+            `;
 
-                return;
-              }
-
-
-              window.location.reload();
-
-            }
-          );
-
-        });
-
-
-      document
-        .querySelectorAll(
-          "[data-delete]"
-        )
-        .forEach(button => {
-
-          button.addEventListener(
-            "click",
-            async () => {
-
-              const id =
-                button.dataset.delete;
-
-
-              const item =
-                gallery.find(
-                  x => x.id === id
-                );
-
-
-              if (
-                !item ||
-                !confirm(
-                  "Hapus foto ini?"
-                )
-              ) {
-                return;
-              }
-
-
-              if (
-                item.storage_path
-              ) {
-
-                const storageResult =
-                  await db.storage
-                    .from(
-                      "product-gallery"
-                    )
-                    .remove([
-                      item.storage_path
-                    ]);
-
-
-                if (
-                  storageResult.error
-                ) {
-
-                  console.warn(
-                    storageResult.error
-                  );
-
-                }
-
-              }
-
-
-              const deleteResult =
-                await db
-                  .from(
-                    "product_gallery"
-                  )
-                  .delete()
-                  .eq(
-                    "id",
-                    id
-                  );
-
-
-              if (
-                deleteResult.error
-              ) {
-
-                alert(
-                  deleteResult.error.message
-                );
-
-                return;
-              }
-
-
-              window.location.reload();
-
-            }
-          );
-
-        });
+          }
+        ).join("");
 
     }
 
 
-    render();
+    async function loadData() {
+
+      try {
+
+        const productResult =
+          await db
+            .from("products")
+            .select(
+              "id,name,slug,is_active"
+            )
+            .order(
+              "name",
+              {
+                ascending:true
+              }
+            );
+
+
+        if (
+          productResult.error
+        ) {
+
+          throw productResult.error;
+
+        }
+
+
+        products =
+          productResult.data ||
+          [];
+
+
+        const galleryResult =
+          await db
+            .from("product_gallery")
+            .select("*")
+            .order(
+              "created_at",
+              {
+                ascending:false
+              }
+            );
+
+
+        if (
+          galleryResult.error
+        ) {
+
+          throw galleryResult.error;
+
+        }
+
+
+        gallery =
+          galleryResult.data ||
+          [];
+
+
+        renderProductOptions();
+        renderStats();
+        renderGallery();
+
+      }
+      catch (error) {
+
+        console.error(
+          "GALLERY:",
+          error
+        );
+
+
+        document.getElementById(
+          "galleryGrid"
+        ).innerHTML = `
+
+          <div class="gallery-empty">
+            Gallery gagal dimuat:
+            ${esc(
+              error?.message ||
+              "Terjadi kesalahan."
+            )}
+          </div>
+
+        `;
+
+      }
+
+    }
 
 
     document
       .getElementById(
-        "uploadGallery"
+        "galleryForm"
       )
       .addEventListener(
-        "click",
-        async () => {
+        "submit",
+        async function (event) {
 
-          const file =
-            document.getElementById(
-              "galleryFile"
-            ).files[0];
+          event.preventDefault();
 
 
-          if (!file) {
+          saveButton.disabled =
+            true;
 
-            alert(
-              "Pilih file gambar."
+          saveButton.textContent =
+            "Menyimpan...";
+
+
+          try {
+
+            const payload = {
+
+              product_id:
+                productInput.value,
+
+              title:
+                document
+                  .getElementById(
+                    "galleryTitle"
+                  )
+                  .value
+                  .trim(),
+
+              image_url:
+                document
+                  .getElementById(
+                    "galleryUrl"
+                  )
+                  .value
+                  .trim(),
+
+              image_type:
+                document
+                  .getElementById(
+                    "galleryType"
+                  )
+                  .value,
+
+              is_cover:
+                document
+                  .getElementById(
+                    "galleryCoverInput"
+                  )
+                  .checked,
+
+              is_active:
+                document
+                  .getElementById(
+                    "galleryActiveInput"
+                  )
+                  .checked
+
+            };
+
+
+            const result =
+              await db
+                .from(
+                  "product_gallery"
+                )
+                .insert(
+                  payload
+                )
+                .select("*")
+                .single();
+
+
+            if (
+              result.error
+            ) {
+
+              throw result.error;
+
+            }
+
+
+            gallery.unshift(
+              result.data
             );
 
-            return;
-          }
+
+            renderStats();
+            renderGallery();
 
 
-          const productId =
-            productSelect.value;
-
-
-          const variantId =
-            variantSelect.value ||
-            null;
-
-
-          const title =
-            document.getElementById(
-              "galleryTitle"
-            ).value.trim();
-
-
-          const type =
-            document.getElementById(
-              "galleryType"
-            ).value;
-
-
-          const extension =
-            (
-              file.name
-                .split(".")
-                .pop() ||
-              "jpg"
-            )
-              .toLowerCase();
-
-
-          const storagePath =
-            `${productId}/${Date.now()}-${crypto.randomUUID()}.${extension}`;
-
-
-          const upload =
-            await db.storage
-              .from(
-                "product-gallery"
+            document
+              .getElementById(
+                "galleryForm"
               )
-              .upload(
-                storagePath,
-                file,
-                {
-                  upsert:false
-                }
-              );
+              .reset();
 
 
-          if (upload.error) {
+            document
+              .getElementById(
+                "galleryActiveInput"
+              )
+              .checked =
+                true;
 
-            alert(
-              upload.error.message
+
+            showMessage(
+              "Foto gallery berhasil disimpan.",
+              "success"
             );
 
-            return;
           }
+          catch (error) {
 
-
-          const publicUrl =
-            db.storage
-              .from(
-                "product-gallery"
-              )
-              .getPublicUrl(
-                storagePath
-              )
-              .data
-              .publicUrl;
-
-
-          if (
-            type === "cover"
-          ) {
-
-            await db
-              .from(
-                "product_gallery"
-              )
-              .update({
-                is_cover:false
-              })
-              .eq(
-                "product_id",
-                productId
-              );
-
-          }
-
-
-          const insertResult =
-            await db
-              .from(
-                "product_gallery"
-              )
-              .insert({
-
-                product_id:
-                  productId,
-
-                variant_id:
-                  variantId,
-
-                title:
-                  title || null,
-
-                image_url:
-                  publicUrl,
-
-                storage_path:
-                  storagePath,
-
-                image_type:
-                  type,
-
-                is_cover:
-                  type === "cover",
-
-                is_active:
-                  true
-
-              });
-
-
-          if (
-            insertResult.error
-          ) {
-
-            await db.storage
-              .from(
-                "product-gallery"
-              )
-              .remove([
-                storagePath
-              ]);
-
-
-            alert(
-              insertResult.error.message
+            console.error(
+              "GALLERY INSERT:",
+              error
             );
 
-            return;
+
+            showMessage(
+              error?.message ||
+              "Foto gallery gagal disimpan.",
+              "error"
+            );
+
           }
+          finally {
 
+            saveButton.disabled =
+              false;
 
-          window.location.reload();
+            saveButton.textContent =
+              "Simpan Foto";
+
+          }
 
         }
       );
 
-  });
 
-});
+    search.addEventListener(
+      "input",
+      renderGallery
+    );
+
+
+    filter.addEventListener(
+      "change",
+      renderGallery
+    );
+
+
+    await loadData();
+
+  }
+);

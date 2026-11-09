@@ -1,295 +1,31 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener(
+  "DOMContentLoaded",
+  async function () {
 
-  MemoraAdmin.start(async () => {
+    const admin =
+      await MemoraAdmin.initialize();
 
-    const db = MemoraAdmin.db;
 
-    const page =
-      document.getElementById("adminPage");
+    if (!admin) {
+      return;
+    }
+
+
+    const db =
+      admin.db;
+
+
+    const content =
+      document.getElementById(
+        "adminContent"
+      );
 
 
     let products = [];
+    let activeProduct = null;
 
-    let variants = [];
 
-    let selectedProduct = null;
-
-
-    page.innerHTML = `
-
-      <div class="page-head">
-
-        <div>
-
-          <div class="eyebrow">
-            Catalog
-          </div>
-
-          <h1>
-            Products
-          </h1>
-
-          <p>
-            Kelola informasi produk dan status produk MEMORA.
-          </p>
-
-        </div>
-
-        <button
-          type="button"
-          class="btn"
-          id="refreshProducts"
-        >
-          Refresh
-        </button>
-
-      </div>
-
-
-      <div
-        class="stats-grid"
-        style="margin-bottom:18px;"
-      >
-
-        <div class="stat-card">
-          <span>Total Products</span>
-          <strong id="productTotal">0</strong>
-        </div>
-
-        <div class="stat-card">
-          <span>Active</span>
-          <strong id="productActive">0</strong>
-        </div>
-
-        <div class="stat-card">
-          <span>Inactive</span>
-          <strong id="productInactive">0</strong>
-        </div>
-
-        <div class="stat-card">
-          <span>Variants</span>
-          <strong id="productVariants">0</strong>
-        </div>
-
-      </div>
-
-
-      <section class="panel">
-
-        <div
-          style="
-            display:flex;
-            gap:12px;
-            align-items:center;
-            justify-content:space-between;
-            margin-bottom:18px;
-            flex-wrap:wrap;
-          "
-        >
-
-          <div>
-
-            <h2 style="margin:0;">
-              Product List
-            </h2>
-
-            <p
-              style="
-                margin:5px 0 0;
-                color:var(--muted,#747d78);
-              "
-            >
-              Pilih Edit untuk mengubah informasi produk.
-            </p>
-
-          </div>
-
-
-          <input
-            type="search"
-            class="input"
-            id="productSearch"
-            placeholder="Cari produk..."
-            style="max-width:280px;"
-          >
-
-        </div>
-
-
-        <div class="table-wrap">
-
-          <table>
-
-            <thead>
-
-              <tr>
-                <th>Product</th>
-                <th>Slug</th>
-                <th>Variant</th>
-                <th>Status</th>
-                <th>Action</th>
-              </tr>
-
-            </thead>
-
-            <tbody id="productRows"></tbody>
-
-          </table>
-
-        </div>
-
-      </section>
-
-
-      <div
-        class="modal"
-        id="productModal"
-        hidden
-      >
-
-        <div
-          class="modal-card"
-          style="width:min(620px,100%);"
-        >
-
-          <div class="modal-head">
-
-            <div>
-
-              <div class="eyebrow">
-                TC-14
-              </div>
-
-              <h2 style="margin:4px 0 0;">
-                Edit Product
-              </h2>
-
-            </div>
-
-            <button
-              type="button"
-              class="btn"
-              id="closeProductModal"
-            >
-              Close
-            </button>
-
-          </div>
-
-
-          <div class="modal-body">
-
-            <div class="form-grid">
-
-              <label class="field">
-
-                <span>
-                  Nama Produk
-                </span>
-
-                <input
-                  type="text"
-                  class="input"
-                  id="editProductName"
-                  autocomplete="off"
-                >
-
-              </label>
-
-
-              <label class="field">
-
-                <span>
-                  Slug
-                </span>
-
-                <input
-                  type="text"
-                  class="input"
-                  id="editProductSlug"
-                  disabled
-                >
-
-              </label>
-
-
-              <label
-                class="field"
-                style="grid-column:1/-1;"
-              >
-
-                <span>
-                  Status Produk
-                </span>
-
-                <select
-                  class="input"
-                  id="editProductActive"
-                >
-                  <option value="true">
-                    Active
-                  </option>
-
-                  <option value="false">
-                    Inactive
-                  </option>
-                </select>
-
-              </label>
-
-            </div>
-
-
-            <div
-              id="variantEditor"
-              style="margin-top:22px;"
-            ></div>
-
-
-            <div
-              id="productMessage"
-              style="
-                display:none;
-                margin-top:18px;
-                padding:12px 14px;
-                border-radius:10px;
-                background:#edf5ef;
-                color:#315844;
-                font-weight:600;
-              "
-            ></div>
-
-          </div>
-
-
-          <div class="modal-foot">
-
-            <button
-              type="button"
-              class="btn"
-              id="cancelProductEdit"
-            >
-              Cancel
-            </button>
-
-            <button
-              type="button"
-              class="btn btn-primary"
-              id="saveProduct"
-            >
-              Simpan Perubahan
-            </button>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    `;
-
-
-    function escapeHtml(value) {
+    function esc(value) {
 
       return MemoraAdmin.escapeHtml(
         value ?? ""
@@ -298,84 +34,364 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    function variantForProduct(productId) {
+    content.innerHTML = `
 
-      return variants.filter(
-        item =>
-          String(item.product_id) ===
-          String(productId)
+      <div>
+
+        <div class="eyebrow">
+          Product Management
+        </div>
+
+        <h1 class="page-title">
+          Products
+        </h1>
+
+        <p class="page-description">
+          Kelola informasi produk MEMORA.
+        </p>
+
+      </div>
+
+
+      <div class="stats">
+
+        <div class="stat">
+
+          <span>
+            Semua Produk
+          </span>
+
+          <strong id="productTotal">
+            0
+          </strong>
+
+        </div>
+
+
+        <div class="stat">
+
+          <span>
+            Aktif
+          </span>
+
+          <strong id="productActive">
+            0
+          </strong>
+
+        </div>
+
+
+        <div class="stat">
+
+          <span>
+            Nonaktif
+          </span>
+
+          <strong id="productInactive">
+            0
+          </strong>
+
+        </div>
+
+
+        <div class="stat">
+
+          <span>
+            TC-14
+          </span>
+
+          <strong style="font-size:15px;">
+            Ready
+          </strong>
+
+        </div>
+
+      </div>
+
+
+      <div class="products-toolbar">
+
+        <input
+          type="search"
+          class="input"
+          id="productSearch"
+          placeholder="Cari nama produk..."
+        >
+
+
+        <select
+          class="input"
+          id="productStatusFilter"
+        >
+
+          <option value="">
+            Semua Status
+          </option>
+
+          <option value="active">
+            Aktif
+          </option>
+
+          <option value="inactive">
+            Nonaktif
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <div class="products-card">
+
+        <div class="products-table-wrap">
+
+          <table class="products-table">
+
+            <thead>
+
+              <tr>
+
+                <th>
+                  Produk
+                </th>
+
+                <th>
+                  Slug
+                </th>
+
+                <th>
+                  Status
+                </th>
+
+                <th>
+                  Aksi
+                </th>
+
+              </tr>
+
+            </thead>
+
+
+            <tbody id="productsBody">
+
+              <tr>
+
+                <td
+                  colspan="4"
+                  class="products-empty"
+                >
+                  Memuat produk...
+                </td>
+
+              </tr>
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+      </div>
+
+
+      <div
+        class="product-message"
+        id="productMessage"
+      ></div>
+
+
+      <div
+        class="product-modal"
+        id="productModal"
+      >
+
+        <div class="product-modal-card">
+
+          <div class="product-modal-head">
+
+            <h2>
+              Edit Produk
+            </h2>
+
+            <button
+              type="button"
+              class="product-modal-close"
+              id="closeProductModal"
+            >
+              ×
+            </button>
+
+          </div>
+
+
+          <form id="productEditForm">
+
+            <div class="product-modal-body">
+
+              <div class="product-edit-field">
+
+                <label for="editProductName">
+                  Nama Produk
+                </label>
+
+                <input
+                  type="text"
+                  class="product-edit-input"
+                  id="editProductName"
+                  required
+                >
+
+              </div>
+
+
+              <div class="product-edit-field">
+
+                <label>
+                  Slug
+                </label>
+
+                <input
+                  type="text"
+                  class="product-edit-input"
+                  id="editProductSlug"
+                  disabled
+                >
+
+              </div>
+
+
+              <div class="product-toggle-row">
+
+                <div>
+
+                  <strong style="font-size:12px;">
+                    Produk Aktif
+                  </strong>
+
+                  <div
+                    style="
+                      margin-top:3px;
+                      color:#858c88;
+                      font-size:10px;
+                    "
+                  >
+                    Produk dapat ditampilkan kepada customer.
+                  </div>
+
+                </div>
+
+
+                <input
+                  type="checkbox"
+                  id="editProductActive"
+                >
+
+              </div>
+
+            </div>
+
+
+            <div class="product-modal-foot">
+
+              <button
+                type="button"
+                class="product-cancel-button"
+                id="cancelProductEdit"
+              >
+                Batal
+              </button>
+
+              <button
+                type="submit"
+                class="product-save-button"
+                id="saveProductButton"
+              >
+                Simpan Perubahan
+              </button>
+
+            </div>
+
+          </form>
+
+        </div>
+
+      </div>
+
+    `;
+
+
+    const search =
+      document.getElementById(
+        "productSearch"
       );
 
-    }
+
+    const filter =
+      document.getElementById(
+        "productStatusFilter"
+      );
 
 
-    function showMessage(message) {
-
-      const box =
-        document.getElementById(
-          "productMessage"
-        );
-
-      box.textContent =
-        message;
-
-      box.style.display =
-        "block";
-
-    }
+    const modal =
+      document.getElementById(
+        "productModal"
+      );
 
 
-    async function loadData() {
-
-      const [
-        productResult,
-        variantResult
-      ] =
-        await Promise.all([
-
-          db
-            .from("products")
-            .select("*")
-            .order(
-              "name",
-              {
-                ascending:true
-              }
-            ),
-
-          db
-            .from("product_variants")
-            .select("*")
-            .order(
-              "created_at",
-              {
-                ascending:true
-              }
-            )
-
-        ]);
+    const form =
+      document.getElementById(
+        "productEditForm"
+      );
 
 
-      if (productResult.error) {
-        throw productResult.error;
-      }
+    const nameInput =
+      document.getElementById(
+        "editProductName"
+      );
 
 
-      products =
-        productResult.data || [];
+    const slugInput =
+      document.getElementById(
+        "editProductSlug"
+      );
 
 
-      variants =
-        variantResult.error
-          ? []
-          : (
-              variantResult.data ||
-              []
-            );
+    const activeInput =
+      document.getElementById(
+        "editProductActive"
+      );
 
 
-      renderStats();
-      renderProducts();
+    const saveButton =
+      document.getElementById(
+        "saveProductButton"
+      );
+
+
+    const message =
+      document.getElementById(
+        "productMessage"
+      );
+
+
+    function showMessage(
+      text,
+      type
+    ) {
+
+      message.textContent =
+        text;
+
+
+      message.className =
+        "product-message " +
+        type;
+
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
 
     }
 
@@ -392,8 +408,14 @@ document.addEventListener("DOMContentLoaded", () => {
         "productActive"
       ).textContent =
         products.filter(
-          item =>
-            item.is_active !== false
+          function (product) {
+
+            return (
+              product.is_active !==
+              false
+            );
+
+          }
         ).length;
 
 
@@ -401,510 +423,533 @@ document.addEventListener("DOMContentLoaded", () => {
         "productInactive"
       ).textContent =
         products.filter(
-          item =>
-            item.is_active === false
+          function (product) {
+
+            return (
+              product.is_active ===
+              false
+            );
+
+          }
         ).length;
-
-
-      document.getElementById(
-        "productVariants"
-      ).textContent =
-        variants.length;
 
     }
 
 
     function renderProducts() {
 
-      const query =
+      const keyword =
         String(
-          document.getElementById(
-            "productSearch"
-          )?.value ||
+          search.value ||
           ""
         )
           .trim()
           .toLowerCase();
 
 
+      const status =
+        filter.value;
+
+
       const filtered =
-        products.filter(product => {
+        products.filter(
+          function (product) {
 
-          if (!query) {
-            return true;
+            const searchMatch =
+              !keyword ||
+              String(
+                product.name ||
+                ""
+              )
+                .toLowerCase()
+                .includes(
+                  keyword
+                ) ||
+              String(
+                product.slug ||
+                ""
+              )
+                .toLowerCase()
+                .includes(
+                  keyword
+                );
+
+
+            let statusMatch =
+              true;
+
+
+            if (
+              status ===
+              "active"
+            ) {
+
+              statusMatch =
+                product.is_active !==
+                false;
+
+            }
+
+
+            if (
+              status ===
+              "inactive"
+            ) {
+
+              statusMatch =
+                product.is_active ===
+                false;
+
+            }
+
+
+            return (
+              searchMatch &&
+              statusMatch
+            );
+
           }
-
-          return (
-            String(
-              product.name ||
-              ""
-            )
-              .toLowerCase()
-              .includes(query)
-
-            ||
-
-            String(
-              product.slug ||
-              ""
-            )
-              .toLowerCase()
-              .includes(query)
-          );
-
-        });
-
-
-      const rows =
-        document.getElementById(
-          "productRows"
         );
 
 
-      rows.innerHTML =
-        filtered.map(product => {
-
-          const productVariants =
-            variantForProduct(
-              product.id
-            );
+      const tbody =
+        document.getElementById(
+          "productsBody"
+        );
 
 
-          return `
+      if (!filtered.length) {
 
-            <tr>
+        tbody.innerHTML = `
 
-              <td>
-
-                <strong>
-                  ${escapeHtml(
-                    product.name ||
-                    "-"
-                  )}
-                </strong>
-
-              </td>
-
-              <td>
-                ${escapeHtml(
-                  product.slug ||
-                  "-"
-                )}
-              </td>
-
-              <td>
-                ${productVariants.length}
-              </td>
-
-              <td>
-
-                <span class="badge">
-
-                  ${
-                    product.is_active === false
-                      ? "Inactive"
-                      : "Active"
-                  }
-
-                </span>
-
-              </td>
-
-              <td>
-
-                <button
-                  type="button"
-                  class="btn"
-                  data-edit-product="${product.id}"
-                >
-                  Edit
-                </button>
-
-              </td>
-
-            </tr>
-
-          `;
-
-        }).join("") ||
-
-        `
           <tr>
 
             <td
-              colspan="5"
-              class="empty"
+              colspan="4"
+              class="products-empty"
             >
-              Produk tidak ditemukan.
+              Tidak ada produk.
             </td>
 
           </tr>
+
         `;
+
+        return;
+
+      }
+
+
+      tbody.innerHTML =
+        filtered.map(
+          function (product) {
+
+            const active =
+              product.is_active !==
+              false;
+
+
+            return `
+
+              <tr>
+
+                <td>
+
+                  <div class="product-name">
+                    ${esc(
+                      product.name ||
+                      "Produk"
+                    )}
+                  </div>
+
+                </td>
+
+
+                <td>
+
+                  <div class="product-slug">
+                    ${esc(
+                      product.slug ||
+                      "-"
+                    )}
+                  </div>
+
+                </td>
+
+
+                <td>
+
+                  <span
+                    class="product-status ${
+                      active
+                        ? ""
+                        : "inactive"
+                    }"
+                  >
+                    ${
+                      active
+                        ? "Aktif"
+                        : "Nonaktif"
+                    }
+                  </span>
+
+                </td>
+
+
+                <td>
+
+                  <button
+                    type="button"
+                    class="product-edit-button"
+                    data-edit-product="${product.id}"
+                  >
+                    Edit
+                  </button>
+
+                </td>
+
+              </tr>
+
+            `;
+
+          }
+        ).join("");
 
 
       document
         .querySelectorAll(
           "[data-edit-product]"
         )
-        .forEach(button => {
+        .forEach(
+          function (button) {
 
-          button.addEventListener(
-            "click",
-            () => {
+            button.addEventListener(
+              "click",
+              function () {
 
-              openProduct(
-                button.dataset.editProduct
-              );
+                openEdit(
+                  button.dataset.editProduct
+                );
 
-            }
-          );
+              }
+            );
 
-        });
+          }
+        );
 
     }
 
 
-    function openProduct(productId) {
+    function openEdit(productId) {
 
-      selectedProduct =
+      activeProduct =
         products.find(
-          product =>
-            String(product.id) ===
-            String(productId)
+          function (product) {
+
+            return (
+              String(product.id) ===
+              String(productId)
+            );
+
+          }
         );
 
 
-      if (!selectedProduct) {
+      if (!activeProduct) {
         return;
       }
 
 
-      document.getElementById(
-        "editProductName"
-      ).value =
-        selectedProduct.name ||
+      nameInput.value =
+        activeProduct.name ||
         "";
 
 
-      document.getElementById(
-        "editProductSlug"
-      ).value =
-        selectedProduct.slug ||
+      slugInput.value =
+        activeProduct.slug ||
         "";
 
 
-      document.getElementById(
-        "editProductActive"
-      ).value =
-        selectedProduct.is_active === false
-          ? "false"
-          : "true";
-
-
-      const itemVariants =
-        variantForProduct(
-          selectedProduct.id
-        );
-
-
-      const variantEditor =
-        document.getElementById(
-          "variantEditor"
-        );
-
-
-      if (!itemVariants.length) {
-
-        variantEditor.innerHTML =
-          `
-            <div
-              style="
-                padding:14px;
-                border:1px solid #e2e5e2;
-                border-radius:10px;
-                color:#7a827e;
-              "
-            >
-              Produk ini belum memiliki variant.
-            </div>
-          `;
-
-      }
-      else {
-
-        variantEditor.innerHTML = `
-
-          <div
-            class="eyebrow"
-            style="margin-bottom:10px;"
-          >
-            Product Variants
-          </div>
-
-          ${
-
-            itemVariants.map(
-              variant => `
-
-                <div
-                  style="
-                    padding:12px 0;
-                    border-bottom:1px solid #eceeec;
-                    display:flex;
-                    justify-content:space-between;
-                    gap:16px;
-                  "
-                >
-
-                  <div>
-
-                    <strong>
-                      ${escapeHtml(
-                        variant.name ||
-                        variant.code ||
-                        "Variant"
-                      )}
-                    </strong>
-
-                    <div
-                      style="
-                        margin-top:4px;
-                        color:#7b837e;
-                        font-size:12px;
-                      "
-                    >
-                      ${escapeHtml(
-                        variant.code ||
-                        "-"
-                      )}
-                    </div>
-
-                  </div>
-
-                  <span class="badge">
-                    ${
-                      variant.is_active === false
-                        ? "Inactive"
-                        : "Active"
-                    }
-                  </span>
-
-                </div>
-
-              `
-            ).join("")
-
-          }
-
-        `;
-
-      }
-
-
-      const message =
-        document.getElementById(
-          "productMessage"
-        );
-
-      message.style.display =
-        "none";
-
-      message.textContent =
-        "";
-
-
-      document.getElementById(
-        "productModal"
-      ).hidden =
+      activeInput.checked =
+        activeProduct.is_active !==
         false;
+
+
+      modal.classList.add(
+        "show"
+      );
 
     }
 
 
-    function closeProduct() {
+    function closeEdit() {
 
-      document.getElementById(
-        "productModal"
-      ).hidden =
-        true;
+      modal.classList.remove(
+        "show"
+      );
 
-      selectedProduct =
+
+      activeProduct =
         null;
 
     }
 
 
-    async function saveProduct() {
-
-      if (!selectedProduct) {
-        return;
-      }
-
-
-      const button =
-        document.getElementById(
-          "saveProduct"
-        );
-
-
-      const name =
-        String(
-          document.getElementById(
-            "editProductName"
-          ).value ||
-          ""
-        ).trim();
-
-
-      if (!name) {
-
-        alert(
-          "Nama produk wajib diisi."
-        );
-
-        return;
-      }
-
-
-      const isActive =
-        document.getElementById(
-          "editProductActive"
-        ).value === "true";
-
-
-      button.disabled =
-        true;
-
-      button.textContent =
-        "Menyimpan...";
-
+    async function loadProducts() {
 
       try {
 
         const result =
           await db
             .from("products")
-            .update({
-              name:
-                name,
-
-              is_active:
-                isActive
-            })
-            .eq(
-              "id",
-              selectedProduct.id
-            )
             .select("*")
-            .single();
+            .order(
+              "name",
+              {
+                ascending:true
+              }
+            );
 
 
-        if (result.error) {
+        if (
+          result.error
+        ) {
+
           throw result.error;
-        }
-
-
-        const index =
-          products.findIndex(
-            item =>
-              String(item.id) ===
-              String(selectedProduct.id)
-          );
-
-
-        if (index >= 0) {
-
-          products[index] =
-            result.data;
 
         }
 
 
-        selectedProduct =
-          result.data;
+        products =
+          result.data ||
+          [];
 
 
         renderStats();
         renderProducts();
 
-
-        showMessage(
-          "Perubahan informasi produk berhasil disimpan."
-        );
-
-
-        alert(
-          "Perubahan informasi produk berhasil disimpan."
-        );
-
       }
       catch (error) {
 
         console.error(
+          "PRODUCTS:",
           error
         );
 
-        alert(
-          error.message ||
-          "Perubahan produk gagal disimpan."
+
+        document.getElementById(
+          "productsBody"
+        ).innerHTML = `
+
+          <tr>
+
+            <td
+              colspan="4"
+              class="products-empty"
+            >
+              Produk gagal dimuat.
+            </td>
+
+          </tr>
+
+        `;
+
+
+        showMessage(
+          error?.message ||
+          "Produk gagal dimuat.",
+          "error"
         );
-
-      }
-      finally {
-
-        button.disabled =
-          false;
-
-        button.textContent =
-          "Simpan Perubahan";
 
       }
 
     }
 
 
-    document.getElementById(
-      "productSearch"
-    ).addEventListener(
+    form.addEventListener(
+      "submit",
+      async function (event) {
+
+        event.preventDefault();
+
+
+        if (!activeProduct) {
+          return;
+        }
+
+
+        saveButton.disabled =
+          true;
+
+        saveButton.textContent =
+          "Menyimpan...";
+
+
+        try {
+
+          const name =
+            nameInput.value
+              .trim();
+
+
+          if (!name) {
+
+            throw new Error(
+              "Nama produk wajib diisi."
+            );
+
+          }
+
+
+          const result =
+            await db
+              .from("products")
+              .update({
+
+                name:
+                  name,
+
+                is_active:
+                  activeInput.checked
+
+              })
+              .eq(
+                "id",
+                activeProduct.id
+              )
+              .select("*")
+              .single();
+
+
+          if (
+            result.error
+          ) {
+
+            throw result.error;
+
+          }
+
+
+          const index =
+            products.findIndex(
+              function (product) {
+
+                return (
+                  String(product.id) ===
+                  String(activeProduct.id)
+                );
+
+              }
+            );
+
+
+          if (
+            index >= 0
+          ) {
+
+            products[index] =
+              result.data;
+
+          }
+
+
+          closeEdit();
+
+
+          renderStats();
+          renderProducts();
+
+
+          showMessage(
+            "Perubahan informasi produk berhasil disimpan.",
+            "success"
+          );
+
+
+          alert(
+            "Perubahan informasi produk berhasil disimpan."
+          );
+
+        }
+        catch (error) {
+
+          console.error(
+            "PRODUCT UPDATE:",
+            error
+          );
+
+
+          showMessage(
+            error?.message ||
+            "Perubahan produk gagal disimpan.",
+            "error"
+          );
+
+        }
+        finally {
+
+          saveButton.disabled =
+            false;
+
+          saveButton.textContent =
+            "Simpan Perubahan";
+
+        }
+
+      }
+    );
+
+
+    search.addEventListener(
       "input",
       renderProducts
     );
 
 
-    document.getElementById(
-      "refreshProducts"
-    ).addEventListener(
-      "click",
-      loadData
+    filter.addEventListener(
+      "change",
+      renderProducts
     );
 
 
-    document.getElementById(
-      "saveProduct"
-    ).addEventListener(
+    document
+      .getElementById(
+        "closeProductModal"
+      )
+      .addEventListener(
+        "click",
+        closeEdit
+      );
+
+
+    document
+      .getElementById(
+        "cancelProductEdit"
+      )
+      .addEventListener(
+        "click",
+        closeEdit
+      );
+
+
+    modal.addEventListener(
       "click",
-      saveProduct
+      function (event) {
+
+        if (
+          event.target ===
+          modal
+        ) {
+
+          closeEdit();
+
+        }
+
+      }
     );
 
 
-    document.getElementById(
-      "closeProductModal"
-    ).addEventListener(
-      "click",
-      closeProduct
-    );
+    await loadProducts();
 
-
-    document.getElementById(
-      "cancelProductEdit"
-    ).addEventListener(
-      "click",
-      closeProduct
-    );
-
-
-    await loadData();
-
-  });
-
-});
+  }
+);

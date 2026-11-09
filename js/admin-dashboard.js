@@ -1,162 +1,736 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener(
+  "DOMContentLoaded",
+  async function () {
 
-  MemoraAdmin.start(async () => {
+    const admin =
+      await MemoraAdmin.initialize();
 
-    const db = MemoraAdmin.db;
-    const page = document.getElementById("adminPage");
 
-    page.innerHTML = `
-      <div class="page-head">
-        <div>
-          <div class="eyebrow">Overview</div>
-          <h1>Dashboard</h1>
-          <p>Ringkasan operasional MEMORA Studio.</p>
-        </div>
-      </div>
+    if (!admin) {
+      return;
+    }
 
-      <div class="stats" id="dashboardStats"></div>
 
-      <div class="grid-2">
+    const db =
+      admin.db;
 
-        <section class="panel">
-          <div class="panel-head">
-            <h2>Order Terbaru</h2>
-            <a class="btn" href="/studio/orders/">Semua Order</a>
-          </div>
 
-          <div class="table-wrap">
-            <table>
-              <thead>
-                <tr>
-                  <th>Order</th>
-                  <th>Status</th>
-                  <th>Payment</th>
-                  <th>Total</th>
-                  <th>Tanggal</th>
-                </tr>
-              </thead>
-              <tbody id="recentOrders"></tbody>
-            </table>
-          </div>
-        </section>
-
-        <section class="panel">
-          <div class="panel-head">
-            <h2>Quick Access</h2>
-          </div>
-
-          <div class="panel-body">
-            <div style="display:grid;gap:9px">
-              <a class="btn" href="/studio/orders/">Orders</a>
-              <a class="btn" href="/studio/custom-orders/">Custom Orders</a>
-              <a class="btn" href="/studio/payments/">Payment Verification</a>
-              <a class="btn" href="/studio/production/">Production</a>
-              <a class="btn" href="/studio/invoices/">Invoices</a>
-              <a class="btn" href="/studio/finance/">Finance</a>
-              <a class="btn" href="/studio/customers/">Customers</a>
-              <a class="btn" href="/studio/products/">Products</a>
-              <a class="btn" href="/studio/gallery/">Gallery</a>
-              <a class="btn" href="/studio/archive/">Archive</a>
-            </div>
-          </div>
-        </section>
-
-      </div>
-    `;
-
-    const { data:orders, error } =
-      await db
-        .from("orders")
-        .select("*")
-        .order("created_at", {
-          ascending:false
-        });
-
-    if (error) throw error;
-
-    const rows =
-      orders || [];
-
-    const total =
-      rows.length;
-
-    const waiting =
-      rows.filter(
-        x => x.status === "menunggu_konfirmasi"
-      ).length;
-
-    const active =
-      rows.filter(
-        x => !["selesai","dibatalkan"].includes(x.status)
-      ).length;
-
-    const revenue =
-      rows.reduce(
-        (sum,x) =>
-          sum + Number(x.total_paid || 0),
-        0
+    const content =
+      document.getElementById(
+        "adminContent"
       );
 
-    document.getElementById("dashboardStats").innerHTML = `
-      <div class="stat">
-        <span>Total Order</span>
-        <strong>${total}</strong>
-        <small>Semua pesanan</small>
+
+    function esc(value) {
+
+      return MemoraAdmin.escapeHtml(
+        value ?? ""
+      );
+
+    }
+
+
+    function formatDate(value) {
+
+      if (!value) {
+        return "-";
+      }
+
+
+      const date =
+        new Date(value);
+
+
+      if (
+        Number.isNaN(
+          date.getTime()
+        )
+      ) {
+        return "-";
+      }
+
+
+      return new Intl.DateTimeFormat(
+        "id-ID",
+        {
+          day: "2-digit",
+          month: "short",
+          year: "numeric"
+        }
+      ).format(date);
+
+    }
+
+
+    function statusLabel(value) {
+
+      const map = {
+
+        menunggu_konfirmasi:
+          "Menunggu Konfirmasi",
+
+        data_belum_lengkap:
+          "Data Belum Lengkap",
+
+        data_lengkap:
+          "Data Lengkap",
+
+        desain:
+          "Desain",
+
+        menunggu_approval:
+          "Menunggu Approval",
+
+        revisi:
+          "Revisi",
+
+        approved:
+          "Approved",
+
+        printing:
+          "Printing",
+
+        finishing:
+          "Finishing",
+
+        quality_check:
+          "Quality Check",
+
+        packing:
+          "Packing",
+
+        dikirim:
+          "Dikirim",
+
+        selesai:
+          "Selesai",
+
+        dibatalkan:
+          "Dibatalkan"
+
+      };
+
+
+      return (
+        map[value] ||
+        String(value || "-")
+          .replaceAll("_", " ")
+      );
+
+    }
+
+
+    content.innerHTML = `
+
+      <div>
+
+        <div class="eyebrow">
+          Overview
+        </div>
+
+        <h1 class="page-title">
+          Dashboard
+        </h1>
+
+        <p class="page-description">
+          Ringkasan aktivitas MEMORA Studio.
+        </p>
+
       </div>
 
-      <div class="stat">
-        <span>Menunggu Konfirmasi</span>
-        <strong>${waiting}</strong>
-        <small>Perlu diperiksa</small>
+
+      <div class="stats">
+
+        <div class="stat">
+
+          <span>
+            Total Orders
+          </span>
+
+          <strong id="dashOrders">
+            -
+          </strong>
+
+        </div>
+
+
+        <div class="stat">
+
+          <span>
+            Products
+          </span>
+
+          <strong id="dashProducts">
+            -
+          </strong>
+
+        </div>
+
+
+        <div class="stat">
+
+          <span>
+            Belum Bayar
+          </span>
+
+          <strong id="dashUnpaid">
+            -
+          </strong>
+
+        </div>
+
+
+        <div class="stat">
+
+          <span>
+            Production
+          </span>
+
+          <strong id="dashProduction">
+            -
+          </strong>
+
+        </div>
+
       </div>
 
-      <div class="stat">
-        <span>Order Aktif</span>
-        <strong>${active}</strong>
-        <small>Belum selesai</small>
+
+      <div class="dashboard-actions">
+
+        <a
+          href="/studio/orders/"
+          class="dashboard-action"
+        >
+
+          <strong>
+            Orders
+          </strong>
+
+          <span>
+            Lihat dan kelola pesanan customer.
+          </span>
+
+        </a>
+
+
+        <a
+          href="/studio/products/"
+          class="dashboard-action"
+        >
+
+          <strong>
+            Products
+          </strong>
+
+          <span>
+            Ubah informasi dan status produk.
+          </span>
+
+        </a>
+
+
+        <a
+          href="/studio/payments/"
+          class="dashboard-action"
+        >
+
+          <strong>
+            Payments
+          </strong>
+
+          <span>
+            Kelola pembayaran setiap order.
+          </span>
+
+        </a>
+
+
+        <a
+          href="/studio/production/"
+          class="dashboard-action"
+        >
+
+          <strong>
+            Production
+          </strong>
+
+          <span>
+            Pantau proses printing hingga selesai.
+          </span>
+
+        </a>
+
       </div>
 
-      <div class="stat">
-        <span>Pembayaran Diterima</span>
-        <strong style="font-size:18px">
-          ${MemoraAdmin.money(revenue)}
-        </strong>
-        <small>Total paid</small>
+
+      <div class="dashboard-grid">
+
+
+        <section class="panel">
+
+          <div class="eyebrow">
+            Recent Orders
+          </div>
+
+          <h2>
+            Pesanan Terbaru
+          </h2>
+
+
+          <div class="dashboard-table-wrap">
+
+            <table class="dashboard-table">
+
+              <thead>
+
+                <tr>
+
+                  <th>
+                    Order
+                  </th>
+
+                  <th>
+                    Status
+                  </th>
+
+                  <th>
+                    Total
+                  </th>
+
+                  <th>
+                    Tanggal
+                  </th>
+
+                </tr>
+
+              </thead>
+
+
+              <tbody id="dashboardRecentOrders">
+
+                <tr>
+
+                  <td
+                    colspan="4"
+                    class="dashboard-empty"
+                  >
+                    Memuat order...
+                  </td>
+
+                </tr>
+
+              </tbody>
+
+            </table>
+
+          </div>
+
+        </section>
+
+
+        <div>
+
+
+          <section class="panel">
+
+            <div class="eyebrow">
+              Order Value
+            </div>
+
+            <h2>
+              Nilai Order
+            </h2>
+
+            <div
+              style="
+                margin-top:15px;
+                font-size:26px;
+                font-weight:700;
+                color:#344a3f;
+              "
+              id="dashValue"
+            >
+              -
+            </div>
+
+            <p>
+              Total grand total seluruh order yang tersimpan.
+            </p>
+
+          </section>
+
+
+          <section
+            class="panel"
+            style="margin-top:18px;"
+          >
+
+            <div class="eyebrow">
+              QA Project
+            </div>
+
+            <h2>
+              Test Case Admin
+            </h2>
+
+
+            <div class="qa-list">
+
+
+              <div class="qa-item">
+
+                <div>
+
+                  <strong>
+                    TC-14 Products
+                  </strong>
+
+                  <span>
+                    Perubahan informasi produk.
+                  </span>
+
+                </div>
+
+                <div class="qa-ready">
+                  READY
+                </div>
+
+              </div>
+
+
+              <div class="qa-item">
+
+                <div>
+
+                  <strong>
+                    TC-15 Orders
+                  </strong>
+
+                  <span>
+                    Data pesanan diperbarui.
+                  </span>
+
+                </div>
+
+                <div class="qa-ready">
+                  READY
+                </div>
+
+              </div>
+
+
+              <div class="qa-item">
+
+                <div>
+
+                  <strong>
+                    TC-16 Payments
+                  </strong>
+
+                  <span>
+                    Status pembayaran diperbarui.
+                  </span>
+
+                </div>
+
+                <div class="qa-ready">
+                  READY
+                </div>
+
+              </div>
+
+
+              <div class="qa-item">
+
+                <div>
+
+                  <strong>
+                    TC-17 Production
+                  </strong>
+
+                  <span>
+                    Status produksi diperbarui.
+                  </span>
+
+                </div>
+
+                <div class="qa-ready">
+                  READY
+                </div>
+
+              </div>
+
+
+            </div>
+
+          </section>
+
+
+        </div>
+
+
       </div>
+
     `;
 
-    document.getElementById("recentOrders").innerHTML =
-      rows.slice(0,7).map(order => `
+
+    try {
+
+      const [
+        ordersResult,
+        productsResult
+      ] =
+        await Promise.all([
+
+          db
+            .from("orders")
+            .select(
+              "id,order_number,status,payment_status,grand_total,created_at"
+            )
+            .order(
+              "created_at",
+              {
+                ascending:false
+              }
+            ),
+
+          db
+            .from("products")
+            .select(
+              "id,is_active"
+            )
+
+        ]);
+
+
+      if (
+        ordersResult.error
+      ) {
+
+        throw ordersResult.error;
+
+      }
+
+
+      const orders =
+        ordersResult.data ||
+        [];
+
+
+      const products =
+        productsResult.error
+          ? []
+          : (
+              productsResult.data ||
+              []
+            );
+
+
+      document.getElementById(
+        "dashOrders"
+      ).textContent =
+        orders.length;
+
+
+      document.getElementById(
+        "dashProducts"
+      ).textContent =
+        products.length;
+
+
+      const unpaid =
+        orders.filter(
+          function (order) {
+
+            return (
+              !order.payment_status ||
+              order.payment_status ===
+              "belum_ada_pembayaran"
+            );
+
+          }
+        ).length;
+
+
+      document.getElementById(
+        "dashUnpaid"
+      ).textContent =
+        unpaid;
+
+
+      const production =
+        orders.filter(
+          function (order) {
+
+            return [
+              "printing",
+              "finishing",
+              "quality_check",
+              "packing"
+            ].includes(
+              order.status
+            );
+
+          }
+        ).length;
+
+
+      document.getElementById(
+        "dashProduction"
+      ).textContent =
+        production;
+
+
+      const value =
+        orders.reduce(
+          function (
+            total,
+            order
+          ) {
+
+            return (
+              total +
+              Number(
+                order.grand_total ||
+                0
+              )
+            );
+
+          },
+          0
+        );
+
+
+      document.getElementById(
+        "dashValue"
+      ).textContent =
+        MemoraAdmin.money(
+          value
+        );
+
+
+      const recent =
+        orders.slice(
+          0,
+          6
+        );
+
+
+      const tbody =
+        document.getElementById(
+          "dashboardRecentOrders"
+        );
+
+
+      if (!recent.length) {
+
+        tbody.innerHTML = `
+
+          <tr>
+
+            <td
+              colspan="4"
+              class="dashboard-empty"
+            >
+              Belum ada order.
+            </td>
+
+          </tr>
+
+        `;
+
+      }
+      else {
+
+        tbody.innerHTML =
+          recent.map(
+            function (order) {
+
+              return `
+
+                <tr>
+
+                  <td>
+
+                    <a
+                      class="dashboard-order-link"
+                      href="/studio/order-detail/?id=${encodeURIComponent(
+                        order.id
+                      )}"
+                    >
+                      ${esc(
+                        order.order_number ||
+                        "-"
+                      )}
+                    </a>
+
+                  </td>
+
+
+                  <td>
+
+                    <span class="dashboard-badge">
+
+                      ${esc(
+                        statusLabel(
+                          order.status
+                        )
+                      )}
+
+                    </span>
+
+                  </td>
+
+
+                  <td>
+                    ${MemoraAdmin.money(
+                      order.grand_total
+                    )}
+                  </td>
+
+
+                  <td>
+                    ${formatDate(
+                      order.created_at
+                    )}
+                  </td>
+
+                </tr>
+
+              `;
+
+            }
+          ).join("");
+
+      }
+
+    }
+    catch (error) {
+
+      console.error(
+        "DASHBOARD:",
+        error
+      );
+
+
+      document.getElementById(
+        "dashboardRecentOrders"
+      ).innerHTML = `
+
         <tr>
-          <td>
-            <a href="/studio/orders/?id=${order.id}">
-              <strong>
-                ${MemoraAdmin.escapeHtml(order.order_number)}
-              </strong>
-            </a>
+
+          <td
+            colspan="4"
+            class="dashboard-empty"
+          >
+            Dashboard gagal memuat data.
           </td>
 
-          <td>
-            <span class="badge">
-              ${MemoraAdmin.statusLabel(order.status)}
-            </span>
-          </td>
-
-          <td>
-            ${MemoraAdmin.statusLabel(order.payment_status)}
-          </td>
-
-          <td>
-            ${MemoraAdmin.money(order.grand_total)}
-          </td>
-
-          <td>
-            ${MemoraAdmin.date(order.created_at)}
-          </td>
         </tr>
-      `).join("") ||
-      `<tr><td colspan="5" class="empty">Belum ada order.</td></tr>`;
 
-  });
+      `;
 
-});
+    }
+
+  }
+);

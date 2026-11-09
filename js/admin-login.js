@@ -1,78 +1,231 @@
-document.addEventListener("DOMContentLoaded", () => {
+(function () {
 
-  const db = window.memoraSupabase;
+  "use strict";
 
-  const form =
-    document.getElementById("loginForm");
 
-  const message =
-    document.getElementById("loginMessage");
+  document.addEventListener(
+    "DOMContentLoaded",
+    function () {
 
-  form.addEventListener("submit", async event => {
-
-    event.preventDefault();
-
-    message.hidden = true;
-
-    const email =
-      document.getElementById("email").value.trim();
-
-    const password =
-      document.getElementById("password").value;
-
-    try {
-
-      const { data, error } =
-        await db.auth.signInWithPassword({
-          email,
-          password
-        });
-
-      if (error) throw error;
-
-      const user =
-        data.user;
-
-      const { data:profile, error:profileError } =
-        await db
-          .from("profiles")
-          .select("*")
-          .eq("id", user.id)
-          .maybeSingle();
-
-      if (profileError) throw profileError;
-
-      if (
-        !profile ||
-        !["owner","admin"].includes(
-          String(profile.role || "").toLowerCase()
-        )
-      ) {
-        await db.auth.signOut();
-
-        throw new Error(
-          "Akun ini tidak memiliki akses Administrator."
+      const form =
+        document.getElementById(
+          "loginForm"
         );
+
+      const email =
+        document.getElementById(
+          "loginEmail"
+        );
+
+      const password =
+        document.getElementById(
+          "loginPassword"
+        );
+
+      const button =
+        document.getElementById(
+          "loginButton"
+        );
+
+      const message =
+        document.getElementById(
+          "loginMessage"
+        );
+
+
+      function showMessage(
+        text,
+        type
+      ) {
+
+        message.textContent =
+          text;
+
+        message.className =
+          "login-message " +
+          type;
+
       }
 
-      window.location.replace(
-        "/studio/dashboard/"
+
+      function getClient() {
+
+        return (
+          window.memoraSupabase ||
+          null
+        );
+
+      }
+
+
+      form.addEventListener(
+        "submit",
+        async function (event) {
+
+          event.preventDefault();
+
+
+          const db =
+            getClient();
+
+
+          if (!db) {
+
+            showMessage(
+              "Supabase belum terhubung.",
+              "error"
+            );
+
+            return;
+
+          }
+
+
+          button.disabled =
+            true;
+
+          button.textContent =
+            "Memeriksa akun...";
+
+
+          try {
+
+            const authResult =
+              await db.auth
+                .signInWithPassword({
+
+                  email:
+                    email.value.trim(),
+
+                  password:
+                    password.value
+
+                });
+
+
+            if (
+              authResult.error
+            ) {
+
+              throw authResult.error;
+
+            }
+
+
+            const user =
+              authResult.data.user;
+
+
+            if (!user) {
+
+              throw new Error(
+                "Data user tidak ditemukan."
+              );
+
+            }
+
+
+            const profileResult =
+              await db
+                .from("profiles")
+                .select(
+                  "id,full_name,role"
+                )
+                .eq(
+                  "id",
+                  user.id
+                )
+                .maybeSingle();
+
+
+            if (
+              profileResult.error
+            ) {
+
+              throw profileResult.error;
+
+            }
+
+
+            const profile =
+              profileResult.data;
+
+
+            if (!profile) {
+
+              await db.auth.signOut();
+
+              throw new Error(
+                "Profile admin tidak ditemukan."
+              );
+
+            }
+
+
+            const role =
+              String(
+                profile.role ||
+                ""
+              )
+                .trim()
+                .toLowerCase();
+
+
+            if (
+              role !== "owner" &&
+              role !== "admin"
+            ) {
+
+              await db.auth.signOut();
+
+
+              throw new Error(
+                "Akun ini tidak memiliki akses Admin MEMORA."
+              );
+
+            }
+
+
+            showMessage(
+              "Login berhasil.",
+              "success"
+            );
+
+
+            window.location.replace(
+              "/studio/dashboard/"
+            );
+
+          }
+          catch (error) {
+
+            console.error(
+              "ADMIN LOGIN:",
+              error
+            );
+
+
+            showMessage(
+              error?.message ||
+              "Login gagal.",
+              "error"
+            );
+
+          }
+          finally {
+
+            button.disabled =
+              false;
+
+            button.textContent =
+              "Masuk ke Studio";
+
+          }
+
+        }
       );
 
     }
-    catch (error) {
+  );
 
-      message.textContent =
-        error.message || "Login gagal.";
-
-      message.className =
-        "message error";
-
-      message.hidden =
-        false;
-
-    }
-
-  });
-
-});
+})();

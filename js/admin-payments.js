@@ -1,269 +1,46 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener(
+  "DOMContentLoaded",
+  async function () {
 
-  MemoraAdmin.start(async () => {
+    const admin =
+      await MemoraAdmin.initialize();
+
+
+    if (!admin) {
+      return;
+    }
+
 
     const db =
-      MemoraAdmin.db;
+      admin.db;
 
-    const page =
+
+    const content =
       document.getElementById(
-        "adminPage"
+        "adminContent"
       );
 
 
     let orders = [];
     let customers = [];
-    let confirmations = [];
+    let activeOrder = null;
 
 
-    const PAYMENT_STATUS = [
-      [
-        "belum_ada_pembayaran",
-        "Belum Ada Pembayaran"
-      ],
-      [
-        "dp_diterima",
-        "DP Diterima"
-      ],
-      [
-        "sebagian",
-        "Pembayaran Sebagian"
-      ],
-      [
-        "lunas",
+    const PAYMENT_LABELS = {
+
+      belum_ada_pembayaran:
+        "Belum Ada Pembayaran",
+
+      dp_diterima:
+        "DP Diterima",
+
+      sebagian:
+        "Pembayaran Sebagian",
+
+      lunas:
         "Lunas"
-      ]
-    ];
 
-
-    page.innerHTML = `
-
-      <div class="page-head">
-
-        <div>
-
-          <div class="eyebrow">
-            TC-16
-          </div>
-
-          <h1>
-            Payment
-          </h1>
-
-          <p>
-            Kelola status pembayaran customer dan konfirmasi pembayaran.
-          </p>
-
-        </div>
-
-
-        <button
-          type="button"
-          class="btn"
-          id="refreshPayment"
-        >
-          Refresh
-        </button>
-
-      </div>
-
-
-      <div
-        class="stats-grid"
-        style="margin-bottom:18px;"
-      >
-
-        <div class="stat-card">
-
-          <span>
-            Belum Bayar
-          </span>
-
-          <strong id="statUnpaid">
-            0
-          </strong>
-
-        </div>
-
-
-        <div class="stat-card">
-
-          <span>
-            DP / Sebagian
-          </span>
-
-          <strong id="statPartial">
-            0
-          </strong>
-
-        </div>
-
-
-        <div class="stat-card">
-
-          <span>
-            Lunas
-          </span>
-
-          <strong id="statPaid">
-            0
-          </strong>
-
-        </div>
-
-
-        <div class="stat-card">
-
-          <span>
-            Confirmation
-          </span>
-
-          <strong id="statConfirmation">
-            0
-          </strong>
-
-        </div>
-
-      </div>
-
-
-      <section class="panel">
-
-        <div
-          style="
-            display:flex;
-            justify-content:space-between;
-            align-items:center;
-            gap:14px;
-            flex-wrap:wrap;
-            margin-bottom:18px;
-          "
-        >
-
-          <div>
-
-            <h2 style="margin:0;">
-              Payment Status
-            </h2>
-
-            <p
-              style="
-                margin:5px 0 0;
-                color:#7a837e;
-              "
-            >
-              Ubah status pembayaran pesanan.
-            </p>
-
-          </div>
-
-
-          <input
-            type="search"
-            id="paymentSearch"
-            class="input"
-            placeholder="Cari order atau customer..."
-            style="max-width:290px;"
-          >
-
-        </div>
-
-
-        <div class="table-wrap">
-
-          <table>
-
-            <thead>
-
-              <tr>
-                <th>Order</th>
-                <th>Customer</th>
-                <th>Total</th>
-                <th>Paid</th>
-                <th>Status</th>
-                <th>Action</th>
-              </tr>
-
-            </thead>
-
-            <tbody id="paymentRows"></tbody>
-
-          </table>
-
-        </div>
-
-      </section>
-
-
-      <section
-        class="panel"
-        style="margin-top:18px;"
-      >
-
-        <div class="eyebrow">
-          Customer Upload
-        </div>
-
-        <h2>
-          Payment Confirmation
-        </h2>
-
-        <p
-          style="
-            color:#7a837e;
-            margin-top:5px;
-          "
-        >
-          Bukti pembayaran yang dikirim customer akan tampil di sini.
-        </p>
-
-
-        <div
-          class="table-wrap"
-          style="margin-top:18px;"
-        >
-
-          <table>
-
-            <thead>
-
-              <tr>
-                <th>Date</th>
-                <th>Order</th>
-                <th>Amount</th>
-                <th>Method</th>
-                <th>Status</th>
-              </tr>
-
-            </thead>
-
-            <tbody id="confirmationRows"></tbody>
-
-          </table>
-
-        </div>
-
-      </section>
-
-
-      <div
-        id="paymentNotice"
-        style="
-          display:none;
-          position:fixed;
-          right:24px;
-          bottom:24px;
-          z-index:9999;
-          background:#315844;
-          color:#fff;
-          padding:14px 18px;
-          border-radius:12px;
-          box-shadow:0 12px 30px rgba(0,0,0,.18);
-          font-weight:600;
-        "
-      ></div>
-
-    `;
+    };
 
 
     function esc(value) {
@@ -275,115 +52,417 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    function findCustomer(order) {
+    function labelPayment(value) {
 
-      return customers.find(
-        customer =>
-          String(customer.id) ===
-          String(order.customer_id)
-      ) || null;
-
-    }
-
-
-    function showNotice(message) {
-
-      const box =
-        document.getElementById(
-          "paymentNotice"
-        );
-
-      box.textContent =
-        message;
-
-      box.style.display =
-        "block";
-
-
-      setTimeout(
-        () => {
-          box.style.display =
-            "none";
-        },
-        3000
+      return (
+        PAYMENT_LABELS[value] ||
+        String(
+          value ||
+          "belum_ada_pembayaran"
+        )
+          .replaceAll("_", " ")
       );
 
     }
 
 
-    async function loadData() {
+    function getCustomer(order) {
 
-      const orderResult =
-        await db
-          .from("orders")
-          .select("*")
-          .order(
-            "created_at",
-            {
-              ascending:false
-            }
+      return customers.find(
+        function (customer) {
+
+          return (
+            String(customer.id) ===
+            String(order.customer_id)
           );
 
+        }
+      ) || null;
 
-      if (orderResult.error) {
-        throw orderResult.error;
-      }
-
-
-      orders =
-        orderResult.data || [];
+    }
 
 
-      const customerResult =
-        await db
-          .from("customers")
-          .select("*");
+    content.innerHTML = `
+
+      <div>
+
+        <div class="eyebrow">
+          Payment Management
+        </div>
+
+        <h1 class="page-title">
+          Payments
+        </h1>
+
+        <p class="page-description">
+          Kelola status pembayaran setiap pesanan MEMORA.
+        </p>
+
+      </div>
 
 
-      customers =
-        customerResult.error
-          ? []
-          : (
-              customerResult.data ||
-              []
-            );
+      <div class="stats">
+
+        <div class="stat">
+
+          <span>
+            Semua Order
+          </span>
+
+          <strong id="paymentTotal">
+            0
+          </strong>
+
+        </div>
 
 
-      const confirmationResult =
-        await db
-          .from("payment_confirmations")
-          .select("*")
-          .order(
-            "submitted_at",
-            {
-              ascending:false
-            }
-          );
+        <div class="stat">
+
+          <span>
+            Belum Bayar
+          </span>
+
+          <strong id="paymentUnpaid">
+            0
+          </strong>
+
+        </div>
 
 
-      if (confirmationResult.error) {
+        <div class="stat">
 
-        console.warn(
-          "payment_confirmations:",
-          confirmationResult.error
-        );
+          <span>
+            DP / Sebagian
+          </span>
 
-        confirmations =
-          [];
+          <strong id="paymentPartial">
+            0
+          </strong>
 
-      }
-      else {
-
-        confirmations =
-          confirmationResult.data ||
-          [];
-
-      }
+        </div>
 
 
-      renderStats();
-      renderOrders();
-      renderConfirmations();
+        <div class="stat">
+
+          <span>
+            Lunas
+          </span>
+
+          <strong id="paymentPaid">
+            0
+          </strong>
+
+        </div>
+
+      </div>
+
+
+      <div class="payments-toolbar">
+
+        <input
+          type="search"
+          class="input"
+          id="paymentSearch"
+          placeholder="Cari nomor order atau customer..."
+        >
+
+
+        <select
+          class="input"
+          id="paymentFilter"
+        >
+
+          <option value="">
+            Semua Status
+          </option>
+
+          <option value="belum_ada_pembayaran">
+            Belum Ada Pembayaran
+          </option>
+
+          <option value="dp_diterima">
+            DP Diterima
+          </option>
+
+          <option value="sebagian">
+            Pembayaran Sebagian
+          </option>
+
+          <option value="lunas">
+            Lunas
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <div class="payments-card">
+
+        <div class="payments-table-wrap">
+
+          <table class="payments-table">
+
+            <thead>
+
+              <tr>
+
+                <th>
+                  Order
+                </th>
+
+                <th>
+                  Customer
+                </th>
+
+                <th>
+                  Total
+                </th>
+
+                <th>
+                  Dibayar
+                </th>
+
+                <th>
+                  Sisa
+                </th>
+
+                <th>
+                  Status
+                </th>
+
+                <th>
+                  Aksi
+                </th>
+
+              </tr>
+
+            </thead>
+
+
+            <tbody id="paymentsBody">
+
+              <tr>
+
+                <td
+                  colspan="7"
+                  class="payments-empty"
+                >
+                  Memuat pembayaran...
+                </td>
+
+              </tr>
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+      </div>
+
+
+      <div
+        class="payment-message"
+        id="paymentMessage"
+      ></div>
+
+
+      <div
+        class="payment-modal"
+        id="paymentModal"
+      >
+
+        <div class="payment-modal-card">
+
+          <div class="payment-modal-head">
+
+            <h2>
+              Update Pembayaran
+            </h2>
+
+            <button
+              type="button"
+              class="payment-modal-close"
+              id="closePaymentModal"
+            >
+              ×
+            </button>
+
+          </div>
+
+
+          <form id="paymentEditForm">
+
+            <div class="payment-modal-body">
+
+
+              <div class="payment-info">
+
+                <span>
+                  Order
+                </span>
+
+                <strong id="modalOrderNumber">
+                  -
+                </strong>
+
+              </div>
+
+
+              <div class="payment-info">
+
+                <span>
+                  Grand Total
+                </span>
+
+                <strong id="modalGrandTotal">
+                  -
+                </strong>
+
+              </div>
+
+
+              <div class="payment-edit-field">
+
+                <label for="editPaymentStatus">
+                  Status Pembayaran
+                </label>
+
+                <select
+                  class="payment-edit-input"
+                  id="editPaymentStatus"
+                >
+
+                  <option value="belum_ada_pembayaran">
+                    Belum Ada Pembayaran
+                  </option>
+
+                  <option value="dp_diterima">
+                    DP Diterima
+                  </option>
+
+                  <option value="sebagian">
+                    Pembayaran Sebagian
+                  </option>
+
+                  <option value="lunas">
+                    Lunas
+                  </option>
+
+                </select>
+
+              </div>
+
+
+              <div class="payment-edit-field">
+
+                <label for="editTotalPaid">
+                  Total Sudah Dibayar
+                </label>
+
+                <input
+                  type="number"
+                  min="0"
+                  step="1"
+                  class="payment-edit-input"
+                  id="editTotalPaid"
+                >
+
+              </div>
+
+            </div>
+
+
+            <div class="payment-modal-foot">
+
+              <button
+                type="button"
+                class="payment-cancel-button"
+                id="cancelPaymentEdit"
+              >
+                Batal
+              </button>
+
+              <button
+                type="submit"
+                class="payment-save-button"
+                id="savePaymentButton"
+              >
+                Simpan Perubahan
+              </button>
+
+            </div>
+
+          </form>
+
+        </div>
+
+      </div>
+
+    `;
+
+
+    const search =
+      document.getElementById(
+        "paymentSearch"
+      );
+
+
+    const filter =
+      document.getElementById(
+        "paymentFilter"
+      );
+
+
+    const modal =
+      document.getElementById(
+        "paymentModal"
+      );
+
+
+    const statusInput =
+      document.getElementById(
+        "editPaymentStatus"
+      );
+
+
+    const paidInput =
+      document.getElementById(
+        "editTotalPaid"
+      );
+
+
+    const saveButton =
+      document.getElementById(
+        "savePaymentButton"
+      );
+
+
+    const message =
+      document.getElementById(
+        "paymentMessage"
+      );
+
+
+    function showMessage(
+      text,
+      type
+    ) {
+
+      message.textContent =
+        text;
+
+
+      message.className =
+        "payment-message " +
+        type;
+
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
 
     }
 
@@ -391,77 +470,118 @@ document.addEventListener("DOMContentLoaded", () => {
     function renderStats() {
 
       document.getElementById(
-        "statUnpaid"
+        "paymentTotal"
+      ).textContent =
+        orders.length;
+
+
+      document.getElementById(
+        "paymentUnpaid"
       ).textContent =
         orders.filter(
-          order =>
-            !order.payment_status ||
-            order.payment_status ===
-              "belum_ada_pembayaran"
+          function (order) {
+
+            return (
+              !order.payment_status ||
+              order.payment_status ===
+                "belum_ada_pembayaran"
+            );
+
+          }
         ).length;
 
 
       document.getElementById(
-        "statPartial"
+        "paymentPartial"
       ).textContent =
         orders.filter(
-          order =>
-            [
+          function (order) {
+
+            return [
               "dp_diterima",
               "sebagian"
             ].includes(
               order.payment_status
-            )
+            );
+
+          }
         ).length;
 
 
       document.getElementById(
-        "statPaid"
+        "paymentPaid"
       ).textContent =
         orders.filter(
-          order =>
-            order.payment_status ===
-            "lunas"
+          function (order) {
+
+            return (
+              order.payment_status ===
+              "lunas"
+            );
+
+          }
         ).length;
-
-
-      document.getElementById(
-        "statConfirmation"
-      ).textContent =
-        confirmations.length;
 
     }
 
 
-    function renderOrders() {
+    function renderPayments() {
 
-      const search =
+      const keyword =
         String(
-          document.getElementById(
-            "paymentSearch"
-          )?.value ||
+          search.value ||
           ""
         )
           .trim()
           .toLowerCase();
 
 
+      const selectedStatus =
+        filter.value;
+
+
       const filtered =
         orders.filter(
-          order => {
+          function (order) {
 
             const customer =
-              findCustomer(order);
+              getCustomer(order);
 
 
             const text =
-              `${order.order_number || ""} ${customer?.full_name || ""} ${customer?.name || ""}`
+              [
+                order.order_number,
+                customer?.full_name,
+                customer?.name,
+                customer?.whatsapp,
+                customer?.email
+              ]
+                .filter(Boolean)
+                .join(" ")
                 .toLowerCase();
 
 
+            const searchMatch =
+              !keyword ||
+              text.includes(
+                keyword
+              );
+
+
+            const currentStatus =
+              order.payment_status ||
+              "belum_ada_pembayaran";
+
+
+            const statusMatch =
+              !selectedStatus ||
+              currentStatus ===
+                selectedStatus;
+
+
             return (
-              !search ||
-              text.includes(search)
+              searchMatch &&
+              statusMatch
             );
 
           }
@@ -470,139 +590,193 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const tbody =
         document.getElementById(
-          "paymentRows"
+          "paymentsBody"
         );
 
 
-      tbody.innerHTML =
-        filtered.map(order => {
+      if (!filtered.length) {
 
-          const customer =
-            findCustomer(order);
-
-
-          const current =
-            order.payment_status ||
-            "belum_ada_pembayaran";
-
-
-          return `
-
-            <tr>
-
-              <td>
-
-                <strong>
-                  ${esc(
-                    order.order_number ||
-                    "-"
-                  )}
-                </strong>
-
-              </td>
-
-              <td>
-                ${esc(
-                  customer?.full_name ||
-                  customer?.name ||
-                  "-"
-                )}
-              </td>
-
-              <td>
-                ${MemoraAdmin.money(
-                  order.grand_total
-                )}
-              </td>
-
-              <td>
-                ${MemoraAdmin.money(
-                  order.total_paid
-                )}
-              </td>
-
-              <td>
-
-                <select
-                  class="input"
-                  data-payment-status="${order.id}"
-                  style="min-width:180px;"
-                >
-
-                  ${
-                    PAYMENT_STATUS
-                      .map(
-                        option => `
-
-                          <option
-                            value="${option[0]}"
-                            ${
-                              option[0] ===
-                              current
-                                ? "selected"
-                                : ""
-                            }
-                          >
-                            ${option[1]}
-                          </option>
-
-                        `
-                      )
-                      .join("")
-                  }
-
-                </select>
-
-              </td>
-
-              <td>
-
-                <button
-                  type="button"
-                  class="btn btn-primary"
-                  data-save-payment="${order.id}"
-                >
-                  Simpan
-                </button>
-
-              </td>
-
-            </tr>
-
-          `;
-
-        }).join("") ||
-
-        `
+        tbody.innerHTML = `
 
           <tr>
 
             <td
-              colspan="6"
-              class="empty"
+              colspan="7"
+              class="payments-empty"
             >
-              Tidak ada order.
+              Tidak ada data pembayaran.
             </td>
 
           </tr>
 
         `;
 
+        return;
+
+      }
+
+
+      tbody.innerHTML =
+        filtered.map(
+          function (order) {
+
+            const customer =
+              getCustomer(order);
+
+
+            const customerName =
+              customer?.full_name ||
+              customer?.name ||
+              "Customer";
+
+
+            const paymentStatus =
+              order.payment_status ||
+              "belum_ada_pembayaran";
+
+
+            const grandTotal =
+              Number(
+                order.grand_total ||
+                0
+              );
+
+
+            const totalPaid =
+              Number(
+                order.total_paid ||
+                0
+              );
+
+
+            const remaining =
+              order.remaining_amount !==
+              null &&
+              order.remaining_amount !==
+              undefined
+                ? Number(
+                    order.remaining_amount
+                  )
+                : Math.max(
+                    grandTotal -
+                    totalPaid,
+                    0
+                  );
+
+
+            return `
+
+              <tr>
+
+                <td>
+
+                  <span class="payment-order-number">
+                    ${esc(
+                      order.order_number ||
+                      "-"
+                    )}
+                  </span>
+
+                </td>
+
+
+                <td>
+
+                  <div class="payment-customer">
+
+                    <strong>
+                      ${esc(
+                        customerName
+                      )}
+                    </strong>
+
+                    <span>
+                      ${esc(
+                        customer?.whatsapp ||
+                        customer?.email ||
+                        "-"
+                      )}
+                    </span>
+
+                  </div>
+
+                </td>
+
+
+                <td>
+                  ${MemoraAdmin.money(
+                    grandTotal
+                  )}
+                </td>
+
+
+                <td>
+                  ${MemoraAdmin.money(
+                    totalPaid
+                  )}
+                </td>
+
+
+                <td>
+                  ${MemoraAdmin.money(
+                    remaining
+                  )}
+                </td>
+
+
+                <td>
+
+                  <span
+                    class="payment-status-badge ${
+                      paymentStatus ===
+                      "lunas"
+                        ? "paid"
+                        : ""
+                    }"
+                  >
+                    ${esc(
+                      labelPayment(
+                        paymentStatus
+                      )
+                    )}
+                  </span>
+
+                </td>
+
+
+                <td>
+
+                  <button
+                    type="button"
+                    class="payment-edit-button"
+                    data-edit-payment="${order.id}"
+                  >
+                    Update
+                  </button>
+
+                </td>
+
+              </tr>
+
+            `;
+
+          }
+        ).join("");
+
 
       document
         .querySelectorAll(
-          "[data-save-payment]"
+          "[data-edit-payment]"
         )
         .forEach(
-          button => {
+          function (button) {
 
             button.addEventListener(
               "click",
-              () => {
+              function () {
 
-                saveStatus(
-                  button.dataset.savePayment,
-                  button
+                openPayment(
+                  button.dataset.editPayment
                 );
 
               }
@@ -614,191 +788,155 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    function renderConfirmations() {
+    function openPayment(orderId) {
 
-      const tbody =
-        document.getElementById(
-          "confirmationRows"
+      activeOrder =
+        orders.find(
+          function (order) {
+
+            return (
+              String(order.id) ===
+              String(orderId)
+            );
+
+          }
         );
 
 
-      tbody.innerHTML =
-        confirmations.map(
-          confirmation => {
+      if (!activeOrder) {
+        return;
+      }
 
-            const order =
-              orders.find(
-                item =>
-                  String(item.id) ===
-                  String(confirmation.order_id)
+
+      document.getElementById(
+        "modalOrderNumber"
+      ).textContent =
+        activeOrder.order_number ||
+        "-";
+
+
+      document.getElementById(
+        "modalGrandTotal"
+      ).textContent =
+        MemoraAdmin.money(
+          activeOrder.grand_total
+        );
+
+
+      statusInput.value =
+        activeOrder.payment_status ||
+        "belum_ada_pembayaran";
+
+
+      paidInput.value =
+        Number(
+          activeOrder.total_paid ||
+          0
+        );
+
+
+      modal.classList.add(
+        "show"
+      );
+
+    }
+
+
+    function closePayment() {
+
+      modal.classList.remove(
+        "show"
+      );
+
+
+      activeOrder =
+        null;
+
+    }
+
+
+    async function loadData() {
+
+      try {
+
+        const orderResult =
+          await db
+            .from("orders")
+            .select(
+              "id,order_number,customer_id,grand_total,total_paid,remaining_amount,payment_status,status,created_at"
+            )
+            .order(
+              "created_at",
+              {
+                ascending:false
+              }
+            );
+
+
+        if (
+          orderResult.error
+        ) {
+
+          throw orderResult.error;
+
+        }
+
+
+        orders =
+          orderResult.data ||
+          [];
+
+
+        const customerResult =
+          await db
+            .from("customers")
+            .select("*");
+
+
+        customers =
+          customerResult.error
+            ? []
+            : (
+                customerResult.data ||
+                []
               );
 
 
-            return `
+        renderStats();
+        renderPayments();
 
-              <tr>
+      }
+      catch (error) {
 
-                <td>
-                  ${MemoraAdmin.date(
-                    confirmation.submitted_at
-                  )}
-                </td>
+        console.error(
+          "PAYMENTS:",
+          error
+        );
 
-                <td>
-                  ${esc(
-                    order?.order_number ||
-                    "-"
-                  )}
-                </td>
 
-                <td>
-                  ${MemoraAdmin.money(
-                    confirmation.amount
-                  )}
-                </td>
-
-                <td>
-                  ${esc(
-                    confirmation.payment_method ||
-                    "-"
-                  )}
-                </td>
-
-                <td>
-
-                  <span class="badge">
-                    ${esc(
-                      confirmation.status ||
-                      "-"
-                    )}
-                  </span>
-
-                </td>
-
-              </tr>
-
-            `;
-
-          }
-        ).join("") ||
-
-        `
+        document.getElementById(
+          "paymentsBody"
+        ).innerHTML = `
 
           <tr>
 
             <td
-              colspan="5"
-              class="empty"
+              colspan="7"
+              class="payments-empty"
             >
-              Belum ada payment confirmation.
+              Data pembayaran gagal dimuat.
             </td>
 
           </tr>
 
         `;
 
-    }
 
-
-    async function saveStatus(
-      orderId,
-      button
-    ) {
-
-      const select =
-        document.querySelector(
-          `[data-payment-status="${orderId}"]`
+        showMessage(
+          error?.message ||
+          "Data pembayaran gagal dimuat.",
+          "error"
         );
-
-
-      if (!select) {
-        return;
-      }
-
-
-      const status =
-        select.value;
-
-
-      button.disabled =
-        true;
-
-      button.textContent =
-        "Menyimpan...";
-
-
-      try {
-
-        const result =
-          await db
-            .from("orders")
-            .update({
-              payment_status:
-                status
-            })
-            .eq(
-              "id",
-              orderId
-            )
-            .select("*")
-            .single();
-
-
-        if (result.error) {
-          throw result.error;
-        }
-
-
-        const index =
-          orders.findIndex(
-            order =>
-              String(order.id) ===
-              String(orderId)
-          );
-
-
-        if (index >= 0) {
-
-          orders[index] =
-            result.data;
-
-        }
-
-
-        renderStats();
-
-
-        showNotice(
-          "Status pembayaran berhasil diperbarui."
-        );
-
-
-        alert(
-          "Status pembayaran berhasil diperbarui."
-        );
-
-      }
-      catch (error) {
-
-        console.error(
-          "Payment update:",
-          error
-        );
-
-
-        alert(
-          error.message ||
-          "Status pembayaran gagal diperbarui."
-        );
-
-      }
-      finally {
-
-        button.disabled =
-          false;
-
-        button.textContent =
-          "Simpan";
 
       }
 
@@ -807,35 +945,190 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document
       .getElementById(
-        "paymentSearch"
+        "paymentEditForm"
       )
       .addEventListener(
-        "input",
-        renderOrders
-      );
+        "submit",
+        async function (event) {
+
+          event.preventDefault();
 
 
-    document
-      .getElementById(
-        "refreshPayment"
-      )
-      .addEventListener(
-        "click",
-        async () => {
+          if (!activeOrder) {
+            return;
+          }
+
+
+          saveButton.disabled =
+            true;
+
+          saveButton.textContent =
+            "Menyimpan...";
+
 
           try {
 
-            await loadData();
+            const paymentStatus =
+              statusInput.value;
+
+
+            let totalPaid =
+              Number(
+                paidInput.value ||
+                0
+              );
+
+
+            const grandTotal =
+              Number(
+                activeOrder.grand_total ||
+                0
+              );
+
+
+            if (
+              totalPaid < 0
+            ) {
+
+              throw new Error(
+                "Total pembayaran tidak boleh kurang dari 0."
+              );
+
+            }
+
+
+            if (
+              totalPaid >
+              grandTotal
+            ) {
+
+              throw new Error(
+                "Total pembayaran tidak boleh melebihi grand total."
+              );
+
+            }
+
+
+            /*
+              Jika status dipilih Lunas,
+              otomatis samakan total_paid
+              dengan grand_total.
+            */
+
+            if (
+              paymentStatus ===
+              "lunas"
+            ) {
+
+              totalPaid =
+                grandTotal;
+
+            }
+
+
+            const remaining =
+              Math.max(
+                grandTotal -
+                totalPaid,
+                0
+              );
+
+
+            const result =
+              await db
+                .from("orders")
+                .update({
+
+                  payment_status:
+                    paymentStatus,
+
+                  total_paid:
+                    totalPaid,
+
+                  remaining_amount:
+                    remaining
+
+                })
+                .eq(
+                  "id",
+                  activeOrder.id
+                )
+                .select("*")
+                .single();
+
+
+            if (
+              result.error
+            ) {
+
+              throw result.error;
+
+            }
+
+
+            const index =
+              orders.findIndex(
+                function (order) {
+
+                  return (
+                    String(order.id) ===
+                    String(activeOrder.id)
+                  );
+
+                }
+              );
+
+
+            if (
+              index >= 0
+            ) {
+
+              orders[index] =
+                result.data;
+
+            }
+
+
+            closePayment();
+
+
+            renderStats();
+            renderPayments();
+
+
+            showMessage(
+              "Status pembayaran berhasil diperbarui.",
+              "success"
+            );
+
+
+            alert(
+              "Status pembayaran berhasil diperbarui."
+            );
 
           }
           catch (error) {
 
-            console.error(error);
-
-            alert(
-              error.message ||
-              "Payment gagal dimuat."
+            console.error(
+              "PAYMENT UPDATE:",
+              error
             );
+
+
+            showMessage(
+              error?.message ||
+              "Status pembayaran gagal diperbarui.",
+              "error"
+            );
+
+          }
+          finally {
+
+            saveButton.disabled =
+              false;
+
+            saveButton.textContent =
+              "Simpan Perubahan";
 
           }
 
@@ -843,46 +1136,56 @@ document.addEventListener("DOMContentLoaded", () => {
       );
 
 
-    try {
+    search.addEventListener(
+      "input",
+      renderPayments
+    );
 
-      await loadData();
 
-    }
-    catch (error) {
+    filter.addEventListener(
+      "change",
+      renderPayments
+    );
 
-      console.error(
-        "MEMORA Payment:",
-        error
+
+    document
+      .getElementById(
+        "closePaymentModal"
+      )
+      .addEventListener(
+        "click",
+        closePayment
       );
 
 
-      page.innerHTML += `
+    document
+      .getElementById(
+        "cancelPaymentEdit"
+      )
+      .addEventListener(
+        "click",
+        closePayment
+      );
 
-        <section
-          class="panel"
-          style="
-            margin-top:18px;
-            border-color:#e4b8b8;
-          "
-        >
 
-          <strong>
-            Payment gagal dimuat
-          </strong>
+    modal.addEventListener(
+      "click",
+      function (event) {
 
-          <p>
-            ${esc(
-              error.message ||
-              "Terjadi kesalahan."
-            )}
-          </p>
+        if (
+          event.target ===
+          modal
+        ) {
 
-        </section>
+          closePayment();
 
-      `;
+        }
 
-    }
+      }
+    );
 
-  });
 
-});
+    await loadData();
+
+  }
+);

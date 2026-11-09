@@ -1,133 +1,125 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener(
+  "DOMContentLoaded",
+  async function () {
 
-  MemoraAdmin.start(async () => {
+    const admin =
+      await MemoraAdmin.initialize();
+
+
+    if (!admin) {
+      return;
+    }
+
 
     const db =
-      MemoraAdmin.db;
+      admin.db;
 
-    const page =
+
+    const content =
       document.getElementById(
-        "adminPage"
+        "adminContent"
       );
 
 
     let orders = [];
-
     let customers = [];
+    let activeOrder = null;
 
 
-    const PRODUCTION_STATUS = [
+    const PRODUCTION_STATUSES = {
 
-      [
-        "desain",
-        "Desain"
-      ],
+      printing:
+        "Printing",
 
-      [
-        "menunggu_approval",
-        "Menunggu Approval"
-      ],
+      finishing:
+        "Finishing",
 
-      [
-        "revisi",
-        "Revisi"
-      ],
+      quality_check:
+        "Quality Check",
 
-      [
-        "approved",
-        "Approved"
-      ],
+      packing:
+        "Packing",
 
-      [
-        "printing",
-        "Printing"
-      ],
+      dikirim:
+        "Dikirim",
 
-      [
-        "finishing",
-        "Finishing"
-      ],
-
-      [
-        "quality_check",
-        "Quality Check"
-      ],
-
-      [
-        "packing",
-        "Packing"
-      ],
-
-      [
-        "dikirim",
-        "Dikirim"
-      ],
-
-      [
-        "selesai",
+      selesai:
         "Selesai"
-      ]
 
-    ];
+    };
 
 
-    const PRODUCTION_KEYS =
-      PRODUCTION_STATUS.map(
-        item => item[0]
+    function esc(value) {
+
+      return MemoraAdmin.escapeHtml(
+        value ?? ""
       );
 
+    }
 
-    page.innerHTML = `
 
-      <div class="page-head">
+    function labelStatus(value) {
 
-        <div>
+      return (
+        PRODUCTION_STATUSES[value] ||
+        String(value || "-")
+          .replaceAll("_", " ")
+      );
 
-          <div class="eyebrow">
-            TC-17
-          </div>
+    }
 
-          <h1>
-            Production
-          </h1>
 
-          <p>
-            Kelola proses produksi setiap pesanan.
-          </p>
+    function getCustomer(order) {
 
+      return customers.find(
+        function (customer) {
+
+          return (
+            String(customer.id) ===
+            String(order.customer_id)
+          );
+
+        }
+      ) || null;
+
+    }
+
+
+    content.innerHTML = `
+
+      <div>
+
+        <div class="eyebrow">
+          Production Management
         </div>
 
+        <h1 class="page-title">
+          Production
+        </h1>
 
-        <button
-          type="button"
-          class="btn"
-          id="refreshProduction"
-        >
-          Refresh
-        </button>
+        <p class="page-description">
+          Pantau dan perbarui proses produksi pesanan MEMORA.
+        </p>
 
       </div>
 
 
-      <div
-        class="stats-grid"
-        style="margin-bottom:18px;"
-      >
+      <div class="stats">
 
-        <div class="stat-card">
+        <div class="stat">
 
           <span>
-            Design
+            Production Queue
           </span>
 
-          <strong id="productionDesign">
+          <strong id="productionTotal">
             0
           </strong>
 
         </div>
 
 
-        <div class="stat-card">
+        <div class="stat">
 
           <span>
             Printing
@@ -140,26 +132,26 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>
 
 
-        <div class="stat-card">
+        <div class="stat">
 
           <span>
             Finishing / QC
           </span>
 
-          <strong id="productionFinishing">
+          <strong id="productionProcess">
             0
           </strong>
 
         </div>
 
 
-        <div class="stat-card">
+        <div class="stat">
 
           <span>
-            Packing
+            Selesai
           </span>
 
-          <strong id="productionPacking">
+          <strong id="productionDone">
             0
           </strong>
 
@@ -168,206 +160,309 @@ document.addEventListener("DOMContentLoaded", () => {
       </div>
 
 
-      <section class="panel">
+      <div class="production-toolbar">
 
-        <div
-          style="
-            display:flex;
-            justify-content:space-between;
-            align-items:center;
-            flex-wrap:wrap;
-            gap:14px;
-            margin-bottom:18px;
-          "
+        <input
+          type="search"
+          class="input"
+          id="productionSearch"
+          placeholder="Cari nomor order atau customer..."
         >
 
-          <div>
 
-            <h2 style="margin:0;">
-              Production Queue
-            </h2>
+        <select
+          class="input"
+          id="productionFilter"
+        >
 
-            <p
-              style="
-                margin:5px 0 0;
-                color:#7a837e;
-              "
-            >
-              Update status sesuai proses produksi.
-            </p>
+          <option value="">
+            Semua Tahap
+          </option>
 
-          </div>
+          <option value="printing">
+            Printing
+          </option>
+
+          <option value="finishing">
+            Finishing
+          </option>
+
+          <option value="quality_check">
+            Quality Check
+          </option>
+
+          <option value="packing">
+            Packing
+          </option>
+
+          <option value="dikirim">
+            Dikirim
+          </option>
+
+          <option value="selesai">
+            Selesai
+          </option>
+
+        </select>
+
+      </div>
 
 
-          <input
-            type="search"
-            id="productionSearch"
-            class="input"
-            placeholder="Cari order/customer..."
-            style="max-width:280px;"
-          >
+      <div class="production-card">
 
-        </div>
+        <div class="production-table-wrap">
 
-
-        <div class="table-wrap">
-
-          <table>
+          <table class="production-table">
 
             <thead>
 
               <tr>
-                <th>Order</th>
-                <th>Customer</th>
-                <th>Current Status</th>
-                <th>Production Status</th>
-                <th>Action</th>
+
+                <th>
+                  Order
+                </th>
+
+                <th>
+                  Customer
+                </th>
+
+                <th>
+                  Total
+                </th>
+
+                <th>
+                  Payment
+                </th>
+
+                <th>
+                  Tahap Produksi
+                </th>
+
+                <th>
+                  Aksi
+                </th>
+
               </tr>
 
             </thead>
 
-            <tbody id="productionRows"></tbody>
+
+            <tbody id="productionBody">
+
+              <tr>
+
+                <td
+                  colspan="6"
+                  class="production-empty"
+                >
+                  Memuat produksi...
+                </td>
+
+              </tr>
+
+            </tbody>
 
           </table>
 
         </div>
 
-      </section>
+      </div>
 
 
       <div
-        id="productionSuccess"
-        style="
-          display:none;
-          position:fixed;
-          right:24px;
-          bottom:24px;
-          z-index:9999;
-          padding:14px 18px;
-          max-width:380px;
-          border-radius:12px;
-          background:#315844;
-          color:#fff;
-          font-weight:600;
-          box-shadow:0 14px 35px rgba(0,0,0,.18);
-        "
+        class="production-message"
+        id="productionMessage"
       ></div>
+
+
+      <div
+        class="production-modal"
+        id="productionModal"
+      >
+
+        <div class="production-modal-card">
+
+          <div class="production-modal-head">
+
+            <h2>
+              Update Production
+            </h2>
+
+            <button
+              type="button"
+              class="production-modal-close"
+              id="closeProductionModal"
+            >
+              ×
+            </button>
+
+          </div>
+
+
+          <form id="productionEditForm">
+
+            <div class="production-modal-body">
+
+
+              <div class="production-info">
+
+                <span>
+                  Order
+                </span>
+
+                <strong id="productionOrderNumber">
+                  -
+                </strong>
+
+              </div>
+
+
+              <div class="production-field">
+
+                <label for="productionStatus">
+                  Tahap Produksi
+                </label>
+
+                <select
+                  id="productionStatus"
+                  class="production-input"
+                >
+
+                  <option value="printing">
+                    Printing
+                  </option>
+
+                  <option value="finishing">
+                    Finishing
+                  </option>
+
+                  <option value="quality_check">
+                    Quality Check
+                  </option>
+
+                  <option value="packing">
+                    Packing
+                  </option>
+
+                  <option value="dikirim">
+                    Dikirim
+                  </option>
+
+                  <option value="selesai">
+                    Selesai
+                  </option>
+
+                </select>
+
+              </div>
+
+
+              <div class="production-field">
+
+                <label for="productionNote">
+                  Catatan Produksi
+                </label>
+
+                <textarea
+                  id="productionNote"
+                  class="production-input"
+                  placeholder="Contoh: Printing selesai dan masuk proses finishing."
+                ></textarea>
+
+              </div>
+
+            </div>
+
+
+            <div class="production-modal-foot">
+
+              <button
+                type="button"
+                class="production-cancel-button"
+                id="cancelProductionEdit"
+              >
+                Batal
+              </button>
+
+              <button
+                type="submit"
+                class="production-save-button"
+                id="saveProductionButton"
+              >
+                Simpan Perubahan
+              </button>
+
+            </div>
+
+          </form>
+
+        </div>
+
+      </div>
 
     `;
 
 
-    function escapeHtml(value) {
-
-      return MemoraAdmin.escapeHtml(
-        value ?? ""
+    const search =
+      document.getElementById(
+        "productionSearch"
       );
 
-    }
 
-
-    function customerFor(order) {
-
-      return customers.find(
-        item =>
-          String(item.id) ===
-          String(order.customer_id)
-      ) || null;
-
-    }
-
-
-    function showSuccess() {
-
-      const box =
-        document.getElementById(
-          "productionSuccess"
-        );
-
-
-      box.textContent =
-        "Status produksi berhasil diperbarui.";
-
-
-      box.style.display =
-        "block";
-
-
-      setTimeout(
-        () => {
-
-          box.style.display =
-            "none";
-
-        },
-        3500
+    const filter =
+      document.getElementById(
+        "productionFilter"
       );
 
-    }
+
+    const modal =
+      document.getElementById(
+        "productionModal"
+      );
 
 
-    async function loadData() {
-
-      const [
-        orderResult,
-        customerResult
-      ] =
-        await Promise.all([
-
-          db
-            .from("orders")
-            .select("*")
-            .order(
-              "created_at",
-              {
-                ascending:false
-              }
-            ),
-
-          db
-            .from("customers")
-            .select("*")
-
-        ]);
+    const statusInput =
+      document.getElementById(
+        "productionStatus"
+      );
 
 
-      if (orderResult.error) {
-        throw orderResult.error;
-      }
+    const noteInput =
+      document.getElementById(
+        "productionNote"
+      );
 
 
-      orders =
-        (
-          orderResult.data ||
-          []
-        ).filter(order =>
-
-          PRODUCTION_KEYS.includes(
-            order.status
-          )
-
-          ||
-
-          [
-            "data_lengkap",
-            "menunggu_konfirmasi"
-          ].includes(
-            order.status
-          )
-
-        );
+    const saveButton =
+      document.getElementById(
+        "saveProductionButton"
+      );
 
 
-      customers =
-        customerResult.error
-          ? []
-          : (
-              customerResult.data ||
-              []
-            );
+    const message =
+      document.getElementById(
+        "productionMessage"
+      );
 
 
-      renderStats();
-      renderRows();
+    function showMessage(
+      text,
+      type
+    ) {
+
+      message.textContent =
+        text;
+
+
+      message.className =
+        "production-message " +
+        type;
+
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
 
     }
 
@@ -375,203 +470,409 @@ document.addEventListener("DOMContentLoaded", () => {
     function renderStats() {
 
       document.getElementById(
-        "productionDesign"
+        "productionTotal"
       ).textContent =
-        orders.filter(
-          item =>
-            [
-              "desain",
-              "menunggu_approval",
-              "revisi",
-              "approved"
-            ].includes(
-              item.status
-            )
-        ).length;
+        orders.length;
 
 
       document.getElementById(
         "productionPrinting"
       ).textContent =
         orders.filter(
-          item =>
-            item.status ===
-            "printing"
+          function (order) {
+
+            return (
+              order.status ===
+              "printing"
+            );
+
+          }
         ).length;
 
 
       document.getElementById(
-        "productionFinishing"
+        "productionProcess"
       ).textContent =
         orders.filter(
-          item =>
-            [
+          function (order) {
+
+            return [
               "finishing",
-              "quality_check"
+              "quality_check",
+              "packing"
             ].includes(
-              item.status
-            )
+              order.status
+            );
+
+          }
         ).length;
 
 
       document.getElementById(
-        "productionPacking"
+        "productionDone"
       ).textContent =
         orders.filter(
-          item =>
-            item.status ===
-            "packing"
+          function (order) {
+
+            return (
+              order.status ===
+              "selesai"
+            );
+
+          }
         ).length;
 
     }
 
 
-    function renderRows() {
+    function renderProduction() {
 
-      const search =
+      const keyword =
         String(
-          document.getElementById(
-            "productionSearch"
-          )?.value ||
+          search.value ||
           ""
         )
           .trim()
           .toLowerCase();
 
 
+      const selectedStatus =
+        filter.value;
+
+
       const filtered =
-        orders.filter(order => {
+        orders.filter(
+          function (order) {
 
-          const customer =
-            customerFor(order);
-
-
-          const value =
-            `${order.order_number || ""} ${customer?.full_name || ""} ${customer?.name || ""}`
-              .toLowerCase();
+            const customer =
+              getCustomer(order);
 
 
-          return (
-            !search ||
-            value.includes(search)
-          );
-
-        });
-
-
-      document.getElementById(
-        "productionRows"
-      ).innerHTML =
-        filtered.map(order => {
-
-          const customer =
-            customerFor(order);
+            const text =
+              [
+                order.order_number,
+                customer?.full_name,
+                customer?.name,
+                customer?.whatsapp
+              ]
+                .filter(Boolean)
+                .join(" ")
+                .toLowerCase();
 
 
-          const currentStatus =
-            PRODUCTION_KEYS.includes(
-              order.status
-            )
-              ? order.status
-              : "desain";
+            const searchMatch =
+              !keyword ||
+              text.includes(
+                keyword
+              );
 
 
-          return `
+            const statusMatch =
+              !selectedStatus ||
+              order.status ===
+                selectedStatus;
 
-            <tr>
 
-              <td>
+            return (
+              searchMatch &&
+              statusMatch
+            );
 
-                <strong>
-                  ${escapeHtml(
-                    order.order_number ||
-                    "-"
-                  )}
-                </strong>
+          }
+        );
 
-              </td>
 
-              <td>
-                ${escapeHtml(
-                  customer?.full_name ||
-                  customer?.name ||
-                  "-"
-                )}
-              </td>
+      const tbody =
+        document.getElementById(
+          "productionBody"
+        );
 
-              <td>
 
-                <span class="badge">
-                  ${escapeHtml(
-                    MemoraAdmin.statusLabel(
-                      order.status
-                    )
-                  )}
-                </span>
+      if (!filtered.length) {
 
-              </td>
-
-              <td>
-
-                <select
-                  class="input"
-                  data-production-status="${order.id}"
-                  style="min-width:190px;"
-                >
-
-                  ${
-
-                    PRODUCTION_STATUS.map(
-                      item => `
-
-                        <option
-                          value="${item[0]}"
-                          ${
-                            currentStatus ===
-                            item[0]
-                              ? "selected"
-                              : ""
-                          }
-                        >
-                          ${item[1]}
-                        </option>
-
-                      `
-                    ).join("")
-
-                  }
-
-                </select>
-
-              </td>
-
-              <td>
-
-                <button
-                  type="button"
-                  class="btn btn-primary"
-                  data-save-production="${order.id}"
-                >
-                  Simpan
-                </button>
-
-              </td>
-
-            </tr>
-
-          `;
-
-        }).join("") ||
-
-        `
+        tbody.innerHTML = `
 
           <tr>
 
             <td
-              colspan="5"
-              class="empty"
+              colspan="6"
+              class="production-empty"
             >
-              Belum ada order dalam proses produksi.
+              Belum ada order pada proses produksi.
+            </td>
+
+          </tr>
+
+        `;
+
+        return;
+
+      }
+
+
+      tbody.innerHTML =
+        filtered.map(
+          function (order) {
+
+            const customer =
+              getCustomer(order);
+
+
+            return `
+
+              <tr>
+
+                <td>
+
+                  <span class="production-order-number">
+                    ${esc(
+                      order.order_number ||
+                      "-"
+                    )}
+                  </span>
+
+                </td>
+
+
+                <td>
+
+                  <div class="production-customer">
+
+                    <strong>
+                      ${esc(
+                        customer?.full_name ||
+                        customer?.name ||
+                        "Customer"
+                      )}
+                    </strong>
+
+                    <span>
+                      ${esc(
+                        customer?.whatsapp ||
+                        customer?.email ||
+                        "-"
+                      )}
+                    </span>
+
+                  </div>
+
+                </td>
+
+
+                <td>
+                  ${MemoraAdmin.money(
+                    order.grand_total
+                  )}
+                </td>
+
+
+                <td>
+                  ${esc(
+                    String(
+                      order.payment_status ||
+                      "-"
+                    )
+                      .replaceAll(
+                        "_",
+                        " "
+                      )
+                  )}
+                </td>
+
+
+                <td>
+
+                  <span class="production-status">
+                    ${esc(
+                      labelStatus(
+                        order.status
+                      )
+                    )}
+                  </span>
+
+                </td>
+
+
+                <td>
+
+                  <button
+                    type="button"
+                    class="production-update-button"
+                    data-production-id="${order.id}"
+                  >
+                    Update
+                  </button>
+
+                </td>
+
+              </tr>
+
+            `;
+
+          }
+        ).join("");
+
+
+      document
+        .querySelectorAll(
+          "[data-production-id]"
+        )
+        .forEach(
+          function (button) {
+
+            button.addEventListener(
+              "click",
+              function () {
+
+                openProduction(
+                  button.dataset.productionId
+                );
+
+              }
+            );
+
+          }
+        );
+
+    }
+
+
+    function openProduction(orderId) {
+
+      activeOrder =
+        orders.find(
+          function (order) {
+
+            return (
+              String(order.id) ===
+              String(orderId)
+            );
+
+          }
+        );
+
+
+      if (!activeOrder) {
+        return;
+      }
+
+
+      document.getElementById(
+        "productionOrderNumber"
+      ).textContent =
+        activeOrder.order_number ||
+        "-";
+
+
+      statusInput.value =
+        activeOrder.status;
+
+
+      noteInput.value =
+        "";
+
+
+      modal.classList.add(
+        "show"
+      );
+
+    }
+
+
+    function closeProduction() {
+
+      modal.classList.remove(
+        "show"
+      );
+
+
+      activeOrder =
+        null;
+
+    }
+
+
+    async function loadData() {
+
+      try {
+
+        const orderResult =
+          await db
+            .from("orders")
+            .select(
+              "id,order_number,customer_id,status,payment_status,grand_total,created_at"
+            )
+            .in(
+              "status",
+              [
+                "printing",
+                "finishing",
+                "quality_check",
+                "packing",
+                "dikirim",
+                "selesai"
+              ]
+            )
+            .order(
+              "created_at",
+              {
+                ascending:false
+              }
+            );
+
+
+        if (
+          orderResult.error
+        ) {
+
+          throw orderResult.error;
+
+        }
+
+
+        orders =
+          orderResult.data ||
+          [];
+
+
+        const customerResult =
+          await db
+            .from("customers")
+            .select("*");
+
+
+        customers =
+          customerResult.error
+            ? []
+            : (
+                customerResult.data ||
+                []
+              );
+
+
+        renderStats();
+        renderProduction();
+
+      }
+      catch (error) {
+
+        console.error(
+          "PRODUCTION:",
+          error
+        );
+
+
+        document.getElementById(
+          "productionBody"
+        ).innerHTML = `
+
+          <tr>
+
+            <td
+              colspan="6"
+              class="production-empty"
+            >
+              Production gagal dimuat.
             </td>
 
           </tr>
@@ -579,173 +880,229 @@ document.addEventListener("DOMContentLoaded", () => {
         `;
 
 
-      document
-        .querySelectorAll(
-          "[data-save-production]"
-        )
-        .forEach(button => {
+        showMessage(
+          error?.message ||
+          "Production gagal dimuat.",
+          "error"
+        );
 
-          button.addEventListener(
-            "click",
-            () => {
+      }
 
-              saveProduction(
-                button.dataset.saveProduction,
-                button
+    }
+
+
+    document
+      .getElementById(
+        "productionEditForm"
+      )
+      .addEventListener(
+        "submit",
+        async function (event) {
+
+          event.preventDefault();
+
+
+          if (!activeOrder) {
+            return;
+          }
+
+
+          saveButton.disabled =
+            true;
+
+          saveButton.textContent =
+            "Menyimpan...";
+
+
+          try {
+
+            const newStatus =
+              statusInput.value;
+
+
+            const note =
+              noteInput.value
+                .trim();
+
+
+            const result =
+              await db
+                .from("orders")
+                .update({
+
+                  status:
+                    newStatus
+
+                })
+                .eq(
+                  "id",
+                  activeOrder.id
+                )
+                .select("*")
+                .single();
+
+
+            if (
+              result.error
+            ) {
+
+              throw result.error;
+
+            }
+
+
+            const historyResult =
+              await db
+                .from(
+                  "order_status_history"
+                )
+                .insert({
+
+                  order_id:
+                    activeOrder.id,
+
+                  status:
+                    newStatus,
+
+                  note:
+                    note ||
+                    "Status produksi diperbarui melalui MEMORA Studio."
+
+                });
+
+
+            if (
+              historyResult.error
+            ) {
+
+              console.warn(
+                "PRODUCTION HISTORY:",
+                historyResult.error
               );
 
             }
-          );
-
-        });
-
-    }
 
 
-    async function saveProduction(
-      orderId,
-      button
-    ) {
+            const index =
+              orders.findIndex(
+                function (order) {
 
-      const select =
-        document.querySelector(
-          `[data-production-status="${orderId}"]`
-        );
+                  return (
+                    String(order.id) ===
+                    String(activeOrder.id)
+                  );
 
-
-      const status =
-        select.value;
+                }
+              );
 
 
-      button.disabled =
-        true;
+            if (
+              index >= 0
+            ) {
 
-      button.textContent =
-        "Menyimpan...";
+              orders[index] =
+                result.data;
 
-
-      try {
-
-        const result =
-          await db
-            .from("orders")
-            .update({
-              status:
-                status
-            })
-            .eq(
-              "id",
-              orderId
-            )
-            .select("*")
-            .single();
+            }
 
 
-        if (result.error) {
-          throw result.error;
-        }
+            closeProduction();
 
 
-        const historyResult =
-          await db
-            .from(
-              "order_status_history"
-            )
-            .insert({
-
-              order_id:
-                orderId,
-
-              status:
-                status,
-
-              note:
-                "Status produksi diperbarui melalui MEMORA Studio."
-
-            });
+            renderStats();
+            renderProduction();
 
 
-        if (historyResult.error) {
+            showMessage(
+              "Status produksi berhasil diperbarui.",
+              "success"
+            );
 
-          console.warn(
-            "Production history:",
-            historyResult.error
-          );
+
+            alert(
+              "Status produksi berhasil diperbarui."
+            );
+
+          }
+          catch (error) {
+
+            console.error(
+              "PRODUCTION UPDATE:",
+              error
+            );
+
+
+            showMessage(
+              error?.message ||
+              "Status produksi gagal diperbarui.",
+              "error"
+            );
+
+          }
+          finally {
+
+            saveButton.disabled =
+              false;
+
+            saveButton.textContent =
+              "Simpan Perubahan";
+
+          }
 
         }
+      );
 
 
-        const index =
-          orders.findIndex(
-            item =>
-              String(item.id) ===
-              String(orderId)
-          );
-
-
-        if (index >= 0) {
-
-          orders[index] =
-            result.data;
-
-        }
-
-
-        renderStats();
-        renderRows();
-
-
-        showSuccess();
-
-
-        alert(
-          "Status produksi berhasil diperbarui."
-        );
-
-      }
-      catch (error) {
-
-        console.error(
-          error
-        );
-
-        alert(
-          error.message ||
-          "Status produksi gagal diperbarui."
-        );
-
-      }
-      finally {
-
-        button.disabled =
-          false;
-
-        button.textContent =
-          "Simpan";
-
-      }
-
-    }
-
-
-    document.getElementById(
-      "productionSearch"
-    ).addEventListener(
+    search.addEventListener(
       "input",
-      renderRows
+      renderProduction
     );
 
 
-    document.getElementById(
-      "refreshProduction"
-    ).addEventListener(
+    filter.addEventListener(
+      "change",
+      renderProduction
+    );
+
+
+    document
+      .getElementById(
+        "closeProductionModal"
+      )
+      .addEventListener(
+        "click",
+        closeProduction
+      );
+
+
+    document
+      .getElementById(
+        "cancelProductionEdit"
+      )
+      .addEventListener(
+        "click",
+        closeProduction
+      );
+
+
+    modal.addEventListener(
       "click",
-      loadData
+      function (event) {
+
+        if (
+          event.target ===
+          modal
+        ) {
+
+          closeProduction();
+
+        }
+
+      }
     );
 
 
     await loadData();
 
-  });
-
-});
+  }
+);

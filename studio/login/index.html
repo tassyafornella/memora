@@ -2,88 +2,138 @@
 <html lang="id">
 
 <head>
+
   <meta charset="utf-8">
+
   <meta
     name="viewport"
     content="width=device-width,initial-scale=1"
   >
 
-  <title>MEMORA Studio Login</title>
+  <title>Login | MEMORA Studio</title>
+
+  <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+  >
+
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
 
   <link
     rel="stylesheet"
-    href="/css/admin.css?v=1"
+    href="/css/admin.css?v=admin-reset-001"
   >
+
 </head>
 
 <body>
 
-  <main class="admin-login-page">
+  <main class="login-page">
 
-    <section class="admin-login-card">
+    <section class="login-card">
 
-      <div class="admin-brand">
-        MEMORA
+      <div class="login-brand">
+
+        <div class="login-brand-name">
+          MEMORA
+        </div>
+
+        <div class="login-brand-subtitle">
+          Studio Administration
+        </div>
+
       </div>
 
-      <h1>
-        Studio Login
+
+      <h1 class="login-title">
+        Welcome back
       </h1>
 
-      <p>
-        Masuk menggunakan akun Administrator MEMORA.
+
+      <p class="login-description">
+        Masuk menggunakan akun owner atau administrator MEMORA.
       </p>
 
-      <form id="loginForm">
+
+      <form
+        class="login-form"
+        id="loginForm"
+      >
 
         <div class="field">
-          <label for="email">
+
+          <label for="loginEmail">
             Email
           </label>
 
           <input
-            id="email"
             type="email"
+            class="input"
+            id="loginEmail"
             autocomplete="email"
             required
           >
+
         </div>
 
+
         <div class="field">
-          <label for="password">
+
+          <label for="loginPassword">
             Password
           </label>
 
           <input
-            id="password"
             type="password"
+            class="input"
+            id="loginPassword"
             autocomplete="current-password"
             required
           >
+
         </div>
 
+
         <button
-          class="btn btn-primary btn-block"
           type="submit"
+          class="login-button"
+          id="loginButton"
         >
-          Login
+          Masuk ke Studio
         </button>
 
-        <div
-          id="loginMessage"
-          class="message"
-          hidden
-        ></div>
-
       </form>
+
+
+      <div
+        class="login-message"
+        id="loginMessage"
+      ></div>
 
     </section>
 
   </main>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script
+    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+  ></script>
+
   <script src="/js/supabase.js"></script>
-  <script src="/js/admin-login.js"></script>
+
+  <script
+    src="/js/admin-login.js?v=admin-reset-001"
+  ></script>
 
 </body>
+
 </html>

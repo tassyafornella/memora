@@ -10,29 +10,68 @@
     content="width=device-width,initial-scale=1"
   >
 
-  <title>Order Detail - MEMORA Studio</title>
+  <title>Order Detail | MEMORA Studio</title>
+
+  <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+  >
+
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
 
   <link
     rel="stylesheet"
-    href="/css/admin.css?v=20261109-full"
+    href="/css/admin.css?v=order-detail-001"
   >
 
 </head>
 
 <body>
 
-  <div id="adminApp"></div>
+  <div id="adminApp">
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <div class="loading-page">
+
+      <div class="loading-inner">
+
+        <strong>
+          MEMORA
+        </strong>
+
+        <span>
+          Membuka detail order...
+        </span>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <script
+    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+  ></script>
 
   <script src="/js/supabase.js"></script>
 
-  <script src="/js/admin-core.js"></script>
+  <script
+    src="/js/admin-core.js?v=order-detail-001"
+  ></script>
 
-  
+  <script
+    src="/js/admin-order-detail.js?v=order-detail-001"
+  ></script>
 
-<script src="=20261109-tc-final"></script>
-<script src="=20261109-tc-final"></script>
 </body>
 
 </html>

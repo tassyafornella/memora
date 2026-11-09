@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="id">
+
+<head>
+
+  <meta charset="utf-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width,initial-scale=1"
+  >
+
+  <title>Invoice | MEMORA</title>
+
+  <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+  >
+
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <link
+    rel="stylesheet"
+    href="/css/admin.css?v=invoice-print-001"
+  >
+
+</head>
+
+<body>
+
+  <div class="invoice-print-page">
+
+    <div class="invoice-print-actions">
+
+      <a
+        href="/studio/invoices/"
+        class="invoice-back-button"
+      >
+        Kembali
+      </a>
+
+      <button
+        type="button"
+        class="invoice-print-button"
+        id="printInvoice"
+      >
+        Cetak / Save PDF
+      </button>
+
+    </div>
+
+
+    <main
+      class="invoice-paper"
+      id="invoicePaper"
+    >
+
+      <div
+        style="
+          padding:40px;
+          text-align:center;
+          color:#7a817d;
+        "
+      >
+        Memuat invoice...
+      </div>
+
+    </main>
+
+  </div>
+
+
+  <script
+    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+  ></script>
+
+  <script src="/js/supabase.js"></script>
+
+  <script
+    src="/js/admin-invoice-print.js?v=invoice-print-001"
+  ></script>
+
+</body>
+
+</html>

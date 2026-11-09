@@ -2,19 +2,15 @@
 <html lang="id">
 
 <head>
+
   <meta charset="utf-8">
 
   <meta
     name="viewport"
-    content="width=device-width, initial-scale=1"
+    content="width=device-width,initial-scale=1"
   >
 
-  <title>Invoices - MEMORA Studio</title>
-
-  <link
-    rel="stylesheet"
-    href="/css/admin.css?v=20261109-invoice-final"
-  >
+  <title>Invoices | MEMORA Studio</title>
 
   <link
     rel="preconnect"
@@ -32,17 +28,50 @@
     rel="stylesheet"
   >
 
+  <link
+    rel="stylesheet"
+    href="/css/admin.css?v=invoices-001"
+  >
+
 </head>
 
 <body>
 
-  <div id="adminApp"></div>
+  <div id="adminApp">
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <div class="loading-page">
+
+      <div class="loading-inner">
+
+        <strong>
+          MEMORA
+        </strong>
+
+        <span>
+          Membuka Invoices...
+        </span>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <script
+    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+  ></script>
 
   <script src="/js/supabase.js"></script>
-  <script src="/js/admin-core.js"></script>
-  <script src="/js/admin-invoices.js"></script>
+
+  <script
+    src="/js/admin-core.js?v=invoices-001"
+  ></script>
+
+  <script
+    src="/js/admin-invoices.js?v=invoices-001"
+  ></script>
 
 </body>
+
 </html>

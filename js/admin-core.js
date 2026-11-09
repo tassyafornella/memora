@@ -1,313 +1,483 @@
 (function () {
+
   "use strict";
 
-  const db = window.memoraSupabase;
-
-  const menu = [
-    ["dashboard","Dashboard"],
-    ["orders","Orders"],
-    ["custom-orders","Custom Orders"],
-    ["payments","Payments"],
-    ["production","Production"],
-    ["finance","Finance"],
-    ["invoices","Invoices"],
-    ["customers","Customers"],
-    ["products","Products"],
-    ["gallery","Gallery"],
-    ["archive","Archive"]
-  ];
-
-  function money(value) {
-    return new Intl.NumberFormat("id-ID", {
-      style:"currency",
-      currency:"IDR",
-      maximumFractionDigits:0
-    }).format(Number(value) || 0);
-  }
-
-  function date(value) {
-    if (!value) return "-";
-
-    return new Intl.DateTimeFormat("id-ID", {
-      day:"2-digit",
-      month:"short",
-      year:"numeric"
-    }).format(new Date(value));
-  }
 
   function escapeHtml(value) {
-    return String(value ?? "")
-      .replaceAll("&","&amp;")
-      .replaceAll("<","&lt;")
-      .replaceAll(">","&gt;")
-      .replaceAll('"',"&quot;")
-      .replaceAll("'","&#039;");
+
+    const div =
+      document.createElement(
+        "div"
+      );
+
+    div.textContent =
+      String(
+        value ?? ""
+      );
+
+    return div.innerHTML;
+
   }
 
-  function statusLabel(value) {
-    const map = {
-      menunggu_konfirmasi:"Menunggu Konfirmasi",
-      data_belum_lengkap:"Data Belum Lengkap",
-      menunggu_approval:"Menunggu Approval",
-      desain:"Desain",
-      printing:"Printing",
-      finishing:"Finishing",
-      quality_check:"Quality Check",
-      packing:"Packing",
-      dikirim:"Dikirim",
-      selesai:"Selesai",
-      dibatalkan:"Dibatalkan",
 
-      belum_ada_pembayaran:"Belum Dibayar",
-      dp_diterima:"DP Diterima",
-      sebagian:"Sebagian",
-      lunas:"Lunas",
+  function money(value) {
 
-      waiting_verification:"Waiting",
-      verified:"Verified",
-      rejected:"Rejected"
-    };
+    return new Intl.NumberFormat(
+      "id-ID",
+      {
+        style: "currency",
+        currency: "IDR",
+        maximumFractionDigits: 0
+      }
+    ).format(
+      Number(value) || 0
+    );
 
-    return map[value] || value || "-";
   }
 
-  async function auth() {
-    if (!db) {
-      throw new Error("Supabase belum terhubung.");
-    }
 
-    const { data, error } =
-      await db.auth.getSession();
+  function renderLoading(message) {
 
-    if (error) throw error;
+    const root =
+      document.getElementById(
+        "adminApp"
+      );
 
-    const session = data.session;
 
-    if (!session) {
-      window.location.replace("/studio/login/");
-      return null;
-    }
+    root.innerHTML = `
 
-    const user = session.user;
+      <div class="loading-page">
 
-    const { data:profile, error:profileError } =
-      await db
-        .from("profiles")
-        .select("*")
-        .eq("id", user.id)
-        .maybeSingle();
+        <div class="loading-inner">
 
-    if (profileError) throw profileError;
+          <strong>
+            MEMORA
+          </strong>
 
-    if (
-      !profile ||
-      !["owner","admin"].includes(
-        String(profile.role || "").toLowerCase()
-      )
-    ) {
-      await db.auth.signOut();
-      throw new Error("Akun ini bukan Administrator.");
-    }
+          <span>
+            ${escapeHtml(message)}
+          </span>
 
-    return {
-      user,
-      profile
-    };
+        </div>
+
+      </div>
+
+    `;
+
   }
 
-  function currentPage() {
-    const path =
-      window.location.pathname
-        .split("/")
-        .filter(Boolean);
 
-    return path[1] || "dashboard";
-  }
+  function renderError(
+    title,
+    message
+  ) {
 
-  function renderShell(authData) {
-    const mount =
-      document.getElementById("adminApp");
+    const root =
+      document.getElementById(
+        "adminApp"
+      );
 
-    if (!mount) return;
 
-    const active =
-      currentPage();
+    root.innerHTML = `
 
-    const displayName =
-      authData.profile.full_name ||
-      authData.profile.name ||
-      authData.user.email ||
-      "Administrator";
+      <div class="error-page">
 
-    const initials =
-      displayName
-        .split(/\s+/)
-        .map(x => x[0])
-        .join("")
-        .slice(0,2)
-        .toUpperCase();
+        <div class="error-card">
 
-    const nav = menu.map(([slug,label]) => `
-      <a
-        href="/studio/${slug}/"
-        class="${active === slug ? "active" : ""}"
-      >
-        <span class="nav-mark">${label.substring(0,1)}</span>
-        <span>${label}</span>
-      </a>
-    `).join("");
-
-    mount.innerHTML = `
-      <div class="admin-shell">
-
-        <div
-          class="admin-overlay"
-          id="adminOverlay"
-        ></div>
-
-        <aside
-          class="admin-sidebar"
-          id="adminSidebar"
-        >
-          <div class="admin-sidebar-head">
-            <strong>MEMORA</strong>
-            <span>Studio Administration</span>
+          <div class="eyebrow">
+            MEMORA Studio
           </div>
 
-          <nav class="admin-nav">
-            ${nav}
+          <h1>
+            ${escapeHtml(title)}
+          </h1>
+
+          <p>
+            ${escapeHtml(message)}
+          </p>
+
+        </div>
+
+      </div>
+
+    `;
+
+  }
+
+
+  function renderDashboardShell(
+    user,
+    profile
+  ) {
+
+    const root =
+      document.getElementById(
+        "adminApp"
+      );
+
+
+    root.innerHTML = `
+
+      <div class="admin-layout">
+
+        <aside class="sidebar">
+
+          <div class="sidebar-brand">
+
+            <strong>
+              MEMORA
+            </strong>
+
+            <span>
+              Studio Administration
+            </span>
+
+          </div>
+
+
+          <nav class="sidebar-menu">
+
+            <a
+              href="/studio/dashboard/"
+              class="${window.location.pathname.includes("/dashboard/") ? "active" : ""}"
+            >
+              Dashboard
+            </a>
+
+            <a
+              href="/studio/orders/"
+              class="${
+                window.location.pathname.includes("/orders/") ||
+                window.location.pathname.includes("/order-detail/")
+                  ? "active"
+                  : ""
+              }"
+            >
+              Orders
+            </a>
+
+            <a
+              href="/studio/products/"
+              class="${window.location.pathname.includes("/products/") ? "active" : ""}"
+            >
+              Products
+            </a>
+
+            <a
+              href="/studio/payments/"
+              class="${window.location.pathname.includes("/payments/") ? "active" : ""}"
+            >
+              Payments
+            </a>
+
+            <a
+              href="/studio/production/"
+              class="${window.location.pathname.includes("/production/") ? "active" : ""}"
+            >
+              Production
+            </a>
+
+            <a
+              href="/studio/finance/"
+              class="${window.location.pathname.includes("/finance/") ? "active" : ""}"
+            >
+              Finance
+            </a>
+
+            <a
+              href="/studio/invoices/"
+              class="${
+                window.location.pathname.includes("/invoices/") ||
+                window.location.pathname.includes("/invoice-print/")
+                  ? "active"
+                  : ""
+              }"
+            >
+              Invoices
+            </a>
+
+            <a
+              href="/studio/customers/"
+              class="${window.location.pathname.includes("/customers/") ? "active" : ""}"
+            >
+              Customers
+            </a>
+
+            <a
+              href="/studio/gallery/"
+              class="${window.location.pathname.includes("/gallery/") ? "active" : ""}"
+            >
+              Gallery
+            </a>
+
+            <a
+              href="/studio/custom-orders/"
+              class="${window.location.pathname.includes("/custom-orders/") ? "active" : ""}"
+            >
+              Custom Orders
+            </a>
+
+            <a
+              href="/studio/archive/"
+              class="${window.location.pathname.includes("/archive/") ? "active" : ""}"
+            >
+              Archive
+            </a>
+
           </nav>
 
-          <div class="admin-sidebar-foot">
 
-            <div class="admin-user">
-              <div class="admin-avatar">
-                ${escapeHtml(initials)}
-              </div>
+          <div class="sidebar-account">
 
-              <div>
-                <strong>
-                  ${escapeHtml(displayName)}
-                </strong>
+            <strong>
+              ${escapeHtml(
+                profile.full_name ||
+                "MEMORA Admin"
+              )}
+            </strong>
 
-                <span>
-                  ${escapeHtml(authData.profile.role || "Admin")}
-                </span>
-              </div>
-            </div>
+            <span>
+              ${escapeHtml(
+                profile.role ||
+                "admin"
+              )}
+            </span>
+
 
             <button
-              class="btn btn-block"
-              id="adminLogout"
               type="button"
+              class="logout-button"
+              id="logoutButton"
             >
               Logout
             </button>
 
           </div>
+
         </aside>
 
-        <main class="admin-main">
 
-          <header class="admin-topbar">
+        <main class="main">
 
-            <button
-              class="admin-menu"
-              id="adminMenu"
-              type="button"
-            >
-              Menu
-            </button>
+          <header class="topbar">
 
-            <div class="admin-topbar-title">
-              MEMORA Studio
-            </div>
+            <div class="topbar-title">
 
-            <div>
-              ${escapeHtml(authData.user.email || "")}
+              <strong>
+                MEMORA Studio
+              </strong>
+
+              <span>
+                ${escapeHtml(
+                  user.email ||
+                  ""
+                )}
+              </span>
+
             </div>
 
           </header>
 
-          <div class="admin-content">
-            <div id="adminPage"></div>
-          </div>
+
+          <div
+            class="content"
+            id="adminContent"
+          ></div>
 
         </main>
 
       </div>
+
     `;
 
-    const sidebar =
-      document.getElementById("adminSidebar");
-
-    const overlay =
-      document.getElementById("adminOverlay");
 
     document
-      .getElementById("adminMenu")
-      ?.addEventListener("click", () => {
-        sidebar.classList.toggle("open");
-        overlay.classList.toggle("show");
-      });
+      .getElementById(
+        "logoutButton"
+      )
+      .addEventListener(
+        "click",
+        async function () {
 
-    overlay?.addEventListener("click", () => {
-      sidebar.classList.remove("open");
-      overlay.classList.remove("show");
-    });
+          await window
+            .memoraSupabase
+            .auth
+            .signOut();
 
-    document
-      .getElementById("adminLogout")
-      ?.addEventListener("click", async () => {
-        await db.auth.signOut();
-        window.location.replace("/studio/login/");
-      });
+
+          window.location.replace(
+            "/studio/login/"
+          );
+
+        }
+      );
+
   }
 
-  async function start(loader) {
+
+  async function initialize() {
+
     try {
-      const authData = await auth();
 
-      if (!authData) return;
+      renderLoading(
+        "Memeriksa session..."
+      );
 
-      renderShell(authData);
 
-      if (loader) {
-        await loader(authData);
+      const db =
+        window.memoraSupabase;
+
+
+      if (!db) {
+
+        renderError(
+          "Supabase belum terhubung",
+          "File js/supabase.js tidak tersedia."
+        );
+
+        return null;
+
       }
+
+
+      const sessionResult =
+        await db.auth.getSession();
+
+
+      if (
+        sessionResult.error
+      ) {
+
+        throw sessionResult.error;
+
+      }
+
+
+      const session =
+        sessionResult.data?.session;
+
+
+      if (!session) {
+
+        window.location.replace(
+          "/studio/login/"
+        );
+
+        return null;
+
+      }
+
+
+      const user =
+        session.user;
+
+
+      renderLoading(
+        "Membaca profile admin..."
+      );
+
+
+      const profileResult =
+        await db
+          .from("profiles")
+          .select(
+            "id,full_name,role"
+          )
+          .eq(
+            "id",
+            user.id
+          )
+          .maybeSingle();
+
+
+      if (
+        profileResult.error
+      ) {
+
+        throw profileResult.error;
+
+      }
+
+
+      const profile =
+        profileResult.data;
+
+
+      if (!profile) {
+
+        renderError(
+          "Profile tidak ditemukan",
+          "Akun ini belum memiliki profile Admin MEMORA."
+        );
+
+        return null;
+
+      }
+
+
+      const role =
+        String(
+          profile.role ||
+          ""
+        )
+          .trim()
+          .toLowerCase();
+
+
+      if (
+        role !== "owner" &&
+        role !== "admin"
+      ) {
+
+        renderError(
+          "Akses ditolak",
+          "Akun ini bukan owner atau admin."
+        );
+
+        return null;
+
+      }
+
+
+      renderDashboardShell(
+        user,
+        profile
+      );
+
+
+      return {
+        db,
+        user,
+        profile
+      };
+
     }
     catch (error) {
-      console.error(error);
 
-      const mount =
-        document.getElementById("adminApp");
+      console.error(
+        "ADMIN CORE:",
+        error
+      );
 
-      if (mount) {
-        mount.innerHTML = `
-          <div class="admin-login-page">
-            <div class="admin-login-card">
-              <div class="admin-brand">MEMORA</div>
-              <h1>Studio Error</h1>
-              <p>
-                ${escapeHtml(error.message || "Terjadi kesalahan.")}
-              </p>
-              <a class="btn btn-primary btn-block" href="/studio/login/">
-                Kembali ke Login
-              </a>
-            </div>
-          </div>
-        `;
-      }
+
+      renderError(
+        "Admin gagal dimuat",
+        error?.message ||
+        "Terjadi kesalahan."
+      );
+
+
+      return null;
+
     }
+
   }
 
+
   window.MemoraAdmin = {
-    db,
-    start,
-    money,
-    date,
+    initialize,
     escapeHtml,
-    statusLabel
+    money
   };
 
 })();

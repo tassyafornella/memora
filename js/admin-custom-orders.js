@@ -1,600 +1,929 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener(
+  "DOMContentLoaded",
+  async function () {
 
-  MemoraAdmin.start(async () => {
+    const admin =
+      await MemoraAdmin.initialize();
 
-    const db =
-      MemoraAdmin.db;
 
-    const page =
-      document.getElementById(
-        "adminPage"
-      );
-
-
-    page.innerHTML = `
-
-      <div class="page-head">
-
-        <div>
-
-          <div class="eyebrow">
-            Private Order
-          </div>
-
-          <h1>
-            Custom Orders
-          </h1>
-
-          <p>
-            Kelola private link untuk kebutuhan custom customer.
-          </p>
-
-        </div>
-
-        <div class="actions">
-
-          <button
-            class="btn btn-primary"
-            id="newCustomOrder"
-            type="button"
-          >
-            New Custom Order
-          </button>
-
-        </div>
-
-      </div>
-
-
-      <div class="stats" id="customStats"></div>
-
-
-      <section class="panel">
-
-        <div class="table-wrap">
-
-          <table>
-
-            <thead>
-
-              <tr>
-                <th>Customer</th>
-                <th>Token</th>
-                <th>Status</th>
-                <th>Created</th>
-                <th>Private Link</th>
-              </tr>
-
-            </thead>
-
-            <tbody id="customRows"></tbody>
-
-          </table>
-
-        </div>
-
-      </section>
-
-
-      <div
-        class="modal"
-        id="customModal"
-        hidden
-      >
-
-        <div class="modal-card">
-
-          <div class="modal-head">
-
-            <h2>
-              New Custom Order
-            </h2>
-
-            <button
-              class="btn"
-              id="closeCustomModal"
-              type="button"
-            >
-              Close
-            </button>
-
-          </div>
-
-          <div class="modal-body">
-
-            <div class="field">
-
-              <label>
-                Customer Name
-              </label>
-
-              <input
-                id="customCustomerName"
-                placeholder="Nama customer"
-              >
-
-            </div>
-
-            <div class="field">
-
-              <label>
-                Customer WhatsApp
-              </label>
-
-              <input
-                id="customWhatsapp"
-                placeholder="08..."
-              >
-
-            </div>
-
-            <div class="field">
-
-              <label>
-                Notes
-              </label>
-
-              <textarea
-                id="customNotes"
-                placeholder="Kebutuhan customer..."
-              ></textarea>
-
-            </div>
-
-            <div class="custom-summary">
-
-              Private link akan dibuat menggunakan token unik.
-
-            </div>
-
-          </div>
-
-          <div class="modal-foot">
-
-            <button
-              class="btn"
-              id="cancelCustomModal"
-              type="button"
-            >
-              Cancel
-            </button>
-
-            <button
-              class="btn btn-primary"
-              id="saveCustomOrder"
-              type="button"
-            >
-              Generate Private Link
-            </button>
-
-          </div>
-
-        </div>
-
-      </div>
-    `;
-
-
-    /*
-     * Schema custom order lama bisa berbeda antar versi.
-     * Query memakai select("*") agar tetap fleksibel.
-     */
-
-    const result =
-      await db
-        .from(
-          "custom_order_links"
-        )
-        .select("*")
-        .order(
-          "created_at",
-          {
-            ascending:false
-          }
-        );
-
-
-    if (result.error) {
-
-      document.getElementById(
-        "customRows"
-      ).innerHTML = `
-
-        <tr>
-
-          <td
-            colspan="5"
-            class="empty"
-          >
-            Table custom_order_links belum tersedia atau belum diberi akses.
-            <br><br>
-            ${MemoraAdmin.escapeHtml(
-              result.error.message
-            )}
-          </td>
-
-        </tr>
-      `;
-
-
-      document.getElementById(
-        "customStats"
-      ).innerHTML = `
-
-        <div class="stat">
-          <span>Total Link</span>
-          <strong>0</strong>
-        </div>
-
-        <div class="stat">
-          <span>Active</span>
-          <strong>0</strong>
-        </div>
-
-        <div class="stat">
-          <span>Used</span>
-          <strong>0</strong>
-        </div>
-
-        <div class="stat">
-          <span>Expired</span>
-          <strong>0</strong>
-        </div>
-      `;
-
+    if (!admin) {
       return;
     }
 
 
-    const rows =
-      result.data || [];
+    const db =
+      admin.db;
 
 
-    function getName(item) {
-
-      return (
-        item.customer_name ||
-        item.name ||
-        item.full_name ||
-        "-"
-      );
-
-    }
-
-
-    function getStatus(item) {
-
-      if (
-        item.used_at ||
-        item.is_used === true
-      ) {
-        return "Used";
-      }
-
-      if (
-        item.is_active === false
-      ) {
-        return "Inactive";
-      }
-
-      return (
-        item.status ||
-        "Active"
-      );
-
-    }
-
-
-    function getToken(item) {
-
-      return (
-        item.token ||
-        item.public_token ||
-        item.access_token ||
-        "-"
-      );
-
-    }
-
-
-    function render() {
-
-      const used =
-        rows.filter(item =>
-          getStatus(item) ===
-          "Used"
-        ).length;
-
-
-      const active =
-        rows.filter(item =>
-          getStatus(item) ===
-          "Active"
-        ).length;
-
-
+    const content =
       document.getElementById(
-        "customStats"
-      ).innerHTML = `
-
-        <div class="stat">
-          <span>Total Link</span>
-          <strong>${rows.length}</strong>
-        </div>
-
-        <div class="stat">
-          <span>Active</span>
-          <strong>${active}</strong>
-        </div>
-
-        <div class="stat">
-          <span>Used</span>
-          <strong>${used}</strong>
-        </div>
-
-        <div class="stat">
-          <span>Other</span>
-          <strong>${rows.length - active - used}</strong>
-        </div>
-      `;
+        "adminContent"
+      );
 
 
-      document.getElementById(
-        "customRows"
-      ).innerHTML =
-        rows.map(item => {
-
-          const token =
-            getToken(item);
+    let orders = [];
+    let items = [];
+    let customers = [];
 
 
-          const url =
-            token !== "-"
-              ? `${location.origin}/custom-order/?token=${encodeURIComponent(token)}`
-              : "-";
+    const STATUS_LABELS = {
+
+      menunggu_konfirmasi:
+        "Menunggu Konfirmasi",
+
+      data_belum_lengkap:
+        "Data Belum Lengkap",
+
+      data_lengkap:
+        "Data Lengkap",
+
+      desain:
+        "Desain",
+
+      menunggu_approval:
+        "Menunggu Approval",
+
+      revisi:
+        "Revisi",
+
+      approved:
+        "Approved",
+
+      printing:
+        "Printing",
+
+      finishing:
+        "Finishing",
+
+      quality_check:
+        "Quality Check",
+
+      packing:
+        "Packing",
+
+      dikirim:
+        "Dikirim",
+
+      selesai:
+        "Selesai",
+
+      dibatalkan:
+        "Dibatalkan"
+
+    };
 
 
-          return `
+    function esc(value) {
 
-            <tr>
+      return MemoraAdmin.escapeHtml(
+        value ?? ""
+      );
 
-              <td>
-                <strong>
-                  ${
-                    MemoraAdmin.escapeHtml(
-                      getName(item)
-                    )
-                  }
-                </strong>
-              </td>
-
-              <td>
-                <div class="code-box">
-                  ${
-                    MemoraAdmin.escapeHtml(
-                      token
-                    )
-                  }
-                </div>
-              </td>
-
-              <td>
-                <span class="badge">
-                  ${
-                    MemoraAdmin.escapeHtml(
-                      getStatus(item)
-                    )
-                  }
-                </span>
-              </td>
-
-              <td>
-                ${
-                  MemoraAdmin.date(
-                    item.created_at
-                  )
-                }
-              </td>
-
-              <td>
-                ${
-                  url !== "-"
-                    ? `
-                        <button
-                          class="btn"
-                          data-copy="${MemoraAdmin.escapeHtml(url)}"
-                          type="button"
-                        >
-                          Copy Link
-                        </button>
-                      `
-                    : "-"
-                }
-              </td>
-
-            </tr>
-          `;
-
-        }).join("") ||
-
-        `
-          <tr>
-            <td
-              colspan="5"
-              class="empty"
-            >
-              Belum ada custom order link.
-            </td>
-          </tr>
-        `;
+    }
 
 
-      document
-        .querySelectorAll(
-          "[data-copy]"
-        )
-        .forEach(button => {
+    function statusLabel(value) {
 
-          button.addEventListener(
-            "click",
-            async () => {
+      return (
+        STATUS_LABELS[value] ||
+        String(value || "-")
+          .replaceAll("_", " ")
+      );
 
-              await navigator.clipboard.writeText(
-                button.dataset.copy
-              );
+    }
 
-              button.textContent =
-                "Copied";
 
-            }
+    function getCustomer(order) {
+
+      return customers.find(
+        function (customer) {
+
+          return (
+            String(customer.id) ===
+            String(order.customer_id)
           );
 
-        });
+        }
+      ) || null;
 
     }
 
 
-    render();
+    function getOrderItems(orderId) {
 
+      return items.filter(
+        function (item) {
 
-    const modal =
-      document.getElementById(
-        "customModal"
-      );
-
-
-    function openModal() {
-      modal.hidden = false;
-    }
-
-
-    function closeModal() {
-      modal.hidden = true;
-    }
-
-
-    document
-      .getElementById(
-        "newCustomOrder"
-      )
-      .addEventListener(
-        "click",
-        openModal
-      );
-
-
-    document
-      .getElementById(
-        "closeCustomModal"
-      )
-      .addEventListener(
-        "click",
-        closeModal
-      );
-
-
-    document
-      .getElementById(
-        "cancelCustomModal"
-      )
-      .addEventListener(
-        "click",
-        closeModal
-      );
-
-
-    document
-      .getElementById(
-        "saveCustomOrder"
-      )
-      .addEventListener(
-        "click",
-        async () => {
-
-          const customerName =
-            document.getElementById(
-              "customCustomerName"
-            ).value.trim();
-
-
-          const whatsapp =
-            document.getElementById(
-              "customWhatsapp"
-            ).value.trim();
-
-
-          const notes =
-            document.getElementById(
-              "customNotes"
-            ).value.trim();
-
-
-          if (!customerName) {
-
-            alert(
-              "Nama customer wajib diisi."
-            );
-
-            return;
-          }
-
-
-          const token =
-            crypto.randomUUID()
-              .replaceAll(
-                "-",
-                ""
-              );
-
-
-          const payload = {
-            token:
-              token,
-
-            customer_name:
-              customerName,
-
-            whatsapp:
-              whatsapp || null,
-
-            notes:
-              notes || null,
-
-            status:
-              "active",
-
-            is_active:
-              true
-          };
-
-
-          const insertResult =
-            await db
-              .from(
-                "custom_order_links"
-              )
-              .insert(
-                payload
-              )
-              .select("*")
-              .single();
-
-
-          if (insertResult.error) {
-
-            alert(
-              insertResult.error.message
-            );
-
-            return;
-          }
-
-
-          window.location.reload();
+          return (
+            String(item.order_id) ===
+            String(orderId)
+          );
 
         }
       );
 
-  });
+    }
 
-});
+
+    function hasPersonalization(value) {
+
+      if (
+        value === null ||
+        value === undefined
+      ) {
+
+        return false;
+
+      }
+
+
+      if (
+        typeof value ===
+        "string"
+      ) {
+
+        const cleaned =
+          value
+            .trim()
+            .toLowerCase();
+
+
+        return (
+          cleaned !== "" &&
+          cleaned !== "{}" &&
+          cleaned !== "null"
+        );
+
+      }
+
+
+      if (
+        typeof value ===
+        "object"
+      ) {
+
+        return (
+          Object.keys(value)
+            .length > 0
+        );
+
+      }
+
+
+      return true;
+
+    }
+
+
+    function personalizationText(value) {
+
+      if (!hasPersonalization(value)) {
+        return "-";
+      }
+
+
+      if (
+        typeof value ===
+        "string"
+      ) {
+
+        return value;
+
+      }
+
+
+      try {
+
+        return Object.entries(value)
+          .map(
+            function (entry) {
+
+              let itemValue =
+                entry[1];
+
+
+              if (
+                typeof itemValue ===
+                "object" &&
+                itemValue !== null
+              ) {
+
+                itemValue =
+                  JSON.stringify(
+                    itemValue
+                  );
+
+              }
+
+
+              return (
+                entry[0] +
+                ": " +
+                String(itemValue)
+              );
+
+            }
+          )
+          .join(" • ");
+
+      }
+      catch (error) {
+
+        return "-";
+
+      }
+
+    }
+
+
+    function isCustomOrder(order) {
+
+      const orderItems =
+        getOrderItems(
+          order.id
+        );
+
+
+      return orderItems.some(
+        function (item) {
+
+          return hasPersonalization(
+            item.personalization
+          );
+
+        }
+      );
+
+    }
+
+
+    content.innerHTML = `
+
+      <div>
+
+        <div class="eyebrow">
+          Personalized Orders
+        </div>
+
+        <h1 class="page-title">
+          Custom Orders
+        </h1>
+
+        <p class="page-description">
+          Pantau pesanan yang memiliki data personalisasi atau permintaan khusus customer.
+        </p>
+
+      </div>
+
+
+      <div class="stats">
+
+        <div class="stat">
+
+          <span>
+            Custom Orders
+          </span>
+
+          <strong id="customOrderTotal">
+            0
+          </strong>
+
+        </div>
+
+
+        <div class="stat">
+
+          <span>
+            Menunggu / Data
+          </span>
+
+          <strong id="customOrderPending">
+            0
+          </strong>
+
+        </div>
+
+
+        <div class="stat">
+
+          <span>
+            Desain
+          </span>
+
+          <strong id="customOrderDesign">
+            0
+          </strong>
+
+        </div>
+
+
+        <div class="stat">
+
+          <span>
+            Production
+          </span>
+
+          <strong id="customOrderProduction">
+            0
+          </strong>
+
+        </div>
+
+      </div>
+
+
+      <div class="custom-orders-toolbar">
+
+        <input
+          type="search"
+          class="input"
+          id="customOrderSearch"
+          placeholder="Cari order, customer, atau produk..."
+        >
+
+
+        <select
+          class="input"
+          id="customOrderStatus"
+        >
+
+          <option value="">
+            Semua Status
+          </option>
+
+          <option value="menunggu_konfirmasi">
+            Menunggu Konfirmasi
+          </option>
+
+          <option value="data_belum_lengkap">
+            Data Belum Lengkap
+          </option>
+
+          <option value="data_lengkap">
+            Data Lengkap
+          </option>
+
+          <option value="desain">
+            Desain
+          </option>
+
+          <option value="menunggu_approval">
+            Menunggu Approval
+          </option>
+
+          <option value="revisi">
+            Revisi
+          </option>
+
+          <option value="approved">
+            Approved
+          </option>
+
+          <option value="printing">
+            Printing
+          </option>
+
+          <option value="finishing">
+            Finishing
+          </option>
+
+          <option value="quality_check">
+            Quality Check
+          </option>
+
+          <option value="packing">
+            Packing
+          </option>
+
+          <option value="dikirim">
+            Dikirim
+          </option>
+
+          <option value="selesai">
+            Selesai
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <div
+        class="custom-orders-grid"
+        id="customOrdersGrid"
+      >
+
+        <div class="custom-orders-empty">
+          Memuat custom orders...
+        </div>
+
+      </div>
+
+    `;
+
+
+    const search =
+      document.getElementById(
+        "customOrderSearch"
+      );
+
+
+    const statusFilter =
+      document.getElementById(
+        "customOrderStatus"
+      );
+
+
+    function customOrders() {
+
+      return orders.filter(
+        isCustomOrder
+      );
+
+    }
+
+
+    function renderStats() {
+
+      const custom =
+        customOrders();
+
+
+      document.getElementById(
+        "customOrderTotal"
+      ).textContent =
+        custom.length;
+
+
+      document.getElementById(
+        "customOrderPending"
+      ).textContent =
+        custom.filter(
+          function (order) {
+
+            return [
+              "menunggu_konfirmasi",
+              "data_belum_lengkap",
+              "data_lengkap"
+            ].includes(
+              order.status
+            );
+
+          }
+        ).length;
+
+
+      document.getElementById(
+        "customOrderDesign"
+      ).textContent =
+        custom.filter(
+          function (order) {
+
+            return [
+              "desain",
+              "menunggu_approval",
+              "revisi",
+              "approved"
+            ].includes(
+              order.status
+            );
+
+          }
+        ).length;
+
+
+      document.getElementById(
+        "customOrderProduction"
+      ).textContent =
+        custom.filter(
+          function (order) {
+
+            return [
+              "printing",
+              "finishing",
+              "quality_check",
+              "packing"
+            ].includes(
+              order.status
+            );
+
+          }
+        ).length;
+
+    }
+
+
+    function renderOrders() {
+
+      const keyword =
+        String(
+          search.value ||
+          ""
+        )
+          .trim()
+          .toLowerCase();
+
+
+      const selectedStatus =
+        statusFilter.value;
+
+
+      const filtered =
+        customOrders()
+          .filter(
+            function (order) {
+
+              const customer =
+                getCustomer(order);
+
+
+              const orderItems =
+                getOrderItems(
+                  order.id
+                );
+
+
+              const searchable =
+                [
+                  order.order_number,
+                  order.customer_note,
+                  customer?.full_name,
+                  customer?.name,
+                  customer?.whatsapp,
+                  ...orderItems.map(
+                    function (item) {
+
+                      return [
+                        item.product_name,
+                        item.variant_name,
+                        personalizationText(
+                          item.personalization
+                        )
+                      ].join(" ");
+
+                    }
+                  )
+                ]
+                  .filter(Boolean)
+                  .join(" ")
+                  .toLowerCase();
+
+
+              const searchMatch =
+                !keyword ||
+                searchable.includes(
+                  keyword
+                );
+
+
+              const statusMatch =
+                !selectedStatus ||
+                order.status ===
+                  selectedStatus;
+
+
+              return (
+                searchMatch &&
+                statusMatch
+              );
+
+            }
+          );
+
+
+      const grid =
+        document.getElementById(
+          "customOrdersGrid"
+        );
+
+
+      if (!filtered.length) {
+
+        grid.innerHTML = `
+
+          <div class="custom-orders-empty">
+
+            Belum ada order dengan data personalisasi.
+
+          </div>
+
+        `;
+
+        return;
+
+      }
+
+
+      grid.innerHTML =
+        filtered.map(
+          function (order) {
+
+            const customer =
+              getCustomer(order);
+
+
+            const customItems =
+              getOrderItems(
+                order.id
+              )
+                .filter(
+                  function (item) {
+
+                    return hasPersonalization(
+                      item.personalization
+                    );
+
+                  }
+                );
+
+
+            const productsHtml =
+              customItems.map(
+                function (item) {
+
+                  return `
+
+                    <div class="custom-order-product">
+
+                      <strong>
+
+                        ${esc(
+                          item.product_name ||
+                          "Produk"
+                        )}
+
+                        ${
+                          item.variant_name
+                            ? " — " +
+                              esc(
+                                item.variant_name
+                              )
+                            : ""
+                        }
+
+                      </strong>
+
+
+                      <span>
+
+                        ${esc(
+                          personalizationText(
+                            item.personalization
+                          )
+                        )}
+
+                      </span>
+
+                    </div>
+
+                  `;
+
+                }
+              ).join("");
+
+
+            return `
+
+              <article class="custom-order-card">
+
+                <div class="custom-order-head">
+
+                  <div>
+
+                    <div class="custom-order-number">
+
+                      ${esc(
+                        order.order_number ||
+                        "-"
+                      )}
+
+                    </div>
+
+                    <div class="custom-order-customer">
+
+                      ${esc(
+                        customer?.full_name ||
+                        customer?.name ||
+                        "Customer"
+                      )}
+
+                      ${
+                        customer?.whatsapp
+                          ? " • " +
+                            esc(
+                              customer.whatsapp
+                            )
+                          : ""
+                      }
+
+                    </div>
+
+                  </div>
+
+
+                  <span class="custom-order-status">
+
+                    ${esc(
+                      statusLabel(
+                        order.status
+                      )
+                    )}
+
+                  </span>
+
+                </div>
+
+
+                <div class="custom-order-products">
+
+                  ${productsHtml}
+
+                </div>
+
+
+                ${
+                  order.customer_note
+                    ? `
+
+                      <div class="custom-order-note">
+
+                        <span>
+                          Catatan Customer
+                        </span>
+
+                        <p>
+                          ${esc(
+                            order.customer_note
+                          )}
+                        </p>
+
+                      </div>
+
+                    `
+                    : ""
+                }
+
+
+                <div class="custom-order-foot">
+
+                  <div class="custom-order-value">
+
+                    ${MemoraAdmin.money(
+                      order.grand_total
+                    )}
+
+                  </div>
+
+
+                  <a
+                    href="/studio/order-detail/?id=${encodeURIComponent(
+                      order.id
+                    )}"
+                    class="custom-order-open"
+                  >
+                    Buka Order
+                  </a>
+
+                </div>
+
+              </article>
+
+            `;
+
+          }
+        ).join("");
+
+    }
+
+
+    async function loadData() {
+
+      try {
+
+        const [
+          orderResult,
+          itemResult,
+          customerResult
+        ] =
+          await Promise.all([
+
+            db
+              .from("orders")
+              .select(
+                "id,order_number,customer_id,status,payment_status,grand_total,customer_note,created_at"
+              )
+              .order(
+                "created_at",
+                {
+                  ascending:false
+                }
+              ),
+
+            db
+              .from("order_items")
+              .select(
+                "id,order_id,product_name,variant_name,quantity,personalization,created_at"
+              )
+              .order(
+                "created_at",
+                {
+                  ascending:true
+                }
+              ),
+
+            db
+              .from("customers")
+              .select("*")
+
+          ]);
+
+
+        if (
+          orderResult.error
+        ) {
+
+          throw orderResult.error;
+
+        }
+
+
+        if (
+          itemResult.error
+        ) {
+
+          throw itemResult.error;
+
+        }
+
+
+        orders =
+          orderResult.data ||
+          [];
+
+
+        items =
+          itemResult.data ||
+          [];
+
+
+        customers =
+          customerResult.error
+            ? []
+            : (
+                customerResult.data ||
+                []
+              );
+
+
+        renderStats();
+        renderOrders();
+
+      }
+      catch (error) {
+
+        console.error(
+          "CUSTOM ORDERS:",
+          error
+        );
+
+
+        document.getElementById(
+          "customOrdersGrid"
+        ).innerHTML = `
+
+          <div class="custom-orders-empty">
+
+            Custom Orders gagal dimuat.
+
+            <br><br>
+
+            ${esc(
+              error?.message ||
+              "Terjadi kesalahan."
+            )}
+
+          </div>
+
+        `;
+
+      }
+
+    }
+
+
+    search.addEventListener(
+      "input",
+      renderOrders
+    );
+
+
+    statusFilter.addEventListener(
+      "change",
+      renderOrders
+    );
+
+
+    await loadData();
+
+  }
+);
